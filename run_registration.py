@@ -1,6 +1,6 @@
 # run_registration.py — end-to-end: generate a registration transaction, score it, log it.
-import json
-from harness import TaskSpec, OllamaBackend, generate, log_result
+import argparse, json
+from harness import TaskSpec, OllamaBackend, OpenRouterBackend, generate, log_result
 import registration as reg
 
 MODEL = "llama3.1:8b"
@@ -39,9 +39,10 @@ task = TaskSpec(
     ),
 )
 
-if __name__ == "__main__":
-    for i in range(N):
-        res = generate(OllamaBackend(), MODEL, task, run_index=i)
+def run(backend, model: str, n: int = N) -> None:
+    print(f"== {backend.name} / {model}")
+    for i in range(n):
+        res = generate(backend, model, task, run_index=i)
         if not res.ok:
             print(f"run {i}: GENERATION FAILED: {res.error}")
             log_result(res)
@@ -50,5 +51,17 @@ if __name__ == "__main__":
         verdict = reg.evaluate(conn, res.raw_output)
         log_result(res, verdict)
         oneline = res.raw_output.replace(chr(10), " ")[:100]
-        print(f"run {i}: {verdict['outcome']:26s} | {verdict['detail']}")
+        cost    = f" | ${res.usd_cost:.6f}" if res.usd_cost else ""
+        print(f"run {i}: {verdict['outcome']:26s} | {verdict['detail']}{cost}")
         print(f"   raw: {oneline}")
+
+if __name__ == "__main__":
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--backend", choices=["ollama", "openrouter"], default="ollama")
+    ap.add_argument("--models", nargs="+", default=[MODEL],
+                    help="e.g. meta-llama/llama-3.1-8b-instruct openai/gpt-4o-mini")
+    ap.add_argument("-n", type=int, default=N, help="samples per model")
+    args = ap.parse_args()
+    backend = OpenRouterBackend() if args.backend == "openrouter" else OllamaBackend()
+    for model in args.models:
+        run(backend, model, args.n)

@@ -1,6 +1,6 @@
 # harness.py — core harness: generation, backends, logging. Domain-agnostic.
 # Domain testbeds (e.g. registration.py) plug in for evaluation.
-import time, json, requests
+import os, time, json, requests
 from dataclasses import dataclass, asdict
 from datetime import datetime, timezone
 from typing import Protocol
@@ -74,16 +74,35 @@ class OllamaBackend:            # Phase 1 — local, free
             total_ms=d.get("total_duration", 0) / _NS,
         )
 
-class OpenRouterBackend:        # Phase 2 — cloud, paid. Stubbed until we spend (§4.2)
+class OpenRouterBackend:        # Phase 2 — cloud, paid (§4.2). One key, many models.
     name = "openrouter"
     URL = "https://openrouter.ai/api/v1/chat/completions"
-    def __init__(self, api_key: str):
-        self.api_key = api_key
+    def __init__(self, api_key: str | None = None):
+        self.api_key = api_key or os.environ.get("OPENROUTER_API_KEY", "")
+        if not self.api_key:
+            raise RuntimeError("OpenRouter needs an API key: set OPENROUTER_API_KEY")
     def call(self, model, messages) -> RawCall:
-        # OpenAI-compatible: choices[0].message.content,
-        #   usage.prompt_tokens / usage.completion_tokens; no prefill/decode split.
-        #   latency = wall-clock; usd_cost = tokens × price (OpenRouter pricing).
-        raise NotImplementedError("OpenRouter backend is Phase 2 (design §4.2)")
+        # OpenAI-compatible; no prefill/decode split, so latency = wall-clock.
+        # usage.include asks OpenRouter to report the exact USD cost of the call.
+        t0 = time.perf_counter()
+        r = requests.post(self.URL, headers={
+            "Authorization": f"Bearer {self.api_key}",
+        }, json={
+            "model": model, "messages": messages,
+            "temperature": 0, "usage": {"include": True},
+        }, timeout=120)
+        latency_ms = (time.perf_counter() - t0) * 1000
+        d = r.json() if r.content else {}
+        if r.status_code != 200 or "error" in d:
+            raise RuntimeError(f"OpenRouter {r.status_code}: {d.get('error', r.text)}")
+        usage = d.get("usage") or {}
+        return RawCall(
+            content=d["choices"][0]["message"].get("content") or "",
+            prompt_tokens=usage.get("prompt_tokens", 0),
+            completion_tokens=usage.get("completion_tokens", 0),
+            latency_ms=latency_ms,
+            usd_cost=usage.get("cost", 0.0),
+        )
 
 # ── Generation result (one log row) ──
 @dataclass(frozen=True)

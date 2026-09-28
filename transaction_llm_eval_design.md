@@ -216,7 +216,7 @@ backends × models × domains × tasks × samples
 | Component | State | Notes |
 |---|---|---|
 | `Backend` protocol + `OllamaBackend` | real | Local, free (Phase 1). |
-| `OpenRouterBackend` | stub | Phase 2; `NotImplementedError` until we spend (§4.2). No API key needed to run everything now. |
+| `OpenRouterBackend` | real | Phase 2 (§4.2). Key from `OPENROUTER_API_KEY`; logs wall-clock latency, usage tokens, and OpenRouter-reported USD cost. Ollama still needs no key. |
 | `generate()` | real | Backend-agnostic; DIDComm system prompt lives above the backend split (§4.2). |
 | `parse_didcomm()` | real (provisional) | Shared envelope parse `{type,id,body}` → body. Envelope shape is the swap point. |
 | `registration.check_consistency()` | real | Invariants: existence, duplicate, seats, time conflict (exact-slot, provisional). |
