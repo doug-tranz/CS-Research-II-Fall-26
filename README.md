@@ -34,6 +34,8 @@ and appends rows to `runs.jsonl`.
 
 ### OpenRouter (cloud, many models)
 
+Step-by-step teammate setup (key, models, results): see [`OPENROUTER_SETUP.md`](OPENROUTER_SETUP.md).
+
 Get a key at <https://openrouter.ai/keys>, then:
 
 ```powershell
