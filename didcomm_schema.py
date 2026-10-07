@@ -57,6 +57,13 @@ OUTPUT_CONTRACT = (
 )
 
 
+# Added to OUTPUT_CONTRACT for input-format cases, where a section is named by its crn.
+CRN_CONTRACT = (
+    ' Each entry of "sections" MUST be the crn of an offered section, '
+    'and "student_id" MUST be the student\'s student_id.'
+)
+
+
 def _errors(validator: Draft202012Validator, message) -> list:
     """Every violation as '<path>: <reason>', in a stable order."""
     found = sorted(validator.iter_errors(message), key=lambda e: list(map(str, e.absolute_path)))

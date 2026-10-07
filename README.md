@@ -7,7 +7,8 @@ schema the models must produce, and the test cases and results so far.
 
 Contents: [What's here](#whats-here) · [Setup](#setup) · [Run](#run) ·
 [Read the results](#read-the-results) · [Troubleshooting](#troubleshooting) ·
-[The cart message](#the-cart-message-didcomm-schema) · [Correctness model](#correctness-model) ·
+[The cart message](#the-cart-message-didcomm-schema) · [The input format](#the-input-format) ·
+[Correctness model](#correctness-model) ·
 [Test cases](#test-cases) · [Results so far](#results-so-far) ·
 [Open questions](#open-questions-for-the-group) · [Phase](#phase) · [Provisional](#provisional-will-change-isolated-to-one-spot-each)
 
@@ -24,12 +25,14 @@ Contents: [What's here](#whats-here) · [Setup](#setup) · [Run](#run) ·
 |---|---|
 | `registration_message.schema.json` | The message rules, as JSON Schema (draft 2020-12). Source of truth for the cart message. |
 | `didcomm_schema.py` | `validate_message()`: Tiers 1–2 against the schema. `OUTPUT_CONTRACT`: the prompt text that tells a model the format. |
-| `registration.py` | Registration domain testbed: SQLite schema, `evaluate()` (Tiers 1–2 from `didcomm_schema`, then Tier 3 consistency over the whole cart). |
+| `registration.py` | Registration domain testbed: SQLite schema, `evaluate()` (Tiers 1–2 from `didcomm_schema`, then Tier 3 consistency over the whole cart). Also the input format: `validate_input()`, `audit()` (degree audit), `missing_prerequisites()`, and `seed_db()`. |
 | `semantic_check.py` | `check_semantic()` (Tier 4): compares the model's body to the case's expected message. Section order is ignored. |
-| `evaluate_with_semantics.py` | `evaluate_full()`: `registration.evaluate()` (Tiers 1–3), then Tier 4. |
+| `evaluate_with_semantics.py` | `evaluate_full()`: `registration.evaluate()` (Tiers 1–3), then Tier 4. `evaluate_case()`: the same for an input-format case, accepting any cart in its answer key. |
 | `run_registration.py` | End-to-end runner for one built-in task: generates, scores Tiers 1–3, logs to `runs.jsonl`. |
-| `run_semantic_eval.py` | Runner: sends each case in a test file to a model and scores all four tiers. |
-| `test_cases.jsonl` (5), `semantic_test_cases.jsonl` (15), `cart_test_cases.jsonl` (10) | Test cases: `task` (sent to the model) and `ground_truth` (never sent). See [Test cases](#test-cases). |
+| `run_semantic_eval.py` | Runner: sends each case in a test file to a model and scores all four tiers. Builds the prompt for input-format cases, as JSON, CSV or plain text. |
+| `registration_input.schema.json` | The input format rules, as JSON Schema. See [The input format](#the-input-format). |
+| `input_format_cases.json` (6) | Test cases in the full input format: student, transcript, program requirements, schedule, prompt. |
+| `test_cases.jsonl` (5), `semantic_test_cases.jsonl` (15), `cart_test_cases.jsonl` (10) | Earlier test cases, whose input is a bare list of sections: `task` (sent to the model) and `ground_truth` (never sent). See [Test cases](#test-cases). |
 | `semantic_eval_results.json` | Generated results of `run_semantic_eval.py`, as an indented JSON array. |
 
 **`old_schema/` — the single-section message** (`{"student_id", "section_id"}`). The
@@ -144,22 +147,30 @@ Scores each sample on Tiers 1–3 and appends rows to `runs.jsonl`.
 python run_semantic_eval.py --backend openrouter --model anthropic/claude-sonnet-5
 python run_semantic_eval.py --model anthropic/claude-sonnet-5 --test-file semantic_test_cases.jsonl
 python run_semantic_eval.py --model anthropic/claude-sonnet-5 --test-file cart_test_cases.jsonl --task-ids cart-006 cart-007
+python run_semantic_eval.py --model anthropic/claude-opus-5.5 --test-file input_format_cases.json --task-ids sem_004 -n 5
+python run_semantic_eval.py --model anthropic/claude-opus-5.5 --test-file input_format_cases.json --rendering nl
 ```
 
 | Option | Meaning | Default |
 |---|---|---|
 | `--backend` | `openrouter` or `ollama` | `openrouter` |
-| `--model` | One model ID (required) | |
-| `--test-file` | Which case file to run | `test_cases.jsonl` |
+| `--model` | One model ID (required unless `--check`) | |
+| `--test-file` | Which case file to run. A `.jsonl` file holds bare-section-list cases; a `.json` file holds full input-format cases | `test_cases.jsonl` |
 | `--task-ids` | Run only these cases | all cases in the file |
+| `-n` | Samples per case | `1` |
+| `--rendering` | How an input-format case's state is shown to the model: `json`, `csv` or `nl` (plain text) | `json` |
+| `--check` | Score each input-format case's own answer key and exit. No model call | off |
 | `--output` | Results file | `semantic_eval_results.json` |
 
-Runs each case once and appends to the results file.
+Appends every sample to the results file. An input-format case costs more per call than the
+earlier cases, because the whole transcript and program are in the prompt (about $0.02 on
+Opus 5.5).
 
-### The validator alone
+### The validators alone
 
 ```bash
 python didcomm_schema.py        # 17 example messages, no model, no cost
+python run_semantic_eval.py --test-file input_format_cases.json --check   # every input-format case and its answer key
 ```
 
 ### Change the model
@@ -350,11 +361,119 @@ originals stay in `old_schema/`.
 | `registration.py` | `evaluate()` calls `validate_message()` for Tiers 1–2. `check_consistency()` checks every section in the cart, and adds two checks that only exist for a cart: two cart sections in the same time slot, and two sections of the same course. |
 | `semantic_check.py` | Compares `sections` as a set, so the order of the cart does not matter. Otherwise the same field-by-field match against the expected message. |
 | `evaluate_with_semantics.py` | Logic unchanged. Its smoke test now uses carts. |
-| `run_semantic_eval.py` | Sends `didcomm_schema.OUTPUT_CONTRACT` in place of the hard-coded single-section contract. Adds `--task-ids`, and writes an indented `.json` results file in place of `.jsonl`. |
+| `run_semantic_eval.py` | Sends `didcomm_schema.OUTPUT_CONTRACT` in place of the hard-coded single-section contract. Adds `--task-ids`, `-n`, `--rendering` and `--check`, and writes an indented `.json` results file in place of `.jsonl`. |
 | `run_registration.py` | Same task and seed data; asks for the cart message. |
 | `test_cases.jsonl`, `semantic_test_cases.jsonl` | `ground_truth.expected` rewritten as a one-section cart with the new `type`. `task`, `note`, `category` and `pair_id` are copied as they were. |
 
 `harness.py` needed no change; its system prompt describes the envelope loosely.
+
+## The input format
+
+**Status:** implements Anand's *Registration Input Format Specification*, v0.3 (draft, Task 1).
+That document is the reference for the base fields and is not in this repo yet. Everything
+marked **[provisional]** below fills one of its open items and is not a team decision.
+
+One input object describes one registration situation, and all of it is sent to the model.
+
+| Field | Required | Content |
+|---|---|---|
+| `student` | yes | `student_id`, `degree`, `major`, optional `minor`, `program_id`, `catalog_year`. |
+| `transcript` | yes | `completed_courses` (with grades, including `W`), `transfer_courses`, `courses_in_progress` (no grade). |
+| `program_requirements` | yes | Each has `req_id`, `category`, `rule`, `course_options`, `credit_hours`, `minimum_grade`. |
+| `schedule` | yes | `term` and `sections`. A section has `crn`, `course_id`, `section`, `credit_hours`, `seats_total`, `seats_taken`, `campus`, `modality`, `meetings` (days, `start_time`, `end_time`). |
+| `prompt` | yes | The student's request in everyday language. |
+| `prerequisites` | no | Added for open item 4. See below. |
+| `course_equivalents` | no | Added for open item 6. |
+| `graduation_rules` | no | Added for open item 7. |
+
+`registration_input.schema.json` holds the field rules (types, the course id pattern, allowed
+grades, `Season YYYY` terms, `h:mm AM/PM` times, no unknown fields).
+`registration.validate_input()` adds the rules a schema cannot express: every `crn` and
+`req_id` is unique, `seats_taken` is at most `seats_total`, and a meeting ends after it
+starts. Because unknown fields are rejected, an answer key placed inside the input is caught.
+
+How one input object is used:
+
+- **Prompt.** `run_semantic_eval.to_task()` sends everything except `prompt` as the known
+  state, and `prompt` as the intent. The answer key is never included.
+- **Database.** `registration.seed_db()` builds the checker's database from the same object,
+  so the model and the checker see the same situation.
+- **Scoring.** `evaluate_with_semantics.evaluate_case()` runs all four tiers.
+
+A test case wraps one input object with an id and an answer key:
+
+```json
+{
+  "case_id": "sem_001",
+  "input": { "...": "the input object" },
+  "ground_truth": {
+    "acceptable_crns": ["12345"],
+    "implicit_relationship": "The student lives in Glassboro, so the Camden section (12348) is valid but wrong."
+  }
+}
+```
+
+### How the spec's open items were filled in [provisional]
+
+| Spec open item | What the code does |
+|---|---|
+| 1. Section id | The message's `sections` list holds `crn` values. The prompt tells the model so. |
+| 2. Meeting times | Two sections conflict when they share a day and their time ranges overlap (`meetings` table in `registration.py`). The slot codes (`MW14`) of the earlier cases still work. |
+| 3. One section or several per message | Several: the spec assumed one enroll message per section, but the 10/1 meeting settled on a cart, so one message registers every section. |
+| 4. Prerequisites | New optional `prerequisites` list. Treated as a **consistency** rule (Tier 3): registering for a course whose prerequisite is unmet is a `consistency_error`. A course still in progress does not satisfy a prerequisite. |
+| 5. `TA` and `minimum_grade` | Accepted transfer credit (`TA`) meets every minimum grade. `F` and `W` meet none. |
+| 6. Other requirement types | New optional fields, all read by `registration.audit()`. See the next table. |
+| 7. Graduation-wide rules | New optional `graduation_rules`: `total_credits`, `minimum_gpa`, `residency_credits`. The audit derives earned credits, institutional credits and GPA from the transcript; none is stored. A repeated course counts once, by its best attempt. |
+| 8. Other input renderings | `--rendering csv` shows the same state as CSV tables, and `--rendering nl` as plain-text sentences. JSON stays the stored form. |
+| 9. Test-case wrapper | `acceptable_crns` lists crns that are each a correct one-section cart. `acceptable_carts` lists whole carts, for answers with several sections. Tier 4 passes when the cart equals any acceptable one, so a case can have more than one right answer. |
+
+Fields added for open items 4, 6 and 7:
+
+| Field | Where | Meaning |
+|---|---|---|
+| `prerequisites` | top level | Entries of `{"course_id", "requires": [...], "minimum_grade"}`: every course in `requires` must be earned at or above the grade first. One entry per course. |
+| `course_equivalents` | top level | Groups of course ids that are the same course under different catalog years. An equivalent satisfies a requirement or a prerequisite. |
+| `graduation_rules` | top level | `total_credits`, `minimum_gpa`, `residency_credits`; each optional. |
+| `attributes` | transcript courses and sections | Catalog attributes a course carries, e.g. a general-education area. |
+| rule `credits_with_attribute`, with `attribute` | requirement | Satisfied by `credit_hours` credits of courses carrying that attribute. `course_options` is then empty. |
+| `repeatable` | requirement | Courses whose credits count every time they are earned. Otherwise only the best attempt counts. |
+| `credit_caps` | requirement | Entries of `{"course_options", "max_credits"}`: at most that many credits from those courses count. |
+| `exclusive` | requirement | By default one course may count toward several requirements. Two requirements both marked `exclusive` cannot share a course; the earlier one in the list takes it. |
+| `credit_hours` as `{"min", "max"}` | section | A variable-credit section. The message has no field for the credits chosen, so the range is shown to the model but not checked. |
+
+What the checker does and does not read:
+
+- **Tier 3 reads** the schedule and the prerequisites (against the transcript).
+- **The audit is not part of scoring.** `registration.audit()` and `counts_toward()` report
+  which requirements are met and which courses would move one forward. They are for case
+  authors and for checking an answer key. Tier 4 still compares the cart to the answer key,
+  so whether a course "counts toward the degree" is decided by the author, with the audit
+  as a cross-check.
+
+### The six cases
+
+`input_format_cases.json`:
+
+| Case | Prompt | What it tests | Correct |
+|---|---|---|---|
+| sem_001 | "Enroll me in CS05000. I live in Glassboro." | The spec's own example: an open Camden section is valid but wrong. | `12345` |
+| con_001 | "Enroll me in MATH03000." | The first section listed is full. | `20002` |
+| con_002 | "Enroll me in CS05000 and MATH03000." | Two-section cart; one MATH section overlaps CS (10:30–11:20 against 10:00–11:15) without starting at the same time. | `30001` + `30003` |
+| sem_002 | "Register me for CS05000 and MATH03000. I only want classes that meet in person." | Online and hybrid sections are open but wrong. | `40002` + `40004` |
+| sem_003 | "Enroll me in one class that counts toward my Computer Science restricted electives. I don't want to retake anything I've already passed." | Uses the transcript and requirements. An already-passed elective and a non-elective are wrong. | `50002` or `50003` |
+| sem_004 | "Register me for two computer science classes that count toward my degree. I work evenings, so nothing that ends after 5 PM." | Uses the open-item fields: a prerequisite still in progress, a prerequisite met by transfer credit, a repeatable course, an attribute requirement, graduation rules. | any two of `60001`, `60004`, `60007` |
+
+In sem_004 the seven sections are: three correct electives; one elective whose prerequisite
+is still in progress (`consistency_error`); one that ends at 6:15 PM; one course already
+passed; and an art course that counts toward the degree but is not computer science.
+
+sem_001 is the spec's example. The other five were written by Claude and have not been
+checked by a teammate. `python run_semantic_eval.py --test-file input_format_cases.json --check`
+confirms each answer key scores `semantic_ok` and, for one-section cases, that no other
+section does.
+
+The 30 earlier cases (`.jsonl`) do not use this format: their input is a bare list of
+sections with short ids such as `CS401-A`, which the course id pattern here does not allow.
 
 ## Correctness model
 
@@ -363,18 +482,23 @@ Four tiers, stopping at the first failure:
 
 - **Tiers 1–2, format.** See [The cart message](#the-cart-message-didcomm-schema).
 - **Tier 3, consistency** — invariants hold. Each section exists, has a seat, is not already
-  held by the student, and does not clash with their enrollments; inside the cart, no two
-  sections share a time slot or a course.
+  held by the student, does not clash with their enrollments, and has its prerequisites met
+  (input-format cases); inside the cart, no two sections overlap in time or belong to the
+  same course.
 - **Tier 4, semantic correctness** — the transaction achieves the user's intent. Scored as a
-  match against one expected message (`semantic_check.py`), ignoring section order. That is
-  fair only while every case has exactly one correct cart, which is true of all 30 today.
-  How to score it when several carts are correct is still open (design §13.1).
+  match against an expected message (`semantic_check.py`), ignoring section order. The 30
+  `.jsonl` cases each have exactly one correct cart. Input-format cases can list several
+  acceptable carts, and matching any of them passes. Listing every correct cart by hand
+  stops being practical for open-ended intents; a rule-based check is still open (design §13.1).
 
 ## Test cases
 
+These are the earlier cases; the ones in the full input format are listed under
+[The input format](#the-input-format).
+
 One JSON object per line. Only `task` (`task_id`, `domain`, `inputs`, `intent`) is sent to
 the model; `ground_truth.expected` is the known-correct message. Inputs are a bare list of
-sections, because the Task 1 input format is not settled.
+sections, because these cases were written before the input format.
 
 | File | Cases | Content |
 |---|---|---|
@@ -424,9 +548,22 @@ Cart message, OpenRouter, 2026-10-07, one sample per case. Rows are in
   per case shows the format works end to end; it is not a pass rate.
 - These ten answers were generated by an earlier cart runner that skipped Tier 3 (since
   removed). The verdicts in the file are the same raw answers re-scored through all four
-  tiers, with no new model calls. `run_semantic_eval.py` and `run_registration.py` have not
-  themselves been run against a model since they were moved to the cart, and the 20
-  one-section cases have no cart-schema results yet.
+  tiers, with no new model calls. The 20 one-section cases have no cart-schema results yet,
+  and `run_registration.py` has not been run against a model since it was moved to the cart.
+
+Input format, OpenRouter, 2026-10-07, JSON rendering, `run_semantic_eval.py -n 5`:
+
+| Model | Case | Result | Cost |
+|---|---|---|---|
+| `anthropic/claude-opus-5.5` | sem_004, 5 samples | 5/5 `semantic_ok` | $0.10 |
+
+- All five answers were the same cart: `60001` + `60007` (CS07450 and the repeatable
+  CS01395). The harness runs at temperature 0, so five samples show stability, not spread.
+- The model never chose `60004` (CS01303), the acceptable section whose prerequisite is met
+  only by transfer credit. The runs do not show why; it is the option that depends on the
+  provisional `TA` rule.
+- Only sem_004 has been run. The other five input-format cases, and the `csv` and `nl`
+  renderings, have not been run against a model.
 
 Results for the single-section message are in `old_schema/runs.jsonl` and
 `old_schema/semantic_eval_results.jsonl`.
@@ -455,7 +592,9 @@ Results for the single-section message are in `old_schema/runs.jsonl` and
 ## Provisional (will change; isolated to one spot each)
 
 - DIDComm envelope shape → `harness.parse_didcomm()`
-- Time-conflict logic (exact-slot match, not interval overlap) → `registration.check_consistency()`
+- Time-conflict logic (interval overlap for input-format cases, exact-slot match for the earlier ones) → `registration.check_consistency()`
+- Input-format open items: prerequisites as a consistency rule, `TA` meeting any minimum, best-attempt GPA → `registration.py` (`missing_prerequisites()`, `meets_minimum()`, `audit()`)
+- Input-format answer-key shape (`acceptable_crns`, `acceptable_carts`) → `evaluate_with_semantics.py`
 - In-memory SQLite → `registration.make_db()`
 - Cart message type URI (`example.org` placeholder) → `registration_message.schema.json`
 - Tier 4 by comparison to one expected cart → `semantic_check.check_semantic()`
