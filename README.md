@@ -209,17 +209,21 @@ run 0: consistent__semantic_TBD   | invariants hold; ... | $0.001334
    raw: {"id": "...", "type": "https://example.org/course-registration/1.0/register", "body": ...
 ```
 
-`run_semantic_eval.py` prints one line per case, then a total:
+`run_semantic_eval.py` prints one line per case (one per sample when `-n` is above 1), then
+a total:
 
 ```
 cart-002: semantic_ok          | matches ground truth exactly
+sem_004 run 0: semantic_ok          | matches ground truth exactly
+
+5/5 semantic_ok on anthropic/claude-opus-5.5. Cost $0.1005. Full results in semantic_eval_results.json
 ```
 
 | Outcome | Tier | Meaning |
 |---|---|---|
 | `syntactic_error` | 1 | Not a DIDComm message: not valid JSON (e.g. the model wrapped it in a ```` ```json ```` code block, or returned nothing), or no `id`, or a malformed `type` |
 | `schema_error` | 2 | A DIDComm message, but not our register message: wrong `type`, or the body isn't exactly `student_id` plus a `sections` list |
-| `consistency_error` | 3 | Breaks a rule, e.g. full section, already enrolled, time conflict |
+| `consistency_error` | 3 | Breaks a rule, e.g. full section, already enrolled, time conflict, unmet prerequisite |
 | `semantic_error` | 4 | Passes every rule, but the cart is not the one the intent asked for |
 | `semantic_ok` | 4 | Correct |
 | `consistent__semantic_TBD` | 3 | `run_registration.py` only: passed Tiers 1–3; that runner has no expected answer to check intent against |
