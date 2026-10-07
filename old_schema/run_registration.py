@@ -1,9 +1,12 @@
 # run_registration.py — end-to-end: generate a registration transaction, score it, log it.
-# CART version (README.md). The single-section version is old_schema/run_registration.py.
-import argparse, json
+import argparse, json, sys
+from pathlib import Path
+HERE = Path(__file__).resolve().parent
+sys.path.append(str(HERE.parent))   # harness.py is in the repo root
 from harness import TaskSpec, OllamaBackend, OpenRouterBackend, generate, log_result
 import registration as reg
-from didcomm_schema import OUTPUT_CONTRACT
+
+LOG = str(HERE / "runs.jsonl")         # the log stays in this folder wherever you run from
 
 MODEL = "llama3.1:8b"
 N     = 5   # samples per task — stochasticity (design §10)
@@ -30,9 +33,15 @@ task = TaskSpec(
         ],
     }),
     intent="Enroll me in CS565.",
-    # The contract's example uses a DIFFERENT student/sections than this task, so a
-    # correct answer requires ADAPTING the shape — not copying the example (no answer leak).
-    output_contract=OUTPUT_CONTRACT + " Pick sections from available_sections.",
+    output_contract=(
+        'The body MUST have exactly these fields: '
+        '{"student_id": <string>, "section_id": <string>}. '
+        'Pick section_id from available_sections. '
+        # Example uses a DIFFERENT student/section than this task, so a correct
+        # answer requires ADAPTING the shape — not copying the example (no answer leak).
+        'Example for an unrelated request: {"type": "registration/enroll", '
+        '"id": "<uuid>", "body": {"student_id": "S042", "section_id": "MATH200-03"}}'
+    ),
 )
 
 def run(backend, model: str, n: int = N) -> None:
@@ -41,11 +50,11 @@ def run(backend, model: str, n: int = N) -> None:
         res = generate(backend, model, task, run_index=i)
         if not res.ok:
             print(f"run {i}: GENERATION FAILED: {res.error}")
-            log_result(res)
+            log_result(res, path=LOG)
             continue
         conn    = reg.make_db(SEED)          # fresh known state per run
         verdict = reg.evaluate(conn, res.raw_output)
-        log_result(res, verdict)
+        log_result(res, verdict, path=LOG)
         oneline = res.raw_output.replace(chr(10), " ")[:100]
         cost    = f" | ${res.usd_cost:.6f}" if res.usd_cost else ""
         print(f"run {i}: {verdict['outcome']:26s} | {verdict['detail']}{cost}")

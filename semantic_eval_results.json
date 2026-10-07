@@ -1,0 +1,340 @@
+[
+  {
+    "task_id": "cart-001",
+    "backend": "openrouter",
+    "model": "anthropic/claude-opus-5.5",
+    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"ART110-A\", \"course_id\": \"ART110\", \"seats_total\": 25, \"seats_taken\": 8, \"meets\": \"TR15\"}, {\"section_id\": \"CS301-A\", \"course_id\": \"CS301\", \"seats_total\": 30, \"seats_taken\": 10, \"meets\": \"MW10\"}, {\"section_id\": \"MATH152-A\", \"course_id\": \"MATH152\", \"seats_total\": 30, \"seats_taken\": 12, \"meets\": \"TR10\"}]\n\nIntent: Register student alice for CS301 and MATH152 next semester.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
+    "raw_output": "{\"type\": \"https://example.org/course-registration/1.0/register\", \"id\": \"a7c3e9d2-4b1f-4e8a-9d6c-2f5b8e1a3c7d\", \"body\": {\"student_id\": \"alice\", \"sections\": [\"CS301-A\", \"MATH152-A\"]}}",
+    "prompt_tokens": 522,
+    "completion_tokens": 101,
+    "latency_ms": 4789.135500002885,
+    "gen_ms": 0.0,
+    "load_ms": 0.0,
+    "total_ms": 0.0,
+    "usd_cost": 0.004108,
+    "run_index": 0,
+    "ok": true,
+    "error": null,
+    "ts": "2026-10-07T19:39:05.855963+00:00",
+    "parsed_output": {
+      "type": "https://example.org/course-registration/1.0/register",
+      "id": "a7c3e9d2-4b1f-4e8a-9d6c-2f5b8e1a3c7d",
+      "body": {
+        "student_id": "alice",
+        "sections": [
+          "CS301-A",
+          "MATH152-A"
+        ]
+      }
+    },
+    "verdict": {
+      "outcome": "semantic_ok",
+      "detail": "matches ground truth exactly",
+      "deviation_score": 0.0,
+      "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
+    }
+  },
+  {
+    "task_id": "cart-002",
+    "backend": "openrouter",
+    "model": "anthropic/claude-opus-5.5",
+    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"CS401-A\", \"course_id\": \"CS401\", \"seats_total\": 30, \"seats_taken\": 5, \"meets\": \"MW09\"}, {\"section_id\": \"CS401-B\", \"course_id\": \"CS401\", \"seats_total\": 30, \"seats_taken\": 5, \"meets\": \"TR13\"}, {\"section_id\": \"STAT200-A\", \"course_id\": \"STAT200\", \"seats_total\": 35, \"seats_taken\": 15, \"meets\": \"MW11\"}]\n\nIntent: Register student bob for STAT200 and for the Tuesday/Thursday section of CS401.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
+    "raw_output": "{\"type\": \"https://example.org/course-registration/1.0/register\", \"id\": \"a7c3e9d2-4b1f-4e8a-9d6c-2f5b8e1a3c47\", \"body\": {\"student_id\": \"bob\", \"sections\": [\"STAT200-A\", \"CS401-B\"]}}",
+    "prompt_tokens": 532,
+    "completion_tokens": 100,
+    "latency_ms": 3145.1567000040086,
+    "gen_ms": 0.0,
+    "load_ms": 0.0,
+    "total_ms": 0.0,
+    "usd_cost": 0.004128,
+    "run_index": 0,
+    "ok": true,
+    "error": null,
+    "ts": "2026-10-07T19:39:10.649648+00:00",
+    "parsed_output": {
+      "type": "https://example.org/course-registration/1.0/register",
+      "id": "a7c3e9d2-4b1f-4e8a-9d6c-2f5b8e1a3c47",
+      "body": {
+        "student_id": "bob",
+        "sections": [
+          "STAT200-A",
+          "CS401-B"
+        ]
+      }
+    },
+    "verdict": {
+      "outcome": "semantic_ok",
+      "detail": "matches ground truth exactly",
+      "deviation_score": 0.0,
+      "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
+    }
+  },
+  {
+    "task_id": "cart-003",
+    "backend": "openrouter",
+    "model": "anthropic/claude-opus-5.5",
+    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"HIST210-A\", \"course_id\": \"HIST210\", \"seats_total\": 30, \"seats_taken\": 6, \"meets\": \"MW14\"}, {\"section_id\": \"HIST110-A\", \"course_id\": \"HIST110\", \"seats_total\": 30, \"seats_taken\": 12, \"meets\": \"TR09\"}]\n\nIntent: Register student carol for HIST110 only.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
+    "raw_output": "{\"type\": \"https://example.org/course-registration/1.0/register\", \"id\": \"b7e4c2a9-5d31-4f8e-a6b2-9c0d1e3f5a71\", \"body\": {\"student_id\": \"carol\", \"sections\": [\"HIST110-A\"]}}",
+    "prompt_tokens": 464,
+    "completion_tokens": 92,
+    "latency_ms": 3195.9263000026112,
+    "gen_ms": 0.0,
+    "load_ms": 0.0,
+    "total_ms": 0.0,
+    "usd_cost": 0.003696,
+    "run_index": 0,
+    "ok": true,
+    "error": null,
+    "ts": "2026-10-07T19:39:13.798389+00:00",
+    "parsed_output": {
+      "type": "https://example.org/course-registration/1.0/register",
+      "id": "b7e4c2a9-5d31-4f8e-a6b2-9c0d1e3f5a71",
+      "body": {
+        "student_id": "carol",
+        "sections": [
+          "HIST110-A"
+        ]
+      }
+    },
+    "verdict": {
+      "outcome": "semantic_ok",
+      "detail": "matches ground truth exactly",
+      "deviation_score": 0.0,
+      "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
+    }
+  },
+  {
+    "task_id": "cart-004",
+    "backend": "openrouter",
+    "model": "anthropic/claude-opus-5.5",
+    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"BIO101-A\", \"course_id\": \"BIO101\", \"seats_total\": 20, \"seats_taken\": 20, \"meets\": \"MW11\"}, {\"section_id\": \"BIO101-B\", \"course_id\": \"BIO101\", \"seats_total\": 20, \"seats_taken\": 9, \"meets\": \"TR11\"}, {\"section_id\": \"CHEM101-A\", \"course_id\": \"CHEM101\", \"seats_total\": 40, \"seats_taken\": 14, \"meets\": \"MW13\"}]\n\nIntent: Register student dave for BIO101 and CHEM101, using sections that still have open seats.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
+    "raw_output": "{\"type\": \"https://example.org/course-registration/1.0/register\", \"id\": \"9a7c2e4f-1b3d-4f6a-8e2c-5d7b9f1a3c6e\", \"body\": {\"student_id\": \"dave\", \"sections\": [\"BIO101-B\", \"CHEM101-A\"]}}",
+    "prompt_tokens": 536,
+    "completion_tokens": 103,
+    "latency_ms": 3119.7489999904064,
+    "gen_ms": 0.0,
+    "load_ms": 0.0,
+    "total_ms": 0.0,
+    "usd_cost": 0.004204,
+    "run_index": 0,
+    "ok": true,
+    "error": null,
+    "ts": "2026-10-07T19:39:16.998240+00:00",
+    "parsed_output": {
+      "type": "https://example.org/course-registration/1.0/register",
+      "id": "9a7c2e4f-1b3d-4f6a-8e2c-5d7b9f1a3c6e",
+      "body": {
+        "student_id": "dave",
+        "sections": [
+          "BIO101-B",
+          "CHEM101-A"
+        ]
+      }
+    },
+    "verdict": {
+      "outcome": "semantic_ok",
+      "detail": "matches ground truth exactly",
+      "deviation_score": 0.0,
+      "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
+    }
+  },
+  {
+    "task_id": "cart-005",
+    "backend": "openrouter",
+    "model": "anthropic/claude-opus-5.5",
+    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"PHYS201-A\", \"course_id\": \"PHYS201\", \"seats_total\": 30, \"seats_taken\": 11, \"meets\": \"MW10\"}, {\"section_id\": \"CS250-A\", \"course_id\": \"CS250\", \"seats_total\": 30, \"seats_taken\": 4, \"meets\": \"MW10\"}, {\"section_id\": \"CS250-B\", \"course_id\": \"CS250\", \"seats_total\": 30, \"seats_taken\": 18, \"meets\": \"TR10\"}]\n\nIntent: Register student erin for PHYS201 and CS250 with no time conflict between them.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
+    "raw_output": "{\"type\": \"https://example.org/course-registration/1.0/register\", \"id\": \"a7c3e9d2-5b14-4f8a-9e61-2d0b7c4f8a13\", \"body\": {\"student_id\": \"erin\", \"sections\": [\"PHYS201-A\", \"CS250-B\"]}}",
+    "prompt_tokens": 530,
+    "completion_tokens": 99,
+    "latency_ms": 3654.684499997529,
+    "gen_ms": 0.0,
+    "load_ms": 0.0,
+    "total_ms": 0.0,
+    "usd_cost": 0.0041,
+    "run_index": 0,
+    "ok": true,
+    "error": null,
+    "ts": "2026-10-07T19:39:20.121943+00:00",
+    "parsed_output": {
+      "type": "https://example.org/course-registration/1.0/register",
+      "id": "a7c3e9d2-5b14-4f8a-9e61-2d0b7c4f8a13",
+      "body": {
+        "student_id": "erin",
+        "sections": [
+          "PHYS201-A",
+          "CS250-B"
+        ]
+      }
+    },
+    "verdict": {
+      "outcome": "semantic_ok",
+      "detail": "matches ground truth exactly",
+      "deviation_score": 0.0,
+      "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
+    }
+  },
+  {
+    "task_id": "cart-006",
+    "backend": "openrouter",
+    "model": "anthropic/claude-sonnet-5",
+    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"CS330-A\", \"course_id\": \"CS330\", \"seats_total\": 30, \"seats_taken\": 6, \"meets\": \"MW08\"}, {\"section_id\": \"CS330-B\", \"course_id\": \"CS330\", \"seats_total\": 30, \"seats_taken\": 21, \"meets\": \"MW13\"}, {\"section_id\": \"MATH210-A\", \"course_id\": \"MATH210\", \"seats_total\": 25, \"seats_taken\": 10, \"meets\": \"TR09\"}, {\"section_id\": \"ENG105-A\", \"course_id\": \"ENG105\", \"seats_total\": 15, \"seats_taken\": 9, \"meets\": \"MW11\"}]\n\nIntent: Register student frank for CS330, MATH210 and ENG105. He does not want any class that meets at 8 a.m.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
+    "raw_output": "```json\n{\"id\": \"a1b2c3d4-e5f6-4789-9abc-def012345678\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"frank\", \"sections\": [\"CS330-B\", \"MATH210-A\", \"ENG105-A\"]}}\n```",
+    "prompt_tokens": 593,
+    "completion_tokens": 103,
+    "latency_ms": 2463.1563000002643,
+    "gen_ms": 0.0,
+    "load_ms": 0.0,
+    "total_ms": 0.0,
+    "usd_cost": 0.002216,
+    "run_index": 0,
+    "ok": true,
+    "error": null,
+    "ts": "2026-10-07T19:44:41.928455+00:00",
+    "parsed_output": null,
+    "verdict": {
+      "outcome": "syntactic_error",
+      "detail": "invalid JSON (Expecting value: line 1 column 1 (char 0))"
+    }
+  },
+  {
+    "task_id": "cart-007",
+    "backend": "openrouter",
+    "model": "anthropic/claude-sonnet-5",
+    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"CS1010-A\", \"course_id\": \"CS1010\", \"seats_total\": 25, \"seats_taken\": 5, \"meets\": \"MW11\"}, {\"section_id\": \"CS101-A\", \"course_id\": \"CS101\", \"seats_total\": 25, \"seats_taken\": 20, \"meets\": \"TR11\"}, {\"section_id\": \"MATH115-A\", \"course_id\": \"MATH115\", \"seats_total\": 30, \"seats_taken\": 7, \"meets\": \"TR09\"}, {\"section_id\": \"MATH151-A\", \"course_id\": \"MATH151\", \"seats_total\": 30, \"seats_taken\": 16, \"meets\": \"MW09\"}]\n\nIntent: Register student grace for CS101 and MATH151.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
+    "raw_output": "{\"id\": \"a7e4c2d1-9f3b-4a5c-8d6e-1b2c3d4e5f6a\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"grace\", \"sections\": [\"CS101-A\", \"MATH151-A\"]}}",
+    "prompt_tokens": 573,
+    "completion_tokens": 101,
+    "latency_ms": 2299.107200000435,
+    "gen_ms": 0.0,
+    "load_ms": 0.0,
+    "total_ms": 0.0,
+    "usd_cost": 0.002156,
+    "run_index": 0,
+    "ok": true,
+    "error": null,
+    "ts": "2026-10-07T19:44:44.396876+00:00",
+    "parsed_output": {
+      "id": "a7e4c2d1-9f3b-4a5c-8d6e-1b2c3d4e5f6a",
+      "type": "https://example.org/course-registration/1.0/register",
+      "body": {
+        "student_id": "grace",
+        "sections": [
+          "CS101-A",
+          "MATH151-A"
+        ]
+      }
+    },
+    "verdict": {
+      "outcome": "semantic_ok",
+      "detail": "matches ground truth exactly",
+      "deviation_score": 0.0,
+      "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
+    }
+  },
+  {
+    "task_id": "cart-008",
+    "backend": "openrouter",
+    "model": "anthropic/claude-sonnet-5",
+    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"PHYS201-A\", \"course_id\": \"PHYS201\", \"seats_total\": 40, \"seats_taken\": 38, \"meets\": \"TR15\"}, {\"section_id\": \"PHYS201-B\", \"course_id\": \"PHYS201\", \"seats_total\": 35, \"seats_taken\": 20, \"meets\": \"MW14\"}, {\"section_id\": \"CHEM110-A\", \"course_id\": \"CHEM110\", \"seats_total\": 50, \"seats_taken\": 10, \"meets\": \"TR09\"}, {\"section_id\": \"CHEM110-B\", \"course_id\": \"CHEM110\", \"seats_total\": 20, \"seats_taken\": 5, \"meets\": \"MW09\"}]\n\nIntent: Register student henry for PHYS201 and CHEM110. For each course, use the section with the most open seats.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
+    "raw_output": "{\"id\": \"a1b2c3d4-e5f6-4789-a123-b456c789d012\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"henry\", \"sections\": [\"PHYS201-B\", \"CHEM110-A\"]}}",
+    "prompt_tokens": 600,
+    "completion_tokens": 173,
+    "latency_ms": 3571.5061999944737,
+    "gen_ms": 0.0,
+    "load_ms": 0.0,
+    "total_ms": 0.0,
+    "usd_cost": 0.00293,
+    "run_index": 0,
+    "ok": true,
+    "error": null,
+    "ts": "2026-10-07T19:44:46.741013+00:00",
+    "parsed_output": {
+      "id": "a1b2c3d4-e5f6-4789-a123-b456c789d012",
+      "type": "https://example.org/course-registration/1.0/register",
+      "body": {
+        "student_id": "henry",
+        "sections": [
+          "PHYS201-B",
+          "CHEM110-A"
+        ]
+      }
+    },
+    "verdict": {
+      "outcome": "semantic_ok",
+      "detail": "matches ground truth exactly",
+      "deviation_score": 0.0,
+      "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
+    }
+  },
+  {
+    "task_id": "cart-009",
+    "backend": "openrouter",
+    "model": "anthropic/claude-sonnet-5",
+    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"CS320-A\", \"course_id\": \"CS320\", \"seats_total\": 30, \"seats_taken\": 8, \"meets\": \"MW10\"}, {\"section_id\": \"CS340-A\", \"course_id\": \"CS340\", \"seats_total\": 30, \"seats_taken\": 8, \"meets\": \"TR10\"}, {\"section_id\": \"CS310-A\", \"course_id\": \"CS310\", \"seats_total\": 30, \"seats_taken\": 8, \"meets\": \"MW10\"}, {\"section_id\": \"CS320-B\", \"course_id\": \"CS320\", \"seats_total\": 30, \"seats_taken\": 8, \"meets\": \"TR10\"}, {\"section_id\": \"CS340-B\", \"course_id\": \"CS340\", \"seats_total\": 30, \"seats_taken\": 8, \"meets\": \"MW13\"}]\n\nIntent: Register student ivy for CS310, CS320 and CS340 with no time conflicts in her schedule.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
+    "raw_output": "{\"id\": \"a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"ivy\", \"sections\": [\"CS310-A\", \"CS320-B\", \"CS340-B\"]}}",
+    "prompt_tokens": 637,
+    "completion_tokens": 247,
+    "latency_ms": 3955.8304999955,
+    "gen_ms": 0.0,
+    "load_ms": 0.0,
+    "total_ms": 0.0,
+    "usd_cost": 0.003744,
+    "run_index": 0,
+    "ok": true,
+    "error": null,
+    "ts": "2026-10-07T19:44:50.349326+00:00",
+    "parsed_output": {
+      "id": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+      "type": "https://example.org/course-registration/1.0/register",
+      "body": {
+        "student_id": "ivy",
+        "sections": [
+          "CS310-A",
+          "CS320-B",
+          "CS340-B"
+        ]
+      }
+    },
+    "verdict": {
+      "outcome": "semantic_ok",
+      "detail": "matches ground truth exactly",
+      "deviation_score": 0.0,
+      "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
+    }
+  },
+  {
+    "task_id": "cart-010",
+    "backend": "openrouter",
+    "model": "anthropic/claude-sonnet-5",
+    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"HIST110-A\", \"course_id\": \"HIST110\", \"seats_total\": 30, \"seats_taken\": 12, \"meets\": \"TR09\"}, {\"section_id\": \"HIST110-B\", \"course_id\": \"HIST110\", \"seats_total\": 30, \"seats_taken\": 30, \"meets\": \"MW18\"}, {\"section_id\": \"HIST110-C\", \"course_id\": \"HIST110\", \"seats_total\": 30, \"seats_taken\": 27, \"meets\": \"TR16\"}, {\"section_id\": \"ECON101-A\", \"course_id\": \"ECON101\", \"seats_total\": 40, \"seats_taken\": 14, \"meets\": \"MW10\"}]\n\nIntent: Register student leo for ECON101 and HIST110. For HIST110, use the latest-starting section that is not full.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
+    "raw_output": "{\"id\": \"b6e4a2f1-3c7d-4f5a-9e2b-1a8d6c4f0e3b\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"leo\", \"sections\": [\"ECON101-A\", \"HIST110-C\"]}}",
+    "prompt_tokens": 595,
+    "completion_tokens": 172,
+    "latency_ms": 3810.1957000035327,
+    "gen_ms": 0.0,
+    "load_ms": 0.0,
+    "total_ms": 0.0,
+    "usd_cost": 0.00291,
+    "run_index": 0,
+    "ok": true,
+    "error": null,
+    "ts": "2026-10-07T19:44:54.327545+00:00",
+    "parsed_output": {
+      "id": "b6e4a2f1-3c7d-4f5a-9e2b-1a8d6c4f0e3b",
+      "type": "https://example.org/course-registration/1.0/register",
+      "body": {
+        "student_id": "leo",
+        "sections": [
+          "ECON101-A",
+          "HIST110-C"
+        ]
+      }
+    },
+    "verdict": {
+      "outcome": "semantic_ok",
+      "detail": "matches ground truth exactly",
+      "deviation_score": 0.0,
+      "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
+    }
+  }
+]

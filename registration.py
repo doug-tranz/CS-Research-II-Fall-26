@@ -1,10 +1,9 @@
-# registration.py — registration domain testbed (PROVISIONAL).
-# Digests a DIDComm message; scores it on: schema (does the body match our
-# required shape?) → consistency (invariants) → semantic (intent, stubbed §13.1).
+# registration.py — registration domain testbed for the CART message (PROVISIONAL).
+# Digests a DIDComm message; scores it on: syntactic + schema (the rules in
+# didcomm_schema.py) → consistency (invariants) → semantic (intent, stubbed here;
+# semantic_check.py fills it in). The single-section version is old_schema/registration.py.
 import sqlite3
-from harness import parse_didcomm     # DIDComm envelope parsing is shared
-
-REQUIRED_BODY = {"student_id", "section_id"}   # the enroll message body contract
+from didcomm_schema import validate_message   # Tiers 1-2: registration_message.schema.json
 
 SCHEMA = """
 CREATE TABLE sections (
@@ -32,41 +31,45 @@ def make_db(seed_sql: str = "") -> sqlite3.Connection:
 
 def check_consistency(conn, body: dict):
     """Returns (ok, reason). Assumes body already passed schema validation."""
-    student, section = body["student_id"], body["section_id"]
-    row = conn.execute(
-        "SELECT seats_total, seats_taken, meets FROM sections WHERE section_id=?",
-        (section,)).fetchone()
-    if row is None:
-        return False, f"section {section} does not exist"
-    seats_total, seats_taken, meets = row
-    if conn.execute("SELECT 1 FROM enrollments WHERE student_id=? AND section_id=?",
-                    (student, section)).fetchone():
-        return False, f"already enrolled in {section}"
-    if seats_taken >= seats_total:
-        return False, f"section {section} is full ({seats_taken}/{seats_total})"
-    conflict = conn.execute("""
-        SELECT e.section_id FROM enrollments e
-        JOIN sections s ON s.section_id = e.section_id
-        WHERE e.student_id=? AND s.meets=?
-    """, (student, meets)).fetchone()
-    if conflict:
-        return False, f"time conflict with {conflict[0]} at {meets}"
+    student = body["student_id"]
+    cart_course, cart_slot = {}, {}       # course / slot -> the cart section that holds it
+    for section in body["sections"]:
+        row = conn.execute(
+            "SELECT course_id, seats_total, seats_taken, meets FROM sections WHERE section_id=?",
+            (section,)).fetchone()
+        if row is None:
+            return False, f"section {section} does not exist"
+        course, seats_total, seats_taken, meets = row
+        if conn.execute("SELECT 1 FROM enrollments WHERE student_id=? AND section_id=?",
+                        (student, section)).fetchone():
+            return False, f"already enrolled in {section}"
+        if seats_taken >= seats_total:
+            return False, f"section {section} is full ({seats_taken}/{seats_total})"
+        conflict = conn.execute("""
+            SELECT e.section_id FROM enrollments e
+            JOIN sections s ON s.section_id = e.section_id
+            WHERE e.student_id=? AND s.meets=?
+        """, (student, meets)).fetchone()
+        if conflict:
+            return False, f"time conflict with {conflict[0]} at {meets}"
+        # Invariants that only exist for a cart: its sections against each other.
+        if course in cart_course:
+            return False, f"two sections of {course} in the cart: {cart_course[course]} and {section}"
+        if meets in cart_slot:
+            return False, f"time conflict inside the cart: {cart_slot[meets]} and {section} at {meets}"
+        cart_course[course], cart_slot[meets] = section, section
     return True, "consistent"
 
 def evaluate(conn, raw_output: str) -> dict:
-    # Tier 1: syntactic — is it valid JSON with a DIDComm body?
-    body, syn_err = parse_didcomm(raw_output)
-    if body is None:
-        return {"outcome": "syntactic_error", "detail": syn_err}
-    # Tier 2: schema — does the body match OUR required message shape?
-    missing = REQUIRED_BODY - set(body.keys())
-    if missing:
-        return {"outcome": "schema_error",
-                "detail": f"body missing required fields: {sorted(missing)}"}
+    # Tier 1: syntactic — is it a DIDComm plaintext message?
+    # Tier 2: schema — is it OUR register message, with a well-formed cart?
+    checked = validate_message(raw_output)
+    if checked["outcome"] != "schema_ok":
+        return {"outcome": checked["outcome"], "detail": checked["detail"]}
     # Tier 3: consistency — invariants
-    ok, reason = check_consistency(conn, body)
+    ok, reason = check_consistency(conn, checked["body"])
     if not ok:
         return {"outcome": "consistency_error", "detail": reason}
-    # Tier 4: semantic — STUB, blocked on §13.1
+    # Tier 4: semantic — STUB here; evaluate_with_semantics.py adds it on top
     return {"outcome": "consistent__semantic_TBD",
             "detail": "invariants hold; semantic/intent check not yet defined (§13.1)"}

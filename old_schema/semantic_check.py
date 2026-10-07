@@ -6,33 +6,25 @@ Fills the Tier 4 stub in registration.py's evaluate() (marked §13.1,
 (new work = new file) so it never touches or overwrites registration.py
 or harness.py directly.
 
-This is the CART version (README.md). The single-section
-version is old_schema/semantic_check.py.
-
 THE GAP THIS CLOSES:
 Tier 3 (consistency, in registration.py) only checks database invariants:
-does each section exist, is there a seat, no time conflict, not already
+does the section exist, is there a seat, no time conflict, not already
 enrolled. It never checks whether the model chose the CORRECT student or
-sections for what the task's `intent` actually asked for. A response can
-pass every consistency check while registering a right-shaped, DB-valid,
-but simply WRONG cart. That's what this tier catches.
+section for what the task's `intent` actually asked for. A response can
+pass every consistency check while enrolling the right-shaped, DB-valid,
+but simply WRONG section. That's what this tier catches.
 
 HOW: compares the model's output body against GroundTruth.expected (a
 human-verified, known-correct DIDComm message for that exact task_id).
-The cart is compared as a SET: the order of `sections` does not matter.
 Per harness.py's own design, GroundTruth is never shown to the model, so
 this comparison is legitimate — it only happens here, after generation.
 """
 
 import json
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parent.parent))   # harness.py is in the repo root
 from harness import parse_didcomm
-
-
-def _normalize(value):
-    """Case- and whitespace-insensitive; a list (the cart) is also order-insensitive."""
-    if isinstance(value, list):
-        return sorted(str(v).strip().lower() for v in value)
-    return str(value).strip().lower()
 
 
 def check_semantic(body: dict, expected_raw: str) -> dict:
@@ -62,7 +54,7 @@ def check_semantic(body: dict, expected_raw: str) -> dict:
     mismatches = {}
     for key, expected_value in expected_body.items():
         actual_value = body.get(key)
-        if _normalize(actual_value) != _normalize(expected_value):
+        if str(actual_value).strip().lower() != str(expected_value).strip().lower():
             mismatches[key] = {"expected": expected_value, "actual": actual_value}
 
     deviation_score = len(mismatches) / max(len(expected_body), 1)
@@ -82,17 +74,13 @@ def check_semantic(body: dict, expected_raw: str) -> dict:
 
 
 if __name__ == "__main__":
-    # Smoke test: model picks a real, valid, but WRONG section for one course.
+    # Smoke test: model picks a real, valid, but WRONG section.
     # This is exactly the failure mode Tier 3 alone cannot catch.
     expected = json.dumps({
-        "id": "irrelevant-for-semantics",
-        "type": "https://example.org/course-registration/1.0/register",
-        "body": {"student_id": "alice", "sections": ["CS401-A", "MATH152-A"]},
+        "type": "registration/enroll", "id": "irrelevant-for-semantics",
+        "body": {"student_id": "alice", "section_id": "CS401-A"},
     })
-    same_cart_reordered = {"student_id": "alice", "sections": ["MATH152-A", "CS401-A"]}
-    wrong_section = {"student_id": "alice", "sections": ["CS401-B", "MATH152-A"]}
+    model_body = {"student_id": "alice", "section_id": "CS401-B"}  # valid section, wrong one
 
-    print("Same cart, different order:")
-    print(json.dumps(check_semantic(same_cart_reordered, expected), indent=2))
-    print("\nValid section, wrong one:")
-    print(json.dumps(check_semantic(wrong_section, expected), indent=2))
+    result = check_semantic(model_body, expected)
+    print(json.dumps(result, indent=2))
