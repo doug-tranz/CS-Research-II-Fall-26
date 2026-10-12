@@ -1,0 +1,36 @@
+Test #1:
+(12345, 'CS04113', 1, 'MW 0930-1045', 'Chein, Chia', 'Glassboro', 4)
+(24680, 'CS04114', 1, 'MW 1230-1345', 'Ambati, Sushanth', 'Glassboro', 3)
+(13579, 'CS06205', 2, 'TR 0800-0915', 'Ivanov, Nick', 'Glassboro', 3)
+1
+
+Test #2:
+(98765, 'CS04215', 1, 'MW 0800-1045', 'Provine, Darren', 'Glassboro', 3)
+(19469, 'CMS04321', 1, 'MWF 0800-0915', 'TBD', 'Glassboro', 3)
+0.7916666666666666
+
+Test #3:
+(12345, 'CS04113', 1, 'MW 0930-1045', 'Chein, Chia', 'Glassboro', 4)
+(12346, 'CS04113', 2, 'MW 0945-1100', 'Chein, Chia', 'Glassboro', 3)
+0.8333333333333334
+
+Test #4:
+(24680, 'CS04114', 1, 'MW 1230-1345', 'Ambati, Sushanth', 'Glassboro', 3)
+(24681, 'CS04114', 1, 'MW 1230-1345', 'Myers, Jack', 'Glassboro', 3)
+0.6666666666666666
+
+Test #5:
+(13579, 'CS06205', 2, 'TR 0800-0915', 'Ivanov, Nick', 'Glassboro', 3)
+(13580, 'CS06205', 2, 'NULL', 'Ivanov, Nick', 'ONLINE', 3)
+0.6666666666666666
+
+Test #6:
+(12345, 'CS04113', 1, 'MW 0930-1045', 'Chein, Chia', 'Glassboro', 4)
+(98765, 'CS04215', 1, 'MW 0800-1045', 'Provine, Darren', 'Glassboro', 3)
+0.31666666666666665
+
+Test #7:
+(12345, 'CS04113', 1, 'MW 0930-1045', 'Chein, Chia', 'Glassboro', 4)
+(19471, 'CMS04321', 3, 'MWF 1100-1230', 'TBD', 'ONLINE', 3)
+0.0
+
