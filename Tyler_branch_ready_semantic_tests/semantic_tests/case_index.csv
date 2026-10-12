@@ -1,0 +1,21 @@
+case_id,scenario_id,variation,semantic_dimension,expected_crns,wrong_but_consistent_crns,intent,review_status
+SEM-001,campus,Glassboro required,campus_preference,31001,31002,Register me for CS05000. I can attend only at the Glassboro campus.,candidate_needs_human_review
+SEM-002,campus,Camden required,campus_preference,31002,31001,Register me for CS05000. I can attend only at the Camden campus.,candidate_needs_human_review
+SEM-003,modality,online required,modality_preference,32002,32001,Enroll me in CS06000. I need an online section.,candidate_needs_human_review
+SEM-004,modality,in-person required,modality_preference,32001,32002,Enroll me in CS06000. I need an in-person section.,candidate_needs_human_review
+SEM-005,weekday,MW requested,meeting_days,33001,33002,Enroll me in CS07000 on Mondays and Wednesdays.,candidate_needs_human_review
+SEM-006,weekday,TR requested,meeting_days,33002,33001,Enroll me in CS07000 on Tuesdays and Thursdays.,candidate_needs_human_review
+SEM-007,time_of_day,morning,time_preference,34001,34002,Sign me up for the morning offering of CS08000.,candidate_needs_human_review
+SEM-008,time_of_day,afternoon,time_preference,34002,34001,Sign me up for the afternoon offering of CS08000.,candidate_needs_human_review
+SEM-009,negation,exclude 35001,negation,35002,35001,"Enroll me in CS09000, but do not use CRN 35001.",candidate_needs_human_review
+SEM-010,negation,exclude 35002,negation,35001,35002,"Enroll me in CS09000, but do not use CRN 35002.",candidate_needs_human_review
+SEM-011,grade_threshold,D (insufficient),transcript_grade_requirement,36001,36002,"I need a C- or better in CS04113. If I have not met that grade, enroll me in CS04113 again; otherwise enroll me in CS05000.",candidate_needs_human_review
+SEM-012,grade_threshold,B (sufficient),transcript_grade_requirement,36002,36001,"I need a C- or better in CS04113. If I have not met that grade, enroll me in CS04113 again; otherwise enroll me in CS05000.",candidate_needs_human_review
+SEM-013,requirement_goal,elective progress,degree_progress,37001,37002,I want a class that counts toward the listed CS Restricted Electives requirement. Enroll me in an eligible course.,candidate_needs_human_review
+SEM-014,requirement_goal,math requested,degree_progress,37002,37001,"I specifically need the Applied Mathematics course, not a CS restricted elective. Enroll me in that course.",candidate_needs_human_review
+SEM-015,priority,online mandatory,requirement_priority,38001,38002,Enroll me in CS05500. Online is mandatory; morning is only a preference if possible.,candidate_needs_human_review
+SEM-016,priority,morning mandatory,requirement_priority,38002,38001,Enroll me in CS05500. Morning is mandatory; online is only a preference if possible.,candidate_needs_human_review
+SEM-017,compound_constraints,online + afternoon,compound_intent,39002,39003,I need CS06600 online AND in the afternoon. Both conditions are required.,candidate_needs_human_review
+SEM-018,compound_constraints,in-person + morning,compound_intent,39004,39001,I need CS06600 in-person AND in the morning. Both conditions are required.,candidate_needs_human_review
+SEM-019,withdrawal_credit,W (unearned),transcript_credit_status,40001,40002,"If I have not earned credit for CS04222, enroll me in it. If I have earned it already, enroll me in CS05900 instead.",candidate_needs_human_review
+SEM-020,withdrawal_credit,B (earned),transcript_credit_status,40002,40001,"If I have not earned credit for CS04222, enroll me in it. If I have earned it already, enroll me in CS05900 instead.",candidate_needs_human_review
