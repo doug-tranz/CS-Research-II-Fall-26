@@ -1,32 +1,273 @@
 [
   {
-    "task_id": "cart-001",
+    "task_id": "tal_001",
     "backend": "openrouter",
     "model": "anthropic/claude-opus-5.5",
-    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"ART110-A\", \"course_id\": \"ART110\", \"seats_total\": 25, \"seats_taken\": 8, \"meets\": \"TR15\"}, {\"section_id\": \"CS301-A\", \"course_id\": \"CS301\", \"seats_total\": 30, \"seats_taken\": 10, \"meets\": \"MW10\"}, {\"section_id\": \"MATH152-A\", \"course_id\": \"MATH152\", \"seats_total\": 30, \"seats_taken\": 12, \"meets\": \"TR10\"}]\n\nIntent: Register student alice for CS301 and MATH152 next semester.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
-    "raw_output": "{\"type\": \"https://example.org/course-registration/1.0/register\", \"id\": \"a7c3e9d2-4b1f-4e8a-9d6c-2f5b8e1a3c7d\", \"body\": {\"student_id\": \"alice\", \"sections\": [\"CS301-A\", \"MATH152-A\"]}}",
-    "prompt_tokens": 522,
-    "completion_tokens": 101,
-    "latency_ms": 4789.135500002885,
-    "gen_ms": 0.0,
-    "load_ms": 0.0,
-    "total_ms": 0.0,
-    "usd_cost": 0.004108,
-    "run_index": 0,
-    "ok": true,
-    "error": null,
-    "ts": "2026-10-07T19:39:05.855963+00:00",
+    "prompt_sent": "Known state (JSON):\n{\"student\": {\"student_id\": \"S005\", \"degree\": \"Bachelor of Science\", \"major\": \"Computer Science\", \"minor\": \"Mathematics\", \"program_id\": \"O701\", \"catalog_year\": \"Fall 2026\"}, \"transcript\": {\"completed_courses\": [{\"term\": \"Fall 2025\", \"course_id\": \"CS04113\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"HONORS INTR OBJ-ORNT PRGRMMN\", \"grade\": \"A-\", \"credit_hours\": 4}, {\"term\": \"Fall 2025\", \"course_id\": \"COMP01111\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"COLLEGE COMPOSITION I\", \"grade\": \"B+\", \"credit_hours\": 3}, {\"term\": \"Spring 2026\", \"course_id\": \"CS04114\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"OBJ-ORIENT PRGRM/DATA ABSTR\", \"grade\": \"B\", \"credit_hours\": 3}, {\"term\": \"Spring 2026\", \"course_id\": \"CS04222\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"HONORS DATA STRUCT/ALGORIM\", \"grade\": \"B+\", \"credit_hours\": 4}], \"transfer_courses\": [], \"courses_in_progress\": []}, \"program_requirements\": [{\"req_id\": \"comp_1\", \"category\": \"Rowan Core: Communicative Literacy\", \"rule\": \"all_of\", \"course_options\": [\"COMP01111\"], \"title\": \"College Composition I\", \"credit_hours\": 3, \"minimum_grade\": \"D-\", \"notes\": \"Required course\"}, {\"req_id\": \"intro_oop\", \"category\": \"Major Requirements: Foundational Courses\", \"rule\": \"any_of\", \"course_options\": [\"CS04113\", \"CS04111\"], \"title\": \"Introduction to Object-Oriented Programming\", \"credit_hours\": 4, \"minimum_grade\": \"C-\", \"notes\": \"Students must be ready for MATH01130\"}, {\"req_id\": \"cs_electives\", \"category\": \"Major Requirements: Computer Science Restricted Electives\", \"rule\": \"credits_from\", \"course_options\": [\"CS01303\", \"CS01395\", \"CS02435\", \"CS02480\", \"CS03351\", \"CS07450\"], \"title\": \"Computer Science Restricted Electives\", \"credit_hours\": 12, \"minimum_grade\": \"D-\", \"notes\": \"Choose 12 credits from the listed elective courses\"}], \"schedule\": {\"term\": \"Fall 2026\", \"term_code\": \"202640\", \"sections\": [{\"crn\": \"42101\", \"course_id\": \"CS07340\", \"section\": \"1\", \"title\": \"DES-ANLYS ALGORITHMS\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 20, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"session\": \"Evening\", \"meetings\": [{\"days\": [\"Monday\", \"Wednesday\"], \"start_time\": \"09:30 AM\", \"end_time\": \"10:45 AM\", \"location\": \"Robinson Hall 323\", \"type\": \"Class\"}], \"instructor\": \"Hristescu, Gabriela\", \"part_of_term\": \"Full Term01-SEP - 17-DEC\", \"waitlist\": {\"capacity\": 50, \"enrolled\": 0}, \"room_capacity\": 30}, {\"crn\": \"42089\", \"course_id\": \"CS06395\", \"section\": \"1\", \"title\": \"OPERATING SYSTEMS\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 30, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"session\": \"Day\", \"meetings\": [{\"days\": [\"Monday\", \"Wednesday\"], \"start_time\": \"08:00 AM\", \"end_time\": \"09:15 AM\", \"location\": \"Robinson Hall 323\", \"type\": \"Class\"}], \"instructor\": \"Ghen, Michael\", \"part_of_term\": \"Full Term01-SEP - 17-DEC\", \"waitlist\": {\"capacity\": 50, \"enrolled\": 0}, \"room_capacity\": 30}, {\"crn\": \"42090\", \"course_id\": \"CS06395\", \"section\": \"2\", \"title\": \"OPERATING SYSTEMS\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 30, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"session\": \"Day\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"03:30 PM\", \"end_time\": \"04:45 PM\", \"location\": \"Robinson Hall 211\", \"type\": \"Class\"}], \"instructor\": \"McKee, Patrick M\", \"part_of_term\": \"Full Term01-SEP - 17-DEC\", \"waitlist\": {\"capacity\": 50, \"enrolled\": 0}, \"room_capacity\": 48}, {\"crn\": \"42091\", \"course_id\": \"CS06395\", \"section\": \"3\", \"title\": \"OPERATING SYSTEMS\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 30, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"session\": \"Day\", \"meetings\": [{\"days\": [\"Monday\"], \"start_time\": \"12:30 PM\", \"end_time\": \"01:45 PM\", \"location\": \"Robinson Hall 211\", \"type\": \"Class\"}, {\"days\": [\"Wednesday\"], \"start_time\": \"12:30 PM\", \"end_time\": \"01:45 PM\", \"location\": \"Robinson Hall 323\", \"type\": \"Class\"}], \"instructor\": \"McKee, Patrick M\", \"part_of_term\": \"Full Term01-SEP - 17-DEC\", \"waitlist\": {\"capacity\": 50, \"enrolled\": 0}, \"room_capacity\": 30}]}}\n\nIntent: Register me for Operating Systems. If every section is full, put me on the waitlist for the Tuesday/Thursday section.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"term_code\": <string>, \"sections\": [{\"crn\": <string>}, ...]}, with at least one section and no crn twice. A section entry MAY also have \"credit_hours\": <number> (REQUIRED when the section is variable-credit: the credits the student takes) and \"waitlist\": true (ONLY to join the waitlist of a full section). Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"term_code\": \"201920\", \"sections\": [{\"crn\": \"90512\"}, {\"crn\": \"90877\", \"credit_hours\": 2}, {\"crn\": \"91004\", \"waitlist\": true}]}} Each \"crn\" MUST be the crn of an offered section, \"term_code\" MUST be the schedule's term_code, and \"student_id\" MUST be the student's student_id.",
+    "prompt_readable": {
+      "known_state": {
+        "student": {
+          "student_id": "S005",
+          "degree": "Bachelor of Science",
+          "major": "Computer Science",
+          "minor": "Mathematics",
+          "program_id": "O701",
+          "catalog_year": "Fall 2026"
+        },
+        "transcript": {
+          "completed_courses": [
+            {
+              "term": "Fall 2025",
+              "course_id": "CS04113",
+              "campus": "Glassboro",
+              "level": "UG",
+              "title": "HONORS INTR OBJ-ORNT PRGRMMN",
+              "grade": "A-",
+              "credit_hours": 4
+            },
+            {
+              "term": "Fall 2025",
+              "course_id": "COMP01111",
+              "campus": "Glassboro",
+              "level": "UG",
+              "title": "COLLEGE COMPOSITION I",
+              "grade": "B+",
+              "credit_hours": 3
+            },
+            {
+              "term": "Spring 2026",
+              "course_id": "CS04114",
+              "campus": "Glassboro",
+              "level": "UG",
+              "title": "OBJ-ORIENT PRGRM/DATA ABSTR",
+              "grade": "B",
+              "credit_hours": 3
+            },
+            {
+              "term": "Spring 2026",
+              "course_id": "CS04222",
+              "campus": "Glassboro",
+              "level": "UG",
+              "title": "HONORS DATA STRUCT/ALGORIM",
+              "grade": "B+",
+              "credit_hours": 4
+            }
+          ],
+          "transfer_courses": [],
+          "courses_in_progress": []
+        },
+        "program_requirements": [
+          {
+            "req_id": "comp_1",
+            "category": "Rowan Core: Communicative Literacy",
+            "rule": "all_of",
+            "course_options": [
+              "COMP01111"
+            ],
+            "title": "College Composition I",
+            "credit_hours": 3,
+            "minimum_grade": "D-",
+            "notes": "Required course"
+          },
+          {
+            "req_id": "intro_oop",
+            "category": "Major Requirements: Foundational Courses",
+            "rule": "any_of",
+            "course_options": [
+              "CS04113",
+              "CS04111"
+            ],
+            "title": "Introduction to Object-Oriented Programming",
+            "credit_hours": 4,
+            "minimum_grade": "C-",
+            "notes": "Students must be ready for MATH01130"
+          },
+          {
+            "req_id": "cs_electives",
+            "category": "Major Requirements: Computer Science Restricted Electives",
+            "rule": "credits_from",
+            "course_options": [
+              "CS01303",
+              "CS01395",
+              "CS02435",
+              "CS02480",
+              "CS03351",
+              "CS07450"
+            ],
+            "title": "Computer Science Restricted Electives",
+            "credit_hours": 12,
+            "minimum_grade": "D-",
+            "notes": "Choose 12 credits from the listed elective courses"
+          }
+        ],
+        "schedule": {
+          "term": "Fall 2026",
+          "term_code": "202640",
+          "sections": [
+            {
+              "crn": "42101",
+              "course_id": "CS07340",
+              "section": "1",
+              "title": "DES-ANLYS ALGORITHMS",
+              "credit_hours": 3,
+              "seats_total": 30,
+              "seats_taken": 20,
+              "campus": "Glassboro",
+              "modality": "in-person",
+              "session": "Evening",
+              "meetings": [
+                {
+                  "days": [
+                    "Monday",
+                    "Wednesday"
+                  ],
+                  "start_time": "09:30 AM",
+                  "end_time": "10:45 AM",
+                  "location": "Robinson Hall 323",
+                  "type": "Class"
+                }
+              ],
+              "instructor": "Hristescu, Gabriela",
+              "part_of_term": "Full Term01-SEP - 17-DEC",
+              "waitlist": {
+                "capacity": 50,
+                "enrolled": 0
+              },
+              "room_capacity": 30
+            },
+            {
+              "crn": "42089",
+              "course_id": "CS06395",
+              "section": "1",
+              "title": "OPERATING SYSTEMS",
+              "credit_hours": 3,
+              "seats_total": 30,
+              "seats_taken": 30,
+              "campus": "Glassboro",
+              "modality": "in-person",
+              "session": "Day",
+              "meetings": [
+                {
+                  "days": [
+                    "Monday",
+                    "Wednesday"
+                  ],
+                  "start_time": "08:00 AM",
+                  "end_time": "09:15 AM",
+                  "location": "Robinson Hall 323",
+                  "type": "Class"
+                }
+              ],
+              "instructor": "Ghen, Michael",
+              "part_of_term": "Full Term01-SEP - 17-DEC",
+              "waitlist": {
+                "capacity": 50,
+                "enrolled": 0
+              },
+              "room_capacity": 30
+            },
+            {
+              "crn": "42090",
+              "course_id": "CS06395",
+              "section": "2",
+              "title": "OPERATING SYSTEMS",
+              "credit_hours": 3,
+              "seats_total": 30,
+              "seats_taken": 30,
+              "campus": "Glassboro",
+              "modality": "in-person",
+              "session": "Day",
+              "meetings": [
+                {
+                  "days": [
+                    "Tuesday",
+                    "Thursday"
+                  ],
+                  "start_time": "03:30 PM",
+                  "end_time": "04:45 PM",
+                  "location": "Robinson Hall 211",
+                  "type": "Class"
+                }
+              ],
+              "instructor": "McKee, Patrick M",
+              "part_of_term": "Full Term01-SEP - 17-DEC",
+              "waitlist": {
+                "capacity": 50,
+                "enrolled": 0
+              },
+              "room_capacity": 48
+            },
+            {
+              "crn": "42091",
+              "course_id": "CS06395",
+              "section": "3",
+              "title": "OPERATING SYSTEMS",
+              "credit_hours": 3,
+              "seats_total": 30,
+              "seats_taken": 30,
+              "campus": "Glassboro",
+              "modality": "in-person",
+              "session": "Day",
+              "meetings": [
+                {
+                  "days": [
+                    "Monday"
+                  ],
+                  "start_time": "12:30 PM",
+                  "end_time": "01:45 PM",
+                  "location": "Robinson Hall 211",
+                  "type": "Class"
+                },
+                {
+                  "days": [
+                    "Wednesday"
+                  ],
+                  "start_time": "12:30 PM",
+                  "end_time": "01:45 PM",
+                  "location": "Robinson Hall 323",
+                  "type": "Class"
+                }
+              ],
+              "instructor": "McKee, Patrick M",
+              "part_of_term": "Full Term01-SEP - 17-DEC",
+              "waitlist": {
+                "capacity": 50,
+                "enrolled": 0
+              },
+              "room_capacity": 30
+            }
+          ]
+        }
+      },
+      "intent": "Register me for Operating Systems. If every section is full, put me on the waitlist for the Tuesday/Thursday section.",
+      "output_contract": "Respond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"term_code\": <string>, \"sections\": [{\"crn\": <string>}, ...]}, with at least one section and no crn twice. A section entry MAY also have \"credit_hours\": <number> (REQUIRED when the section is variable-credit: the credits the student takes) and \"waitlist\": true (ONLY to join the waitlist of a full section). Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"term_code\": \"201920\", \"sections\": [{\"crn\": \"90512\"}, {\"crn\": \"90877\", \"credit_hours\": 2}, {\"crn\": \"91004\", \"waitlist\": true}]}} Each \"crn\" MUST be the crn of an offered section, \"term_code\" MUST be the schedule's term_code, and \"student_id\" MUST be the student's student_id."
+    },
+    "raw_output": "{\"type\": \"https://example.org/course-registration/1.0/register\", \"id\": \"b7e4c2a9-5d31-4f8e-a6c0-91d2e3f4a5b6\", \"body\": {\"student_id\": \"S005\", \"term_code\": \"202640\", \"sections\": [{\"crn\": \"42090\", \"waitlist\": true}]}}",
     "parsed_output": {
       "type": "https://example.org/course-registration/1.0/register",
-      "id": "a7c3e9d2-4b1f-4e8a-9d6c-2f5b8e1a3c7d",
+      "id": "b7e4c2a9-5d31-4f8e-a6c0-91d2e3f4a5b6",
       "body": {
-        "student_id": "alice",
+        "student_id": "S005",
+        "term_code": "202640",
         "sections": [
-          "CS301-A",
-          "MATH152-A"
+          {
+            "crn": "42090",
+            "waitlist": true
+          }
         ]
       }
     },
+    "prompt_tokens": 2479,
+    "completion_tokens": 110,
+    "latency_ms": 6106.1159000964835,
+    "gen_ms": 0.0,
+    "load_ms": 0.0,
+    "total_ms": 0.0,
+    "usd_cost": 0.012116,
+    "run_index": 0,
+    "ok": true,
+    "error": null,
+    "ts": "2026-10-14T15:57:14.920439+00:00",
     "verdict": {
       "outcome": "semantic_ok",
       "detail": "matches ground truth exactly",
@@ -35,479 +276,199 @@
     }
   },
   {
-    "task_id": "cart-002",
+    "task_id": "tal_004",
     "backend": "openrouter",
     "model": "anthropic/claude-opus-5.5",
-    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"CS401-A\", \"course_id\": \"CS401\", \"seats_total\": 30, \"seats_taken\": 5, \"meets\": \"MW09\"}, {\"section_id\": \"CS401-B\", \"course_id\": \"CS401\", \"seats_total\": 30, \"seats_taken\": 5, \"meets\": \"TR13\"}, {\"section_id\": \"STAT200-A\", \"course_id\": \"STAT200\", \"seats_total\": 35, \"seats_taken\": 15, \"meets\": \"MW11\"}]\n\nIntent: Register student bob for STAT200 and for the Tuesday/Thursday section of CS401.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
-    "raw_output": "{\"type\": \"https://example.org/course-registration/1.0/register\", \"id\": \"a7c3e9d2-4b1f-4e8a-9d6c-2f5b8e1a3c47\", \"body\": {\"student_id\": \"bob\", \"sections\": [\"STAT200-A\", \"CS401-B\"]}}",
-    "prompt_tokens": 532,
-    "completion_tokens": 100,
-    "latency_ms": 3145.1567000040086,
+    "prompt_sent": "Known state (JSON):\n{\"student\": {\"student_id\": \"S004\", \"degree\": \"Bachelor of Science\", \"major\": \"Computer Science\", \"minor\": \"Mathematics\", \"program_id\": \"O701\", \"catalog_year\": \"Fall 2026\"}, \"transcript\": {\"completed_courses\": [{\"term\": \"Fall 2025\", \"course_id\": \"CS04113\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"HONORS INTR OBJ-ORNT PRGRMMN\", \"grade\": \"A-\", \"credit_hours\": 4}, {\"term\": \"Fall 2025\", \"course_id\": \"COMP01111\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"COLLEGE COMPOSITION I\", \"grade\": \"B+\", \"credit_hours\": 3}], \"transfer_courses\": [], \"courses_in_progress\": []}, \"program_requirements\": [{\"req_id\": \"comp_1\", \"category\": \"Rowan Core: Communicative Literacy\", \"rule\": \"all_of\", \"course_options\": [\"COMP01111\"], \"title\": \"College Composition I\", \"credit_hours\": 3, \"minimum_grade\": \"D-\", \"notes\": \"Required course\"}, {\"req_id\": \"intro_oop\", \"category\": \"Major Requirements: Foundational Courses\", \"rule\": \"any_of\", \"course_options\": [\"CS04113\", \"CS04111\"], \"title\": \"Introduction to Object-Oriented Programming\", \"credit_hours\": 4, \"minimum_grade\": \"C-\", \"notes\": \"Students must be ready for MATH01130\"}, {\"req_id\": \"cs_electives\", \"category\": \"Major Requirements: Computer Science Restricted Electives\", \"rule\": \"credits_from\", \"course_options\": [\"CS01303\", \"CS01395\", \"CS02435\", \"CS02480\", \"CS03351\", \"CS07450\"], \"title\": \"Computer Science Restricted Electives\", \"credit_hours\": 12, \"minimum_grade\": \"D-\", \"notes\": \"Choose 12 credits from the listed elective courses\"}], \"schedule\": {\"term\": \"Fall 2026\", \"term_code\": \"202640\"}}\n\nIntent: Register me for two classes that count toward my Computer Science restricted electives. No Friday classes, nothing that starts at 5 PM or later, and don't put me on any waitlists.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"term_code\": <string>, \"sections\": [{\"crn\": <string>}, ...]}, with at least one section and no crn twice. A section entry MAY also have \"credit_hours\": <number> (REQUIRED when the section is variable-credit: the credits the student takes) and \"waitlist\": true (ONLY to join the waitlist of a full section). Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"term_code\": \"201920\", \"sections\": [{\"crn\": \"90512\"}, {\"crn\": \"90877\", \"credit_hours\": 2}, {\"crn\": \"91004\", \"waitlist\": true}]}} Each \"crn\" MUST be the crn of an offered section, \"term_code\" MUST be the schedule's term_code, and \"student_id\" MUST be the student's student_id. The sections offered this term are NOT listed above. Look them up with the search_sections tool, which searches the whole Section Tally for the term; only sections it returns exist. Search as often as you need, then reply with the message.",
+    "prompt_readable": {
+      "known_state": {
+        "student": {
+          "student_id": "S004",
+          "degree": "Bachelor of Science",
+          "major": "Computer Science",
+          "minor": "Mathematics",
+          "program_id": "O701",
+          "catalog_year": "Fall 2026"
+        },
+        "transcript": {
+          "completed_courses": [
+            {
+              "term": "Fall 2025",
+              "course_id": "CS04113",
+              "campus": "Glassboro",
+              "level": "UG",
+              "title": "HONORS INTR OBJ-ORNT PRGRMMN",
+              "grade": "A-",
+              "credit_hours": 4
+            },
+            {
+              "term": "Fall 2025",
+              "course_id": "COMP01111",
+              "campus": "Glassboro",
+              "level": "UG",
+              "title": "COLLEGE COMPOSITION I",
+              "grade": "B+",
+              "credit_hours": 3
+            }
+          ],
+          "transfer_courses": [],
+          "courses_in_progress": []
+        },
+        "program_requirements": [
+          {
+            "req_id": "comp_1",
+            "category": "Rowan Core: Communicative Literacy",
+            "rule": "all_of",
+            "course_options": [
+              "COMP01111"
+            ],
+            "title": "College Composition I",
+            "credit_hours": 3,
+            "minimum_grade": "D-",
+            "notes": "Required course"
+          },
+          {
+            "req_id": "intro_oop",
+            "category": "Major Requirements: Foundational Courses",
+            "rule": "any_of",
+            "course_options": [
+              "CS04113",
+              "CS04111"
+            ],
+            "title": "Introduction to Object-Oriented Programming",
+            "credit_hours": 4,
+            "minimum_grade": "C-",
+            "notes": "Students must be ready for MATH01130"
+          },
+          {
+            "req_id": "cs_electives",
+            "category": "Major Requirements: Computer Science Restricted Electives",
+            "rule": "credits_from",
+            "course_options": [
+              "CS01303",
+              "CS01395",
+              "CS02435",
+              "CS02480",
+              "CS03351",
+              "CS07450"
+            ],
+            "title": "Computer Science Restricted Electives",
+            "credit_hours": 12,
+            "minimum_grade": "D-",
+            "notes": "Choose 12 credits from the listed elective courses"
+          }
+        ],
+        "schedule": {
+          "term": "Fall 2026",
+          "term_code": "202640"
+        }
+      },
+      "intent": "Register me for two classes that count toward my Computer Science restricted electives. No Friday classes, nothing that starts at 5 PM or later, and don't put me on any waitlists.",
+      "output_contract": "Respond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"term_code\": <string>, \"sections\": [{\"crn\": <string>}, ...]}, with at least one section and no crn twice. A section entry MAY also have \"credit_hours\": <number> (REQUIRED when the section is variable-credit: the credits the student takes) and \"waitlist\": true (ONLY to join the waitlist of a full section). Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"term_code\": \"201920\", \"sections\": [{\"crn\": \"90512\"}, {\"crn\": \"90877\", \"credit_hours\": 2}, {\"crn\": \"91004\", \"waitlist\": true}]}} Each \"crn\" MUST be the crn of an offered section, \"term_code\" MUST be the schedule's term_code, and \"student_id\" MUST be the student's student_id. The sections offered this term are NOT listed above. Look them up with the search_sections tool, which searches the whole Section Tally for the term; only sections it returns exist. Search as often as you need, then reply with the message."
+    },
+    "raw_output": "{\"type\": \"https://example.org/course-registration/1.0/register\", \"id\": \"c7e2a9d4-5b1f-4e8a-9f3c-2d6b8e0a1f47\", \"body\": {\"student_id\": \"S004\", \"term_code\": \"202640\", \"sections\": [{\"crn\": \"44477\"}, {\"crn\": \"41892\"}]}}",
+    "parsed_output": {
+      "type": "https://example.org/course-registration/1.0/register",
+      "id": "c7e2a9d4-5b1f-4e8a-9f3c-2d6b8e0a1f47",
+      "body": {
+        "student_id": "S004",
+        "term_code": "202640",
+        "sections": [
+          {
+            "crn": "44477"
+          },
+          {
+            "crn": "41892"
+          }
+        ]
+      }
+    },
+    "prompt_tokens": 6948,
+    "completion_tokens": 625,
+    "latency_ms": 10889.378900057636,
     "gen_ms": 0.0,
     "load_ms": 0.0,
     "total_ms": 0.0,
-    "usd_cost": 0.004128,
+    "usd_cost": 0.040292,
     "run_index": 0,
     "ok": true,
     "error": null,
-    "ts": "2026-10-07T19:39:10.649648+00:00",
-    "parsed_output": {
-      "type": "https://example.org/course-registration/1.0/register",
-      "id": "a7c3e9d2-4b1f-4e8a-9d6c-2f5b8e1a3c47",
-      "body": {
-        "student_id": "bob",
-        "sections": [
-          "STAT200-A",
-          "CS401-B"
+    "ts": "2026-10-14T16:49:12.928543+00:00",
+    "model_calls": 2,
+    "steps": [
+      {
+        "tool": "search_sections",
+        "arguments": {
+          "course_id": "CS01303"
+        },
+        "matches": 1,
+        "page": 1,
+        "returned_crns": [
+          "46463"
+        ]
+      },
+      {
+        "tool": "search_sections",
+        "arguments": {
+          "course_id": "CS01395"
+        },
+        "matches": 2,
+        "page": 1,
+        "returned_crns": [
+          "41892",
+          "46228"
+        ]
+      },
+      {
+        "tool": "search_sections",
+        "arguments": {
+          "course_id": "CS02435"
+        },
+        "matches": 2,
+        "page": 1,
+        "returned_crns": [
+          "41895",
+          "46554"
+        ]
+      },
+      {
+        "tool": "search_sections",
+        "arguments": {
+          "course_id": "CS02480"
+        },
+        "matches": 1,
+        "page": 1,
+        "returned_crns": [
+          "41898"
+        ]
+      },
+      {
+        "tool": "search_sections",
+        "arguments": {
+          "course_id": "CS03351"
+        },
+        "matches": 2,
+        "page": 1,
+        "returned_crns": [
+          "41908",
+          "41909"
+        ]
+      },
+      {
+        "tool": "search_sections",
+        "arguments": {
+          "course_id": "CS07450"
+        },
+        "matches": 1,
+        "page": 1,
+        "returned_crns": [
+          "44477"
         ]
       }
-    },
+    ],
     "verdict": {
       "outcome": "semantic_ok",
-      "detail": "matches ground truth exactly",
-      "deviation_score": 0.0,
-      "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
-    }
-  },
-  {
-    "task_id": "cart-003",
-    "backend": "openrouter",
-    "model": "anthropic/claude-opus-5.5",
-    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"HIST210-A\", \"course_id\": \"HIST210\", \"seats_total\": 30, \"seats_taken\": 6, \"meets\": \"MW14\"}, {\"section_id\": \"HIST110-A\", \"course_id\": \"HIST110\", \"seats_total\": 30, \"seats_taken\": 12, \"meets\": \"TR09\"}]\n\nIntent: Register student carol for HIST110 only.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
-    "raw_output": "{\"type\": \"https://example.org/course-registration/1.0/register\", \"id\": \"b7e4c2a9-5d31-4f8e-a6b2-9c0d1e3f5a71\", \"body\": {\"student_id\": \"carol\", \"sections\": [\"HIST110-A\"]}}",
-    "prompt_tokens": 464,
-    "completion_tokens": 92,
-    "latency_ms": 3195.9263000026112,
-    "gen_ms": 0.0,
-    "load_ms": 0.0,
-    "total_ms": 0.0,
-    "usd_cost": 0.003696,
-    "run_index": 0,
-    "ok": true,
-    "error": null,
-    "ts": "2026-10-07T19:39:13.798389+00:00",
-    "parsed_output": {
-      "type": "https://example.org/course-registration/1.0/register",
-      "id": "b7e4c2a9-5d31-4f8e-a6b2-9c0d1e3f5a71",
-      "body": {
-        "student_id": "carol",
-        "sections": [
-          "HIST110-A"
-        ]
-      }
-    },
-    "verdict": {
-      "outcome": "semantic_ok",
-      "detail": "matches ground truth exactly",
-      "deviation_score": 0.0,
-      "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
-    }
-  },
-  {
-    "task_id": "cart-004",
-    "backend": "openrouter",
-    "model": "anthropic/claude-opus-5.5",
-    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"BIO101-A\", \"course_id\": \"BIO101\", \"seats_total\": 20, \"seats_taken\": 20, \"meets\": \"MW11\"}, {\"section_id\": \"BIO101-B\", \"course_id\": \"BIO101\", \"seats_total\": 20, \"seats_taken\": 9, \"meets\": \"TR11\"}, {\"section_id\": \"CHEM101-A\", \"course_id\": \"CHEM101\", \"seats_total\": 40, \"seats_taken\": 14, \"meets\": \"MW13\"}]\n\nIntent: Register student dave for BIO101 and CHEM101, using sections that still have open seats.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
-    "raw_output": "{\"type\": \"https://example.org/course-registration/1.0/register\", \"id\": \"9a7c2e4f-1b3d-4f6a-8e2c-5d7b9f1a3c6e\", \"body\": {\"student_id\": \"dave\", \"sections\": [\"BIO101-B\", \"CHEM101-A\"]}}",
-    "prompt_tokens": 536,
-    "completion_tokens": 103,
-    "latency_ms": 3119.7489999904064,
-    "gen_ms": 0.0,
-    "load_ms": 0.0,
-    "total_ms": 0.0,
-    "usd_cost": 0.004204,
-    "run_index": 0,
-    "ok": true,
-    "error": null,
-    "ts": "2026-10-07T19:39:16.998240+00:00",
-    "parsed_output": {
-      "type": "https://example.org/course-registration/1.0/register",
-      "id": "9a7c2e4f-1b3d-4f6a-8e2c-5d7b9f1a3c6e",
-      "body": {
-        "student_id": "dave",
-        "sections": [
-          "BIO101-B",
-          "CHEM101-A"
-        ]
-      }
-    },
-    "verdict": {
-      "outcome": "semantic_ok",
-      "detail": "matches ground truth exactly",
-      "deviation_score": 0.0,
-      "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
-    }
-  },
-  {
-    "task_id": "cart-005",
-    "backend": "openrouter",
-    "model": "anthropic/claude-opus-5.5",
-    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"PHYS201-A\", \"course_id\": \"PHYS201\", \"seats_total\": 30, \"seats_taken\": 11, \"meets\": \"MW10\"}, {\"section_id\": \"CS250-A\", \"course_id\": \"CS250\", \"seats_total\": 30, \"seats_taken\": 4, \"meets\": \"MW10\"}, {\"section_id\": \"CS250-B\", \"course_id\": \"CS250\", \"seats_total\": 30, \"seats_taken\": 18, \"meets\": \"TR10\"}]\n\nIntent: Register student erin for PHYS201 and CS250 with no time conflict between them.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
-    "raw_output": "{\"type\": \"https://example.org/course-registration/1.0/register\", \"id\": \"a7c3e9d2-5b14-4f8a-9e61-2d0b7c4f8a13\", \"body\": {\"student_id\": \"erin\", \"sections\": [\"PHYS201-A\", \"CS250-B\"]}}",
-    "prompt_tokens": 530,
-    "completion_tokens": 99,
-    "latency_ms": 3654.684499997529,
-    "gen_ms": 0.0,
-    "load_ms": 0.0,
-    "total_ms": 0.0,
-    "usd_cost": 0.0041,
-    "run_index": 0,
-    "ok": true,
-    "error": null,
-    "ts": "2026-10-07T19:39:20.121943+00:00",
-    "parsed_output": {
-      "type": "https://example.org/course-registration/1.0/register",
-      "id": "a7c3e9d2-5b14-4f8a-9e61-2d0b7c4f8a13",
-      "body": {
-        "student_id": "erin",
-        "sections": [
-          "PHYS201-A",
-          "CS250-B"
-        ]
-      }
-    },
-    "verdict": {
-      "outcome": "semantic_ok",
-      "detail": "matches ground truth exactly",
-      "deviation_score": 0.0,
-      "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
-    }
-  },
-  {
-    "task_id": "cart-006",
-    "backend": "openrouter",
-    "model": "anthropic/claude-sonnet-5",
-    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"CS330-A\", \"course_id\": \"CS330\", \"seats_total\": 30, \"seats_taken\": 6, \"meets\": \"MW08\"}, {\"section_id\": \"CS330-B\", \"course_id\": \"CS330\", \"seats_total\": 30, \"seats_taken\": 21, \"meets\": \"MW13\"}, {\"section_id\": \"MATH210-A\", \"course_id\": \"MATH210\", \"seats_total\": 25, \"seats_taken\": 10, \"meets\": \"TR09\"}, {\"section_id\": \"ENG105-A\", \"course_id\": \"ENG105\", \"seats_total\": 15, \"seats_taken\": 9, \"meets\": \"MW11\"}]\n\nIntent: Register student frank for CS330, MATH210 and ENG105. He does not want any class that meets at 8 a.m.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
-    "raw_output": "```json\n{\"id\": \"a1b2c3d4-e5f6-4789-9abc-def012345678\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"frank\", \"sections\": [\"CS330-B\", \"MATH210-A\", \"ENG105-A\"]}}\n```",
-    "prompt_tokens": 593,
-    "completion_tokens": 103,
-    "latency_ms": 2463.1563000002643,
-    "gen_ms": 0.0,
-    "load_ms": 0.0,
-    "total_ms": 0.0,
-    "usd_cost": 0.002216,
-    "run_index": 0,
-    "ok": true,
-    "error": null,
-    "ts": "2026-10-07T19:44:41.928455+00:00",
-    "parsed_output": null,
-    "verdict": {
-      "outcome": "syntactic_error",
-      "detail": "invalid JSON (Expecting value: line 1 column 1 (char 0))"
-    }
-  },
-  {
-    "task_id": "cart-007",
-    "backend": "openrouter",
-    "model": "anthropic/claude-sonnet-5",
-    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"CS1010-A\", \"course_id\": \"CS1010\", \"seats_total\": 25, \"seats_taken\": 5, \"meets\": \"MW11\"}, {\"section_id\": \"CS101-A\", \"course_id\": \"CS101\", \"seats_total\": 25, \"seats_taken\": 20, \"meets\": \"TR11\"}, {\"section_id\": \"MATH115-A\", \"course_id\": \"MATH115\", \"seats_total\": 30, \"seats_taken\": 7, \"meets\": \"TR09\"}, {\"section_id\": \"MATH151-A\", \"course_id\": \"MATH151\", \"seats_total\": 30, \"seats_taken\": 16, \"meets\": \"MW09\"}]\n\nIntent: Register student grace for CS101 and MATH151.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
-    "raw_output": "{\"id\": \"a7e4c2d1-9f3b-4a5c-8d6e-1b2c3d4e5f6a\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"grace\", \"sections\": [\"CS101-A\", \"MATH151-A\"]}}",
-    "prompt_tokens": 573,
-    "completion_tokens": 101,
-    "latency_ms": 2299.107200000435,
-    "gen_ms": 0.0,
-    "load_ms": 0.0,
-    "total_ms": 0.0,
-    "usd_cost": 0.002156,
-    "run_index": 0,
-    "ok": true,
-    "error": null,
-    "ts": "2026-10-07T19:44:44.396876+00:00",
-    "parsed_output": {
-      "id": "a7e4c2d1-9f3b-4a5c-8d6e-1b2c3d4e5f6a",
-      "type": "https://example.org/course-registration/1.0/register",
-      "body": {
-        "student_id": "grace",
-        "sections": [
-          "CS101-A",
-          "MATH151-A"
-        ]
-      }
-    },
-    "verdict": {
-      "outcome": "semantic_ok",
-      "detail": "matches ground truth exactly",
-      "deviation_score": 0.0,
-      "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
-    }
-  },
-  {
-    "task_id": "cart-008",
-    "backend": "openrouter",
-    "model": "anthropic/claude-sonnet-5",
-    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"PHYS201-A\", \"course_id\": \"PHYS201\", \"seats_total\": 40, \"seats_taken\": 38, \"meets\": \"TR15\"}, {\"section_id\": \"PHYS201-B\", \"course_id\": \"PHYS201\", \"seats_total\": 35, \"seats_taken\": 20, \"meets\": \"MW14\"}, {\"section_id\": \"CHEM110-A\", \"course_id\": \"CHEM110\", \"seats_total\": 50, \"seats_taken\": 10, \"meets\": \"TR09\"}, {\"section_id\": \"CHEM110-B\", \"course_id\": \"CHEM110\", \"seats_total\": 20, \"seats_taken\": 5, \"meets\": \"MW09\"}]\n\nIntent: Register student henry for PHYS201 and CHEM110. For each course, use the section with the most open seats.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
-    "raw_output": "{\"id\": \"a1b2c3d4-e5f6-4789-a123-b456c789d012\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"henry\", \"sections\": [\"PHYS201-B\", \"CHEM110-A\"]}}",
-    "prompt_tokens": 600,
-    "completion_tokens": 173,
-    "latency_ms": 3571.5061999944737,
-    "gen_ms": 0.0,
-    "load_ms": 0.0,
-    "total_ms": 0.0,
-    "usd_cost": 0.00293,
-    "run_index": 0,
-    "ok": true,
-    "error": null,
-    "ts": "2026-10-07T19:44:46.741013+00:00",
-    "parsed_output": {
-      "id": "a1b2c3d4-e5f6-4789-a123-b456c789d012",
-      "type": "https://example.org/course-registration/1.0/register",
-      "body": {
-        "student_id": "henry",
-        "sections": [
-          "PHYS201-B",
-          "CHEM110-A"
-        ]
-      }
-    },
-    "verdict": {
-      "outcome": "semantic_ok",
-      "detail": "matches ground truth exactly",
-      "deviation_score": 0.0,
-      "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
-    }
-  },
-  {
-    "task_id": "cart-009",
-    "backend": "openrouter",
-    "model": "anthropic/claude-sonnet-5",
-    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"CS320-A\", \"course_id\": \"CS320\", \"seats_total\": 30, \"seats_taken\": 8, \"meets\": \"MW10\"}, {\"section_id\": \"CS340-A\", \"course_id\": \"CS340\", \"seats_total\": 30, \"seats_taken\": 8, \"meets\": \"TR10\"}, {\"section_id\": \"CS310-A\", \"course_id\": \"CS310\", \"seats_total\": 30, \"seats_taken\": 8, \"meets\": \"MW10\"}, {\"section_id\": \"CS320-B\", \"course_id\": \"CS320\", \"seats_total\": 30, \"seats_taken\": 8, \"meets\": \"TR10\"}, {\"section_id\": \"CS340-B\", \"course_id\": \"CS340\", \"seats_total\": 30, \"seats_taken\": 8, \"meets\": \"MW13\"}]\n\nIntent: Register student ivy for CS310, CS320 and CS340 with no time conflicts in her schedule.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
-    "raw_output": "{\"id\": \"a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"ivy\", \"sections\": [\"CS310-A\", \"CS320-B\", \"CS340-B\"]}}",
-    "prompt_tokens": 637,
-    "completion_tokens": 247,
-    "latency_ms": 3955.8304999955,
-    "gen_ms": 0.0,
-    "load_ms": 0.0,
-    "total_ms": 0.0,
-    "usd_cost": 0.003744,
-    "run_index": 0,
-    "ok": true,
-    "error": null,
-    "ts": "2026-10-07T19:44:50.349326+00:00",
-    "parsed_output": {
-      "id": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
-      "type": "https://example.org/course-registration/1.0/register",
-      "body": {
-        "student_id": "ivy",
-        "sections": [
-          "CS310-A",
-          "CS320-B",
-          "CS340-B"
-        ]
-      }
-    },
-    "verdict": {
-      "outcome": "semantic_ok",
-      "detail": "matches ground truth exactly",
-      "deviation_score": 0.0,
-      "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
-    }
-  },
-  {
-    "task_id": "cart-010",
-    "backend": "openrouter",
-    "model": "anthropic/claude-sonnet-5",
-    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"HIST110-A\", \"course_id\": \"HIST110\", \"seats_total\": 30, \"seats_taken\": 12, \"meets\": \"TR09\"}, {\"section_id\": \"HIST110-B\", \"course_id\": \"HIST110\", \"seats_total\": 30, \"seats_taken\": 30, \"meets\": \"MW18\"}, {\"section_id\": \"HIST110-C\", \"course_id\": \"HIST110\", \"seats_total\": 30, \"seats_taken\": 27, \"meets\": \"TR16\"}, {\"section_id\": \"ECON101-A\", \"course_id\": \"ECON101\", \"seats_total\": 40, \"seats_taken\": 14, \"meets\": \"MW10\"}]\n\nIntent: Register student leo for ECON101 and HIST110. For HIST110, use the latest-starting section that is not full.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
-    "raw_output": "{\"id\": \"b6e4a2f1-3c7d-4f5a-9e2b-1a8d6c4f0e3b\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"leo\", \"sections\": [\"ECON101-A\", \"HIST110-C\"]}}",
-    "prompt_tokens": 595,
-    "completion_tokens": 172,
-    "latency_ms": 3810.1957000035327,
-    "gen_ms": 0.0,
-    "load_ms": 0.0,
-    "total_ms": 0.0,
-    "usd_cost": 0.00291,
-    "run_index": 0,
-    "ok": true,
-    "error": null,
-    "ts": "2026-10-07T19:44:54.327545+00:00",
-    "parsed_output": {
-      "id": "b6e4a2f1-3c7d-4f5a-9e2b-1a8d6c4f0e3b",
-      "type": "https://example.org/course-registration/1.0/register",
-      "body": {
-        "student_id": "leo",
-        "sections": [
-          "ECON101-A",
-          "HIST110-C"
-        ]
-      }
-    },
-    "verdict": {
-      "outcome": "semantic_ok",
-      "detail": "matches ground truth exactly",
-      "deviation_score": 0.0,
-      "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
-    }
-  },
-  {
-    "task_id": "sem_004",
-    "backend": "openrouter",
-    "model": "anthropic/claude-opus-5.5",
-    "prompt_sent": "Known state (JSON):\n{\"student\": {\"student_id\": \"S001\", \"degree\": \"Bachelor of Science\", \"major\": \"Computer Science\", \"minor\": \"Mathematics\", \"program_id\": \"O701\", \"catalog_year\": \"Fall 2026\"}, \"transcript\": {\"completed_courses\": [{\"term\": \"Fall 2023\", \"course_id\": \"CS04113\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"INTRO OBJ-ORIENT PRGRMMNG\", \"grade\": \"A-\", \"credit_hours\": 4}, {\"term\": \"Fall 2024\", \"course_id\": \"CS04222\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"DATA STRUCT/ALGORIM\", \"grade\": \"W\", \"credit_hours\": 4}, {\"term\": \"Spring 2025\", \"course_id\": \"CS04222\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"DATA STRUCT/ALGORIM\", \"grade\": \"B\", \"credit_hours\": 4}, {\"term\": \"Spring 2026\", \"course_id\": \"CS01395\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"TOPICS IN COMPUTER SCI\", \"grade\": \"B\", \"credit_hours\": 3}], \"transfer_courses\": [{\"institution\": \"Example County College\", \"course_id\": \"PHYS00220\", \"title\": \"INTRODUCTORY MECHANICS\", \"grade\": \"TA\", \"credit_hours\": 4}], \"courses_in_progress\": [{\"term\": \"Fall 2026\", \"course_id\": \"CS04114\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"OBJ-ORIENT PRGRM/DATA ABSTR\", \"credit_hours\": 3}]}, \"program_requirements\": [{\"req_id\": \"comp_1\", \"category\": \"Rowan Core: Communicative Literacy\", \"rule\": \"all_of\", \"course_options\": [\"COMP01111\"], \"title\": \"College Composition I\", \"credit_hours\": 3, \"minimum_grade\": \"D-\", \"notes\": \"Required course\"}, {\"req_id\": \"intro_oop\", \"category\": \"Major Requirements: Foundational Courses\", \"rule\": \"any_of\", \"course_options\": [\"CS04113\", \"CS04111\"], \"title\": \"Introduction to Object-Oriented Programming\", \"credit_hours\": 4, \"minimum_grade\": \"C-\", \"notes\": \"Students must be ready for MATH01130\"}, {\"req_id\": \"cs_electives\", \"category\": \"Major Requirements: Computer Science Restricted Electives\", \"rule\": \"credits_from\", \"course_options\": [\"CS01303\", \"CS01395\", \"CS02435\", \"CS02480\", \"CS03351\", \"CS07450\"], \"title\": \"Computer Science Restricted Electives\", \"credit_hours\": 12, \"minimum_grade\": \"D-\", \"notes\": \"Choose 12 credits from the listed elective courses. CS01395 may be repeated for credit\", \"repeatable\": [\"CS01395\"]}, {\"req_id\": \"rc_artistic\", \"category\": \"Rowan Core: Artistic Literacy\", \"rule\": \"credits_with_attribute\", \"attribute\": \"ARTL\", \"course_options\": [], \"title\": \"Artistic Literacy\", \"credit_hours\": 3, \"minimum_grade\": \"D-\", \"notes\": \"Any course carrying the ARTL attribute\"}], \"prerequisites\": [{\"course_id\": \"CS07450\", \"requires\": [\"CS04222\"], \"minimum_grade\": \"C-\"}, {\"course_id\": \"CS02435\", \"requires\": [\"CS04114\"], \"minimum_grade\": \"C-\"}, {\"course_id\": \"CS01303\", \"requires\": [\"PHYS00220\"], \"minimum_grade\": \"C-\"}, {\"course_id\": \"CS03351\", \"requires\": [\"CS04113\"], \"minimum_grade\": \"C-\"}], \"graduation_rules\": {\"total_credits\": 120, \"minimum_gpa\": 2.0, \"residency_credits\": 30}, \"schedule\": {\"term\": \"Fall 2026\", \"sections\": [{\"crn\": \"60005\", \"course_id\": \"CS04113\", \"section\": \"01\", \"title\": \"Introduction to Object-Oriented Programming\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 12, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"9:30 AM\", \"end_time\": \"10:45 AM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60002\", \"course_id\": \"CS02435\", \"section\": \"01\", \"title\": \"Web Programming\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 9, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"11:00 AM\", \"end_time\": \"12:15 PM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60001\", \"course_id\": \"CS07450\", \"section\": \"01\", \"title\": \"Database Systems\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 17, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Monday\", \"Wednesday\"], \"start_time\": \"2:00 PM\", \"end_time\": \"3:15 PM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60006\", \"course_id\": \"ART02100\", \"section\": \"01\", \"title\": \"Drawing I\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 6, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"2:00 PM\", \"end_time\": \"3:15 PM\", \"type\": \"Lecture\"}], \"attributes\": [\"ARTL\"]}, {\"crn\": \"60003\", \"course_id\": \"CS03351\", \"section\": \"01\", \"title\": \"Theory of Computing\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 11, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"5:00 PM\", \"end_time\": \"6:15 PM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60004\", \"course_id\": \"CS01303\", \"section\": \"01\", \"title\": \"Introduction to Artificial Intelligence\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 20, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Monday\", \"Wednesday\"], \"start_time\": \"9:30 AM\", \"end_time\": \"10:45 AM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60007\", \"course_id\": \"CS01395\", \"section\": \"02\", \"title\": \"Topics in Computer Science\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 14, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Monday\", \"Wednesday\"], \"start_time\": \"12:30 PM\", \"end_time\": \"1:45 PM\", \"type\": \"Lecture\"}]}]}}\n\nIntent: Register me for two computer science classes that count toward my degree. I work evenings, so nothing that ends after 5 PM.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}} Each entry of \"sections\" MUST be the crn of an offered section, and \"student_id\" MUST be the student's student_id.",
-    "raw_output": "{\"type\": \"https://example.org/course-registration/1.0/register\", \"id\": \"b7e4c2a9-5d1f-4a3e-8c6b-2f9d0e7a1c34\", \"body\": {\"student_id\": \"S001\", \"sections\": [\"60001\", \"60007\"]}}",
-    "prompt_tokens": 2835,
-    "completion_tokens": 464,
-    "latency_ms": 7791.884299993399,
-    "gen_ms": 0.0,
-    "load_ms": 0.0,
-    "total_ms": 0.0,
-    "usd_cost": 0.02062,
-    "run_index": 0,
-    "ok": true,
-    "error": null,
-    "ts": "2026-10-07T20:46:13.373003+00:00",
-    "parsed_output": {
-      "type": "https://example.org/course-registration/1.0/register",
-      "id": "b7e4c2a9-5d1f-4a3e-8c6b-2f9d0e7a1c34",
-      "body": {
-        "student_id": "S001",
-        "sections": [
-          "60001",
-          "60007"
-        ]
-      }
-    },
-    "verdict": {
-      "outcome": "semantic_ok",
-      "detail": "matches ground truth exactly",
-      "deviation_score": 0.0,
-      "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
-    }
-  },
-  {
-    "task_id": "sem_004",
-    "backend": "openrouter",
-    "model": "anthropic/claude-opus-5.5",
-    "prompt_sent": "Known state (JSON):\n{\"student\": {\"student_id\": \"S001\", \"degree\": \"Bachelor of Science\", \"major\": \"Computer Science\", \"minor\": \"Mathematics\", \"program_id\": \"O701\", \"catalog_year\": \"Fall 2026\"}, \"transcript\": {\"completed_courses\": [{\"term\": \"Fall 2023\", \"course_id\": \"CS04113\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"INTRO OBJ-ORIENT PRGRMMNG\", \"grade\": \"A-\", \"credit_hours\": 4}, {\"term\": \"Fall 2024\", \"course_id\": \"CS04222\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"DATA STRUCT/ALGORIM\", \"grade\": \"W\", \"credit_hours\": 4}, {\"term\": \"Spring 2025\", \"course_id\": \"CS04222\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"DATA STRUCT/ALGORIM\", \"grade\": \"B\", \"credit_hours\": 4}, {\"term\": \"Spring 2026\", \"course_id\": \"CS01395\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"TOPICS IN COMPUTER SCI\", \"grade\": \"B\", \"credit_hours\": 3}], \"transfer_courses\": [{\"institution\": \"Example County College\", \"course_id\": \"PHYS00220\", \"title\": \"INTRODUCTORY MECHANICS\", \"grade\": \"TA\", \"credit_hours\": 4}], \"courses_in_progress\": [{\"term\": \"Fall 2026\", \"course_id\": \"CS04114\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"OBJ-ORIENT PRGRM/DATA ABSTR\", \"credit_hours\": 3}]}, \"program_requirements\": [{\"req_id\": \"comp_1\", \"category\": \"Rowan Core: Communicative Literacy\", \"rule\": \"all_of\", \"course_options\": [\"COMP01111\"], \"title\": \"College Composition I\", \"credit_hours\": 3, \"minimum_grade\": \"D-\", \"notes\": \"Required course\"}, {\"req_id\": \"intro_oop\", \"category\": \"Major Requirements: Foundational Courses\", \"rule\": \"any_of\", \"course_options\": [\"CS04113\", \"CS04111\"], \"title\": \"Introduction to Object-Oriented Programming\", \"credit_hours\": 4, \"minimum_grade\": \"C-\", \"notes\": \"Students must be ready for MATH01130\"}, {\"req_id\": \"cs_electives\", \"category\": \"Major Requirements: Computer Science Restricted Electives\", \"rule\": \"credits_from\", \"course_options\": [\"CS01303\", \"CS01395\", \"CS02435\", \"CS02480\", \"CS03351\", \"CS07450\"], \"title\": \"Computer Science Restricted Electives\", \"credit_hours\": 12, \"minimum_grade\": \"D-\", \"notes\": \"Choose 12 credits from the listed elective courses. CS01395 may be repeated for credit\", \"repeatable\": [\"CS01395\"]}, {\"req_id\": \"rc_artistic\", \"category\": \"Rowan Core: Artistic Literacy\", \"rule\": \"credits_with_attribute\", \"attribute\": \"ARTL\", \"course_options\": [], \"title\": \"Artistic Literacy\", \"credit_hours\": 3, \"minimum_grade\": \"D-\", \"notes\": \"Any course carrying the ARTL attribute\"}], \"prerequisites\": [{\"course_id\": \"CS07450\", \"requires\": [\"CS04222\"], \"minimum_grade\": \"C-\"}, {\"course_id\": \"CS02435\", \"requires\": [\"CS04114\"], \"minimum_grade\": \"C-\"}, {\"course_id\": \"CS01303\", \"requires\": [\"PHYS00220\"], \"minimum_grade\": \"C-\"}, {\"course_id\": \"CS03351\", \"requires\": [\"CS04113\"], \"minimum_grade\": \"C-\"}], \"graduation_rules\": {\"total_credits\": 120, \"minimum_gpa\": 2.0, \"residency_credits\": 30}, \"schedule\": {\"term\": \"Fall 2026\", \"sections\": [{\"crn\": \"60005\", \"course_id\": \"CS04113\", \"section\": \"01\", \"title\": \"Introduction to Object-Oriented Programming\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 12, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"9:30 AM\", \"end_time\": \"10:45 AM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60002\", \"course_id\": \"CS02435\", \"section\": \"01\", \"title\": \"Web Programming\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 9, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"11:00 AM\", \"end_time\": \"12:15 PM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60001\", \"course_id\": \"CS07450\", \"section\": \"01\", \"title\": \"Database Systems\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 17, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Monday\", \"Wednesday\"], \"start_time\": \"2:00 PM\", \"end_time\": \"3:15 PM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60006\", \"course_id\": \"ART02100\", \"section\": \"01\", \"title\": \"Drawing I\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 6, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"2:00 PM\", \"end_time\": \"3:15 PM\", \"type\": \"Lecture\"}], \"attributes\": [\"ARTL\"]}, {\"crn\": \"60003\", \"course_id\": \"CS03351\", \"section\": \"01\", \"title\": \"Theory of Computing\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 11, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"5:00 PM\", \"end_time\": \"6:15 PM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60004\", \"course_id\": \"CS01303\", \"section\": \"01\", \"title\": \"Introduction to Artificial Intelligence\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 20, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Monday\", \"Wednesday\"], \"start_time\": \"9:30 AM\", \"end_time\": \"10:45 AM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60007\", \"course_id\": \"CS01395\", \"section\": \"02\", \"title\": \"Topics in Computer Science\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 14, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Monday\", \"Wednesday\"], \"start_time\": \"12:30 PM\", \"end_time\": \"1:45 PM\", \"type\": \"Lecture\"}]}]}}\n\nIntent: Register me for two computer science classes that count toward my degree. I work evenings, so nothing that ends after 5 PM.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}} Each entry of \"sections\" MUST be the crn of an offered section, and \"student_id\" MUST be the student's student_id.",
-    "raw_output": "{\"type\": \"https://example.org/course-registration/1.0/register\", \"id\": \"b7e4c2a9-5d31-4f8e-a6b2-9c0d1e3f5a71\", \"body\": {\"student_id\": \"S001\", \"sections\": [\"60001\", \"60007\"]}}",
-    "prompt_tokens": 2835,
-    "completion_tokens": 441,
-    "latency_ms": 7247.194199997466,
-    "gen_ms": 0.0,
-    "load_ms": 0.0,
-    "total_ms": 0.0,
-    "usd_cost": 0.02016,
-    "run_index": 1,
-    "ok": true,
-    "error": null,
-    "ts": "2026-10-07T20:46:21.175913+00:00",
-    "parsed_output": {
-      "type": "https://example.org/course-registration/1.0/register",
-      "id": "b7e4c2a9-5d31-4f8e-a6b2-9c0d1e3f5a71",
-      "body": {
-        "student_id": "S001",
-        "sections": [
-          "60001",
-          "60007"
-        ]
-      }
-    },
-    "verdict": {
-      "outcome": "semantic_ok",
-      "detail": "matches ground truth exactly",
-      "deviation_score": 0.0,
-      "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
-    }
-  },
-  {
-    "task_id": "sem_004",
-    "backend": "openrouter",
-    "model": "anthropic/claude-opus-5.5",
-    "prompt_sent": "Known state (JSON):\n{\"student\": {\"student_id\": \"S001\", \"degree\": \"Bachelor of Science\", \"major\": \"Computer Science\", \"minor\": \"Mathematics\", \"program_id\": \"O701\", \"catalog_year\": \"Fall 2026\"}, \"transcript\": {\"completed_courses\": [{\"term\": \"Fall 2023\", \"course_id\": \"CS04113\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"INTRO OBJ-ORIENT PRGRMMNG\", \"grade\": \"A-\", \"credit_hours\": 4}, {\"term\": \"Fall 2024\", \"course_id\": \"CS04222\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"DATA STRUCT/ALGORIM\", \"grade\": \"W\", \"credit_hours\": 4}, {\"term\": \"Spring 2025\", \"course_id\": \"CS04222\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"DATA STRUCT/ALGORIM\", \"grade\": \"B\", \"credit_hours\": 4}, {\"term\": \"Spring 2026\", \"course_id\": \"CS01395\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"TOPICS IN COMPUTER SCI\", \"grade\": \"B\", \"credit_hours\": 3}], \"transfer_courses\": [{\"institution\": \"Example County College\", \"course_id\": \"PHYS00220\", \"title\": \"INTRODUCTORY MECHANICS\", \"grade\": \"TA\", \"credit_hours\": 4}], \"courses_in_progress\": [{\"term\": \"Fall 2026\", \"course_id\": \"CS04114\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"OBJ-ORIENT PRGRM/DATA ABSTR\", \"credit_hours\": 3}]}, \"program_requirements\": [{\"req_id\": \"comp_1\", \"category\": \"Rowan Core: Communicative Literacy\", \"rule\": \"all_of\", \"course_options\": [\"COMP01111\"], \"title\": \"College Composition I\", \"credit_hours\": 3, \"minimum_grade\": \"D-\", \"notes\": \"Required course\"}, {\"req_id\": \"intro_oop\", \"category\": \"Major Requirements: Foundational Courses\", \"rule\": \"any_of\", \"course_options\": [\"CS04113\", \"CS04111\"], \"title\": \"Introduction to Object-Oriented Programming\", \"credit_hours\": 4, \"minimum_grade\": \"C-\", \"notes\": \"Students must be ready for MATH01130\"}, {\"req_id\": \"cs_electives\", \"category\": \"Major Requirements: Computer Science Restricted Electives\", \"rule\": \"credits_from\", \"course_options\": [\"CS01303\", \"CS01395\", \"CS02435\", \"CS02480\", \"CS03351\", \"CS07450\"], \"title\": \"Computer Science Restricted Electives\", \"credit_hours\": 12, \"minimum_grade\": \"D-\", \"notes\": \"Choose 12 credits from the listed elective courses. CS01395 may be repeated for credit\", \"repeatable\": [\"CS01395\"]}, {\"req_id\": \"rc_artistic\", \"category\": \"Rowan Core: Artistic Literacy\", \"rule\": \"credits_with_attribute\", \"attribute\": \"ARTL\", \"course_options\": [], \"title\": \"Artistic Literacy\", \"credit_hours\": 3, \"minimum_grade\": \"D-\", \"notes\": \"Any course carrying the ARTL attribute\"}], \"prerequisites\": [{\"course_id\": \"CS07450\", \"requires\": [\"CS04222\"], \"minimum_grade\": \"C-\"}, {\"course_id\": \"CS02435\", \"requires\": [\"CS04114\"], \"minimum_grade\": \"C-\"}, {\"course_id\": \"CS01303\", \"requires\": [\"PHYS00220\"], \"minimum_grade\": \"C-\"}, {\"course_id\": \"CS03351\", \"requires\": [\"CS04113\"], \"minimum_grade\": \"C-\"}], \"graduation_rules\": {\"total_credits\": 120, \"minimum_gpa\": 2.0, \"residency_credits\": 30}, \"schedule\": {\"term\": \"Fall 2026\", \"sections\": [{\"crn\": \"60005\", \"course_id\": \"CS04113\", \"section\": \"01\", \"title\": \"Introduction to Object-Oriented Programming\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 12, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"9:30 AM\", \"end_time\": \"10:45 AM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60002\", \"course_id\": \"CS02435\", \"section\": \"01\", \"title\": \"Web Programming\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 9, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"11:00 AM\", \"end_time\": \"12:15 PM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60001\", \"course_id\": \"CS07450\", \"section\": \"01\", \"title\": \"Database Systems\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 17, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Monday\", \"Wednesday\"], \"start_time\": \"2:00 PM\", \"end_time\": \"3:15 PM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60006\", \"course_id\": \"ART02100\", \"section\": \"01\", \"title\": \"Drawing I\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 6, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"2:00 PM\", \"end_time\": \"3:15 PM\", \"type\": \"Lecture\"}], \"attributes\": [\"ARTL\"]}, {\"crn\": \"60003\", \"course_id\": \"CS03351\", \"section\": \"01\", \"title\": \"Theory of Computing\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 11, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"5:00 PM\", \"end_time\": \"6:15 PM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60004\", \"course_id\": \"CS01303\", \"section\": \"01\", \"title\": \"Introduction to Artificial Intelligence\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 20, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Monday\", \"Wednesday\"], \"start_time\": \"9:30 AM\", \"end_time\": \"10:45 AM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60007\", \"course_id\": \"CS01395\", \"section\": \"02\", \"title\": \"Topics in Computer Science\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 14, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Monday\", \"Wednesday\"], \"start_time\": \"12:30 PM\", \"end_time\": \"1:45 PM\", \"type\": \"Lecture\"}]}]}}\n\nIntent: Register me for two computer science classes that count toward my degree. I work evenings, so nothing that ends after 5 PM.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}} Each entry of \"sections\" MUST be the crn of an offered section, and \"student_id\" MUST be the student's student_id.",
-    "raw_output": "{\"type\":\"https://example.org/course-registration/1.0/register\",\"id\":\"b7e4c2a9-5d31-4f8e-a6c0-9e2d71f3b845\",\"body\":{\"student_id\":\"S001\",\"sections\":[\"60001\",\"60007\"]}}",
-    "prompt_tokens": 2835,
-    "completion_tokens": 449,
-    "latency_ms": 7046.898900007363,
-    "gen_ms": 0.0,
-    "load_ms": 0.0,
-    "total_ms": 0.0,
-    "usd_cost": 0.02032,
-    "run_index": 2,
-    "ok": true,
-    "error": null,
-    "ts": "2026-10-07T20:46:28.454094+00:00",
-    "parsed_output": {
-      "type": "https://example.org/course-registration/1.0/register",
-      "id": "b7e4c2a9-5d31-4f8e-a6c0-9e2d71f3b845",
-      "body": {
-        "student_id": "S001",
-        "sections": [
-          "60001",
-          "60007"
-        ]
-      }
-    },
-    "verdict": {
-      "outcome": "semantic_ok",
-      "detail": "matches ground truth exactly",
-      "deviation_score": 0.0,
-      "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
-    }
-  },
-  {
-    "task_id": "sem_004",
-    "backend": "openrouter",
-    "model": "anthropic/claude-opus-5.5",
-    "prompt_sent": "Known state (JSON):\n{\"student\": {\"student_id\": \"S001\", \"degree\": \"Bachelor of Science\", \"major\": \"Computer Science\", \"minor\": \"Mathematics\", \"program_id\": \"O701\", \"catalog_year\": \"Fall 2026\"}, \"transcript\": {\"completed_courses\": [{\"term\": \"Fall 2023\", \"course_id\": \"CS04113\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"INTRO OBJ-ORIENT PRGRMMNG\", \"grade\": \"A-\", \"credit_hours\": 4}, {\"term\": \"Fall 2024\", \"course_id\": \"CS04222\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"DATA STRUCT/ALGORIM\", \"grade\": \"W\", \"credit_hours\": 4}, {\"term\": \"Spring 2025\", \"course_id\": \"CS04222\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"DATA STRUCT/ALGORIM\", \"grade\": \"B\", \"credit_hours\": 4}, {\"term\": \"Spring 2026\", \"course_id\": \"CS01395\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"TOPICS IN COMPUTER SCI\", \"grade\": \"B\", \"credit_hours\": 3}], \"transfer_courses\": [{\"institution\": \"Example County College\", \"course_id\": \"PHYS00220\", \"title\": \"INTRODUCTORY MECHANICS\", \"grade\": \"TA\", \"credit_hours\": 4}], \"courses_in_progress\": [{\"term\": \"Fall 2026\", \"course_id\": \"CS04114\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"OBJ-ORIENT PRGRM/DATA ABSTR\", \"credit_hours\": 3}]}, \"program_requirements\": [{\"req_id\": \"comp_1\", \"category\": \"Rowan Core: Communicative Literacy\", \"rule\": \"all_of\", \"course_options\": [\"COMP01111\"], \"title\": \"College Composition I\", \"credit_hours\": 3, \"minimum_grade\": \"D-\", \"notes\": \"Required course\"}, {\"req_id\": \"intro_oop\", \"category\": \"Major Requirements: Foundational Courses\", \"rule\": \"any_of\", \"course_options\": [\"CS04113\", \"CS04111\"], \"title\": \"Introduction to Object-Oriented Programming\", \"credit_hours\": 4, \"minimum_grade\": \"C-\", \"notes\": \"Students must be ready for MATH01130\"}, {\"req_id\": \"cs_electives\", \"category\": \"Major Requirements: Computer Science Restricted Electives\", \"rule\": \"credits_from\", \"course_options\": [\"CS01303\", \"CS01395\", \"CS02435\", \"CS02480\", \"CS03351\", \"CS07450\"], \"title\": \"Computer Science Restricted Electives\", \"credit_hours\": 12, \"minimum_grade\": \"D-\", \"notes\": \"Choose 12 credits from the listed elective courses. CS01395 may be repeated for credit\", \"repeatable\": [\"CS01395\"]}, {\"req_id\": \"rc_artistic\", \"category\": \"Rowan Core: Artistic Literacy\", \"rule\": \"credits_with_attribute\", \"attribute\": \"ARTL\", \"course_options\": [], \"title\": \"Artistic Literacy\", \"credit_hours\": 3, \"minimum_grade\": \"D-\", \"notes\": \"Any course carrying the ARTL attribute\"}], \"prerequisites\": [{\"course_id\": \"CS07450\", \"requires\": [\"CS04222\"], \"minimum_grade\": \"C-\"}, {\"course_id\": \"CS02435\", \"requires\": [\"CS04114\"], \"minimum_grade\": \"C-\"}, {\"course_id\": \"CS01303\", \"requires\": [\"PHYS00220\"], \"minimum_grade\": \"C-\"}, {\"course_id\": \"CS03351\", \"requires\": [\"CS04113\"], \"minimum_grade\": \"C-\"}], \"graduation_rules\": {\"total_credits\": 120, \"minimum_gpa\": 2.0, \"residency_credits\": 30}, \"schedule\": {\"term\": \"Fall 2026\", \"sections\": [{\"crn\": \"60005\", \"course_id\": \"CS04113\", \"section\": \"01\", \"title\": \"Introduction to Object-Oriented Programming\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 12, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"9:30 AM\", \"end_time\": \"10:45 AM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60002\", \"course_id\": \"CS02435\", \"section\": \"01\", \"title\": \"Web Programming\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 9, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"11:00 AM\", \"end_time\": \"12:15 PM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60001\", \"course_id\": \"CS07450\", \"section\": \"01\", \"title\": \"Database Systems\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 17, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Monday\", \"Wednesday\"], \"start_time\": \"2:00 PM\", \"end_time\": \"3:15 PM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60006\", \"course_id\": \"ART02100\", \"section\": \"01\", \"title\": \"Drawing I\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 6, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"2:00 PM\", \"end_time\": \"3:15 PM\", \"type\": \"Lecture\"}], \"attributes\": [\"ARTL\"]}, {\"crn\": \"60003\", \"course_id\": \"CS03351\", \"section\": \"01\", \"title\": \"Theory of Computing\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 11, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"5:00 PM\", \"end_time\": \"6:15 PM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60004\", \"course_id\": \"CS01303\", \"section\": \"01\", \"title\": \"Introduction to Artificial Intelligence\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 20, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Monday\", \"Wednesday\"], \"start_time\": \"9:30 AM\", \"end_time\": \"10:45 AM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60007\", \"course_id\": \"CS01395\", \"section\": \"02\", \"title\": \"Topics in Computer Science\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 14, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Monday\", \"Wednesday\"], \"start_time\": \"12:30 PM\", \"end_time\": \"1:45 PM\", \"type\": \"Lecture\"}]}]}}\n\nIntent: Register me for two computer science classes that count toward my degree. I work evenings, so nothing that ends after 5 PM.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}} Each entry of \"sections\" MUST be the crn of an offered section, and \"student_id\" MUST be the student's student_id.",
-    "raw_output": "{\"type\": \"https://example.org/course-registration/1.0/register\", \"id\": \"b7e4c2a9-5d1f-4a8e-9c36-2f0d8e1a7b54\", \"body\": {\"student_id\": \"S001\", \"sections\": [\"60001\", \"60007\"]}}",
-    "prompt_tokens": 2835,
-    "completion_tokens": 381,
-    "latency_ms": 9598.79629999341,
-    "gen_ms": 0.0,
-    "load_ms": 0.0,
-    "total_ms": 0.0,
-    "usd_cost": 0.01896,
-    "run_index": 3,
-    "ok": true,
-    "error": null,
-    "ts": "2026-10-07T20:46:35.531686+00:00",
-    "parsed_output": {
-      "type": "https://example.org/course-registration/1.0/register",
-      "id": "b7e4c2a9-5d1f-4a8e-9c36-2f0d8e1a7b54",
-      "body": {
-        "student_id": "S001",
-        "sections": [
-          "60001",
-          "60007"
-        ]
-      }
-    },
-    "verdict": {
-      "outcome": "semantic_ok",
-      "detail": "matches ground truth exactly",
-      "deviation_score": 0.0,
-      "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
-    }
-  },
-  {
-    "task_id": "sem_004",
-    "backend": "openrouter",
-    "model": "anthropic/claude-opus-5.5",
-    "prompt_sent": "Known state (JSON):\n{\"student\": {\"student_id\": \"S001\", \"degree\": \"Bachelor of Science\", \"major\": \"Computer Science\", \"minor\": \"Mathematics\", \"program_id\": \"O701\", \"catalog_year\": \"Fall 2026\"}, \"transcript\": {\"completed_courses\": [{\"term\": \"Fall 2023\", \"course_id\": \"CS04113\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"INTRO OBJ-ORIENT PRGRMMNG\", \"grade\": \"A-\", \"credit_hours\": 4}, {\"term\": \"Fall 2024\", \"course_id\": \"CS04222\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"DATA STRUCT/ALGORIM\", \"grade\": \"W\", \"credit_hours\": 4}, {\"term\": \"Spring 2025\", \"course_id\": \"CS04222\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"DATA STRUCT/ALGORIM\", \"grade\": \"B\", \"credit_hours\": 4}, {\"term\": \"Spring 2026\", \"course_id\": \"CS01395\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"TOPICS IN COMPUTER SCI\", \"grade\": \"B\", \"credit_hours\": 3}], \"transfer_courses\": [{\"institution\": \"Example County College\", \"course_id\": \"PHYS00220\", \"title\": \"INTRODUCTORY MECHANICS\", \"grade\": \"TA\", \"credit_hours\": 4}], \"courses_in_progress\": [{\"term\": \"Fall 2026\", \"course_id\": \"CS04114\", \"campus\": \"Glassboro\", \"level\": \"UG\", \"title\": \"OBJ-ORIENT PRGRM/DATA ABSTR\", \"credit_hours\": 3}]}, \"program_requirements\": [{\"req_id\": \"comp_1\", \"category\": \"Rowan Core: Communicative Literacy\", \"rule\": \"all_of\", \"course_options\": [\"COMP01111\"], \"title\": \"College Composition I\", \"credit_hours\": 3, \"minimum_grade\": \"D-\", \"notes\": \"Required course\"}, {\"req_id\": \"intro_oop\", \"category\": \"Major Requirements: Foundational Courses\", \"rule\": \"any_of\", \"course_options\": [\"CS04113\", \"CS04111\"], \"title\": \"Introduction to Object-Oriented Programming\", \"credit_hours\": 4, \"minimum_grade\": \"C-\", \"notes\": \"Students must be ready for MATH01130\"}, {\"req_id\": \"cs_electives\", \"category\": \"Major Requirements: Computer Science Restricted Electives\", \"rule\": \"credits_from\", \"course_options\": [\"CS01303\", \"CS01395\", \"CS02435\", \"CS02480\", \"CS03351\", \"CS07450\"], \"title\": \"Computer Science Restricted Electives\", \"credit_hours\": 12, \"minimum_grade\": \"D-\", \"notes\": \"Choose 12 credits from the listed elective courses. CS01395 may be repeated for credit\", \"repeatable\": [\"CS01395\"]}, {\"req_id\": \"rc_artistic\", \"category\": \"Rowan Core: Artistic Literacy\", \"rule\": \"credits_with_attribute\", \"attribute\": \"ARTL\", \"course_options\": [], \"title\": \"Artistic Literacy\", \"credit_hours\": 3, \"minimum_grade\": \"D-\", \"notes\": \"Any course carrying the ARTL attribute\"}], \"prerequisites\": [{\"course_id\": \"CS07450\", \"requires\": [\"CS04222\"], \"minimum_grade\": \"C-\"}, {\"course_id\": \"CS02435\", \"requires\": [\"CS04114\"], \"minimum_grade\": \"C-\"}, {\"course_id\": \"CS01303\", \"requires\": [\"PHYS00220\"], \"minimum_grade\": \"C-\"}, {\"course_id\": \"CS03351\", \"requires\": [\"CS04113\"], \"minimum_grade\": \"C-\"}], \"graduation_rules\": {\"total_credits\": 120, \"minimum_gpa\": 2.0, \"residency_credits\": 30}, \"schedule\": {\"term\": \"Fall 2026\", \"sections\": [{\"crn\": \"60005\", \"course_id\": \"CS04113\", \"section\": \"01\", \"title\": \"Introduction to Object-Oriented Programming\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 12, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"9:30 AM\", \"end_time\": \"10:45 AM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60002\", \"course_id\": \"CS02435\", \"section\": \"01\", \"title\": \"Web Programming\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 9, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"11:00 AM\", \"end_time\": \"12:15 PM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60001\", \"course_id\": \"CS07450\", \"section\": \"01\", \"title\": \"Database Systems\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 17, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Monday\", \"Wednesday\"], \"start_time\": \"2:00 PM\", \"end_time\": \"3:15 PM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60006\", \"course_id\": \"ART02100\", \"section\": \"01\", \"title\": \"Drawing I\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 6, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"2:00 PM\", \"end_time\": \"3:15 PM\", \"type\": \"Lecture\"}], \"attributes\": [\"ARTL\"]}, {\"crn\": \"60003\", \"course_id\": \"CS03351\", \"section\": \"01\", \"title\": \"Theory of Computing\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 11, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"5:00 PM\", \"end_time\": \"6:15 PM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60004\", \"course_id\": \"CS01303\", \"section\": \"01\", \"title\": \"Introduction to Artificial Intelligence\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 20, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Monday\", \"Wednesday\"], \"start_time\": \"9:30 AM\", \"end_time\": \"10:45 AM\", \"type\": \"Lecture\"}]}, {\"crn\": \"60007\", \"course_id\": \"CS01395\", \"section\": \"02\", \"title\": \"Topics in Computer Science\", \"credit_hours\": 3, \"seats_total\": 30, \"seats_taken\": 14, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Monday\", \"Wednesday\"], \"start_time\": \"12:30 PM\", \"end_time\": \"1:45 PM\", \"type\": \"Lecture\"}]}]}}\n\nIntent: Register me for two computer science classes that count toward my degree. I work evenings, so nothing that ends after 5 PM.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}} Each entry of \"sections\" MUST be the crn of an offered section, and \"student_id\" MUST be the student's student_id.",
-    "raw_output": "{\"type\": \"https://example.org/course-registration/1.0/register\", \"id\": \"b7e4c2a9-5d31-4f8e-a6b2-9c0d1e3f4a57\", \"body\": {\"student_id\": \"S001\", \"sections\": [\"60001\", \"60007\"]}}",
-    "prompt_tokens": 2835,
-    "completion_tokens": 454,
-    "latency_ms": 8779.759600001853,
-    "gen_ms": 0.0,
-    "load_ms": 0.0,
-    "total_ms": 0.0,
-    "usd_cost": 0.02042,
-    "run_index": 4,
-    "ok": true,
-    "error": null,
-    "ts": "2026-10-07T20:46:45.164743+00:00",
-    "parsed_output": {
-      "type": "https://example.org/course-registration/1.0/register",
-      "id": "b7e4c2a9-5d31-4f8e-a6b2-9c0d1e3f4a57",
-      "body": {
-        "student_id": "S001",
-        "sections": [
-          "60001",
-          "60007"
-        ]
-      }
-    },
-    "verdict": {
-      "outcome": "semantic_ok",
-      "detail": "matches ground truth exactly",
+      "detail": "satisfies every rule",
       "deviation_score": 0.0,
       "tier3_detail": "invariants hold; semantic/intent check not yet defined (\u00a713.1)"
     }

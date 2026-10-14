@@ -1,5 +1,5 @@
 # run_registration.py — end-to-end: generate a registration transaction, score it, log it.
-# CART version (README.md). The single-section version is old_schema/run_registration.py.
+# CART version (README.md).
 import argparse, json
 from harness import TaskSpec, OllamaBackend, OpenRouterBackend, generate, log_result
 import registration as reg
@@ -22,6 +22,7 @@ task = TaskSpec(
     task_id="reg_enroll_01",
     domain="registration",
     inputs=json.dumps({
+        "term_code": "202640",
         "student": {"student_id": "S001",
                     "enrolled": [{"section_id": "CS520-01", "meets": "TR13"}]},
         "available_sections": [

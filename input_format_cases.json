@@ -3,62 +3,54 @@
     "case_id": "sem_001",
     "input": {
       "student": {
-        "student_id": "S001",
+        "student_id": "S006",
         "degree": "Bachelor of Science",
         "major": "Computer Science",
-        "minor": "Mathematics",
+        "minor": "Biological Sciences",
         "program_id": "O701",
         "catalog_year": "Fall 2026"
       },
       "transcript": {
         "completed_courses": [
           {
-            "term": "Fall 2023",
+            "term": "Fall 2025",
             "course_id": "CS04113",
             "campus": "Glassboro",
             "level": "UG",
-            "title": "INTRO OBJ-ORIENT PRGRMMNG",
+            "title": "HONORS INTR OBJ-ORNT PRGRMMN",
             "grade": "A-",
             "credit_hours": 4
           },
           {
-            "term": "Fall 2024",
-            "course_id": "CS04222",
+            "term": "Fall 2025",
+            "course_id": "COMP01111",
             "campus": "Glassboro",
             "level": "UG",
-            "title": "DATA STRUCT/ALGORIM",
-            "grade": "W",
-            "credit_hours": 4
+            "title": "COLLEGE COMPOSITION I",
+            "grade": "B+",
+            "credit_hours": 3
           },
           {
-            "term": "Spring 2025",
-            "course_id": "CS04222",
-            "campus": "Glassboro",
-            "level": "UG",
-            "title": "DATA STRUCT/ALGORIM",
-            "grade": "B",
-            "credit_hours": 4
-          }
-        ],
-        "transfer_courses": [
-          {
-            "institution": "Example County College",
-            "course_id": "PHYS00220",
-            "title": "INTRODUCTORY MECHANICS",
-            "grade": "TA",
-            "credit_hours": 4
-          }
-        ],
-        "courses_in_progress": [
-          {
-            "term": "Fall 2026",
+            "term": "Spring 2026",
             "course_id": "CS04114",
             "campus": "Glassboro",
             "level": "UG",
             "title": "OBJ-ORIENT PRGRM/DATA ABSTR",
+            "grade": "B",
             "credit_hours": 3
+          },
+          {
+            "term": "Spring 2026",
+            "course_id": "BIOL01203",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "HONORS INTRO TO CELL BIOLOGY",
+            "grade": "B+",
+            "credit_hours": 4
           }
-        ]
+        ],
+        "transfer_courses": [],
+        "courses_in_progress": []
       },
       "program_requirements": [
         {
@@ -102,93 +94,39 @@
           "credit_hours": 12,
           "minimum_grade": "D-",
           "notes": "Choose 12 credits from the listed elective courses"
+        },
+        {
+          "req_id": "bio_minor",
+          "category": "Minor: Biological Sciences",
+          "rule": "credits_from",
+          "course_options": [
+            "BIOL01203",
+            "BIOL01430",
+            "STAT02280"
+          ],
+          "title": "Biology Minor",
+          "credit_hours": 12,
+          "minimum_grade": "C-",
+          "notes": "Choose 12 credits"
         }
       ],
-      "schedule": {
-        "term": "Fall 2026",
-        "sections": [
-          {
-            "crn": "12345",
-            "course_id": "CS05000",
-            "section": "01",
-            "title": "Introduction to Software Engineering",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 25,
-            "campus": "Glassboro",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Monday",
-                  "Wednesday"
-                ],
-                "start_time": "10:00 AM",
-                "end_time": "11:15 AM",
-                "type": "Lecture"
-              }
-            ]
-          },
-          {
-            "crn": "12348",
-            "course_id": "CS05000",
-            "section": "02",
-            "title": "Introduction to Software Engineering",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 10,
-            "campus": "Camden",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Tuesday",
-                  "Thursday"
-                ],
-                "start_time": "10:00 AM",
-                "end_time": "11:15 AM",
-                "type": "Lecture"
-              }
-            ]
-          },
-          {
-            "crn": "12346",
-            "course_id": "MATH03000",
-            "section": "02",
-            "title": "Applied Mathematics",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 25,
-            "campus": "Glassboro",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Tuesday",
-                  "Thursday"
-                ],
-                "start_time": "1:00 PM",
-                "end_time": "2:15 PM",
-                "type": "Lecture"
-              }
-            ]
-          }
-        ]
-      },
-      "prompt": "Enroll me in CS05000. I live in Glassboro."
+      "prompt": "Enroll me in Advanced Cell Biology (BIOL01430). I live in Glassboro, so I want the section on my campus."
+    },
+    "schedule_from_tally": {
+      "search": true
     },
     "ground_truth": {
       "acceptable_crns": [
-        "12345"
+        "46195"
       ],
-      "implicit_relationship": "The student lives in Glassboro, so the Camden section (12348) is valid but wrong."
+      "implicit_relationship": "BIOL01430 has three sections: 44165 (Glassboro) is full, 44167 is at Rowan College at Burlington (open, so valid but wrong; it is also for RCBC 3+1 students), and 46195 (Glassboro, Tue/Thu) is the answer."
     }
   },
   {
     "case_id": "con_001",
     "input": {
       "student": {
-        "student_id": "S001",
+        "student_id": "S007",
         "degree": "Bachelor of Science",
         "major": "Computer Science",
         "minor": "Mathematics",
@@ -198,52 +136,35 @@
       "transcript": {
         "completed_courses": [
           {
-            "term": "Fall 2023",
+            "term": "Fall 2025",
             "course_id": "CS04113",
             "campus": "Glassboro",
             "level": "UG",
-            "title": "INTRO OBJ-ORIENT PRGRMMNG",
+            "title": "HONORS INTR OBJ-ORNT PRGRMMN",
             "grade": "A-",
             "credit_hours": 4
           },
           {
-            "term": "Fall 2024",
-            "course_id": "CS04222",
+            "term": "Fall 2025",
+            "course_id": "COMP01111",
             "campus": "Glassboro",
             "level": "UG",
-            "title": "DATA STRUCT/ALGORIM",
-            "grade": "W",
-            "credit_hours": 4
+            "title": "COLLEGE COMPOSITION I",
+            "grade": "B+",
+            "credit_hours": 3
           },
           {
-            "term": "Spring 2025",
-            "course_id": "CS04222",
-            "campus": "Glassboro",
-            "level": "UG",
-            "title": "DATA STRUCT/ALGORIM",
-            "grade": "B",
-            "credit_hours": 4
-          }
-        ],
-        "transfer_courses": [
-          {
-            "institution": "Example County College",
-            "course_id": "PHYS00220",
-            "title": "INTRODUCTORY MECHANICS",
-            "grade": "TA",
-            "credit_hours": 4
-          }
-        ],
-        "courses_in_progress": [
-          {
-            "term": "Fall 2026",
+            "term": "Spring 2026",
             "course_id": "CS04114",
             "campus": "Glassboro",
             "level": "UG",
             "title": "OBJ-ORIENT PRGRM/DATA ABSTR",
+            "grade": "B",
             "credit_hours": 3
           }
-        ]
+        ],
+        "transfer_courses": [],
+        "courses_in_progress": []
       },
       "program_requirements": [
         {
@@ -289,91 +210,23 @@
           "notes": "Choose 12 credits from the listed elective courses"
         }
       ],
-      "schedule": {
-        "term": "Fall 2026",
-        "sections": [
-          {
-            "crn": "20001",
-            "course_id": "MATH03000",
-            "section": "01",
-            "title": "Applied Mathematics",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 30,
-            "campus": "Glassboro",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Monday",
-                  "Wednesday"
-                ],
-                "start_time": "9:30 AM",
-                "end_time": "10:45 AM",
-                "type": "Lecture"
-              }
-            ]
-          },
-          {
-            "crn": "20002",
-            "course_id": "MATH03000",
-            "section": "02",
-            "title": "Applied Mathematics",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 12,
-            "campus": "Glassboro",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Tuesday",
-                  "Thursday"
-                ],
-                "start_time": "1:00 PM",
-                "end_time": "2:15 PM",
-                "type": "Lecture"
-              }
-            ]
-          },
-          {
-            "crn": "20003",
-            "course_id": "CS05000",
-            "section": "01",
-            "title": "Introduction to Software Engineering",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 8,
-            "campus": "Glassboro",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Monday",
-                  "Wednesday"
-                ],
-                "start_time": "2:00 PM",
-                "end_time": "3:15 PM",
-                "type": "Lecture"
-              }
-            ]
-          }
-        ]
-      },
-      "prompt": "Enroll me in MATH03000."
+      "prompt": "Enroll me in CS04225."
+    },
+    "schedule_from_tally": {
+      "search": true
     },
     "ground_truth": {
       "acceptable_crns": [
-        "20002"
+        "42070"
       ],
-      "implicit_relationship": "None; a basic consistency case. Section 01 (20001) is listed first but is full (30/30), so only 20002 can be registered."
+      "implicit_relationship": "CS04225 sections 1 (42069) and 3 (42072) are full (30/30); only section 2 (42070) has seats."
     }
   },
   {
     "case_id": "con_002",
     "input": {
       "student": {
-        "student_id": "S001",
+        "student_id": "S007",
         "degree": "Bachelor of Science",
         "major": "Computer Science",
         "minor": "Mathematics",
@@ -383,52 +236,35 @@
       "transcript": {
         "completed_courses": [
           {
-            "term": "Fall 2023",
+            "term": "Fall 2025",
             "course_id": "CS04113",
             "campus": "Glassboro",
             "level": "UG",
-            "title": "INTRO OBJ-ORIENT PRGRMMNG",
+            "title": "HONORS INTR OBJ-ORNT PRGRMMN",
             "grade": "A-",
             "credit_hours": 4
           },
           {
-            "term": "Fall 2024",
-            "course_id": "CS04222",
+            "term": "Fall 2025",
+            "course_id": "COMP01111",
             "campus": "Glassboro",
             "level": "UG",
-            "title": "DATA STRUCT/ALGORIM",
-            "grade": "W",
-            "credit_hours": 4
+            "title": "COLLEGE COMPOSITION I",
+            "grade": "B+",
+            "credit_hours": 3
           },
           {
-            "term": "Spring 2025",
-            "course_id": "CS04222",
-            "campus": "Glassboro",
-            "level": "UG",
-            "title": "DATA STRUCT/ALGORIM",
-            "grade": "B",
-            "credit_hours": 4
-          }
-        ],
-        "transfer_courses": [
-          {
-            "institution": "Example County College",
-            "course_id": "PHYS00220",
-            "title": "INTRODUCTORY MECHANICS",
-            "grade": "TA",
-            "credit_hours": 4
-          }
-        ],
-        "courses_in_progress": [
-          {
-            "term": "Fall 2026",
+            "term": "Spring 2026",
             "course_id": "CS04114",
             "campus": "Glassboro",
             "level": "UG",
             "title": "OBJ-ORIENT PRGRM/DATA ABSTR",
+            "grade": "B",
             "credit_hours": 3
           }
-        ]
+        ],
+        "transfer_courses": [],
+        "courses_in_progress": []
       },
       "program_requirements": [
         {
@@ -474,95 +310,63 @@
           "notes": "Choose 12 credits from the listed elective courses"
         }
       ],
-      "schedule": {
-        "term": "Fall 2026",
-        "sections": [
-          {
-            "crn": "30001",
-            "course_id": "CS05000",
-            "section": "01",
-            "title": "Introduction to Software Engineering",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 14,
-            "campus": "Glassboro",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Monday",
-                  "Wednesday"
-                ],
-                "start_time": "10:00 AM",
-                "end_time": "11:15 AM",
-                "type": "Lecture"
-              }
-            ]
-          },
-          {
-            "crn": "30002",
-            "course_id": "MATH03000",
-            "section": "01",
-            "title": "Applied Mathematics",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 5,
-            "campus": "Glassboro",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Monday",
-                  "Wednesday",
-                  "Friday"
-                ],
-                "start_time": "10:30 AM",
-                "end_time": "11:20 AM",
-                "type": "Lecture"
-              }
-            ]
-          },
-          {
-            "crn": "30003",
-            "course_id": "MATH03000",
-            "section": "02",
-            "title": "Applied Mathematics",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 22,
-            "campus": "Glassboro",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Tuesday",
-                  "Thursday"
-                ],
-                "start_time": "10:00 AM",
-                "end_time": "11:15 AM",
-                "type": "Lecture"
-              }
-            ]
-          }
-        ]
-      },
-      "prompt": "Enroll me in CS05000 and MATH03000."
+      "prompt": "Enroll me in CS01303 and Calculus II (MATH01131)."
+    },
+    "schedule_from_tally": {
+      "search": true
     },
     "ground_truth": {
-      "acceptable_carts": [
-        [
-          "30001",
-          "30003"
+      "rules": {
+        "count": {
+          "min": 2,
+          "max": 2
+        },
+        "must_include_courses": [
+          "CS01303",
+          "MATH01131"
         ]
-      ],
-      "implicit_relationship": "None; a basic consistency case for a two-section cart. CS05000 has one section (MW 10:00-11:15). MATH03000 section 01 (30002) meets MWF 10:30-11:20, which overlaps it without starting at the same time, so only 30003 fits."
+      },
+      "examples": {
+        "valid": [
+          [
+            "46463",
+            "41017"
+          ],
+          [
+            "46463",
+            "41021"
+          ],
+          [
+            "46463",
+            "41026"
+          ],
+          [
+            "46463",
+            "41027"
+          ]
+        ],
+        "invalid": [
+          [
+            "46463",
+            "41028"
+          ],
+          [
+            "46463",
+            "45039"
+          ],
+          [
+            "46463"
+          ]
+        ]
+      },
+      "implicit_relationship": "CS01303 has one section (46463, Thursday 6:30-9:15 PM). MATH01131 section 41028 (Tue/Thu 5:00-6:40 PM) overlaps it by ten minutes and 45039 (Mon/Thu 6:55 PM) overlaps it too; both are consistency errors. Any other open MATH01131 section works."
     }
   },
   {
     "case_id": "sem_002",
     "input": {
       "student": {
-        "student_id": "S001",
+        "student_id": "S007",
         "degree": "Bachelor of Science",
         "major": "Computer Science",
         "minor": "Mathematics",
@@ -572,52 +376,35 @@
       "transcript": {
         "completed_courses": [
           {
-            "term": "Fall 2023",
+            "term": "Fall 2025",
             "course_id": "CS04113",
             "campus": "Glassboro",
             "level": "UG",
-            "title": "INTRO OBJ-ORIENT PRGRMMNG",
+            "title": "HONORS INTR OBJ-ORNT PRGRMMN",
             "grade": "A-",
             "credit_hours": 4
           },
           {
-            "term": "Fall 2024",
-            "course_id": "CS04222",
+            "term": "Fall 2025",
+            "course_id": "COMP01111",
             "campus": "Glassboro",
             "level": "UG",
-            "title": "DATA STRUCT/ALGORIM",
-            "grade": "W",
-            "credit_hours": 4
+            "title": "COLLEGE COMPOSITION I",
+            "grade": "B+",
+            "credit_hours": 3
           },
           {
-            "term": "Spring 2025",
-            "course_id": "CS04222",
-            "campus": "Glassboro",
-            "level": "UG",
-            "title": "DATA STRUCT/ALGORIM",
-            "grade": "B",
-            "credit_hours": 4
-          }
-        ],
-        "transfer_courses": [
-          {
-            "institution": "Example County College",
-            "course_id": "PHYS00220",
-            "title": "INTRODUCTORY MECHANICS",
-            "grade": "TA",
-            "credit_hours": 4
-          }
-        ],
-        "courses_in_progress": [
-          {
-            "term": "Fall 2026",
+            "term": "Spring 2026",
             "course_id": "CS04114",
             "campus": "Glassboro",
             "level": "UG",
             "title": "OBJ-ORIENT PRGRM/DATA ABSTR",
+            "grade": "B",
             "credit_hours": 3
           }
-        ]
+        ],
+        "transfer_courses": [],
+        "courses_in_progress": []
       },
       "program_requirements": [
         {
@@ -663,105 +450,55 @@
           "notes": "Choose 12 credits from the listed elective courses"
         }
       ],
-      "schedule": {
-        "term": "Fall 2026",
-        "sections": [
-          {
-            "crn": "40001",
-            "course_id": "CS05000",
-            "section": "01",
-            "title": "Introduction to Software Engineering",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 6,
-            "campus": "Online",
-            "modality": "online",
-            "meetings": []
-          },
-          {
-            "crn": "40002",
-            "course_id": "CS05000",
-            "section": "02",
-            "title": "Introduction to Software Engineering",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 20,
-            "campus": "Glassboro",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Tuesday",
-                  "Thursday"
-                ],
-                "start_time": "2:00 PM",
-                "end_time": "3:15 PM",
-                "type": "Lecture"
-              }
-            ]
-          },
-          {
-            "crn": "40003",
-            "course_id": "MATH03000",
-            "section": "01",
-            "title": "Applied Mathematics",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 9,
-            "campus": "Glassboro",
-            "modality": "hybrid",
-            "meetings": [
-              {
-                "days": [
-                  "Monday"
-                ],
-                "start_time": "1:00 PM",
-                "end_time": "2:15 PM",
-                "type": "Lecture"
-              }
-            ]
-          },
-          {
-            "crn": "40004",
-            "course_id": "MATH03000",
-            "section": "02",
-            "title": "Applied Mathematics",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 18,
-            "campus": "Glassboro",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Monday",
-                  "Wednesday"
-                ],
-                "start_time": "3:30 PM",
-                "end_time": "4:45 PM",
-                "type": "Lecture"
-              }
-            ]
-          }
-        ]
-      },
-      "prompt": "Register me for CS05000 and MATH03000. I only want classes that meet in person."
+      "prompt": "Register me for Interpersonal Communication (CMS04220) and CS07450. I only want classes that meet in person."
+    },
+    "schedule_from_tally": {
+      "search": true
     },
     "ground_truth": {
-      "acceptable_carts": [
-        [
-          "40002",
-          "40004"
+      "rules": {
+        "count": {
+          "min": 2,
+          "max": 2
+        },
+        "must_include_courses": [
+          "CMS04220",
+          "CS07450"
+        ],
+        "modality_in": [
+          "in-person"
         ]
-      ],
-      "implicit_relationship": "The student wants in-person classes only. The online CS05000 section (40001) and the hybrid MATH03000 section (40003) are open and conflict-free, so they are valid but wrong."
+      },
+      "examples": {
+        "valid": [
+          [
+            "44477",
+            "44395"
+          ],
+          [
+            "44477",
+            "44397"
+          ]
+        ],
+        "invalid": [
+          [
+            "44477",
+            "44398"
+          ],
+          [
+            "44477",
+            "46036"
+          ]
+        ]
+      },
+      "implicit_relationship": "CMS04220 has two in-person sections (44395, 44397) and two online ones: 44398 is open, so valid but wrong; 46036 is full. CS07450 has one section, 44477."
     }
   },
   {
     "case_id": "sem_003",
     "input": {
       "student": {
-        "student_id": "S001",
+        "student_id": "S008",
         "degree": "Bachelor of Science",
         "major": "Computer Science",
         "minor": "Mathematics",
@@ -771,61 +508,53 @@
       "transcript": {
         "completed_courses": [
           {
-            "term": "Fall 2023",
+            "term": "Fall 2025",
             "course_id": "CS04113",
             "campus": "Glassboro",
             "level": "UG",
-            "title": "INTRO OBJ-ORIENT PRGRMMNG",
+            "title": "HONORS INTR OBJ-ORNT PRGRMMN",
             "grade": "A-",
             "credit_hours": 4
           },
           {
-            "term": "Fall 2024",
-            "course_id": "CS04222",
+            "term": "Fall 2025",
+            "course_id": "COMP01111",
             "campus": "Glassboro",
             "level": "UG",
-            "title": "DATA STRUCT/ALGORIM",
-            "grade": "W",
-            "credit_hours": 4
+            "title": "COLLEGE COMPOSITION I",
+            "grade": "B+",
+            "credit_hours": 3
           },
           {
-            "term": "Spring 2025",
-            "course_id": "CS04222",
+            "term": "Spring 2026",
+            "course_id": "CS04114",
             "campus": "Glassboro",
             "level": "UG",
-            "title": "DATA STRUCT/ALGORIM",
+            "title": "OBJ-ORIENT PRGRM/DATA ABSTR",
             "grade": "B",
-            "credit_hours": 4
+            "credit_hours": 3
+          },
+          {
+            "term": "Spring 2026",
+            "course_id": "CS07450",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "ARTIFICIAL INTELLIGENCE AI",
+            "grade": "B",
+            "credit_hours": 3
           },
           {
             "term": "Spring 2026",
             "course_id": "CS01303",
             "campus": "Glassboro",
             "level": "UG",
-            "title": "INTRO ARTIFICIAL INTELL",
+            "title": "BIOINFORMATICS - COMP ASPECT",
             "grade": "B",
             "credit_hours": 3
           }
         ],
-        "transfer_courses": [
-          {
-            "institution": "Example County College",
-            "course_id": "PHYS00220",
-            "title": "INTRODUCTORY MECHANICS",
-            "grade": "TA",
-            "credit_hours": 4
-          }
-        ],
-        "courses_in_progress": [
-          {
-            "term": "Fall 2026",
-            "course_id": "CS04114",
-            "campus": "Glassboro",
-            "level": "UG",
-            "title": "OBJ-ORIENT PRGRM/DATA ABSTR",
-            "credit_hours": 3
-          }
-        ]
+        "transfer_courses": [],
+        "courses_in_progress": []
       },
       "program_requirements": [
         {
@@ -871,107 +600,52 @@
           "notes": "Choose 12 credits from the listed elective courses"
         }
       ],
-      "schedule": {
-        "term": "Fall 2026",
-        "sections": [
-          {
-            "crn": "50001",
-            "course_id": "CS01303",
-            "section": "01",
-            "title": "Introduction to Artificial Intelligence",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 10,
-            "campus": "Glassboro",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Monday",
-                  "Wednesday"
-                ],
-                "start_time": "9:30 AM",
-                "end_time": "10:45 AM",
-                "type": "Lecture"
-              }
-            ]
-          },
-          {
-            "crn": "50004",
-            "course_id": "ART02100",
-            "section": "01",
-            "title": "Drawing I",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 4,
-            "campus": "Glassboro",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Tuesday",
-                  "Thursday"
-                ],
-                "start_time": "9:30 AM",
-                "end_time": "10:45 AM",
-                "type": "Lecture"
-              }
-            ]
-          },
-          {
-            "crn": "50002",
-            "course_id": "CS02435",
-            "section": "01",
-            "title": "Web Programming",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 15,
-            "campus": "Glassboro",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Monday",
-                  "Wednesday"
-                ],
-                "start_time": "12:30 PM",
-                "end_time": "1:45 PM",
-                "type": "Lecture"
-              }
-            ]
-          },
-          {
-            "crn": "50003",
-            "course_id": "CS07450",
-            "section": "01",
-            "title": "Database Systems",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 21,
-            "campus": "Glassboro",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Tuesday",
-                  "Thursday"
-                ],
-                "start_time": "3:30 PM",
-                "end_time": "4:45 PM",
-                "type": "Lecture"
-              }
-            ]
-          }
-        ]
-      },
       "prompt": "Enroll me in one class that counts toward my Computer Science restricted electives. I don't want to retake anything I've already passed."
     },
+    "schedule_from_tally": {
+      "search": true
+    },
     "ground_truth": {
-      "acceptable_crns": [
-        "50002",
-        "50003"
-      ],
-      "implicit_relationship": "Two answers are correct. CS02435 and CS07450 are restricted electives the student has not taken. CS01303 (50001) is also an elective but the transcript shows it passed with a B, and ART02100 (50004) is not in the requirement's course_options; both are open and valid but wrong."
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "courses_count_toward": [
+          "cs_electives"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "41892"
+          ],
+          [
+            "46228"
+          ],
+          [
+            "41898"
+          ],
+          [
+            "41909"
+          ]
+        ],
+        "invalid": [
+          [
+            "44477"
+          ],
+          [
+            "46463"
+          ],
+          [
+            "46554"
+          ],
+          [
+            "42090"
+          ]
+        ]
+      },
+      "implicit_relationship": "The student has passed CS07450 and CS01303, so they no longer count. Open electives that do: CS01395 (41892, 46228), CS02480 (41898), CS03351 section 2 (41909). CS02435 and CS03351 section 1 are full."
     }
   },
   {
@@ -988,11 +662,11 @@
       "transcript": {
         "completed_courses": [
           {
-            "term": "Fall 2023",
+            "term": "Fall 2025",
             "course_id": "CS04113",
             "campus": "Glassboro",
             "level": "UG",
-            "title": "INTRO OBJ-ORIENT PRGRMMNG",
+            "title": "HONORS INTR OBJ-ORNT PRGRMMN",
             "grade": "A-",
             "credit_hours": 4
           },
@@ -1001,7 +675,7 @@
             "course_id": "CS04222",
             "campus": "Glassboro",
             "level": "UG",
-            "title": "DATA STRUCT/ALGORIM",
+            "title": "HONORS DATA STRUCT/ALGORIM",
             "grade": "W",
             "credit_hours": 4
           },
@@ -1010,7 +684,7 @@
             "course_id": "CS04222",
             "campus": "Glassboro",
             "level": "UG",
-            "title": "DATA STRUCT/ALGORIM",
+            "title": "HONORS DATA STRUCT/ALGORIM",
             "grade": "B",
             "credit_hours": 4
           },
@@ -1019,7 +693,7 @@
             "course_id": "CS01395",
             "campus": "Glassboro",
             "level": "UG",
-            "title": "TOPICS IN COMPUTER SCI",
+            "title": "TPS IN CS: DATABASE DESIGN",
             "grade": "B",
             "credit_hours": 3
           }
@@ -1035,7 +709,7 @@
         ],
         "courses_in_progress": [
           {
-            "term": "Fall 2026",
+            "term": "Spring 2026",
             "course_id": "CS04114",
             "campus": "Glassboro",
             "level": "UG",
@@ -1089,17 +763,6 @@
           "repeatable": [
             "CS01395"
           ]
-        },
-        {
-          "req_id": "rc_artistic",
-          "category": "Rowan Core: Artistic Literacy",
-          "rule": "credits_with_attribute",
-          "attribute": "ARTL",
-          "course_options": [],
-          "title": "Artistic Literacy",
-          "credit_hours": 3,
-          "minimum_grade": "D-",
-          "notes": "Any course carrying the ARTL attribute"
         }
       ],
       "prerequisites": [
@@ -1111,23 +774,16 @@
           "minimum_grade": "C-"
         },
         {
-          "course_id": "CS02435",
+          "course_id": "CS03351",
           "requires": [
             "CS04114"
           ],
           "minimum_grade": "C-"
         },
         {
-          "course_id": "CS01303",
+          "course_id": "CS01395",
           "requires": [
             "PHYS00220"
-          ],
-          "minimum_grade": "C-"
-        },
-        {
-          "course_id": "CS03351",
-          "requires": [
-            "CS04113"
           ],
           "minimum_grade": "C-"
         }
@@ -1137,186 +793,1180 @@
         "minimum_gpa": 2.0,
         "residency_credits": 30
       },
-      "schedule": {
-        "term": "Fall 2026",
-        "sections": [
-          {
-            "crn": "60005",
-            "course_id": "CS04113",
-            "section": "01",
-            "title": "Introduction to Object-Oriented Programming",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 12,
-            "campus": "Glassboro",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Tuesday",
-                  "Thursday"
-                ],
-                "start_time": "9:30 AM",
-                "end_time": "10:45 AM",
-                "type": "Lecture"
-              }
-            ]
-          },
-          {
-            "crn": "60002",
-            "course_id": "CS02435",
-            "section": "01",
-            "title": "Web Programming",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 9,
-            "campus": "Glassboro",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Tuesday",
-                  "Thursday"
-                ],
-                "start_time": "11:00 AM",
-                "end_time": "12:15 PM",
-                "type": "Lecture"
-              }
-            ]
-          },
-          {
-            "crn": "60001",
-            "course_id": "CS07450",
-            "section": "01",
-            "title": "Database Systems",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 17,
-            "campus": "Glassboro",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Monday",
-                  "Wednesday"
-                ],
-                "start_time": "2:00 PM",
-                "end_time": "3:15 PM",
-                "type": "Lecture"
-              }
-            ]
-          },
-          {
-            "crn": "60006",
-            "course_id": "ART02100",
-            "section": "01",
-            "title": "Drawing I",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 6,
-            "campus": "Glassboro",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Tuesday",
-                  "Thursday"
-                ],
-                "start_time": "2:00 PM",
-                "end_time": "3:15 PM",
-                "type": "Lecture"
-              }
-            ],
-            "attributes": [
-              "ARTL"
-            ]
-          },
-          {
-            "crn": "60003",
-            "course_id": "CS03351",
-            "section": "01",
-            "title": "Theory of Computing",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 11,
-            "campus": "Glassboro",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Tuesday",
-                  "Thursday"
-                ],
-                "start_time": "5:00 PM",
-                "end_time": "6:15 PM",
-                "type": "Lecture"
-              }
-            ]
-          },
-          {
-            "crn": "60004",
-            "course_id": "CS01303",
-            "section": "01",
-            "title": "Introduction to Artificial Intelligence",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 20,
-            "campus": "Glassboro",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Monday",
-                  "Wednesday"
-                ],
-                "start_time": "9:30 AM",
-                "end_time": "10:45 AM",
-                "type": "Lecture"
-              }
-            ]
-          },
-          {
-            "crn": "60007",
-            "course_id": "CS01395",
-            "section": "02",
-            "title": "Topics in Computer Science",
-            "credit_hours": 3,
-            "seats_total": 30,
-            "seats_taken": 14,
-            "campus": "Glassboro",
-            "modality": "in-person",
-            "meetings": [
-              {
-                "days": [
-                  "Monday",
-                  "Wednesday"
-                ],
-                "start_time": "12:30 PM",
-                "end_time": "1:45 PM",
-                "type": "Lecture"
-              }
-            ]
-          }
+      "prompt": "Register me for two computer science classes that count toward my degree. I work evenings, so nothing that ends after 5 PM."
+    },
+    "schedule_from_tally": {
+      "search": true
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 2,
+          "max": 2
+        },
+        "courses_count_toward": [
+          "cs_electives"
+        ],
+        "ends_by": "5:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "44477",
+            "41892"
+          ],
+          [
+            "44477",
+            "46228"
+          ]
+        ],
+        "invalid": [
+          [
+            "44477",
+            "41909"
+          ],
+          [
+            "44477",
+            "46463"
+          ],
+          [
+            "44477",
+            "41898"
+          ],
+          [
+            "41892",
+            "46228"
+          ]
         ]
       },
-      "prompt": "Register me for two computer science classes that count toward my degree. I work evenings, so nothing that ends after 5 PM."
+      "implicit_relationship": "Electives ending by 5 PM: CS07450 (44477), CS01395 (41892, 46228) and CS03351 section 2 (41909). CS01395 was passed but is repeatable, so it counts; its prerequisite PHYS00220 is met by transfer credit (TA). CS03351 needs CS04114, still in progress, so 41909 is a consistency error. CS01303 and CS02480 end after 5 PM; both CS02435 sections are full."
+    }
+  },
+  {
+    "case_id": "sem_005",
+    "input": {
+      "student": {
+        "student_id": "S007",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "minor": "Mathematics",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [
+          {
+            "term": "Fall 2025",
+            "course_id": "CS04113",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "HONORS INTR OBJ-ORNT PRGRMMN",
+            "grade": "A-",
+            "credit_hours": 4
+          },
+          {
+            "term": "Fall 2025",
+            "course_id": "COMP01111",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "COLLEGE COMPOSITION I",
+            "grade": "B+",
+            "credit_hours": 3
+          },
+          {
+            "term": "Spring 2026",
+            "course_id": "CS04114",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "OBJ-ORIENT PRGRM/DATA ABSTR",
+            "grade": "B",
+            "credit_hours": 3
+          }
+        ],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [
+        {
+          "req_id": "comp_1",
+          "category": "Rowan Core: Communicative Literacy",
+          "rule": "all_of",
+          "course_options": [
+            "COMP01111"
+          ],
+          "title": "College Composition I",
+          "credit_hours": 3,
+          "minimum_grade": "D-",
+          "notes": "Required course"
+        },
+        {
+          "req_id": "intro_oop",
+          "category": "Major Requirements: Foundational Courses",
+          "rule": "any_of",
+          "course_options": [
+            "CS04113",
+            "CS04111"
+          ],
+          "title": "Introduction to Object-Oriented Programming",
+          "credit_hours": 4,
+          "minimum_grade": "C-",
+          "notes": "Students must be ready for MATH01130"
+        },
+        {
+          "req_id": "cs_electives",
+          "category": "Major Requirements: Computer Science Restricted Electives",
+          "rule": "credits_from",
+          "course_options": [
+            "CS01303",
+            "CS01395",
+            "CS02435",
+            "CS02480",
+            "CS03351",
+            "CS07450"
+          ],
+          "title": "Computer Science Restricted Electives",
+          "credit_hours": 12,
+          "minimum_grade": "D-",
+          "notes": "Choose 12 credits from the listed elective courses"
+        }
+      ],
+      "prompt": "I can only take 6 credits this fall. Register me for CS07450, and add Calculus I (MATH01130) too only if both fit within my limit."
+    },
+    "schedule_from_tally": {
+      "search": true
+    },
+    "ground_truth": {
+      "acceptable_crns": [
+        "44477"
+      ],
+      "implicit_relationship": "CS07450 is 3 credits and MATH01130 is 4, so together they are 7, over the limit. Only CS07450 (44477) is registered; adding an open Calculus I section would be valid but wrong."
+    }
+  },
+  {
+    "case_id": "con_003",
+    "input": {
+      "student": {
+        "student_id": "S003",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "minor": "Mathematics",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [
+          {
+            "term": "Fall 2025",
+            "course_id": "CS04113",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "HONORS INTR OBJ-ORNT PRGRMMN",
+            "grade": "A-",
+            "credit_hours": 4
+          },
+          {
+            "term": "Spring 2026",
+            "course_id": "CS04114",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "OBJ-ORIENT PRGRM/DATA ABSTR",
+            "grade": "B",
+            "credit_hours": 3
+          },
+          {
+            "term": "Fall 2025",
+            "course_id": "CS04222",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "HONORS DATA STRUCT/ALGORIM",
+            "grade": "D",
+            "credit_hours": 4
+          }
+        ],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [
+        {
+          "req_id": "foundations",
+          "category": "Major Requirements: Foundational Courses",
+          "rule": "all_of",
+          "course_options": [
+            "CS04113",
+            "CS04114",
+            "CS04222"
+          ],
+          "title": "Foundational Courses",
+          "credit_hours": 11,
+          "minimum_grade": "C-",
+          "notes": "Each course needs a C- or better"
+        },
+        {
+          "req_id": "cs_electives",
+          "category": "Major Requirements: Computer Science Restricted Electives",
+          "rule": "credits_from",
+          "course_options": [
+            "CS01303",
+            "CS01395",
+            "CS02435",
+            "CS02480",
+            "CS03351",
+            "CS07450"
+          ],
+          "title": "Computer Science Restricted Electives",
+          "credit_hours": 12,
+          "minimum_grade": "D-",
+          "notes": "Choose 12 credits from the listed elective courses"
+        }
+      ],
+      "prerequisites": [
+        {
+          "course_id": "CS07450",
+          "requires": [
+            "CS04222"
+          ],
+          "minimum_grade": "C-"
+        },
+        {
+          "course_id": "CS04222",
+          "requires": [
+            "CS04114"
+          ],
+          "minimum_grade": "C-"
+        }
+      ],
+      "prompt": "Register me for CS07450 if I meet its prerequisite. If I don't, register me for CS04222 instead so I can retake it."
+    },
+    "schedule_from_tally": {
+      "search": true
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "CS04222"
+        ],
+        "must_exclude_courses": [
+          "CS07450"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "42014"
+          ],
+          [
+            "42016"
+          ],
+          [
+            "46617"
+          ]
+        ],
+        "invalid": [
+          [
+            "44477"
+          ],
+          [
+            "42028"
+          ]
+        ]
+      },
+      "implicit_relationship": "CS07450 needs CS04222 with a C- or better; the transcript shows a D, so the fallback applies. Any open CS04222 section is correct (42014, 42016, 46617); 42028 and 42030 are full."
+    }
+  },
+  {
+    "case_id": "sem_006",
+    "input": {
+      "student": {
+        "student_id": "S007",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "minor": "Mathematics",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [
+          {
+            "term": "Fall 2025",
+            "course_id": "CS04113",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "HONORS INTR OBJ-ORNT PRGRMMN",
+            "grade": "A-",
+            "credit_hours": 4
+          },
+          {
+            "term": "Fall 2025",
+            "course_id": "COMP01111",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "COLLEGE COMPOSITION I",
+            "grade": "B+",
+            "credit_hours": 3
+          },
+          {
+            "term": "Spring 2026",
+            "course_id": "CS04114",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "OBJ-ORIENT PRGRM/DATA ABSTR",
+            "grade": "B",
+            "credit_hours": 3
+          }
+        ],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [
+        {
+          "req_id": "comp_1",
+          "category": "Rowan Core: Communicative Literacy",
+          "rule": "all_of",
+          "course_options": [
+            "COMP01111"
+          ],
+          "title": "College Composition I",
+          "credit_hours": 3,
+          "minimum_grade": "D-",
+          "notes": "Required course"
+        },
+        {
+          "req_id": "intro_oop",
+          "category": "Major Requirements: Foundational Courses",
+          "rule": "any_of",
+          "course_options": [
+            "CS04113",
+            "CS04111"
+          ],
+          "title": "Introduction to Object-Oriented Programming",
+          "credit_hours": 4,
+          "minimum_grade": "C-",
+          "notes": "Students must be ready for MATH01130"
+        },
+        {
+          "req_id": "cs_electives",
+          "category": "Major Requirements: Computer Science Restricted Electives",
+          "rule": "credits_from",
+          "course_options": [
+            "CS01303",
+            "CS01395",
+            "CS02435",
+            "CS02480",
+            "CS03351",
+            "CS07450"
+          ],
+          "title": "Computer Science Restricted Electives",
+          "credit_hours": 12,
+          "minimum_grade": "D-",
+          "notes": "Choose 12 credits from the listed elective courses"
+        },
+        {
+          "req_id": "rc_health",
+          "category": "Rowan Experience: Health and Society",
+          "rule": "any_of",
+          "course_options": [
+            "HLT00200",
+            "HLT00262",
+            "INTR01265",
+            "CMS04220"
+          ],
+          "title": "Health and Society",
+          "credit_hours": 3,
+          "minimum_grade": "D-",
+          "notes": "One course from the list"
+        }
+      ],
+      "prompt": "I need one class for my Health and Society requirement. I'll be away from campus all fall, so it has to be fully online."
+    },
+    "schedule_from_tally": {
+      "search": true
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "courses_count_toward": [
+          "rc_health"
+        ],
+        "modality_in": [
+          "online"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "42857"
+          ],
+          [
+            "42860"
+          ],
+          [
+            "42861"
+          ],
+          [
+            "41722"
+          ],
+          [
+            "44398"
+          ]
+        ],
+        "invalid": [
+          [
+            "43077"
+          ],
+          [
+            "44397"
+          ],
+          [
+            "42856"
+          ]
+        ]
+      },
+      "implicit_relationship": "The requirement lists HLT00200, HLT00262, INTR01265 and CMS04220. Their open online sections are 42857, 42860, 42861, 41722 and 44398; in-person sections are valid but wrong; 42856 and 46036 are online but full."
+    }
+  },
+  {
+    "case_id": "sem_007",
+    "input": {
+      "student": {
+        "student_id": "S006",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "minor": "Biological Sciences",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [
+          {
+            "term": "Fall 2025",
+            "course_id": "CS04113",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "HONORS INTR OBJ-ORNT PRGRMMN",
+            "grade": "A-",
+            "credit_hours": 4
+          },
+          {
+            "term": "Fall 2025",
+            "course_id": "COMP01111",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "COLLEGE COMPOSITION I",
+            "grade": "B+",
+            "credit_hours": 3
+          },
+          {
+            "term": "Spring 2026",
+            "course_id": "CS04114",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "OBJ-ORIENT PRGRM/DATA ABSTR",
+            "grade": "B",
+            "credit_hours": 3
+          },
+          {
+            "term": "Spring 2026",
+            "course_id": "BIOL01203",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "HONORS INTRO TO CELL BIOLOGY",
+            "grade": "B+",
+            "credit_hours": 4
+          }
+        ],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [
+        {
+          "req_id": "comp_1",
+          "category": "Rowan Core: Communicative Literacy",
+          "rule": "all_of",
+          "course_options": [
+            "COMP01111"
+          ],
+          "title": "College Composition I",
+          "credit_hours": 3,
+          "minimum_grade": "D-",
+          "notes": "Required course"
+        },
+        {
+          "req_id": "intro_oop",
+          "category": "Major Requirements: Foundational Courses",
+          "rule": "any_of",
+          "course_options": [
+            "CS04113",
+            "CS04111"
+          ],
+          "title": "Introduction to Object-Oriented Programming",
+          "credit_hours": 4,
+          "minimum_grade": "C-",
+          "notes": "Students must be ready for MATH01130"
+        },
+        {
+          "req_id": "cs_electives",
+          "category": "Major Requirements: Computer Science Restricted Electives",
+          "rule": "credits_from",
+          "course_options": [
+            "CS01303",
+            "CS01395",
+            "CS02435",
+            "CS02480",
+            "CS03351",
+            "CS07450"
+          ],
+          "title": "Computer Science Restricted Electives",
+          "credit_hours": 12,
+          "minimum_grade": "D-",
+          "notes": "Choose 12 credits from the listed elective courses"
+        },
+        {
+          "req_id": "bio_minor",
+          "category": "Minor: Biological Sciences",
+          "rule": "credits_from",
+          "course_options": [
+            "BIOL01203",
+            "BIOL01430",
+            "STAT02280"
+          ],
+          "title": "Biology Minor",
+          "credit_hours": 12,
+          "minimum_grade": "C-",
+          "notes": "Choose 12 credits"
+        }
+      ],
+      "prompt": "Register me for Advanced Cell Biology (BIOL01430) and CS04222. I can't be on campus on Fridays."
+    },
+    "schedule_from_tally": {
+      "search": true
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 2,
+          "max": 2
+        },
+        "must_include_courses": [
+          "BIOL01430",
+          "CS04222"
+        ],
+        "no_days": [
+          "Friday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "46195",
+            "42014"
+          ],
+          [
+            "46195",
+            "46617"
+          ]
+        ],
+        "invalid": [
+          [
+            "44167",
+            "42014"
+          ],
+          [
+            "46195",
+            "42016"
+          ],
+          [
+            "46195",
+            "42030"
+          ]
+        ]
+      },
+      "implicit_relationship": "BIOL01430 sections have a lecture and a lab. 44167's lab is on Friday (valid but wrong); 44165 is full; 46195 (lab and lecture Tue/Thu 2:00-4:45 PM) is the only one left. CS04222 section 2 (42016, Tue/Thu 2:00 PM) overlaps 46195's lab, a consistency error; 42014 and 46617 meet Tue/Thu mornings."
+    }
+  },
+  {
+    "case_id": "sem_008",
+    "input": {
+      "student": {
+        "student_id": "S002",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "minor": "Mathematics",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [
+          {
+            "term": "Fall 2024",
+            "course_id": "CS04111",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "INTRO PROGRAMMING (OLD CATALOG)",
+            "grade": "A-",
+            "credit_hours": 4
+          },
+          {
+            "term": "Spring 2025",
+            "course_id": "CS04114",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "OBJ-ORIENT PRGRM/DATA ABSTR",
+            "grade": "D+",
+            "credit_hours": 3
+          },
+          {
+            "term": "Fall 2025",
+            "course_id": "CS04222",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "HONORS DATA STRUCT/ALGORIM",
+            "grade": "W",
+            "credit_hours": 4
+          }
+        ],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [
+        {
+          "req_id": "foundations",
+          "category": "Major Requirements: Foundational Courses",
+          "rule": "all_of",
+          "course_options": [
+            "CS04113",
+            "CS04114",
+            "CS04222"
+          ],
+          "title": "Foundational Courses",
+          "credit_hours": 11,
+          "minimum_grade": "C-",
+          "notes": "Each course needs a C- or better"
+        },
+        {
+          "req_id": "cs_electives",
+          "category": "Major Requirements: Computer Science Restricted Electives",
+          "rule": "credits_from",
+          "course_options": [
+            "CS01303",
+            "CS01395",
+            "CS02435",
+            "CS02480",
+            "CS03351",
+            "CS07450"
+          ],
+          "title": "Computer Science Restricted Electives",
+          "credit_hours": 12,
+          "minimum_grade": "D-",
+          "notes": "Choose 12 credits from the listed elective courses"
+        }
+      ],
+      "course_equivalents": [
+        [
+          "CS04113",
+          "CS04111"
+        ]
+      ],
+      "prompt": "Register me for every class I still need to finish my Foundational Courses requirement."
+    },
+    "schedule_from_tally": {
+      "search": true
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 2,
+          "max": 2
+        },
+        "must_include_courses": [
+          "CS04114",
+          "CS04222"
+        ],
+        "courses_count_toward": [
+          "foundations"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "41989",
+            "42014"
+          ],
+          [
+            "41990",
+            "46617"
+          ]
+        ],
+        "invalid": [
+          [
+            "41990"
+          ],
+          [
+            "41977",
+            "41990",
+            "42014"
+          ],
+          [
+            "41988",
+            "42014"
+          ]
+        ]
+      },
+      "implicit_relationship": "Foundations needs CS04113, CS04114 and CS04222 at C- or better. CS04113 is met through CS04111, its equivalent; CS04114 was a D+ and CS04222 a W, so both are still needed. Any open CS04114 section (41989, 41990) with any open CS04222 section (42014, 42016, 46617) works; none conflict."
+    }
+  },
+  {
+    "case_id": "tal_001",
+    "input": {
+      "student": {
+        "student_id": "S005",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "minor": "Mathematics",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [
+          {
+            "term": "Fall 2025",
+            "course_id": "CS04113",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "HONORS INTR OBJ-ORNT PRGRMMN",
+            "grade": "A-",
+            "credit_hours": 4
+          },
+          {
+            "term": "Fall 2025",
+            "course_id": "COMP01111",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "COLLEGE COMPOSITION I",
+            "grade": "B+",
+            "credit_hours": 3
+          },
+          {
+            "term": "Spring 2026",
+            "course_id": "CS04114",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "OBJ-ORIENT PRGRM/DATA ABSTR",
+            "grade": "B",
+            "credit_hours": 3
+          },
+          {
+            "term": "Spring 2026",
+            "course_id": "CS04222",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "HONORS DATA STRUCT/ALGORIM",
+            "grade": "B+",
+            "credit_hours": 4
+          }
+        ],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [
+        {
+          "req_id": "comp_1",
+          "category": "Rowan Core: Communicative Literacy",
+          "rule": "all_of",
+          "course_options": [
+            "COMP01111"
+          ],
+          "title": "College Composition I",
+          "credit_hours": 3,
+          "minimum_grade": "D-",
+          "notes": "Required course"
+        },
+        {
+          "req_id": "intro_oop",
+          "category": "Major Requirements: Foundational Courses",
+          "rule": "any_of",
+          "course_options": [
+            "CS04113",
+            "CS04111"
+          ],
+          "title": "Introduction to Object-Oriented Programming",
+          "credit_hours": 4,
+          "minimum_grade": "C-",
+          "notes": "Students must be ready for MATH01130"
+        },
+        {
+          "req_id": "cs_electives",
+          "category": "Major Requirements: Computer Science Restricted Electives",
+          "rule": "credits_from",
+          "course_options": [
+            "CS01303",
+            "CS01395",
+            "CS02435",
+            "CS02480",
+            "CS03351",
+            "CS07450"
+          ],
+          "title": "Computer Science Restricted Electives",
+          "credit_hours": 12,
+          "minimum_grade": "D-",
+          "notes": "Choose 12 credits from the listed elective courses"
+        }
+      ],
+      "prompt": "Register me for Operating Systems. If every section is full, put me on the waitlist for the Tuesday/Thursday section."
+    },
+    "schedule_from_tally": {
+      "search": true
+    },
+    "ground_truth": {
+      "acceptable_crns": [
+        {
+          "crn": "42090",
+          "waitlist": true
+        }
+      ],
+      "implicit_relationship": "The model must find Operating Systems itself (CS06395; three sections, all full at 30/30, each with an empty 50-seat waitlist), so the condition holds. The Tuesday/Thursday section is 42090. Registering it without waitlist is a consistency error; waitlisting 42089 or 42091 (Monday/Wednesday) is valid but wrong. CS03570 'CYBER DEFENSE OPERATING SYS' is a different course."
+    }
+  },
+  {
+    "case_id": "tal_002",
+    "input": {
+      "student": {
+        "student_id": "S004",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "minor": "Mathematics",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [
+          {
+            "term": "Fall 2025",
+            "course_id": "CS04113",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "HONORS INTR OBJ-ORNT PRGRMMN",
+            "grade": "A-",
+            "credit_hours": 4
+          },
+          {
+            "term": "Fall 2025",
+            "course_id": "COMP01111",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "COLLEGE COMPOSITION I",
+            "grade": "B+",
+            "credit_hours": 3
+          }
+        ],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [
+        {
+          "req_id": "comp_1",
+          "category": "Rowan Core: Communicative Literacy",
+          "rule": "all_of",
+          "course_options": [
+            "COMP01111"
+          ],
+          "title": "College Composition I",
+          "credit_hours": 3,
+          "minimum_grade": "D-",
+          "notes": "Required course"
+        },
+        {
+          "req_id": "intro_oop",
+          "category": "Major Requirements: Foundational Courses",
+          "rule": "any_of",
+          "course_options": [
+            "CS04113",
+            "CS04111"
+          ],
+          "title": "Introduction to Object-Oriented Programming",
+          "credit_hours": 4,
+          "minimum_grade": "C-",
+          "notes": "Students must be ready for MATH01130"
+        },
+        {
+          "req_id": "cs_electives",
+          "category": "Major Requirements: Computer Science Restricted Electives",
+          "rule": "credits_from",
+          "course_options": [
+            "CS01303",
+            "CS01395",
+            "CS02435",
+            "CS02480",
+            "CS03351",
+            "CS07450"
+          ],
+          "title": "Computer Science Restricted Electives",
+          "credit_hours": 12,
+          "minimum_grade": "D-",
+          "notes": "Choose 12 credits from the listed elective courses"
+        }
+      ],
+      "prompt": "Enroll me in CS04114 and CS06205. I don't want any classes on Fridays."
+    },
+    "schedule_from_tally": {
+      "search": true
     },
     "ground_truth": {
       "acceptable_carts": [
         [
-          "60001",
-          "60004"
+          "41989",
+          "42087"
         ],
         [
-          "60001",
-          "60007"
-        ],
-        [
-          "60004",
-          "60007"
+          "41990",
+          "42087"
         ]
       ],
-      "implicit_relationship": "Any two of CS07450 (60001), CS01303 (60004) and CS01395 (60007) are correct: each is an unfinished restricted elective whose prerequisite is met and which ends by 5 PM. CS01303's prerequisite is met by transfer credit (TA), and CS01395 was already passed but is repeatable. Wrong: CS02435 (60002) needs CS04114, which is still in progress; CS03351 (60003) ends at 6:15 PM; CS04113 (60005) is already passed and its requirement is met; ART02100 (60006) counts toward the degree but is not a computer science class."
+      "implicit_relationship": "Real Fall 2026 sections. CS04114 section 2 (41988) is full. CS06205 section 1 (42086) is full, and section 3 (42088) meets on Friday (and also overlaps 41989 on Monday at 12:30). That leaves CS06205 section 2 (42087, Thursday morning) with either open CS04114 section, 41989 or 41990."
+    }
+  },
+  {
+    "case_id": "tal_003",
+    "input": {
+      "student": {
+        "student_id": "S004",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "minor": "Mathematics",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [
+          {
+            "term": "Fall 2025",
+            "course_id": "CS04113",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "HONORS INTR OBJ-ORNT PRGRMMN",
+            "grade": "A-",
+            "credit_hours": 4
+          },
+          {
+            "term": "Fall 2025",
+            "course_id": "COMP01111",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "COLLEGE COMPOSITION I",
+            "grade": "B+",
+            "credit_hours": 3
+          }
+        ],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [
+        {
+          "req_id": "comp_1",
+          "category": "Rowan Core: Communicative Literacy",
+          "rule": "all_of",
+          "course_options": [
+            "COMP01111"
+          ],
+          "title": "College Composition I",
+          "credit_hours": 3,
+          "minimum_grade": "D-",
+          "notes": "Required course"
+        },
+        {
+          "req_id": "intro_oop",
+          "category": "Major Requirements: Foundational Courses",
+          "rule": "any_of",
+          "course_options": [
+            "CS04113",
+            "CS04111"
+          ],
+          "title": "Introduction to Object-Oriented Programming",
+          "credit_hours": 4,
+          "minimum_grade": "C-",
+          "notes": "Students must be ready for MATH01130"
+        },
+        {
+          "req_id": "cs_electives",
+          "category": "Major Requirements: Computer Science Restricted Electives",
+          "rule": "credits_from",
+          "course_options": [
+            "CS01303",
+            "CS01395",
+            "CS02435",
+            "CS02480",
+            "CS03351",
+            "CS07450"
+          ],
+          "title": "Computer Science Restricted Electives",
+          "credit_hours": 12,
+          "minimum_grade": "D-",
+          "notes": "Choose 12 credits from the listed elective courses"
+        }
+      ],
+      "prompt": "Sign me up for the Clinical Lab Science Seminar (CHEM05502) for 2 credits, and for a morning section of CS04114."
+    },
+    "schedule_from_tally": {
+      "search": true
+    },
+    "ground_truth": {
+      "acceptable_carts": [
+        [
+          {
+            "crn": "44459",
+            "credit_hours": 2
+          },
+          "41990"
+        ]
+      ],
+      "implicit_relationship": "CHEM05502 (44459) is variable-credit (1-3), so the message must carry credit_hours, and the student asked for 2. The only morning CS04114 section is 41990 (Mon/Wed 11:00-12:15); 41989 starts at 12:30 PM and 41988 meets in the evening and is full."
+    }
+  },
+  {
+    "case_id": "tal_004",
+    "input": {
+      "student": {
+        "student_id": "S004",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "minor": "Mathematics",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [
+          {
+            "term": "Fall 2025",
+            "course_id": "CS04113",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "HONORS INTR OBJ-ORNT PRGRMMN",
+            "grade": "A-",
+            "credit_hours": 4
+          },
+          {
+            "term": "Fall 2025",
+            "course_id": "COMP01111",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "COLLEGE COMPOSITION I",
+            "grade": "B+",
+            "credit_hours": 3
+          }
+        ],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [
+        {
+          "req_id": "comp_1",
+          "category": "Rowan Core: Communicative Literacy",
+          "rule": "all_of",
+          "course_options": [
+            "COMP01111"
+          ],
+          "title": "College Composition I",
+          "credit_hours": 3,
+          "minimum_grade": "D-",
+          "notes": "Required course"
+        },
+        {
+          "req_id": "intro_oop",
+          "category": "Major Requirements: Foundational Courses",
+          "rule": "any_of",
+          "course_options": [
+            "CS04113",
+            "CS04111"
+          ],
+          "title": "Introduction to Object-Oriented Programming",
+          "credit_hours": 4,
+          "minimum_grade": "C-",
+          "notes": "Students must be ready for MATH01130"
+        },
+        {
+          "req_id": "cs_electives",
+          "category": "Major Requirements: Computer Science Restricted Electives",
+          "rule": "credits_from",
+          "course_options": [
+            "CS01303",
+            "CS01395",
+            "CS02435",
+            "CS02480",
+            "CS03351",
+            "CS07450"
+          ],
+          "title": "Computer Science Restricted Electives",
+          "credit_hours": 12,
+          "minimum_grade": "D-",
+          "notes": "Choose 12 credits from the listed elective courses"
+        }
+      ],
+      "prompt": "Register me for two classes that count toward my Computer Science restricted electives. No Friday classes, nothing that starts at 5 PM or later, and don't put me on any waitlists."
+    },
+    "schedule_from_tally": {
+      "search": true
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 2,
+          "max": 2
+        },
+        "courses_count_toward": [
+          "cs_electives"
+        ],
+        "no_days": [
+          "Friday"
+        ],
+        "starts_before": "5:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "44477",
+            "41892"
+          ],
+          [
+            "44477",
+            "46228"
+          ]
+        ],
+        "invalid": [
+          [
+            "44477",
+            "41909"
+          ],
+          [
+            "44477",
+            "46463"
+          ],
+          [
+            "41892",
+            "46228"
+          ],
+          [
+            "44477",
+            {
+              "crn": "46554",
+              "waitlist": true
+            }
+          ],
+          [
+            "44477",
+            "42090"
+          ],
+          [
+            "44477"
+          ]
+        ]
+      },
+      "implicit_relationship": "The electives offered are CS07450, CS01395, CS01303, CS02480, CS03351 and CS02435. CS01303 and CS02480 meet Thursday at 6:30 PM; CS03351 section 2 meets Friday and section 1 is full; both CS02435 sections are full. That leaves CS07450 (44477, Mon/Wed 3:30 PM) with either CS01395 section: 41892 (Tue/Thu 3:30 PM) or 46228 (Tue 2:00 PM). Two sections of CS01395 would repeat a course."
     }
   }
 ]

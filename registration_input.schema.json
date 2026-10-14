@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://example.org/course-registration/1.0/input.schema.json",
   "title": "Registration input: one registration situation",
-  "description": "Registration Input Format Specification, v0.3 (draft), plus the fields that implement its open items 4-7: prerequisites, course_equivalents, graduation_rules, attributes, and the extra requirement fields. Everything here is sent to the model. Rules that span several fields are checked in registration.validate_input().",
+  "description": "Registration Input Format Specification, v0.3 (draft), plus the fields that implement its open items 4-7: prerequisites, course_equivalents, graduation_rules, attributes, and the extra requirement fields. Everything here is sent to the model. Rules that span several fields are checked in registration.validate_input(). Section and meeting fields follow Rowan's Section Tally export (section_tally.py): session, instructor, title_note, part_of_term, waitlist, reserved_seats, room_capacity, cancelled, meeting location, and times written with or without a leading zero.",
   "type": "object",
   "required": [
     "student",
@@ -109,9 +109,9 @@
       ]
     },
     "clock_time": {
-      "description": "h:mm AM/PM",
+      "description": "h:mm AM/PM or hh:mm AM/PM, as the Section Tally writes it",
       "type": "string",
-      "pattern": "^(1[0-2]|[1-9]):[0-5]\\d (AM|PM)$"
+      "pattern": "^(0?[1-9]|1[0-2]):[0-5]\\d (AM|PM)$"
     },
     "student": {
       "type": "object",
@@ -373,6 +373,7 @@
       "type": "object",
       "required": [
         "term",
+        "term_code",
         "sections"
       ],
       "additionalProperties": false,
@@ -385,6 +386,11 @@
           "items": {
             "$ref": "#/$defs/section"
           }
+        },
+        "term_code": {
+          "description": "The registrar's code for the term, e.g. 202640 (Fall 2026).",
+          "type": "string",
+          "pattern": "^\\d{6}$"
         }
       }
     },
@@ -448,15 +454,88 @@
         },
         "attributes": {
           "$ref": "#/$defs/attributes"
+        },
+        "session": {
+          "description": "Tally `Session`.",
+          "enum": [
+            "Day",
+            "Evening",
+            "Weekend",
+            "Online",
+            "Hybrid"
+          ]
+        },
+        "title_note": {
+          "description": "Text the tally appends to a title in parentheses: a restriction, a topic or a former name.",
+          "type": "string",
+          "minLength": 1
+        },
+        "instructor": {
+          "description": "Tally `Instructor(s)`, verbatim. STAFF = not yet assigned; several names are run together.",
+          "type": "string"
+        },
+        "part_of_term": {
+          "description": "Tally `Part of Term`, e.g. 'Full Term01-SEP - 17-DEC'.",
+          "type": "string"
+        },
+        "waitlist": {
+          "type": "object",
+          "required": [
+            "capacity",
+            "enrolled"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "capacity": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "enrolled": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "reserved_seats": {
+          "type": "object",
+          "required": [
+            "total",
+            "remaining"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "total": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "remaining": {
+              "type": "integer"
+            }
+          }
+        },
+        "room_capacity": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cancelled": {
+          "description": "Registering for a cancelled section is a consistency error.",
+          "type": "boolean"
+        },
+        "room_capacity_marked": {
+          "description": "The tally wrote an asterisk after Room Cap (e.g. '40*', or '*' alone). Its meaning is not documented.",
+          "type": "boolean"
+        },
+        "meeting_note": {
+          "description": "Meeting text from the tally that names no days, e.g. a list of rooms. Not used for conflicts.",
+          "type": "string",
+          "minLength": 1
         }
       }
     },
     "meeting": {
       "type": "object",
       "required": [
-        "days",
-        "start_time",
-        "end_time"
+        "days"
       ],
       "additionalProperties": false,
       "properties": {
@@ -485,7 +564,21 @@
         "type": {
           "type": "string",
           "minLength": 1
+        },
+        "location": {
+          "description": "Building and room, e.g. 'Robinson Hall 207'.",
+          "type": "string",
+          "minLength": 1
         }
+      },
+      "description": "Days, and usually a time range. A meeting with days but no times is time-to-be-arranged.",
+      "dependentRequired": {
+        "start_time": [
+          "end_time"
+        ],
+        "end_time": [
+          "start_time"
+        ]
       }
     },
     "attributes": {

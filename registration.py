@@ -1,7 +1,7 @@
 # registration.py — registration domain testbed for the CART message (PROVISIONAL).
 # Digests a DIDComm message; scores it on: syntactic + schema (the rules in
 # didcomm_schema.py) → consistency (invariants) → semantic (intent, stubbed here;
-# semantic_check.py fills it in). The single-section version is old_schema/registration.py.
+# run_semantic_eval.py fills it in).
 #
 # Also holds the INPUT FORMAT (README.md, "The input format"): validating an input
 # object, a degree audit over its transcript and requirements, and seeding the
@@ -32,6 +32,22 @@ CREATE TABLE enrollments (
     section_id TEXT NOT NULL,
     PRIMARY KEY (student_id, section_id),
     FOREIGN KEY (section_id) REFERENCES sections(section_id)
+);
+CREATE TABLE term (                   -- the term this database's sections are offered in (input format)
+    term_code TEXT NOT NULL
+);
+CREATE TABLE section_credits (        -- credits a section allows; min = max for a fixed-credit section
+    section_id  TEXT PRIMARY KEY,
+    min_credits REAL NOT NULL,
+    max_credits REAL NOT NULL
+);
+CREATE TABLE waitlists (
+    section_id TEXT PRIMARY KEY,
+    capacity   INTEGER NOT NULL,
+    enrolled   INTEGER NOT NULL
+);
+CREATE TABLE cancelled_sections (     -- sections the registrar cancelled (input format)
+    section_id TEXT PRIMARY KEY
 );
 CREATE TABLE prereq_missing (          -- prerequisites THIS student has not met (input format)
     course_id     TEXT NOT NULL,       -- the offered course
@@ -67,7 +83,11 @@ def check_consistency(conn, body: dict):
     cart_times = {}                       # cart section -> its structured meetings
     enrolled_times = {row[0]: _meetings(conn, row[0]) for row in conn.execute(
         "SELECT section_id FROM enrollments WHERE student_id=?", (student,))}
-    for section in body["sections"]:
+    term = conn.execute("SELECT term_code FROM term").fetchone()
+    if term and body["term_code"] != term[0]:
+        return False, f"term_code {body['term_code']} is not the term being registered for ({term[0]})"
+    for item in body["sections"]:
+        section = item["crn"]
         row = conn.execute(
             "SELECT course_id, seats_total, seats_taken, meets FROM sections WHERE section_id=?",
             (section,)).fetchone()
@@ -77,8 +97,31 @@ def check_consistency(conn, body: dict):
         if conn.execute("SELECT 1 FROM enrollments WHERE student_id=? AND section_id=?",
                         (student, section)).fetchone():
             return False, f"already enrolled in {section}"
-        if seats_taken >= seats_total:
+        if conn.execute("SELECT 1 FROM cancelled_sections WHERE section_id=?", (section,)).fetchone():
+            return False, f"section {section} is cancelled"
+        if item.get("waitlist"):
+            waitlist = conn.execute("SELECT capacity, enrolled FROM waitlists WHERE section_id=?",
+                                    (section,)).fetchone()
+            if seats_taken < seats_total:
+                return False, (f"section {section} has open seats ({seats_taken}/{seats_total}), "
+                               f"so it cannot be waitlisted")
+            if waitlist is None:
+                return False, f"section {section} is full and has no waitlist"
+            if waitlist[1] >= waitlist[0]:
+                return False, f"the waitlist for section {section} is full ({waitlist[1]}/{waitlist[0]})"
+        elif seats_taken >= seats_total:
             return False, f"section {section} is full ({seats_taken}/{seats_total})"
+        allowed = conn.execute("SELECT min_credits, max_credits FROM section_credits WHERE section_id=?",
+                               (section,)).fetchone()
+        chosen = item.get("credit_hours")
+        if allowed:
+            low, high = allowed
+            if low != high and chosen is None:
+                return False, (f"section {section} is variable-credit ({low:g}-{high:g}); "
+                               f"the message must give credit_hours")
+            if chosen is not None and not low <= chosen <= high:
+                allowed_text = f"{low:g}" if low == high else f"{low:g}-{high:g}"
+                return False, f"section {section}: credit_hours {chosen:g} is not {allowed_text}"
         unmet = conn.execute(
             "SELECT requires, minimum_grade FROM prereq_missing WHERE course_id=?", (course,)).fetchone()
         if unmet:
@@ -122,7 +165,7 @@ def evaluate(conn, raw_output: str) -> dict:
     ok, reason = check_consistency(conn, checked["body"])
     if not ok:
         return {"outcome": "consistency_error", "detail": reason}
-    # Tier 4: semantic — STUB here; evaluate_with_semantics.py adds it on top
+    # Tier 4: semantic — STUB here; run_semantic_eval.py adds it on top
     return {"outcome": "consistent__semantic_TBD",
             "detail": "invariants hold; semantic/intent check not yet defined (§13.1)"}
 
@@ -181,7 +224,7 @@ def validate_input(data) -> list:
         if isinstance(credits, dict) and credits["min"] > credits["max"]:
             problems.append(f"crn {s['crn']}: credit_hours min is more than max")
         for m in s["meetings"]:
-            if minutes(m["end_time"]) <= minutes(m["start_time"]):
+            if "start_time" in m and minutes(m["end_time"]) <= minutes(m["start_time"]):
                 problems.append(f"crn {s['crn']}: meeting ends ({m['end_time']}) "
                                 f"at or before it starts ({m['start_time']})")
     return problems
@@ -321,10 +364,21 @@ def missing_prerequisites(data: dict, course_id: str) -> list:
 def seed_db(data: dict) -> sqlite3.Connection:
     """The checker's database for one input object. section_id is the crn."""
     conn = make_db()
+    conn.execute("INSERT INTO term VALUES (?)", (data["schedule"]["term_code"],))
     for s in data["schedule"]["sections"]:
+        credits = s["credit_hours"]
+        low, high = (credits["min"], credits["max"]) if isinstance(credits, dict) else (credits, credits)
+        conn.execute("INSERT INTO section_credits VALUES (?, ?, ?)", (s["crn"], low, high))
+        if s.get("waitlist"):
+            conn.execute("INSERT INTO waitlists VALUES (?, ?, ?)",
+                         (s["crn"], s["waitlist"]["capacity"], s["waitlist"]["enrolled"]))
         conn.execute("INSERT INTO sections VALUES (?, ?, ?, ?, '')",
                      (s["crn"], s["course_id"], s["seats_total"], s["seats_taken"]))
+        if s.get("cancelled"):
+            conn.execute("INSERT INTO cancelled_sections VALUES (?)", (s["crn"],))
         for m in s["meetings"]:
+            if "start_time" not in m:     # time to be arranged: nothing to conflict with
+                continue
             conn.executemany(
                 "INSERT INTO meetings VALUES (?, ?, ?, ?)",
                 [(s["crn"], day, minutes(m["start_time"]), minutes(m["end_time"]))

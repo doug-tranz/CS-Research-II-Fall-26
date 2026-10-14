@@ -4,30 +4,71 @@
   "title": "Course registration cart, as a DIDComm v2 plaintext message",
   "description": "See README.md. $defs/envelope is Tier 1 (syntactic); $defs/register is Tier 2 (schema).",
   "allOf": [
-    { "$ref": "#/$defs/envelope" },
-    { "$ref": "#/$defs/register" }
+    {
+      "$ref": "#/$defs/envelope"
+    },
+    {
+      "$ref": "#/$defs/register"
+    }
   ],
   "$defs": {
     "envelope": {
       "description": "DIDComm v2 plaintext message headers. Unknown headers are allowed, as DIDComm requires.",
       "type": "object",
-      "required": ["id", "type", "body"],
+      "required": [
+        "id",
+        "type",
+        "body"
+      ],
       "properties": {
-        "id": { "type": "string", "minLength": 1 },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
         "type": {
           "description": "Message type URI: <doc-uri><protocol-name>/<version>/<message-name>.",
           "type": "string",
           "pattern": "^(.*?)([a-z0-9._-]+)/(\\d[^/]*)/([a-z0-9._-]+)$"
         },
-        "typ": { "const": "application/didcomm-plain+json" },
-        "from": { "$ref": "#/$defs/did" },
-        "to": { "type": "array", "items": { "$ref": "#/$defs/did" } },
-        "thid": { "type": "string", "minLength": 1 },
-        "pthid": { "type": "string", "minLength": 1 },
-        "created_time": { "description": "UTC epoch seconds.", "type": "integer", "minimum": 0 },
-        "expires_time": { "description": "UTC epoch seconds.", "type": "integer", "minimum": 0 },
-        "body": { "type": "object" },
-        "attachments": { "type": "array", "items": { "$ref": "#/$defs/attachment" } }
+        "typ": {
+          "const": "application/didcomm-plain+json"
+        },
+        "from": {
+          "$ref": "#/$defs/did"
+        },
+        "to": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/did"
+          }
+        },
+        "thid": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pthid": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_time": {
+          "description": "UTC epoch seconds.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "expires_time": {
+          "description": "UTC epoch seconds.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "body": {
+          "type": "object"
+        },
+        "attachments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/attachment"
+          }
+        }
       }
     },
     "did": {
@@ -36,21 +77,52 @@
     },
     "attachment": {
       "type": "object",
-      "required": ["data"],
+      "required": [
+        "data"
+      ],
       "properties": {
-        "id": { "type": "string", "minLength": 1 },
-        "description": { "type": "string" },
-        "filename": { "type": "string" },
-        "media_type": { "type": "string" },
-        "format": { "type": "string" },
-        "lastmod_time": { "type": "integer", "minimum": 0 },
-        "byte_count": { "type": "integer", "minimum": 0 },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string"
+        },
+        "filename": {
+          "type": "string"
+        },
+        "media_type": {
+          "type": "string"
+        },
+        "format": {
+          "type": "string"
+        },
+        "lastmod_time": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "byte_count": {
+          "type": "integer",
+          "minimum": 0
+        },
         "data": {
           "type": "object",
           "anyOf": [
-            { "required": ["base64"] },
-            { "required": ["json"] },
-            { "required": ["links"] }
+            {
+              "required": [
+                "base64"
+              ]
+            },
+            {
+              "required": [
+                "json"
+              ]
+            },
+            {
+              "required": [
+                "links"
+              ]
+            }
           ]
         }
       }
@@ -58,28 +130,67 @@
     "register": {
       "description": "The one message type the registration system accepts.",
       "properties": {
-        "type": { "const": "https://example.org/course-registration/1.0/register" },
-        "body": { "$ref": "#/$defs/body" }
+        "type": {
+          "const": "https://example.org/course-registration/1.0/register"
+        },
+        "body": {
+          "$ref": "#/$defs/body"
+        }
       }
     },
     "body": {
-      "description": "A cart: every section one student registers for in one request.",
+      "description": "A cart: every section one student registers for, in one term, in one request.",
       "type": "object",
-      "required": ["student_id", "sections"],
+      "required": [
+        "student_id",
+        "term_code",
+        "sections"
+      ],
       "additionalProperties": false,
       "properties": {
-        "student_id": { "$ref": "#/$defs/identifier" },
+        "student_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "term_code": {
+          "description": "The term being registered for, e.g. 202640 (Fall 2026).",
+          "type": "string",
+          "pattern": "^\\d{6}$"
+        },
         "sections": {
+          "description": "At least one section; no crn twice (checked in didcomm_schema.py).",
           "type": "array",
           "minItems": 1,
-          "uniqueItems": true,
-          "items": { "$ref": "#/$defs/identifier" }
+          "items": {
+            "$ref": "#/$defs/cart_item"
+          }
         }
       }
     },
     "identifier": {
       "type": "string",
       "pattern": "^\\S+$"
+    },
+    "cart_item": {
+      "description": "One section in the cart.",
+      "type": "object",
+      "required": [
+        "crn"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "crn": {
+          "$ref": "#/$defs/identifier"
+        },
+        "credit_hours": {
+          "description": "Credits to take. Required for a variable-credit section; for a fixed-credit section it may be left out, or must equal the section's credits.",
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "waitlist": {
+          "description": "true = join the waitlist, because the section is full. Default false.",
+          "type": "boolean"
+        }
+      }
     }
   }
 }
