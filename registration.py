@@ -49,6 +49,13 @@ CREATE TABLE waitlists (
 CREATE TABLE cancelled_sections (     -- sections the registrar cancelled (input format)
     section_id TEXT PRIMARY KEY
 );
+CREATE TABLE section_details (        -- what the message must copy, beyond `sections` (input format)
+    section_id TEXT PRIMARY KEY,
+    section    TEXT NOT NULL,          -- section number, e.g. "1"
+    campus     TEXT NOT NULL,
+    modality   TEXT NOT NULL,
+    meetings   TEXT NOT NULL           -- the section's meetings, as JSON
+);
 CREATE TABLE prereq_missing (          -- prerequisites THIS student has not met (input format)
     course_id     TEXT NOT NULL,       -- the offered course
     requires      TEXT NOT NULL,       -- the course it needs first
@@ -76,6 +83,45 @@ def _overlap(a: list, b: list):
                 return day_a
     return None
 
+def _same_text(a, b) -> bool:
+    return str(a).strip().casefold() == str(b).strip().casefold()
+
+def _meeting_key(m: dict) -> tuple:
+    """A meeting's days and times, ignoring day order and a leading zero ('9:30 AM' = '09:30 AM')."""
+    times = (minutes(m["start_time"]), minutes(m["end_time"])) if "start_time" in m else ()
+    return tuple(sorted(m["days"])), times
+
+def _meetings_differ(copied: list, offered: list):
+    """Why the message's meetings are not the offered ones, else None. Days and times must
+    match; `type` and `location` may be left out, but must match when given."""
+    if sorted(map(_meeting_key, copied)) != sorted(map(_meeting_key, offered)):
+        return "days or times differ"
+    for m in copied:
+        same = [o for o in offered if _meeting_key(o) == _meeting_key(m)]
+        if not any(all(_same_text(m[k], o.get(k, "")) for k in ("type", "location") if k in m)
+                   for o in same):
+            return "a meeting's type or location differs"
+    return None
+
+def _copy_differs(conn, item: dict, course: str, seats_total: int, seats_taken: int):
+    """The first field the message copied wrongly from the offered section, else None."""
+    details = conn.execute("SELECT section, campus, modality, meetings FROM section_details "
+                           "WHERE section_id=?", (item["crn"],)).fetchone()
+    if details is None:
+        return "the checker has no details for it"
+    section, campus, modality, meetings = details
+    for field, offered in (("course_id", course), ("section", section), ("campus", campus),
+                           ("modality", modality)):
+        if not _same_text(item[field], offered):
+            return f"{field} {item[field]!r} is not the offered section's ({offered!r})"
+    for field, offered in (("seats_total", seats_total), ("seats_taken", seats_taken)):
+        if item[field] != offered:
+            return f"{field} {item[field]} is not the offered section's ({offered})"
+    differs = _meetings_differ(item["meetings"], json.loads(meetings))
+    if differs:
+        return f"meetings do not match the offered section's: {differs}"
+    return None
+
 def check_consistency(conn, body: dict):
     """Returns (ok, reason). Assumes body already passed schema validation."""
     student = body["student_id"]
@@ -94,6 +140,9 @@ def check_consistency(conn, body: dict):
         if row is None:
             return False, f"section {section} does not exist"
         course, seats_total, seats_taken, meets = row
+        wrong = _copy_differs(conn, item, course, seats_total, seats_taken)
+        if wrong:
+            return False, f"section {section}: {wrong}"
         if conn.execute("SELECT 1 FROM enrollments WHERE student_id=? AND section_id=?",
                         (student, section)).fetchone():
             return False, f"already enrolled in {section}"
@@ -167,7 +216,7 @@ def evaluate(conn, raw_output: str) -> dict:
         return {"outcome": "consistency_error", "detail": reason}
     # Tier 4: semantic — STUB here; run_semantic_eval.py adds it on top
     return {"outcome": "consistent__semantic_TBD",
-            "detail": "invariants hold; semantic/intent check not yet defined (§13.1)"}
+            "detail": "invariants hold"}
 
 
 # ── Input format: one JSON object per registration situation ──
@@ -374,6 +423,8 @@ def seed_db(data: dict) -> sqlite3.Connection:
                          (s["crn"], s["waitlist"]["capacity"], s["waitlist"]["enrolled"]))
         conn.execute("INSERT INTO sections VALUES (?, ?, ?, ?, '')",
                      (s["crn"], s["course_id"], s["seats_total"], s["seats_taken"]))
+        conn.execute("INSERT INTO section_details VALUES (?, ?, ?, ?, ?)",
+                     (s["crn"], s["section"], s["campus"], s["modality"], json.dumps(s["meetings"])))
         if s.get("cancelled"):
             conn.execute("INSERT INTO cancelled_sections VALUES (?)", (s["crn"],))
         for m in s["meetings"]:

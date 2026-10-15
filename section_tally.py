@@ -237,6 +237,17 @@ def select_schedule(crns=(), courses=(), include_cancelled=False, path: Path = T
     return _schedule(rows)
 
 
+def course_schedule(courses, path: Path = TALLY_CSV) -> dict:
+    """Every section of these courses, in export order, cancelled ones left out. A course
+    with no section this term is skipped: a requirement may list courses not offered."""
+    wanted = set(courses)
+    rows = [row for row in read_tally(str(path))
+            if row["Subj"] + row["Course#"] in wanted and row["Cancelled"] != "true"]
+    if not rows:
+        raise ValueError(f"none of {sorted(wanted)} has a section in the tally")
+    return _schedule(rows)
+
+
 def full_schedule(path: Path = TALLY_CSV) -> dict:
     """Every section in the export, cancelled ones included (flagged), as one `schedule`.
     This is the checker's view when the model searches the tally itself."""

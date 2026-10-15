@@ -11,9 +11,13 @@ N     = 5   # samples per task — stochasticity (design §10)
 # Known system state the transaction runs against
 SEED = """
 INSERT INTO sections VALUES
- ('CS565-01','CS565',30,29,'MW14'),   -- 1 seat left, no conflict
- ('CS500-01','CS500',30,30,'MW10'),   -- full
- ('CS520-01','CS520',30,5, 'TR13');   -- student already enrolled here
+ ('CS565-01','CS00565',30,29,'MW14'),   -- 1 seat left, no conflict
+ ('CS500-01','CS00500',30,30,'MW10'),   -- full
+ ('CS520-01','CS00520',30,5, 'TR13');   -- student already enrolled here
+INSERT INTO section_details VALUES
+ ('CS565-01','1','Glassboro','in-person','[{"days": ["Monday", "Wednesday"], "start_time": "2:00 PM", "end_time": "3:15 PM"}]'),
+ ('CS500-01','1','Glassboro','in-person','[{"days": ["Monday", "Wednesday"], "start_time": "10:00 AM", "end_time": "11:15 AM"}]'),
+ ('CS520-01','1','Glassboro','in-person','[{"days": ["Tuesday", "Thursday"], "start_time": "1:00 PM", "end_time": "2:15 PM"}]');
 INSERT INTO enrollments VALUES ('S001','CS520-01');
 """
 
@@ -24,13 +28,17 @@ task = TaskSpec(
     inputs=json.dumps({
         "term_code": "202640",
         "student": {"student_id": "S001",
-                    "enrolled": [{"section_id": "CS520-01", "meets": "TR13"}]},
+                    "enrolled": [{"crn": "CS520-01", "course_id": "CS00520", "meets": "TR13"}]},
         "available_sections": [
-            {"section_id": "CS565-01", "seats_left": 1, "meets": "MW14"},
-            {"section_id": "CS500-01", "seats_left": 0, "meets": "MW10"},
+            {"crn": "CS565-01", "course_id": "CS00565", "section": "1", "credit_hours": 3,
+             "seats_total": 30, "seats_taken": 29, "campus": "Glassboro", "modality": "in-person",
+             "meetings": [{"days": ["Monday", "Wednesday"], "start_time": "2:00 PM", "end_time": "3:15 PM"}]},
+            {"crn": "CS500-01", "course_id": "CS00500", "section": "1", "credit_hours": 3,
+             "seats_total": 30, "seats_taken": 30, "campus": "Glassboro", "modality": "in-person",
+             "meetings": [{"days": ["Monday", "Wednesday"], "start_time": "10:00 AM", "end_time": "11:15 AM"}]},
         ],
     }),
-    intent="Enroll me in CS565.",
+    intent="Enroll me in CS00565.",
     # The contract's example uses a DIFFERENT student/sections than this task, so a
     # correct answer requires ADAPTING the shape — not copying the example (no answer leak).
     output_contract=OUTPUT_CONTRACT + " Pick sections from available_sections.",

@@ -1,6 +1,6 @@
 [
   {
-    "case_id": "sem_001",
+    "case_id": "case_001",
     "input": {
       "student": {
         "student_id": "S006",
@@ -113,7 +113,7 @@
       "prompt": "Enroll me in Advanced Cell Biology (BIOL01430). I live in Glassboro, so I want the section on my campus."
     },
     "schedule_from_tally": {
-      "search": true
+      "named_courses": true
     },
     "ground_truth": {
       "acceptable_crns": [
@@ -123,7 +123,7 @@
     }
   },
   {
-    "case_id": "con_001",
+    "case_id": "case_002",
     "input": {
       "student": {
         "student_id": "S007",
@@ -213,7 +213,7 @@
       "prompt": "Enroll me in CS04225."
     },
     "schedule_from_tally": {
-      "search": true
+      "named_courses": true
     },
     "ground_truth": {
       "acceptable_crns": [
@@ -223,7 +223,7 @@
     }
   },
   {
-    "case_id": "con_002",
+    "case_id": "case_003",
     "input": {
       "student": {
         "student_id": "S007",
@@ -313,7 +313,7 @@
       "prompt": "Enroll me in CS01303 and Calculus II (MATH01131)."
     },
     "schedule_from_tally": {
-      "search": true
+      "named_courses": true
     },
     "ground_truth": {
       "rules": {
@@ -363,7 +363,7 @@
     }
   },
   {
-    "case_id": "sem_002",
+    "case_id": "case_004",
     "input": {
       "student": {
         "student_id": "S007",
@@ -453,7 +453,7 @@
       "prompt": "Register me for Interpersonal Communication (CMS04220) and CS07450. I only want classes that meet in person."
     },
     "schedule_from_tally": {
-      "search": true
+      "named_courses": true
     },
     "ground_truth": {
       "rules": {
@@ -495,7 +495,7 @@
     }
   },
   {
-    "case_id": "sem_003",
+    "case_id": "case_005",
     "input": {
       "student": {
         "student_id": "S008",
@@ -603,7 +603,7 @@
       "prompt": "Enroll me in one class that counts toward my Computer Science restricted electives. I don't want to retake anything I've already passed."
     },
     "schedule_from_tally": {
-      "search": true
+      "named_courses": true
     },
     "ground_truth": {
       "rules": {
@@ -641,7 +641,7 @@
             "46554"
           ],
           [
-            "42090"
+            "42163"
           ]
         ]
       },
@@ -649,7 +649,7 @@
     }
   },
   {
-    "case_id": "sem_004",
+    "case_id": "case_006",
     "input": {
       "student": {
         "student_id": "S001",
@@ -796,7 +796,7 @@
       "prompt": "Register me for two computer science classes that count toward my degree. I work evenings, so nothing that ends after 5 PM."
     },
     "schedule_from_tally": {
-      "search": true
+      "named_courses": true
     },
     "ground_truth": {
       "rules": {
@@ -843,7 +843,7 @@
     }
   },
   {
-    "case_id": "sem_005",
+    "case_id": "case_007",
     "input": {
       "student": {
         "student_id": "S007",
@@ -933,7 +933,7 @@
       "prompt": "I can only take 6 credits this fall. Register me for CS07450, and add Calculus I (MATH01130) too only if both fit within my limit."
     },
     "schedule_from_tally": {
-      "search": true
+      "named_courses": true
     },
     "ground_truth": {
       "acceptable_crns": [
@@ -943,7 +943,7 @@
     }
   },
   {
-    "case_id": "con_003",
+    "case_id": "case_008",
     "input": {
       "student": {
         "student_id": "S003",
@@ -1038,7 +1038,7 @@
       "prompt": "Register me for CS07450 if I meet its prerequisite. If I don't, register me for CS04222 instead so I can retake it."
     },
     "schedule_from_tally": {
-      "search": true
+      "named_courses": true
     },
     "ground_truth": {
       "rules": {
@@ -1078,7 +1078,7 @@
     }
   },
   {
-    "case_id": "sem_006",
+    "case_id": "case_009",
     "input": {
       "student": {
         "student_id": "S007",
@@ -1183,7 +1183,7 @@
       "prompt": "I need one class for my Health and Society requirement. I'll be away from campus all fall, so it has to be fully online."
     },
     "schedule_from_tally": {
-      "search": true
+      "named_courses": true
     },
     "ground_truth": {
       "rules": {
@@ -1232,7 +1232,7 @@
     }
   },
   {
-    "case_id": "sem_007",
+    "case_id": "case_010",
     "input": {
       "student": {
         "student_id": "S006",
@@ -1345,7 +1345,7 @@
       "prompt": "Register me for Advanced Cell Biology (BIOL01430) and CS04222. I can't be on campus on Fridays."
     },
     "schedule_from_tally": {
-      "search": true
+      "named_courses": true
     },
     "ground_truth": {
       "rules": {
@@ -1391,7 +1391,7 @@
     }
   },
   {
-    "case_id": "sem_008",
+    "case_id": "case_011",
     "input": {
       "student": {
         "student_id": "S002",
@@ -1476,7 +1476,7 @@
       "prompt": "Register me for every class I still need to finish my Foundational Courses requirement."
     },
     "schedule_from_tally": {
-      "search": true
+      "named_courses": true
     },
     "ground_truth": {
       "rules": {
@@ -1522,7 +1522,7 @@
     }
   },
   {
-    "case_id": "tal_001",
+    "case_id": "case_012",
     "input": {
       "student": {
         "student_id": "S005",
@@ -1621,7 +1621,11 @@
       "prompt": "Register me for Operating Systems. If every section is full, put me on the waitlist for the Tuesday/Thursday section."
     },
     "schedule_from_tally": {
-      "search": true
+      "named_courses": true,
+      "courses": [
+        "CS06395",
+        "CS03570"
+      ]
     },
     "ground_truth": {
       "acceptable_crns": [
@@ -1634,7 +1638,7 @@
     }
   },
   {
-    "case_id": "tal_002",
+    "case_id": "case_013",
     "input": {
       "student": {
         "student_id": "S004",
@@ -1715,7 +1719,7 @@
       "prompt": "Enroll me in CS04114 and CS06205. I don't want any classes on Fridays."
     },
     "schedule_from_tally": {
-      "search": true
+      "named_courses": true
     },
     "ground_truth": {
       "acceptable_carts": [
@@ -1732,7 +1736,7 @@
     }
   },
   {
-    "case_id": "tal_003",
+    "case_id": "case_014",
     "input": {
       "student": {
         "student_id": "S004",
@@ -1813,7 +1817,7 @@
       "prompt": "Sign me up for the Clinical Lab Science Seminar (CHEM05502) for 2 credits, and for a morning section of CS04114."
     },
     "schedule_from_tally": {
-      "search": true
+      "named_courses": true
     },
     "ground_truth": {
       "acceptable_carts": [
@@ -1829,7 +1833,7 @@
     }
   },
   {
-    "case_id": "tal_004",
+    "case_id": "case_015",
     "input": {
       "student": {
         "student_id": "S004",
@@ -1910,7 +1914,7 @@
       "prompt": "Register me for two classes that count toward my Computer Science restricted electives. No Friday classes, nothing that starts at 5 PM or later, and don't put me on any waitlists."
     },
     "schedule_from_tally": {
-      "search": true
+      "named_courses": true
     },
     "ground_truth": {
       "rules": {
@@ -1959,7 +1963,7 @@
           ],
           [
             "44477",
-            "42090"
+            "40655"
           ],
           [
             "44477"
@@ -1967,6 +1971,278 @@
         ]
       },
       "implicit_relationship": "The electives offered are CS07450, CS01395, CS01303, CS02480, CS03351 and CS02435. CS01303 and CS02480 meet Thursday at 6:30 PM; CS03351 section 2 meets Friday and section 1 is full; both CS02435 sections are full. That leaves CS07450 (44477, Mon/Wed 3:30 PM) with either CS01395 section: 41892 (Tue/Thu 3:30 PM) or 46228 (Tue 2:00 PM). Two sections of CS01395 would repeat a course."
+    }
+  },
+  {
+    "case_id": "aneesh_test",
+    "input": {
+      "student": {
+        "student_id": "S009",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [
+          {
+            "term": "Fall 2025",
+            "course_id": "COMP01111",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "COLLEGE COMPOSITION I",
+            "grade": "B",
+            "credit_hours": 3
+          },
+          {
+            "term": "Fall 2025",
+            "course_id": "CS00100",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "CS LEARNING COMMUNITY",
+            "grade": "A",
+            "credit_hours": 1
+          },
+          {
+            "term": "Fall 2025",
+            "course_id": "CS04113",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "HONORS INTR OBJ-ORNT PRGRMMN",
+            "grade": "B+",
+            "credit_hours": 4
+          },
+          {
+            "term": "Spring 2026",
+            "course_id": "COMP01112",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "COLLEGE COMPOSITION II",
+            "grade": "B+",
+            "credit_hours": 3
+          },
+          {
+            "term": "Spring 2026",
+            "course_id": "CS04114",
+            "campus": "Glassboro",
+            "level": "UG",
+            "title": "OBJ-ORIENT PRGRM/DATA ABSTR",
+            "grade": "B",
+            "credit_hours": 3
+          }
+        ],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [
+        {
+          "req_id": "NONPROG-TECH-WRITING",
+          "category": "Non-Program / Writing Intensive",
+          "rule": "all_of",
+          "course_options": [
+            "WA01302"
+          ],
+          "credit_hours": 3,
+          "minimum_grade": "D-",
+          "title": "Technical Writing",
+          "notes": "Required for the major according to the guide. The guide says this requirement was introduced in Fall 2022; students who joined the program and completed INTR01266 before Fall 2022 may follow previous requirements and have WA01302 waived."
+        },
+        {
+          "req_id": "ROWAN-COML-COMP1",
+          "category": "Rowan Core - Communicative Literacy",
+          "rule": "all_of",
+          "course_options": [
+            "COMP01111"
+          ],
+          "credit_hours": 3,
+          "minimum_grade": "D-",
+          "title": "College Composition I",
+          "notes": "Part of the three-course Communicative Literacy requirement."
+        },
+        {
+          "req_id": "ROWAN-COML-COMP2",
+          "category": "Rowan Core - Communicative Literacy",
+          "rule": "all_of",
+          "course_options": [
+            "COMP01112"
+          ],
+          "credit_hours": 3,
+          "minimum_grade": "D-",
+          "title": "College Composition II",
+          "notes": "Part of the three-course Communicative Literacy requirement."
+        },
+        {
+          "req_id": "ROWAN-COML-SPEECH",
+          "category": "Rowan Core - Communicative Literacy",
+          "rule": "all_of",
+          "course_options": [
+            "CMS04205"
+          ],
+          "credit_hours": 3,
+          "minimum_grade": "D-",
+          "title": "Public Speaking",
+          "notes": "CMS04205 Public Speaking is required; the guide states it is a prerequisite for one or more major courses but does not name those courses. CMS04206 Digital Presentations is not a substitute. Do not invent specific dependent-course links from this guide alone. The guide requires all six Rowan Core literacies, at least 3 credits per literacy. Artistic and Global literacy recommendations are left unspecified in this guide; choose eligible courses with an advisor/Section Tally. A course may satisfy more than one Core/Experience attribute."
+        },
+        {
+          "req_id": "ROWAN-EXPERIENCE-SEMINAR",
+          "category": "Rowan Experience",
+          "rule": "all_of",
+          "course_options": [
+            "CS00100"
+          ],
+          "credit_hours": 1,
+          "minimum_grade": "D-",
+          "title": "Computer Science Learning Community",
+          "notes": "Required for incoming students and transfers according to the guide. The guide also requires Writing Intensive (WA01302) and a Broad-Based Literature attribute; it does not name a specific literature course. All three Rowan Experience attributes must be satisfied."
+        },
+        {
+          "req_id": "CS-RESTRICTED-ELECTIVES",
+          "category": "Major - Restricted Electives",
+          "rule": "credits_from",
+          "course_options": [
+            "CS01303",
+            "CS01395",
+            "CS01400",
+            "CS02370",
+            "CS02421",
+            "CS02435",
+            "CS02440",
+            "CS02480",
+            "CS02485",
+            "CS03351",
+            "CS03353",
+            "CS03440",
+            "CYBR01470",
+            "CS04305",
+            "CS04323",
+            "CS04350",
+            "CS04372",
+            "CS04376",
+            "CS04380",
+            "CS04391",
+            "CS04394",
+            "CS04401",
+            "CS04444",
+            "CS04471",
+            "CS06310",
+            "CS06390",
+            "CS06412",
+            "CS06420",
+            "CS06447",
+            "CS07310",
+            "CS07350",
+            "CS07422",
+            "CS07450",
+            "CS07455",
+            "CS07459",
+            "CS07460",
+            "CS08360",
+            "CS08380",
+            "CS08390",
+            "CS09410",
+            "CS09415",
+            "CS09416",
+            "CYBR03427",
+            "CS99300",
+            "CS99310",
+            "CS99490",
+            "DS02395"
+          ],
+          "credit_hours": 12,
+          "minimum_grade": "D-",
+          "title": "Computer Science Restricted Electives",
+          "notes": "Choose 12 credits from the approved list. Only 3 credits of CS99300 may apply; CS01395 may be repeated with different topics; CS01400 requires mentor/course-advisor approval; CS99300 and CS99310 require instructor permission; DS02395 is 1–3 credits. The guide does not provide a complete structured prerequisite graph; consult official catalog descriptions before enforcing course-to-course prerequisites."
+        }
+      ],
+      "prompt": "Sign me up for my writing-intensive requirement and for whichever Communicative Literacy course I still need. I can only come to campus on Tuesdays and Thursdays, and I have to be done by 7 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 2,
+          "max": 2
+        },
+        "must_include": [
+          "40859"
+        ],
+        "must_include_courses": [
+          "WA01302",
+          "CMS04205"
+        ],
+        "courses_count_toward": [
+          "NONPROG-TECH-WRITING",
+          "ROWAN-COML-SPEECH"
+        ],
+        "no_days": [
+          "Monday",
+          "Wednesday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "ends_by": "7:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "40859",
+            "44327"
+          ],
+          [
+            "40859",
+            "44354"
+          ],
+          [
+            "40859",
+            "44318"
+          ]
+        ],
+        "invalid": [
+          [
+            "40859",
+            "44376"
+          ],
+          [
+            "40859",
+            "44396"
+          ],
+          [
+            "40857",
+            "44327"
+          ],
+          [
+            "40859",
+            "44325"
+          ],
+          [
+            "40859",
+            {
+              "crn": "44383",
+              "waitlist": true
+            }
+          ],
+          [
+            "40859",
+            "45086"
+          ],
+          [
+            "40859",
+            "44327",
+            "44354"
+          ],
+          [
+            "40853",
+            "44327"
+          ],
+          [
+            "40859"
+          ]
+        ]
+      },
+      "implicit_relationship": "The writing-intensive requirement is WA01302 (NONPROG-TECH-WRITING). COMP01111 and COMP01112 are done, so the Communicative Literacy course still needed is CMS04205 Public Speaking (ROWAN-COML-SPEECH). Every WA01302 section is full except 40857 (Mon/Wed 5:00 PM) and 40859 (Tue/Thu 5:00-6:15 PM), so only 40859 fits Tue/Thu; it has no waitlist. With it, any open Tue/Thu CMS04205 section that ends by 7 PM and does not overlap 5:00-6:15 PM is correct: 44318, 44320, 44337, 44351 (8:00 or 9:30 AM), 44327 (12:30 PM) or 44354 (3:30 PM). 44376 (Tue/Thu 5:00 PM) conflicts with 40859; 44371 and 44396 (6:30 PM) end at 7:45 PM; 44383 (2:00 PM) is full and would need its waitlist. COMP01112 (e.g. 45086) is already completed, so it does not count."
     }
   }
 ]

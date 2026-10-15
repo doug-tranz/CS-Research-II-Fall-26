@@ -18,12 +18,12 @@ here, after generation, per harness.py's own design comment on GroundTruth.
 A case file is an indented JSON array of cases, each one input object
 (student, transcript, program requirements, schedule, prompt) wrapped with a
 case_id and an answer key:
-    {"case_id": "tal_001", "input": {...},
+    {"case_id": "case_012", "input": {...},
      "ground_truth": {"acceptable_crns": ["12345"], "implicit_relationship": "..."}}
 
 HOW TO RUN:
     python run_semantic_eval.py --model anthropic/claude-opus-5.5
-    python run_semantic_eval.py --model anthropic/claude-opus-5.5 --task-ids tal_001 -n 5
+    python run_semantic_eval.py --model anthropic/claude-opus-5.5 --task-ids case_012 -n 5
     python run_semantic_eval.py --model anthropic/claude-opus-5.5 --rendering nl
     python run_semantic_eval.py --check      # scores every answer key; no model, no cost
 
@@ -36,13 +36,14 @@ import argparse
 import csv
 import io
 import json
+import re
 import sys
 from dataclasses import asdict
 from pathlib import Path
 from harness import TaskSpec, OllamaBackend, OpenRouterBackend, generate, generate_with_tools, parse_didcomm
 import registration as reg
 import section_tally
-from didcomm_schema import OUTPUT_CONTRACT, CRN_CONTRACT, MESSAGE_TYPE
+from didcomm_schema import OUTPUT_CONTRACT, CRN_CONTRACT, MESSAGE_TYPE, SECTION_FIELDS
 
 RENDERINGS = ("json", "csv", "nl")
 
@@ -145,7 +146,17 @@ def evaluate_full(conn, raw_output: str, expected_raw: str = "") -> dict:
 #       correct carts to list, e.g. "two classes that count toward my degree". With rules,
 #       `examples` gives carts that must pass ("valid") and must fail ("invalid").
 
-TALLY_KEYS = {"crns", "courses", "include_cancelled", "search"}
+TALLY_KEYS = {"crns", "courses", "include_cancelled", "search", "named_courses"}
+_COURSE_IN_TEXT = re.compile(r"\b[A-Z]{2,4}\d[A-Z0-9]{4}\b")
+
+
+def named_courses(data: dict) -> list:
+    """Every course an input names: each requirement's course_options, each course with a
+    prerequisites entry, and each course id written in the prompt. In first-seen order."""
+    named = [c for r in data["program_requirements"] for c in r["course_options"]]
+    named += [p["course_id"] for p in data.get("prerequisites", [])]
+    named += _COURSE_IN_TEXT.findall(data["prompt"])
+    return list(dict.fromkeys(named))
 
 # Told to the model in search mode, after the output contract.
 SEARCH_CONTRACT = (
@@ -162,11 +173,15 @@ def is_search(case: dict) -> bool:
 
 def resolve_case(case: dict) -> dict:
     """A case may take its schedule from the Section Tally instead of writing it out:
+        "schedule_from_tally": {"named_courses": true, "courses": [...]}
+            every open section of every course the input names (named_courses()), plus of
+            the optional `courses` (e.g. a course the prompt names only by title), listed in
+            the prompt, so the model reads everything in one input (every case uses this)
+        "schedule_from_tally": {"crns": [...], "courses": [...], "include_cancelled": false}
+            a hand-picked portion, listed in the prompt
         "schedule_from_tally": {"search": true}
             the model gets no list of sections and must search the whole tally itself;
             the checker sees every section (input.schedule = the whole tally)
-        "schedule_from_tally": {"crns": [...], "courses": [...], "include_cancelled": false}
-            a hand-picked portion, listed in the prompt
     This fills in input.schedule from the Section Tally export (section_tally.TALLY_CSV),
     so everything after it (validation, database, scoring) sees an ordinary input object."""
     ref = case.get("schedule_from_tally")
@@ -174,17 +189,25 @@ def resolve_case(case: dict) -> dict:
         return case
     name = case.get("case_id", "<no id>")
     if not isinstance(ref, dict) or set(ref) - TALLY_KEYS:
-        raise ValueError(f"{name}: schedule_from_tally takes search, or crns and/or courses "
-                         f"(and include_cancelled), nothing else")
+        raise ValueError(f"{name}: schedule_from_tally takes named_courses, search, or crns "
+                         f"and/or courses (and include_cancelled), nothing else")
     if ref.get("search") and set(ref) != {"search"}:
         raise ValueError(f"{name}: with search, the model picks the sections; give no crns or courses")
-    if not ref.get("search") and not (ref.get("crns") or ref.get("courses")):
-        raise ValueError(f"{name}: schedule_from_tally needs search: true, or crns and/or courses")
+    if ref.get("named_courses") and not set(ref) <= {"named_courses", "courses"}:
+        raise ValueError(f"{name}: named_courses takes only extra courses")
+    if not (ref.get("named_courses") or ref.get("search") or ref.get("crns") or ref.get("courses")):
+        raise ValueError(f"{name}: schedule_from_tally needs named_courses: true, search: true, "
+                         f"or crns and/or courses")
     if "schedule" in case["input"]:
         raise ValueError(f"{name}: give input.schedule or schedule_from_tally, not both")
     data = {key: value for key, value in case["input"].items() if key != "prompt"}
-    data["schedule"] = (section_tally.full_schedule() if ref.get("search")
-                        else section_tally.select_schedule(**ref))
+    if ref.get("named_courses"):
+        data["schedule"] = section_tally.course_schedule(
+            named_courses(case["input"]) + list(ref.get("courses", [])))
+    elif ref.get("search"):
+        data["schedule"] = section_tally.full_schedule()
+    else:
+        data["schedule"] = section_tally.select_schedule(**ref)
     data["prompt"] = case["input"]["prompt"]
     return {**case, "input": data}
 
@@ -225,12 +248,27 @@ def acceptable_carts(case: dict) -> list:
     return carts + [[_item(entry) for entry in cart] for cart in truth.get("acceptable_carts", [])]
 
 
+def _full_item(entry, by_crn: dict) -> dict:
+    """An answer-key entry as the message must write it: the offered section's fields
+    (SECTION_FIELDS) copied in, then the entry's own credit_hours and waitlist. A
+    variable-credit section gets credit_hours only from the entry."""
+    item = _item(entry)
+    section = by_crn.get(item["crn"])
+    if section is None:              # validate_case() reports it
+        return item
+    full = {field: section[field] for field in SECTION_FIELDS if field != "credit_hours"}
+    if not isinstance(section["credit_hours"], dict):
+        full["credit_hours"] = section["credit_hours"]
+    return {**full, **item}
+
+
 def expected_message(case: dict, cart: list) -> str:
     """The register message for this cart; entries may be crns or section objects."""
     data = case["input"]
+    by_crn = {s["crn"]: s for s in data["schedule"]["sections"]}
     return json.dumps({"id": "n/a", "type": MESSAGE_TYPE, "body": {
         "student_id": data["student"]["student_id"], "term_code": data["schedule"]["term_code"],
-        "sections": [_item(entry) for entry in cart]}})
+        "sections": [_full_item(entry, by_crn) for entry in cart]}})
 
 
 def validate_case(case) -> list:
@@ -628,7 +666,7 @@ def main():
     parser.add_argument("--model", help="required unless --check")
     parser.add_argument("--test-file", default="input_format_cases.json")
     parser.add_argument("--output", default="semantic_eval_results.json")
-    parser.add_argument("--task-ids", nargs="+", help="run only these cases, e.g. tal_001 tal_002")
+    parser.add_argument("--task-ids", nargs="+", help="run only these cases, e.g. case_012 case_013")
     parser.add_argument("-n", type=int, default=1, help="samples per case")
     parser.add_argument("--rendering", choices=RENDERINGS, default="json",
                         help="how a case's state is shown to the model")

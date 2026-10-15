@@ -44,27 +44,45 @@ _REGISTER = _validator("register")
 # Goes in TaskSpec.output_contract. The example uses a student and sections
 # that appear in no test case, so a correct answer requires ADAPTING the
 # shape -- not copying the example (same rule as the original run_registration.py).
+SECTION_FIELDS = ("crn", "course_id", "section", "credit_hours", "seats_total", "seats_taken",
+                  "campus", "modality", "meetings")
+_EXAMPLE = {
+    "id": "3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c", "type": MESSAGE_TYPE,
+    "body": {"student_id": "S042", "term_code": "201920", "sections": [
+        {"crn": "90512", "course_id": "HIST01150", "section": "2", "credit_hours": 3,
+         "seats_total": 35, "seats_taken": 20, "campus": "Glassboro", "modality": "in-person",
+         "meetings": [{"days": ["Tuesday", "Thursday"], "start_time": "9:30 AM",
+                       "end_time": "10:45 AM", "type": "Class", "location": "Bunce Hall 101"}]},
+        {"crn": "90877", "course_id": "ART09900", "section": "1", "credit_hours": 2,
+         "seats_total": 5, "seats_taken": 1, "campus": "Glassboro", "modality": "online",
+         "meetings": []},
+        {"crn": "91004", "course_id": "BIOL01120", "section": "4", "credit_hours": 4,
+         "seats_total": 24, "seats_taken": 24, "campus": "Camden", "modality": "hybrid",
+         "meetings": [{"days": ["Monday"], "start_time": "1:00 PM", "end_time": "3:50 PM"}],
+         "waitlist": True}]}}
+
 OUTPUT_CONTRACT = (
     "Respond with one DIDComm v2 plaintext message that registers the student "
     "for every section in a single request. "
     f'"type" MUST be exactly "{MESSAGE_TYPE}". '
     '"id" MUST be a unique string such as a UUID. '
     'The body MUST have exactly these fields: {"student_id": <string>, "term_code": <string>, '
-    '"sections": [{"crn": <string>}, ...]}, with at least one section and no crn twice. '
-    'A section entry MAY also have "credit_hours": <number> (REQUIRED when the section is '
-    'variable-credit: the credits the student takes) and "waitlist": true (ONLY to join the '
-    'waitlist of a full section). '
-    "Example for an unrelated request: "
-    f'{{"id": "3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c", "type": "{MESSAGE_TYPE}", '
-    '"body": {"student_id": "S042", "term_code": "201920", "sections": [{"crn": "90512"}, '
-    '{"crn": "90877", "credit_hours": 2}, {"crn": "91004", "waitlist": true}]}}'
+    '"sections": [<section entry>, ...]}, with at least one section and no crn twice. '
+    'Each section entry MUST have exactly these fields, copied from the offered section: '
+    '"crn", "course_id", "section", "seats_total", "seats_taken", "campus", "modality", '
+    '"meetings" (each meeting\'s "days", and its "start_time" and "end_time" when it has them; '
+    '"type" and "location" may be copied too), plus "credit_hours": <number>, the credits the '
+    "student takes (the section's credits, or a number in the range of a variable-credit "
+    'section). An entry MAY also have "waitlist": true (ONLY to join the waitlist of a full '
+    "section). Example for an unrelated request: " + json.dumps(_EXAMPLE)
 )
 
 
 # Added to OUTPUT_CONTRACT for input-format cases, where a section is named by its crn.
 CRN_CONTRACT = (
-    ' Each "crn" MUST be the crn of an offered section, "term_code" MUST be the '
-    'schedule\'s term_code, and "student_id" MUST be the student\'s student_id.'
+    ' Each "crn" MUST be the crn of an offered section, and every other copied field MUST '
+    'equal that section\'s value. "term_code" MUST be the schedule\'s term_code, and '
+    '"student_id" MUST be the student\'s student_id.'
 )
 
 
@@ -109,10 +127,19 @@ def validate_message(raw: str) -> dict:
 
 
 if __name__ == "__main__":
-    # Smoke test: one message per way of failing, plus two that pass.
+    # Smoke test: one message per way of failing, plus a few that pass.
+    def entry(crn, **changes):
+        """A complete section entry; a change of None removes that field."""
+        item = {"crn": crn, "course_id": "CS04114", "section": "1", "credit_hours": 3,
+                "seats_total": 30, "seats_taken": 20, "campus": "Glassboro", "modality": "in-person",
+                "meetings": [{"days": ["Monday", "Wednesday"], "start_time": "09:30 AM",
+                              "end_time": "10:45 AM", "type": "Class", "location": "Robinson Hall 207"}]}
+        item.update(changes)
+        return {k: v for k, v in item.items() if v is not None}
+
     good = {"id": "a1", "type": MESSAGE_TYPE,
             "body": {"student_id": "S001", "term_code": "202640",
-                     "sections": [{"crn": "41836"}, {"crn": "41909"}]}}
+                     "sections": [entry("41836"), entry("41909")]}}
 
     def variant(**changes):
         return {**good, **changes}
@@ -121,9 +148,11 @@ if __name__ == "__main__":
         return variant(body={**good["body"], **changes})
 
     cases = [
-        ("minimal valid cart", json.dumps(good), "schema_ok"),
-        ("credit_hours and waitlist", json.dumps(body(sections=[
-            {"crn": "45510", "credit_hours": 3}, {"crn": "41909", "waitlist": True}])), "schema_ok"),
+        ("valid cart", json.dumps(good), "schema_ok"),
+        ("waitlist, no meetings, bare meeting", json.dumps(body(sections=[
+            entry("45510", meetings=[]), entry("41909", waitlist=True, seats_taken=30),
+            entry("41910", meetings=[{"days": ["Friday"]}])])), "schema_ok"),
+        ("contract example", json.dumps(_EXAMPLE), "schema_ok"),
         ("valid, with optional headers", json.dumps(variant(
             typ="application/didcomm-plain+json", **{"from": "did:example:alice"},
             to=["did:example:registrar"], created_time=1791331200)), "schema_ok"),
@@ -138,14 +167,27 @@ if __name__ == "__main__":
         ("a different protocol's type", json.dumps(variant(type="https://didcomm.org/basicmessage/2.0/message")), "schema_error"),
         ("old single-section body", json.dumps(variant(body={"student_id": "S001", "section_id": "41836"})), "schema_error"),
         ("sections as bare strings", json.dumps(body(sections=["41836", "41909"])), "schema_error"),
-        ("no term_code", json.dumps(variant(body={"student_id": "S001", "sections": [{"crn": "41836"}]})), "schema_error"),
+        ("no term_code", json.dumps(variant(body={"student_id": "S001", "sections": [entry("41836")]})), "schema_error"),
         ("term_code as a number", json.dumps(body(term_code=202640)), "schema_error"),
         ("empty cart", json.dumps(body(sections=[])), "schema_error"),
-        ("same crn twice", json.dumps(body(sections=[{"crn": "41836"}, {"crn": "41836", "waitlist": True}])), "schema_error"),
-        ("section entry without crn", json.dumps(body(sections=[{"section_id": "41836"}])), "schema_error"),
-        ("unknown field in a section", json.dumps(body(sections=[{"crn": "41836", "grade_mode": "P/F"}])), "schema_error"),
-        ("credit_hours as a string", json.dumps(body(sections=[{"crn": "45510", "credit_hours": "3"}])), "schema_error"),
-        ("waitlist as a string", json.dumps(body(sections=[{"crn": "41909", "waitlist": "yes"}])), "schema_error"),
+        ("same crn twice", json.dumps(body(sections=[entry("41836"), entry("41836", waitlist=True)])), "schema_error"),
+        ("crn only (the earlier entry)", json.dumps(body(sections=[{"crn": "41836"}])), "schema_error"),
+        ("section entry without crn", json.dumps(body(sections=[entry(None, section_id="41836")])), "schema_error"),
+        ("section entry without meetings", json.dumps(body(sections=[entry("41836", meetings=None)])), "schema_error"),
+        ("section entry without credit_hours", json.dumps(body(sections=[entry("41836", credit_hours=None)])), "schema_error"),
+        ("unknown field in a section", json.dumps(body(sections=[entry("41836", grade_mode="P/F")])), "schema_error"),
+        ("credit_hours as a string", json.dumps(body(sections=[entry("45510", credit_hours="3")])), "schema_error"),
+        ("seats_taken as a string", json.dumps(body(sections=[entry("45510", seats_taken="20")])), "schema_error"),
+        ("course_id with a space", json.dumps(body(sections=[entry("45510", course_id="CS 04114")])), "schema_error"),
+        ("unknown modality", json.dumps(body(sections=[entry("45510", modality="remote")])), "schema_error"),
+        ("day abbreviated", json.dumps(body(sections=[entry("45510", meetings=[{"days": ["MW"]}])])), "schema_error"),
+        ("24-hour time", json.dumps(body(sections=[entry("45510", meetings=[
+            {"days": ["Monday"], "start_time": "13:00", "end_time": "14:15"}])])), "schema_error"),
+        ("start_time without end_time", json.dumps(body(sections=[entry("45510", meetings=[
+            {"days": ["Monday"], "start_time": "1:00 PM"}])])), "schema_error"),
+        ("unknown meeting field", json.dumps(body(sections=[entry("45510", meetings=[
+            {"days": ["Monday"], "room": "101"}])])), "schema_error"),
+        ("waitlist as a string", json.dumps(body(sections=[entry("41909", waitlist="yes")])), "schema_error"),
         ("extra body field", json.dumps(body(total_credits=6)), "schema_error"),
     ]
 

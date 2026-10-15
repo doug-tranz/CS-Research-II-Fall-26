@@ -26,8 +26,8 @@ Contents: [What's here](#whats-here) · [Setup](#setup) · [Run](#run) ·
 | `didcomm_schema.py` | `validate_message()`: Tiers 1–2 against the message schema. `OUTPUT_CONTRACT`: the prompt text that tells a model the format. |
 | `registration.py` | Registration domain testbed: SQLite schema, `evaluate()` (Tiers 1–2 from `didcomm_schema`, then Tier 3 consistency over the whole cart). Also the input format: `validate_input()`, `audit()` (degree audit), `missing_prerequisites()`, and `seed_db()`. |
 | `run_semantic_eval.py` | The pipeline. Builds each case's prompt (as JSON, CSV or plain text), sends it to a model, and scores the answer on all four tiers; `check_semantic()` (Tier 4) and `evaluate_case()` live here. |
-| `input_format_cases.json` (15) | The test cases: each an input object plus an answer key. In every case the model searches the whole Section Tally itself (`"schedule_from_tally": {"search": true}`). |
-| `section_tally.py` | Reads Rowan's Section Tally export, turns rows into input-format sections, and provides the `search_sections` tool the model uses to look sections up. See [Sections from the Section Tally](#sections-from-the-section-tally). |
+| `input_format_cases.json` (16) | The test cases: each an input object plus an answer key. In every case the sections come from the Section Tally and are listed in the prompt: every open section of each course the case names (`"schedule_from_tally": {"named_courses": true}`). |
+| `section_tally.py` | Reads Rowan's Section Tally export, turns rows into input-format sections, and picks each case's sections (`course_schedule()`). It also holds the `search_sections` tool for search mode, which no case uses now. See [Sections from the Section Tally](#sections-from-the-section-tally). |
 | `section_tally_fall2026.csv` | The Fall 2026 Section Tally export, as downloaded (renamed). The pipeline reads this one file. |
 | `section_tally/` (138 files, optional) | The same data split by subject (`CS.csv`, `MATH.csv`, …), for browsing only; `python section_tally.py split` regenerates it. The pipeline does not read it, so it can be deleted. |
 | `semantic_eval_results.json` | Generated results of `run_semantic_eval.py`, as an indented JSON array. |
@@ -121,7 +121,7 @@ All commands are run from the repo root with `(venv)` active.
 
 ```bash
 python run_semantic_eval.py --model anthropic/claude-opus-5.5
-python run_semantic_eval.py --model anthropic/claude-opus-5.5 --task-ids tal_001 -n 5
+python run_semantic_eval.py --model anthropic/claude-opus-5.5 --task-ids case_012 -n 5
 python run_semantic_eval.py --model anthropic/claude-opus-5.5 --rendering nl
 ```
 
@@ -136,9 +136,11 @@ python run_semantic_eval.py --model anthropic/claude-opus-5.5 --rendering nl
 | `--check` | Score each case's own answer key and exit. No model call | off |
 | `--output` | Results file | `semantic_eval_results.json` |
 
-Appends every sample to the results file. A search-mode case makes several model calls
-(the searches, then the answer): tal_004 took 2 calls, 6 searches and about $0.04 on Opus 5.5.
-A case with the schedule written into the prompt costs about $0.01–0.02 per call.
+Appends every sample to the results file. Each case is one model call: the prompt holds the
+transcript, requirements, request and every section, and the model answers. Most cases put
+about 100 sections in the prompt, roughly 24k–30k input tokens and about $0.10–0.13 per call
+on Opus 5.5 (an estimate; case_008 and case_011 about $0.04, aneesh_test, with 220 sections, about
+$0.21). Search mode, the earlier default, took 2 calls and about $0.03–0.04.
 
 ### The validators alone
 
@@ -203,7 +205,7 @@ group agrees.
 a total:
 
 ```
-tal_001 run 0: semantic_ok          | matches ground truth exactly
+case_012 run 0: semantic_ok          | matches ground truth exactly
 
 5/5 semantic_ok on anthropic/claude-opus-5.5. Cost $0.1005. Full results in semantic_eval_results.json
 ```
@@ -264,9 +266,18 @@ cart correct for an intent (Task 3).
     "student_id": "S001",
     "term_code": "202640",
     "sections": [
-      {"crn": "60001"},
-      {"crn": "46497", "credit_hours": 3},
-      {"crn": "44033", "waitlist": true}
+      {
+        "crn": "41990", "course_id": "CS04114", "section": "4", "credit_hours": 3,
+        "seats_total": 28, "seats_taken": 27, "campus": "Glassboro", "modality": "in-person",
+        "meetings": [{"days": ["Monday", "Wednesday"], "start_time": "11:00 AM",
+                      "end_time": "12:15 PM", "type": "Class", "location": "James Hall 2113"}]
+      },
+      {
+        "crn": "44459", "course_id": "CHEM05502", "section": "1", "credit_hours": 2,
+        "seats_total": 10, "seats_taken": 2, "campus": "Glassboro", "modality": "in-person",
+        "meetings": [{"days": ["Monday"], "start_time": "02:00 PM", "end_time": "03:15 PM",
+                      "type": "Class", "location": "James Hall 2095"}]
+      }
     ]
   }
 }
@@ -277,8 +288,11 @@ A single enrollment is a cart with one section. There is no separate one-section
 Earlier versions, whose results are not comparable with this one:
 - **Until 10/7:** a single-section message, `{"student_id", "section_id"}` with type
   `registration/enroll`. The cart's Tiers 1–2 are stricter.
-- **10/7 to 10/14:** the cart with `sections` as a bare list of crns and no `term_code`. The
-  results in `semantic_eval_results.json` up to now are in that shape.
+- **10/7 to 10/14:** the cart with `sections` as a bare list of crns and no `term_code`.
+- **10/14:** section objects holding only `crn`, plus optional `credit_hours` and
+  `waitlist`. The results in `semantic_eval_results.json` and
+  `semantic_eval_results_random3.json` are in this shape or the one before; the current
+  schema rejects both as `schema_error`.
 
 ### Envelope (DIDComm v2 headers)
 
@@ -312,16 +326,27 @@ Each section object:
 | Field | Required | Rule |
 |---|---|---|
 | `crn` | yes | The section's `crn` from the input. |
-| `credit_hours` | for a variable-credit section | A number above 0: the credits the student takes. Required when the section's credits are a range (182 tally sections, e.g. 1–12 for independent study). For a fixed-credit section it may be left out, or must equal the section's credits. |
+| `course_id` | yes | Copied from the section, e.g. `CS04114` (same pattern as the input). |
+| `section` | yes | Copied: the section number, a string, e.g. `"4"`. |
+| `credit_hours` | yes | A number, 0 or more: the credits the student takes. For a fixed-credit section, its credits (271 tally sections have 0, e.g. labs); for a variable-credit section (182 tally sections, e.g. 1–12 for independent study), a number in its range. |
+| `seats_total`, `seats_taken` | yes | Copied: integers. |
+| `campus` | yes | Copied. |
+| `modality` | yes | Copied: `in-person`, `online` or `hybrid`. |
+| `meetings` | yes | Copied: an array, empty if the section has none. Each meeting has `days` (full day names), and `start_time`/`end_time` (`h:mm AM/PM` or `hh:mm AM/PM`) when it has times; `type` and `location` are optional. |
 | `waitlist` | no | `true` to join the waitlist of a full section. Absent means `false`. |
 | anything else | | Not allowed. |
+
+`didcomm_schema.SECTION_FIELDS` lists the required fields; `OUTPUT_CONTRACT` tells the model
+to copy them from the offered section. The copied fields make the model restate what it
+registers for, so a crn that does not belong to the section it means is caught.
 
 The schema checks shape only. Tier 3 checks the values against the input:
 
 | Rule | Fails as |
 |---|---|
 | `term_code` is the schedule's term | `consistency_error` |
-| A variable-credit section has `credit_hours`, inside its range; a fixed-credit section's `credit_hours`, if given, equals its credits | `consistency_error` |
+| Every copied field equals the offered section's: `course_id`, `section`, `campus` and `modality` ignoring case and surrounding spaces; `seats_total` and `seats_taken` exactly; `meetings` with the same days and times, in any order and with or without a leading zero, and `type` and `location`, where given, matching (they may be left out) | `consistency_error` |
+| `credit_hours` equals a fixed-credit section's credits, or is inside a variable-credit section's range | `consistency_error` |
 | `waitlist: true` only on a section that is full and has a waitlist with room | `consistency_error` |
 | A full section without `waitlist: true` | `consistency_error` (as before) |
 
@@ -360,14 +385,16 @@ the design asks (§10).
 | `"from": "alice"` | `syntactic_error` |
 | `"type"` of another protocol | `schema_error` |
 | Old body `{"student_id", "section_id"}` | `schema_error` |
-| `"sections": ["41836"]` (bare crns, the earlier shape) | `schema_error` |
+| `"sections": ["41836"]` (bare crns) or `[{"crn": "41836"}]` (crn only), the earlier shapes | `schema_error` |
 | No `term_code`, or `"term_code": 202640` as a number | `schema_error` |
 | `"sections": []`, or the same crn twice | `schema_error` |
-| A section object without `crn`, or with an unknown field | `schema_error` |
-| `"credit_hours": "3"` or `"waitlist": "yes"` | `schema_error` |
+| A section object missing a required field (`crn`, `meetings`, `credit_hours`, …), or with an unknown field | `schema_error` |
+| `"credit_hours": "3"`, `"seats_taken": "20"` or `"waitlist": "yes"` | `schema_error` |
+| `"course_id": "CS 04114"`, `"modality": "remote"`, `"days": ["MW"]` or a 24-hour time | `schema_error` |
+| A meeting with `start_time` but no `end_time`, or an unknown meeting field | `schema_error` |
 | Extra body field | `schema_error` |
 
-`python didcomm_schema.py` runs these and more; all 23 give the expected outcome.
+`python didcomm_schema.py` runs these and more; all 34 give the expected outcome.
 
 ## The input format
 
@@ -407,28 +434,40 @@ from is set by the case:
 
 | Case gives | The model sees | Who picks the sections |
 |---|---|---|
-| `"schedule_from_tally": {"search": true}` (every case in this repo) | Only the term. It must find sections with the `search_sections` tool, over the whole tally | The model |
+| `"schedule_from_tally": {"named_courses": true}` (every case in this repo), optionally with `"courses": [...]` | Every open section of every course the input names, listed in the prompt, in one input | The pipeline (which courses); the model (which sections) |
 | `"schedule_from_tally": {"crns": [...], "courses": [...]}` | Those sections, listed in the prompt | The case author |
+| `"schedule_from_tally": {"search": true}` | Only the term. It must find sections with the `search_sections` tool, over the whole tally | The model |
 | `input.schedule` written out | That schedule | The case author |
 
 ```json
 {
-  "case_id": "tal_004",
+  "case_id": "case_015",
   "input": { "student": {}, "transcript": {}, "program_requirements": [], "prompt": "Register me for two classes that count toward my ..." },
-  "schedule_from_tally": { "search": true },
+  "schedule_from_tally": { "named_courses": true },
   "ground_truth": { "rules": { "count": {"min": 2, "max": 2}, "courses_count_toward": ["cs_electives"], "no_days": ["Friday"] } }
 }
 ```
 
 `run_semantic_eval.load_test_cases()` fills in `input.schedule` from
-`section_tally_fall2026.csv` when it loads the file (`resolve_case()`). In search mode that is
-the whole tally (5,129 sections, cancelled ones flagged): the checker's database holds every
-section, so whatever the model picks is checked against real data, but the prompt carries only
-the term. A case gives `schedule` or `schedule_from_tally`, never both. With hand-picked
+`section_tally_fall2026.csv` when it loads the file (`resolve_case()`).
+
+With `named_courses`, `run_semantic_eval.named_courses()` collects every course the input
+names: each requirement's `course_options`, each course with a `prerequisites` entry, and each
+course id written in the prompt. `section_tally.course_schedule()` then takes every section of
+those courses, in export order, leaving out cancelled ones and skipping courses with no section
+this term (28 of the 47 electives in aneesh_test). `"courses": [...]` adds courses the input does
+not name by id, e.g. case_012's "Operating Systems" (CS06395) and the look-alike CS03570. The
+prompt and the checker's database hold the same sections, so a crn from outside them is a
+`consistency_error` ("does not exist"). The whole tally does not fit: 4,807 open sections are
+about 660k tokens.
+
+In search mode the schedule is the whole tally (5,129 sections, cancelled ones flagged): the
+checker's database holds every section, but the prompt carries only the term. A case gives
+`schedule` or `schedule_from_tally`, never both. With hand-picked
 sections, `crns` come first in the order given, then every section of each of `courses`;
 `include_cancelled` offers cancelled ones too.
 
-### The search tool
+### The search tool (search mode, not used by any case now)
 
 In search mode the model gets one tool, `search_sections` (`section_tally.SEARCH_TOOL`), and
 the prompt says the sections are not listed and must be looked up. The harness runs the loop
@@ -523,7 +562,7 @@ Open points:
 | 6. Other requirement types | New optional fields, all read by `registration.audit()`. See the next table. |
 | 7. Graduation-wide rules | New optional `graduation_rules`: `total_credits`, `minimum_gpa`, `residency_credits`. The audit derives earned credits, institutional credits and GPA from the transcript; none is stored. A repeated course counts once, by its best attempt. |
 | 8. Other input renderings | `--rendering csv` shows the same state as CSV tables, and `--rendering nl` as plain-text sentences. JSON stays the stored form. |
-| 9. Test-case wrapper | `acceptable_crns` lists sections that are each a correct one-section cart. `acceptable_carts` lists whole carts, for answers with several sections. A section is written as its crn (`"41836"`), or as an object when the answer needs more: `{"crn": "46497", "credit_hours": 3}`, `{"crn": "44033", "waitlist": true}`. Tier 4 passes when the cart equals any acceptable one, so a case can have more than one right answer. |
+| 9. Test-case wrapper | `acceptable_crns` lists sections that are each a correct one-section cart. `acceptable_carts` lists whole carts, for answers with several sections. A section is written as its crn (`"41836"`), or as an object when the answer needs more: `{"crn": "46497", "credit_hours": 3}`, `{"crn": "44033", "waitlist": true}`. The key never repeats the section's details: `expected_message()` copies them in from the schedule. Tier 4 passes when the cart equals any acceptable one, so a case can have more than one right answer. |
 
 Fields added for open items 4, 6 and 7:
 
@@ -548,46 +587,53 @@ What the checker does and does not read:
   so whether a course "counts toward the degree" is decided by the author, with the audit
   as a cross-check.
 
-### The fifteen cases
+### The sixteen cases
 
-`input_format_cases.json`. In each, the model searches the whole Fall 2026 Section Tally; the
-student, transcript, requirements and request are made up. "Listed" answer keys name every
+Cases are named `case_001`–`case_015` in file order, plus `aneesh_test`, the case built on
+the CS program guide's requirements. Before 10/14 they were `sem_001`–`sem_008`,
+`con_001`–`con_003` and `tal_001`–`tal_005` (`aneesh_test` was `tal_005`); results logged
+before then use the old ids.
+
+`input_format_cases.json`. In each, the prompt lists every open Fall 2026 section of the
+courses the case names; the student, transcript and request are made up, and so are the
+requirements except aneesh_test's, which come from the CS program guide. "Listed" answer keys name every
 correct cart; "rules" keys say what any correct cart must satisfy.
 
 | Case | Prompt | What it tests | Answer key |
 |---|---|---|---|
-| sem_001 | "Enroll me in Advanced Cell Biology (BIOL01430). I live in Glassboro, so I want the section on my campus." | Campus: an open section at Rowan College at Burlington is valid but wrong; the other Glassboro section is full. | listed: `46195` |
-| con_001 | "Enroll me in CS04225." | Two of three sections are full. | listed: `42070` |
-| con_002 | "Enroll me in CS01303 and Calculus II (MATH01131)." | Partial time overlap: one Calculus II section overlaps CS01303 by ten minutes. | rules: 4 correct carts |
-| sem_002 | "Register me for Interpersonal Communication (CMS04220) and CS07450. I only want classes that meet in person." | An open online section is valid but wrong. | rules: 2 correct carts |
-| sem_003 | "Enroll me in one class that counts toward my Computer Science restricted electives. I don't want to retake anything I've already passed." | Two electives are already passed; two others are full. | rules: 4 correct sections |
-| sem_004 | "Register me for two computer science classes that count toward my degree. I work evenings, so nothing that ends after 5 PM." | A prerequisite still in progress, one met by transfer credit, a repeatable course, evening sections. | rules: 2 correct carts |
-| sem_005 | "I can only take 6 credits this fall. Register me for CS07450, and add Calculus I (MATH01130) too only if both fit within my limit." | Credit arithmetic: 3 + 4 is over the limit. | listed: `44477` |
-| con_003 | "Register me for CS07450 if I meet its prerequisite. If I don't, register me for CS04222 instead so I can retake it." | A prerequisite earned with a D against a C- minimum, so the fallback applies. | rules: 3 correct sections |
-| sem_006 | "I need one class for my Health and Society requirement. I'll be away from campus all fall, so it has to be fully online." | Which courses count, then online only; in-person and full online sections are traps. | rules: 5 correct sections |
-| sem_007 | "Register me for Advanced Cell Biology (BIOL01430) and CS04222. I can't be on campus on Fridays." | Lecture-and-lab sections: one lab is on Friday, and one CS04222 section overlaps the remaining lab. | rules: 2 correct carts |
-| sem_008 | "Register me for every class I still need to finish my Foundational Courses requirement." | One course met under an old id, one earned below the minimum grade, one withdrawn. | rules: 6 correct carts |
-| tal_001 | "Register me for Operating Systems. If every section is full, put me on the waitlist for the Tuesday/Thursday section." | Every section is full, so the answer is a waitlist request, for one particular section. | listed: `42090` with `waitlist: true` |
-| tal_002 | "Enroll me in CS04114 and CS06205. I don't want any classes on Fridays." | One of each course is full, one meets on Friday and also overlaps. | listed: 2 carts |
-| tal_003 | "Sign me up for the Clinical Lab Science Seminar (CHEM05502) for 2 credits, and for a morning section of CS04114." | A variable-credit section (1–3 credits) and a time-of-day choice. | listed: `44459` at 2 credits + `41990` |
-| tal_004 | "Register me for two classes that count toward my Computer Science restricted electives. No Friday classes, nothing that starts at 5 PM or later, and don't put me on any waitlists." | Which courses count, then day, time and seats. | rules: 2 correct carts |
+| case_001 | "Enroll me in Advanced Cell Biology (BIOL01430). I live in Glassboro, so I want the section on my campus." | Campus: an open section at Rowan College at Burlington is valid but wrong; the other Glassboro section is full. | listed: `46195` |
+| case_002 | "Enroll me in CS04225." | Two of three sections are full. | listed: `42070` |
+| case_003 | "Enroll me in CS01303 and Calculus II (MATH01131)." | Partial time overlap: one Calculus II section overlaps CS01303 by ten minutes. | rules: 4 correct carts |
+| case_004 | "Register me for Interpersonal Communication (CMS04220) and CS07450. I only want classes that meet in person." | An open online section is valid but wrong. | rules: 2 correct carts |
+| case_005 | "Enroll me in one class that counts toward my Computer Science restricted electives. I don't want to retake anything I've already passed." | Two electives are already passed; two others are full. | rules: 4 correct sections |
+| case_006 | "Register me for two computer science classes that count toward my degree. I work evenings, so nothing that ends after 5 PM." | A prerequisite still in progress, one met by transfer credit, a repeatable course, evening sections. | rules: 2 correct carts |
+| case_007 | "I can only take 6 credits this fall. Register me for CS07450, and add Calculus I (MATH01130) too only if both fit within my limit." | Credit arithmetic: 3 + 4 is over the limit. | listed: `44477` |
+| case_008 | "Register me for CS07450 if I meet its prerequisite. If I don't, register me for CS04222 instead so I can retake it." | A prerequisite earned with a D against a C- minimum, so the fallback applies. | rules: 3 correct sections |
+| case_009 | "I need one class for my Health and Society requirement. I'll be away from campus all fall, so it has to be fully online." | Which courses count, then online only; in-person and full online sections are traps. | rules: 5 correct sections |
+| case_010 | "Register me for Advanced Cell Biology (BIOL01430) and CS04222. I can't be on campus on Fridays." | Lecture-and-lab sections: one lab is on Friday, and one CS04222 section overlaps the remaining lab. | rules: 2 correct carts |
+| case_011 | "Register me for every class I still need to finish my Foundational Courses requirement." | One course met under an old id, one earned below the minimum grade, one withdrawn. | rules: 6 correct carts |
+| case_012 | "Register me for Operating Systems. If every section is full, put me on the waitlist for the Tuesday/Thursday section." | Every section is full, so the answer is a waitlist request, for one particular section. | listed: `42090` with `waitlist: true` |
+| case_013 | "Enroll me in CS04114 and CS06205. I don't want any classes on Fridays." | One of each course is full, one meets on Friday and also overlaps. | listed: 2 carts |
+| case_014 | "Sign me up for the Clinical Lab Science Seminar (CHEM05502) for 2 credits, and for a morning section of CS04114." | A variable-credit section (1–3 credits) and a time-of-day choice. | listed: `44459` at 2 credits + `41990` |
+| case_015 | "Register me for two classes that count toward my Computer Science restricted electives. No Friday classes, nothing that starts at 5 PM or later, and don't put me on any waitlists." | Which courses count, then day, time and seats. | rules: 2 correct carts |
+| aneesh_test | "Sign me up for my writing-intensive requirement and for whichever Communicative Literacy course I still need. I can only come to campus on Tuesdays and Thursdays, and I have to be done by 7 PM." | Requirements from the CS program guide: name the courses from requirement titles and the transcript (WA01302, CMS04205), then days, an end time, an evening section that overlaps, and seats. | rules: 6 correct carts |
 
-All fifteen were written by Claude and have not been checked by a teammate. `python
+All sixteen were written by Claude and have not been checked by a teammate. `python
 run_semantic_eval.py --check` confirms each answer key behaves: listed carts score
 `semantic_ok`; in a rules case the valid examples pass and the invalid ones fail. For every
 rules case I also checked every combination of the real sections a student could reach for
 (sections of the named courses, or of courses that count toward the named requirements): the
 rules accept exactly the carts in the table.
 
-The sem_ and con_ cases are rebuilt versions of eleven earlier cases that used invented
+case_001–case_011 (formerly the sem_ and con_ cases) are rebuilt versions of eleven earlier cases that used invented
 sections (removed on 10/14; the first six are in git history at `e02b9f1`). Each keeps what
 its original tested, on real Fall 2026 sections, with two changes forced by the data:
 
-- **sem_006** tested a requirement satisfied by a course *attribute*; the tally has no
+- **case_009** tested a requirement satisfied by a course *attribute*; the tally has no
   attributes, so its requirement is now a list of courses (an invented "Health and Society"
   requirement over real courses).
-- **sem_001** and **sem_007** both use BIOL01430, the only course in the tally with both a
-  second campus and a Friday lab; sem_007 adds a second course so the two cases differ.
+- **case_001** and **case_010** both use BIOL01430, the only course in the tally with both a
+  second campus and a Friday lab; case_010 adds a second course so the two cases differ.
 
 Requirements and prerequisites are invented throughout (the tally has neither), so a course's
 real prerequisites are not checked unless a case lists them.
@@ -629,14 +675,16 @@ Rows are in `semantic_eval_results.json`. OpenRouter, JSON rendering, current me
 
 | Date | Model | Case | Samples | Result | Cost |
 |---|---|---|---|---|---|
-| 2026-10-14 | `anthropic/claude-opus-5.5` | tal_001, sections listed in the prompt | 1 | 1/1 `semantic_ok` (used `waitlist` as asked) | $0.012 |
-| 2026-10-14 | `anthropic/claude-opus-5.5` | tal_004, **search mode** | 1 | 1/1 `semantic_ok` | $0.040 |
+| 2026-10-14 | `anthropic/claude-opus-5.5` | case_012, sections listed in the prompt | 1 | 1/1 `semantic_ok` (used `waitlist` as asked) | $0.012 |
+| 2026-10-14 | `anthropic/claude-opus-5.5` | case_015, **search mode** | 1 | 1/1 `semantic_ok` | $0.040 |
 
-- In tal_004, Opus looked up each of the six courses in the electives requirement by course id
+- In case_015, Opus looked up each of the six courses in the electives requirement by course id
   (6 searches, sent together in one turn), then answered `44477` + `41892`: 2 model calls,
   6,948 input tokens, 10.9 s.
-- tal_001 was run before it switched to search mode; tal_002 and tal_003 have not been run,
+- case_012 was run before it switched to search mode; case_013 and case_014 have not been run,
   nor have the `csv` and `nl` renderings.
+- None of these runs is comparable with the current pipeline: they used the earlier message
+  body (crn only), and every case now lists its sections in one input instead of searching.
 
 Findings from removed runs (earlier message body or removed cases), kept because they bear on
 open questions:
@@ -666,8 +714,11 @@ The results committed before 10/14 are in git history (`semantic_eval_results.js
    measured deviation anyway?
 5. **Drops and swaps.** Is the scope register-only, or do we need message types for dropping
    or swapping a section?
-6. **Credits on fixed-credit sections.** The message may leave `credit_hours` out or repeat
-   the section's credits. Should repeating them be required, or forbidden, for consistency?
+6. **How strictly the copied section fields are checked.** Every entry must now repeat the
+   section's details (`course_id`, `section`, `credit_hours`, seats, `campus`, `modality`,
+   `meetings`). Tier 3 ignores case, day order and a leading zero, and lets a meeting's
+   `type` and `location` be left out. Should a wrong copy be a `consistency_error` (as now)
+   or a separate measured deviation, given that it can fail an otherwise right cart?
 7. **Waitlisting and time conflicts.** A waitlisted section is still checked for time
    conflicts with the rest of the cart. Is that right, given the student isn't enrolled yet?
 8. **What the search tool offers.** It searches by course id, subject and title words. A real
