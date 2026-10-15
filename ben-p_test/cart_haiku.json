@@ -1,0 +1,71 @@
+[
+  {
+    "task_id": "cart-001",
+    "backend": "openrouter",
+    "model": "anthropic/claude-haiku-4.5",
+    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"ART110-A\", \"course_id\": \"ART110\", \"seats_total\": 25, \"seats_taken\": 8, \"meets\": \"TR15\"}, {\"section_id\": \"CS301-A\", \"course_id\": \"CS301\", \"seats_total\": 30, \"seats_taken\": 10, \"meets\": \"MW10\"}, {\"section_id\": \"MATH152-A\", \"course_id\": \"MATH152\", \"seats_total\": 30, \"seats_taken\": 12, \"meets\": \"TR10\"}]\n\nIntent: Register student alice for CS301 and MATH152 next semester.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
+    "raw_output": "```json\n{\"type\": \"https://example.org/course-registration/1.0/register\", \"id\": \"a7f2c9e1-3b5d-4a8f-9e2c-1d6b4f8a3e5c\", \"body\": {\"student_id\": \"alice\", \"sections\": [\"CS301-A\", \"MATH152-A\"]}}\n```",
+    "prompt_tokens": 428,
+    "completion_tokens": 97,
+    "latency_ms": 1554.7790999989957,
+    "gen_ms": 0.0,
+    "load_ms": 0.0,
+    "total_ms": 0.0,
+    "usd_cost": 0.000913,
+    "run_index": 0,
+    "ok": true,
+    "error": null,
+    "ts": "2026-10-15T03:06:55.552017+00:00",
+    "parsed_output": null,
+    "verdict": {
+      "outcome": "syntactic_error",
+      "detail": "invalid JSON (Expecting value: line 1 column 1 (char 0))"
+    }
+  },
+  {
+    "task_id": "cart-002",
+    "backend": "openrouter",
+    "model": "anthropic/claude-haiku-4.5",
+    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"CS401-A\", \"course_id\": \"CS401\", \"seats_total\": 30, \"seats_taken\": 5, \"meets\": \"MW09\"}, {\"section_id\": \"CS401-B\", \"course_id\": \"CS401\", \"seats_total\": 30, \"seats_taken\": 5, \"meets\": \"TR13\"}, {\"section_id\": \"STAT200-A\", \"course_id\": \"STAT200\", \"seats_total\": 35, \"seats_taken\": 15, \"meets\": \"MW11\"}]\n\nIntent: Register student bob for STAT200 and for the Tuesday/Thursday section of CS401.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
+    "raw_output": "```json\n{\"type\": \"https://example.org/course-registration/1.0/register\", \"id\": \"550e8400-e29b-41d4-a716-446655440000\", \"body\": {\"student_id\": \"bob\", \"sections\": [\"STAT200-A\", \"CS401-B\"]}}\n```",
+    "prompt_tokens": 430,
+    "completion_tokens": 81,
+    "latency_ms": 1126.446099995519,
+    "gen_ms": 0.0,
+    "load_ms": 0.0,
+    "total_ms": 0.0,
+    "usd_cost": 0.000835,
+    "run_index": 0,
+    "ok": true,
+    "error": null,
+    "ts": "2026-10-15T03:06:57.122216+00:00",
+    "parsed_output": null,
+    "verdict": {
+      "outcome": "syntactic_error",
+      "detail": "invalid JSON (Expecting value: line 1 column 1 (char 0))"
+    }
+  },
+  {
+    "task_id": "cart-005",
+    "backend": "openrouter",
+    "model": "anthropic/claude-haiku-4.5",
+    "prompt_sent": "Known state (JSON):\n[{\"section_id\": \"PHYS201-A\", \"course_id\": \"PHYS201\", \"seats_total\": 30, \"seats_taken\": 11, \"meets\": \"MW10\"}, {\"section_id\": \"CS250-A\", \"course_id\": \"CS250\", \"seats_total\": 30, \"seats_taken\": 4, \"meets\": \"MW10\"}, {\"section_id\": \"CS250-B\", \"course_id\": \"CS250\", \"seats_total\": 30, \"seats_taken\": 18, \"meets\": \"TR10\"}]\n\nIntent: Register student erin for PHYS201 and CS250 with no time conflict between them.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}}",
+    "raw_output": "```json\n{\"type\": \"https://example.org/course-registration/1.0/register\", \"id\": \"a7f2c9e1-3b5d-4a8f-9e2c-1d6b4f8a2e5c\", \"body\": {\"student_id\": \"erin\", \"sections\": [\"PHYS201-A\", \"CS250-B\"]}}\n```",
+    "prompt_tokens": 434,
+    "completion_tokens": 99,
+    "latency_ms": 1446.1030999955256,
+    "gen_ms": 0.0,
+    "load_ms": 0.0,
+    "total_ms": 0.0,
+    "usd_cost": 0.000929,
+    "run_index": 0,
+    "ok": true,
+    "error": null,
+    "ts": "2026-10-15T03:06:58.265755+00:00",
+    "parsed_output": null,
+    "verdict": {
+      "outcome": "syntactic_error",
+      "detail": "invalid JSON (Expecting value: line 1 column 1 (char 0))"
+    }
+  }
+]

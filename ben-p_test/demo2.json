@@ -1,0 +1,35 @@
+[
+  {
+    "task_id": "con_002",
+    "backend": "openrouter",
+    "model": "anthropic/claude-sonnet-5",
+    "prompt_sent": "Known state (JSON):\n(The state below is given as CSV tables, not JSON.)\n# student\nstudent_id,degree,major,minor,program_id,catalog_year\nS001,Bachelor of Science,Computer Science,Mathematics,O701,Fall 2026\n\n# completed_courses\nterm,course_id,campus,level,title,grade,credit_hours\nFall 2023,CS04113,Glassboro,UG,INTRO OBJ-ORIENT PRGRMMNG,A-,4\nFall 2024,CS04222,Glassboro,UG,DATA STRUCT/ALGORIM,W,4\nSpring 2025,CS04222,Glassboro,UG,DATA STRUCT/ALGORIM,B,4\n\n# transfer_courses\ninstitution,course_id,title,grade,credit_hours\nExample County College,PHYS00220,INTRODUCTORY MECHANICS,TA,4\n\n# courses_in_progress\nterm,course_id,campus,level,title,credit_hours\nFall 2026,CS04114,Glassboro,UG,OBJ-ORIENT PRGRM/DATA ABSTR,3\n\n# program_requirements\nreq_id,category,rule,course_options,title,credit_hours,minimum_grade,notes\ncomp_1,Rowan Core: Communicative Literacy,all_of,COMP01111,College Composition I,3,D-,Required course\nintro_oop,Major Requirements: Foundational Courses,any_of,CS04113|CS04111,Introduction to Object-Oriented Programming,4,C-,Students must be ready for MATH01130\ncs_electives,Major Requirements: Computer Science Restricted Electives,credits_from,CS01303|CS01395|CS02435|CS02480|CS03351|CS07450,Computer Science Restricted Electives,12,D-,Choose 12 credits from the listed elective courses\n\n# sections offered in Fall 2026\ncrn,course_id,section,title,credit_hours,seats_total,seats_taken,campus,modality,meetings\n30001,CS05000,01,Introduction to Software Engineering,3,30,14,Glassboro,in-person,Monday/Wednesday 10:00 AM-11:15 AM (Lecture)\n30002,MATH03000,01,Applied Mathematics,3,30,5,Glassboro,in-person,Monday/Wednesday/Friday 10:30 AM-11:20 AM (Lecture)\n30003,MATH03000,02,Applied Mathematics,3,30,22,Glassboro,in-person,Tuesday/Thursday 10:00 AM-11:15 AM (Lecture)\n\n\nIntent: Enroll me in CS05000 and MATH03000.\n\nRespond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"sections\": [<section_id>, ...]}, with at least one section and no repeats. Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"sections\": [\"MATH200-03\", \"ENGL110-01\"]}} Each entry of \"sections\" MUST be the crn of an offered section, and \"student_id\" MUST be the student's student_id.",
+    "raw_output": "{\"id\": \"b6e4f1a2-9c3d-4e8b-8a7f-1d2c3b4a5e6f\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S001\", \"sections\": [\"30001\", \"30002\"]}}",
+    "prompt_tokens": 1273,
+    "completion_tokens": 174,
+    "latency_ms": 5199.2809000003035,
+    "gen_ms": 0.0,
+    "load_ms": 0.0,
+    "total_ms": 0.0,
+    "usd_cost": 0.004286,
+    "run_index": 0,
+    "ok": true,
+    "error": null,
+    "ts": "2026-10-14T22:49:06.954041+00:00",
+    "parsed_output": {
+      "id": "b6e4f1a2-9c3d-4e8b-8a7f-1d2c3b4a5e6f",
+      "type": "https://example.org/course-registration/1.0/register",
+      "body": {
+        "student_id": "S001",
+        "sections": [
+          "30001",
+          "30002"
+        ]
+      }
+    },
+    "verdict": {
+      "outcome": "consistency_error",
+      "detail": "time conflict inside the cart: 30001 and 30002 on Monday"
+    }
+  }
+]
