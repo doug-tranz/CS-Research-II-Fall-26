@@ -20,19 +20,21 @@ Contents: [What's here](#whats-here) · [Setup](#setup) · [Run](#run) ·
 
 | File | Role |
 |---|---|
-| `harness.py` | Core, domain-agnostic: backends (Ollama local, OpenRouter cloud), `generate()`, `generate_with_tools()` (lets the model call tools before it answers), DIDComm envelope parsing, logging. |
-| `registration_input.schema.json` | The input format rules, as JSON Schema: student, transcript, program requirements, schedule, prompt. See [The input format](#the-input-format). |
+| `harness.py` | Core, domain-agnostic: the OpenRouter backend, `generate()`, prompt caching for an opening shared by many cases (`TaskSpec.shared_context`), DIDComm envelope parsing. |
+| `registration_input.schema.json` | The input format rules, as JSON Schema: student, transcript, program requirements, schedule, prompt, and the optional Rowan program-guide fields. See [The input format](#the-input-format). |
 | `registration_message.schema.json` | The message rules, as JSON Schema (draft 2020-12). Source of truth for the cart message. |
 | `didcomm_schema.py` | `validate_message()`: Tiers 1–2 against the message schema. `OUTPUT_CONTRACT`: the prompt text that tells a model the format. |
 | `registration.py` | Registration domain testbed: SQLite schema, `evaluate()` (Tiers 1–2 from `didcomm_schema`, then Tier 3 consistency over the whole cart). Also the input format: `validate_input()`, `audit()` (degree audit), `missing_prerequisites()`, and `seed_db()`. |
-| `run_semantic_eval.py` | The pipeline. Builds each case's prompt (as JSON, CSV or plain text), sends it to a model, and scores the answer on all four tiers; `check_semantic()` (Tier 4) and `evaluate_case()` live here. |
-| `input_format_cases.json` (16) | The test cases: each an input object plus an answer key. In every case the sections come from the Section Tally and are listed in the prompt: every open section of each course the case names (`"schedule_from_tally": {"named_courses": true}`). |
-| `section_tally.py` | Reads Rowan's Section Tally export, turns rows into input-format sections, and picks each case's sections (`course_schedule()`). It also holds the `search_sections` tool for search mode, which no case uses now. See [Sections from the Section Tally](#sections-from-the-section-tally). |
+| `run_semantic_eval.py` | The pipeline. Runs a session (`TallySession`): the whole Section Tally as the opening turn, cached, then each case as its own request (as JSON, CSV or plain text); scores each answer on all four tiers. `check_rules()` (Tier 4) and `evaluate_case()` live here. See [The session](#the-session-the-default). |
+| `degree_requirements.json` (50) | Degree requirements for 50 Rowan programs, parsed from their Academic Program Guides: requirements, program guide, course attributes, graduation rules, and guide-stated prerequisites. A case names its program instead of writing these out. See [Cases built from degree requirements](#cases-built-from-degree-requirements). |
+| `fabricate.py` | Builds a case's input from its program and fabricates its transcript from a short spec (which requirements are complete, a seed, trap rows); checks the result with the degree audit. |
+| `generate_cases.py` | Writes five test cases per program (250), with rules answer keys verified against every candidate cart in the Section Tally. |
+| `generate_pairs.py` | Writes counterfactual pairs (200 pairs, 400 cases): two cases that differ in one detail of the prompt or transcript, which flips the answer. See [Counterfactual pairs](#counterfactual-pairs-paired_casesjson). |
+| `paired_cases.json` (400) | The pairs, in the same case format; run with `--test-file paired_cases.json`. |
+| `input_format_cases.json` (250) | The test cases: each names its program, fabricates its transcript, and carries an answer key. The sections come from the Section Tally: in a session, the whole tally; with `--named-courses`, every open section of each course the case names (`"schedule_from_tally": {"named_courses": true}`). |
+| `section_tally.py` | Reads Rowan's Section Tally export, turns rows into input-format sections, and gives each case its sections: the named courses' (`course_schedule()`) or the whole tally (`full_schedule()`). See [Sections from the Section Tally](#sections-from-the-section-tally). |
 | `section_tally_fall2026.csv` | The Fall 2026 Section Tally export, as downloaded (renamed). The pipeline reads this one file. |
-| `section_tally/` (138 files, optional) | The same data split by subject (`CS.csv`, `MATH.csv`, …), for browsing only; `python section_tally.py split` regenerates it. The pipeline does not read it, so it can be deleted. |
-| `semantic_eval_results.json` | Generated results of `run_semantic_eval.py`, as an indented JSON array. |
-| `run_registration.py` | A runner for one built-in task: generates, scores Tiers 1–3, logs to `runs.jsonl`. |
-| `probe.py` | Historical raw-Ollama diagnostic (kept for reference). |
+| `semantic_eval_results_finalized.json` | Results of `run_semantic_eval.py`, as an indented JSON array. New runs go to `semantic_eval_results.json` unless `--output` names another file. |
 
 Earlier work is in git history, not in the working tree: the single-section message
 (`old_schema/`) and the 30 cases whose input was a bare list of sections (`test_cases.jsonl`,
@@ -42,7 +44,6 @@ Earlier work is in git history, not in the working tree: the single-section mess
 ## Setup
 
 OpenRouter lets the harness call many LLMs (Claude, GPT, Llama, …) with one API key.
-You do **not** need Ollama installed to run on OpenRouter.
 
 ### 1. Get the code
 
@@ -74,7 +75,6 @@ You'll see `(venv)` at the start of your prompt when it's active. Activate it ag
 (the second line) every time you open a new terminal. `requirements.txt` is `requests`
 plus `jsonschema` (needed by both schemas).
 
-For local runs only, also install Ollama and run `ollama pull llama3.1:8b`.
 
 ### 3. Install your OpenRouter key (once)
 
@@ -121,68 +121,119 @@ All commands are run from the repo root with `(venv)` active.
 
 ```bash
 python run_semantic_eval.py --model anthropic/claude-opus-5.5
-python run_semantic_eval.py --model anthropic/claude-opus-5.5 --task-ids case_012 -n 5
-python run_semantic_eval.py --model anthropic/claude-opus-5.5 --rendering nl
+python run_semantic_eval.py --model anthropic/claude-opus-5.5 --task-ids case_006 case_009
+python run_semantic_eval.py --model anthropic/claude-opus-5.5 --named-courses   # the earlier way
+python run_semantic_eval.py --check                                              # no model, no cost
 ```
 
 | Option | Meaning | Default |
 |---|---|---|
-| `--backend` | `openrouter` (cloud) or `ollama` (local) | `openrouter` |
 | `--model` | One model ID (required unless `--check`) | |
 | `--test-file` | Which case file to run | `input_format_cases.json` |
 | `--task-ids` | Run only these cases | all cases in the file |
 | `-n` | Samples per case | `1` |
-| `--rendering` | How a case's state is shown to the model: `json`, `csv` or `nl` (plain text) | `json` |
+| `--rendering` | How a case's own state is shown to the model: `json`, `csv` or `nl` (plain text) | `json` |
 | `--check` | Score each case's own answer key and exit. No model call | off |
+| `--named-courses` | No session: each case's prompt lists only the sections of the courses it names (below) | off |
+| `--tally` | Which version of the Section Tally opens the session: `raw`, `trimmed`, `raw-open`, `trimmed-open` (see below) | `trimmed` |
+| `--cache-ttl` | How long the session's cached opening lives between calls, `5m` or `1h` | `5m` |
 | `--output` | Results file | `semantic_eval_results.json` |
+| `--pair-report` | Print paired accuracy per model from `--output`, using `--test-file`'s pairs, and exit. No model call | off |
+| `--rescore` | Re-grade the saved answers in `--output` with the current scorer and rewrite their verdicts. No model call | off |
+| `--max-tokens` | Cap on output tokens per call (sent and recorded) | the provider's default |
+| `--effort` | Reasoning effort sent to the model: `minimal`, `low`, `medium`, `high`, `xhigh` | the model's default |
+| `--compare A B` | McNemar's test between two results files, per case and per pair. No model call | |
 
-Appends every sample to the results file. Each case is one model call: the prompt holds the
-transcript, requirements, request and every section, and the model answers. Most cases put
-about 100 sections in the prompt, roughly 24k–30k input tokens and about $0.10–0.13 per call
-on Opus 5.5 (an estimate; case_008 and case_011 about $0.04, aneesh_test, with 220 sections, about
-$0.21). Search mode, the earlier default, took 2 calls and about $0.03–0.04.
+Appends every sample to the results file. When the cases include pairs, the run also prints
+paired accuracy (see [Counterfactual pairs](#counterfactual-pairs-paired_casesjson)).
+
+### The session (the default)
+
+A run is one session:
+
+1. **Start the session** (`TallySession` in `run_semantic_eval.py`): read the whole Section
+   Tally once and build the opening turn: a short key to the columns, then every section,
+   5,129 rows, as CSV (`render_tally()`, about 753,000 characters, roughly 400k tokens).
+2. **Prompt each case.** Every case is one call with four turns: the system prompt; the
+   Section Tally (byte-identical every time, marked for prompt caching); the model's fixed
+   reply, "I have read the Section Tally. Send the registration request."
+   (`harness.SESSION_ACK`); then the case: its student, transcript, requirements, program
+   guide, request and the term (8k-9k tokens). The model never sees another case or its
+   answer, so the order of cases does not matter.
+3. **Close the session.** It prints the model calls, input tokens, how many were written to
+   and read from the cache, and the cost. The cache expires on its own (5 minutes after its
+   last use, or 1 hour with `--cache-ttl 1h`); a run with gaps longer than that pays to write it again.
+
+**Four versions of the opening** (`--tally`). The checker holds all 5,129 sections in every
+version, so the answer keys are the same; a correct cart never needs a full or cancelled section.
+
+| # | `--tally` | The opening | Rows | Size |
+|---|---|---|---|---|
+| 1 | `raw` | The export as downloaded: every row and column (instructor, part of term, room capacity, reserved seats...) | 5,129 | 1.27M characters, ~674k tokens |
+| 2 | `trimmed` (default) | Converted rows; columns no check uses dropped (`TALLY_FIELDS`) | 5,129 | 753k characters, ~386k tokens |
+| 3 | `raw-open` | Every column, but full and cancelled sections dropped | 2,860 | 720k characters, ~380k tokens |
+| 4 | `trimmed-open` | Converted rows, trimmed columns (also no waitlist / cancelled), full and cancelled dropped | 2,860 | 410k characters, ~210k tokens |
+
+With a raw opening the instructions say how to build a message entry from the CSV columns (course_id =
+Subj + Course#, seats_taken = Enrolled, modality from Session, meetings from Meeting Time with full day
+names); with an open-only opening they add that full and cancelled sections are not listed. Costs scale
+with the opening: roughly ×1.75 for `raw`, ×1 for `raw-open`, ×0.55 for `trimmed-open` against
+`trimmed`. Only `trimmed-open` fits a 256k context.
+
+**Result rows.** Each row names its `session_id` and `tally_variant`; when the session closes,
+every row of that session gets `session_cost_usd` (the whole session) and
+`session_avg_cost_per_prompt_usd`. `prompt_sent` is not logged: `prompt_readable` holds the
+same text, parsed.
+
+The model API keeps no state between calls, so "kept in its context" means every call resends
+the tally; the provider's prompt cache is what makes that cheap. The first call writes the
+tally to the cache and later calls read it from there.
+
+The opening's columns are what a model needs to choose a section and copy it into the
+message: crn, course_id, section, title, title_note, credit_hours, seats_total, seats_taken,
+waitlist, campus, modality, meetings, cancelled. Instructor, part_of_term, room capacity,
+session and reserved seats are left out (`TALLY_FIELDS`). Full and cancelled sections are
+included, so the full-section, waitlist and cancelled-section traps still work. The checker
+holds the same 5,129 sections.
+
+Cost on Opus 5.5 (prices: input $4 per million tokens; a cache write costs 1.25×, a cache read
+$0.20 per million): about $2.05 for the first case (the write), then about $0.13 per case
+(about $0.08 to read the tally, $0.04 for the case, plus the answer). All 250 cases come to
+about $33 with `--tally trimmed` (about $22 with `trimmed-open`, $49 with `raw`; use `--task-ids`
+to run fewer), against roughly $410 for the session without caching. Only providers that cache honor the marker: caching through
+OpenRouter was confirmed on Claude (a second call read the whole opening from the cache at
+about a sixth of the cost). The first call can take minutes, so the
+OpenRouter request timeout is 10 minutes.
+
+What is measured: the model must find the right few sections among 5,129, so a wrong answer
+can come from reading a very long input as well as from reasoning. The tally does not fit
+Claude Haiku 4.5 (200k tokens), Grok 4.7 (500k) or the local Llama (131k); run those with
+`--named-courses`.
+
+### Named courses (`--named-courses`, the earlier pipeline)
+
+No session: each case is one call whose prompt holds the student, transcript, requirements,
+request and every open section of the courses the case names (`schedule_from_tally` in the
+case file). The CS cases put about 490 sections in the prompt, about 130k input tokens or
+about $0.50 per call on Opus 5.5; the rowan_ cases about 350-510 sections, $0.35-0.50.
 
 ### The validators alone
 
 ```bash
-python didcomm_schema.py               # 23 example messages, no model, no cost
+python didcomm_schema.py               # 34 example messages, no model, no cost
 python run_semantic_eval.py --check    # every case and its answer key, no model, no cost
 python section_tally.py check          # every tally section converts and fits the input schema
 ```
 
-### The Section Tally
-
-```bash
-python section_tally.py show CS --crns 41836 41837   # those sections in the input format
-python section_tally.py split                        # optional: section_tally/<SUBJ>.csv, for browsing
-```
-
-### One built-in task, several samples
-
-```bash
-python run_registration.py --backend openrouter --models anthropic/claude-haiku-4.5 -n 5
-```
-
-| Option | Meaning | Default |
-|---|---|---|
-| `--backend` | `openrouter` (cloud) or `ollama` (local) | `ollama` |
-| `--models` | One or more model IDs, separated by spaces | `llama3.1:8b` |
-| `-n` | How many times to run each model (samples) | `5` |
-
-Running with no options uses local Ollama, which only works if you have Ollama installed.
-Scores each sample on Tiers 1–3 and appends rows to `runs.jsonl`.
-
 ### Change the model
 
 Model IDs are the `provider/model` names on <https://openrouter.ai/models>. Click a model
-and copy the ID under its name. Spelling must be exact. `run_registration.py` takes several
-at once and runs them one after another:
+and copy the ID under its name. Spelling must be exact. Run one model per command:
 
 ```bash
-python run_registration.py --backend openrouter --models anthropic/claude-sonnet-5 openai/gpt-4o-mini meta-llama/llama-3.1-8b-instruct -n 5
+python run_semantic_eval.py --model anthropic/claude-sonnet-5
+python run_semantic_eval.py --model openai/gpt-5.5
 ```
-
-Include `meta-llama/llama-3.1-8b-instruct` to compare against local `llama3.1:8b` (design §4.1).
 
 Models we've already tried (price is per call on the early single-section task; the current
 cases are longer, so expect more):
@@ -193,7 +244,7 @@ cases are longer, so expect more):
 | `anthropic/claude-sonnet-5` | mid | $0.0013 |
 | `anthropic/claude-opus-5.5` | high | $0.004 |
 | `anthropic/claude-fable-5.1` | top | $0.007 (often blocked, see Troubleshooting) |
-| `meta-llama/llama-3.1-8b-instruct` | same model as our local Ollama run | very cheap |
+| `meta-llama/llama-3.1-8b-instruct` | small open model | very cheap |
 
 **Watch the cost.** Cost ≈ price per call × number of models × number of calls. Try new
 models with `-n 1` or a couple of `--task-ids` first. Avoid very expensive models unless the
@@ -210,32 +261,96 @@ case_012 run 0: semantic_ok          | matches ground truth exactly
 5/5 semantic_ok on anthropic/claude-opus-5.5. Cost $0.1005. Full results in semantic_eval_results.json
 ```
 
-`run_registration.py` prints one line per sample:
-
-```
-run 0: consistent__semantic_TBD   | invariants hold; ... | $0.001334
-   raw: {"id": "...", "type": "https://example.org/course-registration/1.0/register", "body": ...
-```
-
 | Outcome | Tier | Meaning |
 |---|---|---|
 | `syntactic_error` | 1 | Not a DIDComm message: not valid JSON (e.g. the model wrapped it in a ```` ```json ```` code block, or returned nothing), or no `id`, or a malformed `type` |
 | `schema_error` | 2 | A DIDComm message, but not our register message: wrong `type`, or the body isn't exactly `student_id`, `term_code` and a `sections` list of section objects |
-| `consistency_error` | 3 | Breaks a rule, e.g. full section, already enrolled, time conflict, unmet prerequisite |
+| `consistency_error` | 3 | Breaks a rule, e.g. full section, time conflict, unmet prerequisite |
 | `semantic_error` | 4 | Passes every rule, but the cart is not one the intent asked for |
 | `semantic_ok` | 4 | Correct |
-| `consistent__semantic_TBD` | 3 | `run_registration.py` only: passed Tiers 1–3; that runner has no expected answer to check intent against |
 | `GENERATION FAILED` / `generation_failed` | | The call itself failed; the error message says why |
 
-Where the full rows go, each with the prompt, the model's raw answer, tokens, latency, cost
-and the verdict:
+Where the full results go: `run_semantic_eval.py` → `semantic_eval_results.json` (or
+`--output`), one indented JSON object, `{"sessions": [...], "results": [...]}`. Each run of the
+script is one session. What every call of a session shares is written once, in its summary;
+each result row keeps only what is its own and names its `session_id`. Nothing is stored twice,
+except `deviation_score` (per row, and averaged in the summary).
 
-- `run_semantic_eval.py` → `semantic_eval_results.json`, an indented JSON array. Next to each
-  verbatim string is a readable version: `prompt_sent` (the exact text sent) is followed by
-  `prompt_readable`, split into `known_state` (the input, including the schedule, as an
-  indented object; as lines for the CSV and plain-text renderings), `intent` and
-  `output_contract`; `raw_output` (the exact text returned) is followed by `parsed_output`.
-- `run_registration.py` → `runs.jsonl`, one line per sample.
+**`sessions[]`, one summary per run.**
+- **Settings (to repeat the run):** `session_id`, `model`, `test_file` and `test_file_sha256`,
+  `code_version` (git `commit`, `branch`, and `uncommitted_changes` with the `changed_files`;
+  with uncommitted changes the commit alone does not reproduce the run), `tally_variant` (null
+  with `--named-courses`), `rendering`, `samples_per_case`, `cache_ttl`,
+  `generation_settings` (exactly what every call sent: `temperature`, `stream`, `usage`, and
+  `max_tokens` / `reasoning.effort` when `--max-tokens` / `--effort` are given; otherwise the
+  provider's defaults apply), `shared_context` (the cached opening's size and hash) and
+  `output_contract`.
+- **Correctness:** `cases`, `calls`, `generation_failures`, `outcomes`; `semantic_ok` as
+  `{count, rate, ci95}` (a 95% Wilson interval, over calls that did not fail);
+  `semantic_ok_by_case_type`; `mean_chance_baseline` (the average chance of a correct answer by
+  picking a plausible answer at random, from each case's `difficulty`; compare it to the rate);
+  `mean_deviation_score`; `error_types` (failures counted by kind, see below); and
+  `paired_accuracy` when the session ran pairs (`passed`, `scored`, `rate`, `ci95`,
+  `strong_pairs_only` with its own interval, `weak_pairs_scored`, `incomplete`, `by_family`).
+  With fewer than 3 samples per case, a `sampling_note` warns that differences may be chance.
+- **The calls:** `finish_reasons` (stop reasons counted, e.g. `stop (end_turn)`: 6),
+  `served_by` (model and provider OpenRouter actually used, counted), `tokens` (prompt, cached,
+  cache-write, completion, `reasoning_tokens`, `cache_read_share`), and `latency`
+  (`mean_total_ms`, `mean_first_token_ms`).
+- **Cost:** `cost.total_usd`; `avg_per_call_usd`; `setup_usd_est` (the one-time cache write of
+  the shared opening) and `per_case_marginal_usd_est` (one more case once the cache is warm).
+  These two are estimates: OpenRouter reports one cost per call, so the marginal cost is the
+  median cost of cache-reading calls, and setup is what the writing call cost above that.
+  Also `per_correct_answer_usd`, `per_passed_pair_usd`, and, when a session records
+  `earlier_attempts` (failed tries that were billed and then rerun), `earlier_attempts_usd` and
+  `total_spent_usd`. `--rescore` makes no model call and costs nothing.
+
+**`results[]`, one row per call:**
+- **Identity:** `task_id`, `session_id`, `run_index`, `ts`, `case_hashes` (`input`: a hash of
+  what the model saw; `rules`: a hash of the answer key's rules), so a result can be tied to the
+  exact case version it ran on.
+- **What was sent:** `prompt_readable`, the case's own turn as `known_state` and `intent`; the
+  output contract is in the summary, and stays in a row only if it differed.
+- **What came back:** `parsed_output`, the model's message. `raw_output` (the verbatim text) is
+  kept only when it is not JSON, e.g. wrapped in a code fence, so the parsed copy would be lossy.
+- **The call:** `error` (null when the call succeeded); `finish_reason` and
+  `native_finish_reason` (why generation stopped: `stop`/`end_turn`, `length`/`max_tokens` =
+  cut off, `refusal`); `served_model`, `provider` and `generation_id` (OpenRouter's id, for its
+  dashboard); `prompt_tokens`, `cached_tokens`, `cache_write_tokens`, `completion_tokens`,
+  `reasoning_tokens` (thinking, part of completion), `first_token_ms` (time to the first streamed
+  token, thinking or answer), `latency_ms`, `usd_cost`.
+- **Grading:** `verdict`, with `error_type` on a failure. For a pair case, also `pair_result`:
+  `pair_id`, `twin_id`, `same_answer_as_twin`, `pair_passed`, and an `explanation` naming the
+  twin's outcome.
+
+**`error_type`** names what went wrong, so failures can be counted.
+- **A failed pair or template case** is named for the reasoning it tests: `fallback_not_applied`,
+  `in_progress_course_ignored`, `transfer_credit_ignored`, `time_overlap_missed`,
+  `and_or_requirement_misread`, `credit_arithmetic`, `modality_ignored`, `meeting_days_ignored`,
+  `minimum_grade_misread`, `withdrawal_counted_as_credit`, `already_passed_course_retaken`.
+- **Any other semantic error** is named for its first broken rule: `wrong_number_of_sections`,
+  `requirement_mismatch`, `named_course_missing`, `time_limit_ignored`, `wrong_course`, and so on.
+- **A consistency error** is named for its first failed Tier 3 check: `full_section`,
+  `time_conflict_in_cart`, `prerequisite_missing`, `section_details_miscopied`, and so on.
+- **A format error** is named for its first failed Tier 1–2 check: `not_json`, `not_didcomm`,
+  `malformed_section_entry`, and so on.
+- **From the call itself:** `truncated_at_max_tokens` (a format error from an answer cut off at
+  `max_tokens`), `refused`, and `call_failed`.
+
+**Comparing sessions:** `python run_semantic_eval.py --test-file <cases> --compare A.json B.json`
+runs McNemar's exact test on the case runs both files have, per case and per pair. It prints
+how often only A or only B was right, and p. With one sample per case and a handful of cases,
+expect p near 1: run `-n 3` or more on more cases before claiming a difference.
+
+**Sessions run before 2026-10-19's streaming harness** (the four `pairs_sonnet_*.json`) have no
+finish reasons, providers, thinking tokens or first-token times. Their `generation_settings`,
+`code_version` (the commit, with uncommitted changes that were not recorded) and
+`earlier_attempts` were filled in afterwards from what is known about those runs.
+
+Dropped as duplicates: `ok` (= `error` is null), `prompt_sent`, the per-row copies of the
+session's fields, and, in verdicts, `tier3_detail`, `violated` and `tier4_summary` (all
+restated in `tiers` and the check lists). `--rescore` rewrites an older file (a bare array of
+rows) in this layout.
 
 ## Troubleshooting
 
@@ -290,9 +405,8 @@ Earlier versions, whose results are not comparable with this one:
   `registration/enroll`. The cart's Tiers 1–2 are stricter.
 - **10/7 to 10/14:** the cart with `sections` as a bare list of crns and no `term_code`.
 - **10/14:** section objects holding only `crn`, plus optional `credit_hours` and
-  `waitlist`. The results in `semantic_eval_results.json` and
-  `semantic_eval_results_random3.json` are in this shape or the one before; the current
-  schema rejects both as `schema_error`.
+  `waitlist`. Results logged then (in git history) are in this shape or the one before; the
+  current schema rejects both as `schema_error`.
 
 ### Envelope (DIDComm v2 headers)
 
@@ -406,7 +520,7 @@ One input object describes one registration situation, and all of it is sent to 
 
 | Field | Required | Content |
 |---|---|---|
-| `student` | yes | `student_id`, `degree`, `major`, optional `minor`, `program_id`, `catalog_year`. |
+| `student` | yes | `student_id`, `degree`, `major`, optional `minor`, `program_id`, `catalog_year`, optional `entry` (first-year or transfer; see "Fields for Rowan program guides"). |
 | `transcript` | yes | `completed_courses` (with grades, including `W`), `transfer_courses`, `courses_in_progress` (no grade). |
 | `program_requirements` | yes | Each has `req_id`, `category`, `rule`, `course_options`, `credit_hours`, `minimum_grade`. |
 | `schedule` | yes | `term`, `term_code` (six digits, e.g. `202640`; the message must copy it), and `sections`. A section has `crn`, `course_id`, `section`, `credit_hours`, `seats_total`, `seats_taken`, `campus`, `modality`, `meetings` (days, optional `start_time`/`end_time`, `location`, `type`), plus optional fields from the Section Tally (see below). |
@@ -414,6 +528,8 @@ One input object describes one registration situation, and all of it is sent to 
 | `prerequisites` | no | Added for open item 4. See below. |
 | `course_equivalents` | no | Added for open item 6. |
 | `graduation_rules` | no | Added for open item 7. |
+| `program_guide` | no | The Rowan Academic Program Guide the requirements come from. See "Fields for Rowan program guides". |
+| `course_attributes` | no | Rowan Core and Rowan Experience designations by course id. Same section. |
 
 `registration_input.schema.json` holds the field rules (types, the course id pattern, allowed
 grades, `Season YYYY` terms, `h:mm AM/PM` times, no unknown fields).
@@ -434,9 +550,8 @@ from is set by the case:
 
 | Case gives | The model sees | Who picks the sections |
 |---|---|---|
-| `"schedule_from_tally": {"named_courses": true}` (every case in this repo), optionally with `"courses": [...]` | Every open section of every course the input names, listed in the prompt, in one input | The pipeline (which courses); the model (which sections) |
-| `"schedule_from_tally": {"crns": [...], "courses": [...]}` | Those sections, listed in the prompt | The case author |
-| `"schedule_from_tally": {"search": true}` | Only the term. It must find sections with the `search_sections` tool, over the whole tally | The model |
+| `"schedule_from_tally": {"whole": true}` (what the default run, the session, gives every tally-based case) | Every section in the tally, in the session's opening turn; the case's own turn carries only the term | The model, from all 5,129 |
+| `"schedule_from_tally": {"named_courses": true}` (what every case file says; used with `--named-courses`), optionally with `"courses": [...]` | Every open section of every course the input names, listed in the prompt, in one input | The pipeline (which courses); the model (which sections) |
 | `input.schedule` written out | That schedule | The case author |
 
 ```json
@@ -458,41 +573,12 @@ those courses, in export order, leaving out cancelled ones and skipping courses 
 this term (28 of the 47 electives in aneesh_test). `"courses": [...]` adds courses the input does
 not name by id, e.g. case_012's "Operating Systems" (CS06395) and the look-alike CS03570. The
 prompt and the checker's database hold the same sections, so a crn from outside them is a
-`consistency_error` ("does not exist"). The whole tally does not fit: 4,807 open sections are
-about 660k tokens.
+`consistency_error` ("does not exist").
 
-In search mode the schedule is the whole tally (5,129 sections, cancelled ones flagged): the
-checker's database holds every section, but the prompt carries only the term. A case gives
-`schedule` or `schedule_from_tally`, never both. With hand-picked
-sections, `crns` come first in the order given, then every section of each of `courses`;
-`include_cancelled` offers cancelled ones too.
-
-### The search tool (search mode, not used by any case now)
-
-In search mode the model gets one tool, `search_sections` (`section_tally.SEARCH_TOOL`), and
-the prompt says the sections are not listed and must be looked up. The harness runs the loop
-(`harness.generate_with_tools()`): each time the model calls the tool, the search runs and
-the result goes back, until the model replies with its message (at most 12 model calls).
-
-| Argument | Meaning |
-|---|---|
-| `course_id` | Exact course id, e.g. `CS04114` (a space is ignored) |
-| `subject` | Subject code, e.g. `CS` |
-| `title_contains` | Words that must all be in the title. Tally titles are abbreviated (`DES-ANLYS ALGORITHMS`), so this misses more than the others |
-| `open_only` | Only sections with a free seat |
-| `page` | Results come 40 at a time; a note says when there are more |
-
-Each result is a list of input-format sections (crn, seats, credits, meetings, waitlist, …).
-Cancelled sections are never returned. A bad call (no filter, an unknown argument) comes back
-to the model as an error it can correct.
-
-The log records the search: each result row has `model_calls` and `steps`, one entry per tool
-call with its arguments, the number of matches and the crns returned. Tokens, cost and latency
-are summed over all the calls.
-
-What this changes in what is measured: the model now has to decide which courses to look up
-from the transcript and requirements, so a wrong answer can come from searching badly as well
-as from choosing badly. The steps show which.
+In whole mode the schedule is the whole tally (5,129 sections, cancelled ones flagged): the
+checker's database holds every section, and the prompt's own part carries only the term,
+because the sections are the session's opening turn (see "The session"). A case gives
+`schedule` or `schedule_from_tally`, never both.
 
 Cases are picked (`--task-ids`) before the export is read, so a case that does not use the
 tally runs even if the export is missing; a case that uses it stops with a clear error.
@@ -502,8 +588,8 @@ tally runs even if the export is missing; a case that uses it stops with a clear
 The schedule can come from Rowan's real Section Tally (Fall 2026, 5,129 sections, 138
 subjects) instead of invented sections. The data is one file, `section_tally_fall2026.csv`:
 the export as downloaded, renamed, read whole on each run (about 20 ms). A case picks its
-sections with `schedule_from_tally` (above), which calls `section_tally.select_schedule()`;
-`section_tally.load_schedule("CS")` gives a whole subject. All 5,129 sections convert and
+sections with `schedule_from_tally` (above), which calls `section_tally.course_schedule()` or
+`section_tally.full_schedule()`; `section_tally.load_schedule("CS")` gives a whole subject. All 5,129 sections convert and
 validate (`python section_tally.py check`, which fails if the export is missing or empty).
 To use a newer export, save it under the same name and rerun `python run_semantic_eval.py
 --check`: answer keys depend on seat counts and times, so a refresh can change them.
@@ -541,9 +627,8 @@ What changed in the input format so the tally fits:
 Open points:
 
 - **A whole subject is too big for one prompt.** All 168 open CS sections come to about
-  86,000 characters as JSON (about 37,000 as CSV), against 5,000–10,000 for today's cases. A
-  case should carry a chosen portion: today's tally cases use 4–6 sections each, about 3,500
-  characters.
+  86,000 characters as JSON (about 37,000 as CSV). A case carries the sections of the courses
+  its program guide names instead: 350–500 sections, about 86k–132k tokens (see "Cases built from degree requirements").
 - **The `*` after `Room Cap`** (296 sections) is not documented in the export.
 - **Only the Fall term code is known.** `TERM_SEASONS` in `section_tally.py` maps the last two
   digits (`40` → Fall); others are added when a tally for that term shows its dates.
@@ -562,7 +647,7 @@ Open points:
 | 6. Other requirement types | New optional fields, all read by `registration.audit()`. See the next table. |
 | 7. Graduation-wide rules | New optional `graduation_rules`: `total_credits`, `minimum_gpa`, `residency_credits`. The audit derives earned credits, institutional credits and GPA from the transcript; none is stored. A repeated course counts once, by its best attempt. |
 | 8. Other input renderings | `--rendering csv` shows the same state as CSV tables, and `--rendering nl` as plain-text sentences. JSON stays the stored form. |
-| 9. Test-case wrapper | `acceptable_crns` lists sections that are each a correct one-section cart. `acceptable_carts` lists whole carts, for answers with several sections. A section is written as its crn (`"41836"`), or as an object when the answer needs more: `{"crn": "46497", "credit_hours": 3}`, `{"crn": "44033", "waitlist": true}`. The key never repeats the section's details: `expected_message()` copies them in from the schedule. Tier 4 passes when the cart equals any acceptable one, so a case can have more than one right answer. |
+| 9. Test-case wrapper | A `rules` answer key (see the Correctness model): what any correct cart must satisfy, with `examples` of carts that must pass and fail. A cart is a list of crns; the key never repeats a section's details: `expected_message()` copies them in from the schedule. (Listed exact-cart keys, `acceptable_crns` / `acceptable_carts`, were removed on 10/18; no generated case used them.) |
 
 Fields added for open items 4, 6 and 7:
 
@@ -578,6 +663,34 @@ Fields added for open items 4, 6 and 7:
 | `exclusive` | requirement | By default one course may count toward several requirements. Two requirements both marked `exclusive` cannot share a course; the earlier one in the list takes it. |
 | `credit_hours` as `{"min", "max"}` | section | A variable-credit section. The message must say how many credits the student takes (`credit_hours` in its section object), and Tier 3 checks it is in the range. |
 
+#### Fields for Rowan program guides
+
+A Rowan Academic Program Guide is laid out in fixed sections: university graduation rules,
+Rowan Core (six literacies), Rowan Experience (three attributes), Non-Program courses, Major
+requirements and Free Electives. These fields let an input carry one:
+
+| Field | Where | Meaning |
+|---|---|---|
+| `program_guide` | top level | `program_name`, `department`, `contact_email`, `effective_term`, `source_url`, `total_credits`, `sections` (each `{section, title, credit_hours, notes}`; `credit_hours` may be `{min, max}`, and the sections must add up to `total_credits`), `rowan_core.literacies`, `rowan_experience.attributes`, `program_rules` (as the guide words them). Context for the model; the audit reads `program_requirements`. |
+| `course_attributes` | top level | `{course_id: [attributes]}`: Rowan Core codes (`COML ARTL GLBL HUML QNTL SCIL`) and Rowan Experience codes (`LIT WI RS`). The Section Tally export has no attributes column, so a case lists the designations the guide states; they count for `credits_with_attribute` like attributes on a transcript row. |
+| `entry` | student | `{type: first_year \| transfer, transfer_credits_at_entry, nj_associate_degree}`. Decides the guide's waivers. |
+| `guide_section` | requirement | `rowan_core`, `rowan_experience`, `non_program`, `major` or `free_electives`. |
+| rule `one_of_groups`, with `course_groups` | requirement | Met when every course of any one group is earned: a choice of sequences, or "COMP01111 + COMP01112 + (CMS04205 or CMS04206)" written as two groups. |
+| rule `credits_any` | requirement | Free electives: any credits no exclusive requirement took. Must be the last requirement. |
+| `course_ranges` | requirement (`any_of`, `credits_from`) | Course families, `{subject, discipline?, min_number?, max_number?, exclude?}`, e.g. "any 300+ level PHYS course". The number is the id's last three digits: PHYS00340 is subject PHYS, discipline 00, number 340. |
+| `recommended_courses` | requirement | The guide's "Recommendation from major". Informational. |
+| `waived_if` | requirement | `{nj_associate_degree: true}` and/or `{transfer_credits_at_entry: 24}`: met with no course when the student's entry matches either. |
+| `major_gpa`, `minimum_grade` | `graduation_rules` | GPA over courses that satisfy `major` requirements (2.5 for the business majors), and the university's D- floor. |
+
+`registration.audit()` applies waivers, reports `missing` for the closest group of a
+`one_of_groups` rule and `cap_remaining` for credit caps, and computes `major_gpa`.
+`counts_toward()` skips a course whose credit cap is used up. Known limitation:
+`counts_toward()` does not simulate `exclusive`, so a course that an earlier exclusive
+requirement would take is still reported for a later one; the cases are written so this does
+not change an answer. `named_courses()` includes `course_groups` and `recommended_courses`
+but does not expand `course_ranges`; a case adds a range's offered courses with
+`schedule_from_tally.courses`.
+
 What the checker does and does not read:
 
 - **Tier 3 reads** the schedule and the prerequisites (against the transcript).
@@ -587,56 +700,213 @@ What the checker does and does not read:
   so whether a course "counts toward the degree" is decided by the author, with the audit
   as a cross-check.
 
-### The sixteen cases
+### Cases built from degree requirements
 
-Cases are named `case_001`–`case_015` in file order, plus `aneesh_test`, the case built on
-the CS program guide's requirements. Before 10/14 they were `sem_001`–`sem_008`,
-`con_001`–`con_003` and `tal_001`–`tal_005` (`aneesh_test` was `tal_005`); results logged
-before then use the old ids.
+**The requirements file.** `degree_requirements.json` holds 50 programs, keyed like
+`marketing-bs` or `english-ba`. Six are the programs the earlier hand-built cases used (CS,
+Psychological Science, Management, Physics, Accounting, Environmental Science). The other 44 were
+parsed from the registrar's archived Academic Program Guides (the newest Rowan Core guide of each
+program; the live catalog at catalog.rowan.edu blocks scripted access, so it was not used). Each
+program's `program_guide.source_url` links its PDF, and choices made where a guide is ambiguous
+or inconsistent (typos in course ids, subtotals that do not add up, unlisted electives
+approximated by `course_ranges`) are written in the requirement's `notes` or in
+`program_guide.program_rules`. ECE requires 128 sh; Biomedical Engineering counts all six Rowan
+Core literacies (28 sh) and has no free electives.
 
-`input_format_cases.json`. In each, the prompt lists every open Fall 2026 section of the
-courses the case names; the student, transcript and request are made up, and so are the
-requirements except aneesh_test's, which come from the CS program guide. "Listed" answer keys name every
-correct cart; "rules" keys say what any correct cart must satisfy.
+**A case names its program.** Its input no longer writes out requirements or a transcript:
 
-| Case | Prompt | What it tests | Answer key |
+```json
+"input": {
+  "program": "marketing-bs",
+  "student": {"student_id": "S1001", "catalog_year": "Fall 2023", "entry": {"type": "first_year"}},
+  "transcript": {"fabricate": {"seed": 7, "complete": ["CORE-*", "NONPROG-*", "BUS-FOUNDATION"],
+                               "rows": [{"term": "Spring 2026", "course_id": "MKT09379", "grade": "D+"}],
+                               "avoid": ["MKT09384"], "keep_unmet": ["MKT-REQUIRED"]}},
+  "prompt": "..."
+}
+```
+
+`fabricate.build_input()` takes the program's requirements, guide, attributes, graduation rules
+and prerequisites (plus any `extra_requirements`, `prerequisites` or `course_equivalents` the case
+adds) and fabricates the transcript: real courses that satisfy each requirement in `complete`,
+grades at or above every minimum they must meet, prerequisites in earlier terms, credits spread
+from the catalog year to `through` (default Spring 2026), and the case's own `rows` (its traps)
+kept as written. Rowan Core / Experience attribute requirements are met with courses some guide
+designates. It then runs the degree audit and stops with an error unless every `complete`
+requirement is met and every `keep_unmet` one is not. The same seed always gives the same
+transcript. `run_semantic_eval.resolve_case()` calls it, so validation, the checker and the
+prompt all see the full input object.
+
+**Five generated cases per program.** `python generate_cases.py` writes cases `<program>-1` to
+`-5` (250 in all) from templates, each falling back to another when a program or this term's
+sections cannot support it:
+
+| Template | Prompt | Count |
+|---|---|---|
+| requirement | "Register me for one class that counts toward my <requirement>." + a constraint | 74 |
+| named_pair | "Enroll me in <course A> and <course B>." (two required courses not yet taken) | 47 |
+| attribute | "I still need a class for my <Rowan Core literacy / Rowan Experience> requirement." | 45 |
+| retake | "I got a <grade below the minimum> in <course> last spring. If that doesn't count toward my major, register me to retake it." | 30 |
+| passed | "One class toward <requirement>; I don't want to retake anything I've already passed." | 3 |
+| fallback | "Sign me up for <course with no Fall 2026 section>. If it isn't offered, register me for another class toward <requirement>." | 1 |
+| credit_limit (case `-5`) | "I can take at most N credits this fall. Register me for <course A>, and add <course B> too only if both fit within my limit." | 50: both fit in 28, only A in 22 |
+
+**The credit-limit template** tests credit arithmetic in both directions. N is drawn per
+program as either A + B credits (both fit: the answer is one section of each, not overlapping;
+taking A alone is wrong) or A + B - 1 (they do not fit: the answer is A alone; adding B breaks
+the limit). A and B are untaken required courses with fixed credits, or, for programs without
+such a pair (Africana Studies, Philosophy), two electives from one list. The key uses the
+`credits` rule (`{"max": N}`). Template 5 has its own seed and student ids (S5001 on), so
+adding it left cases 1-4 unchanged.
+
+The constraint is one of: no Friday classes; Tuesdays/Thursdays or Mondays/Wednesdays in person;
+fully online; in person only; nothing ending after 5 PM; nothing starting at 5 PM or later. The
+generator keeps a constraint only if it leaves at least one correct cart and rules out at least
+one cart that would otherwise be correct. When a prompt names a category shared by several
+requirements ("my Non-Program Courses"), the key accepts a course toward any unmet one of them.
+
+Every answer key is a rules key. The generator scores every candidate cart (every Fall 2026
+section of every course that could count, or every pair of the two named courses' sections)
+against the whole Section Tally, the way a session run scores a model, and records the accepted
+set in `implicit_relationship`, up to four valid examples, and invalid examples drawn from the
+near misses (constraint violations, full sections, conflicts, earned courses, wrong counts).
+`ground_truth.case_type` and `ground_truth.targets` say which template and requirements a case
+tests. `schedule_from_tally.courses` lists the candidate courses, so `--named-courses` shows them too.
+
+Caveats: requirements and attribute designations are only what the guides state, so a course a
+model knows to be, say, Global Literacy counts only if the input designates it; real
+prerequisites are checked only where a guide states them; and some guides are several years old
+(effective Fall 2018 to Fall 2026).
+
+### Counterfactual pairs (`paired_cases.json`)
+
+A pair is two cases that are the same except for one detail, chosen so the detail flips the
+answer. A model that ignores the detail can get at most one of the two right, so **a pair
+passes a run only when both variants are `semantic_ok` in that run**. This separates reasoning
+from luck better than scoring cases one at a time. The idea comes from the BIRD-style pairs on
+the `Tyler` branch (`Tyler_branch_ready_semantic_tests/`: `SEM-001`–`020` and `RC-001`–`012`).
+These pairs are rebuilt on this pipeline: real Fall 2026 sections, real degree programs, rules
+answer keys, and every candidate cart scored the way a model's answer is scored. Seats are real,
+so a pair cannot make a section full. It flips what the student asked for (the prompt) or what
+they have taken (the fabricated transcript).
+
+```bash
+python generate_pairs.py                                    # adds pairs until paired_cases.json holds 200
+python generate_pairs.py --total 250                        # grow it; pairs already there are kept
+python generate_pairs.py --annotate                         # only rewrite each pair's `difference` field
+python run_semantic_eval.py --test-file paired_cases.json --check
+python run_semantic_eval.py --model anthropic/claude-opus-5.5 --test-file paired_cases.json --output pair_results.json
+python run_semantic_eval.py --test-file paired_cases.json --output pair_results.json --pair-report
+```
+
+| Family | What changes between a and b | Reasoning it needs | Tyler-branch analogue |
 |---|---|---|---|
-| case_001 | "Enroll me in Advanced Cell Biology (BIOL01430). I live in Glassboro, so I want the section on my campus." | Campus: an open section at Rowan College at Burlington is valid but wrong; the other Glassboro section is full. | listed: `46195` |
-| case_002 | "Enroll me in CS04225." | Two of three sections are full. | listed: `42070` |
-| case_003 | "Enroll me in CS01303 and Calculus II (MATH01131)." | Partial time overlap: one Calculus II section overlaps CS01303 by ten minutes. | rules: 4 correct carts |
-| case_004 | "Register me for Interpersonal Communication (CMS04220) and CS07450. I only want classes that meet in person." | An open online section is valid but wrong. | rules: 2 correct carts |
-| case_005 | "Enroll me in one class that counts toward my Computer Science restricted electives. I don't want to retake anything I've already passed." | Two electives are already passed; two others are full. | rules: 4 correct sections |
-| case_006 | "Register me for two computer science classes that count toward my degree. I work evenings, so nothing that ends after 5 PM." | A prerequisite still in progress, one met by transfer credit, a repeatable course, evening sections. | rules: 2 correct carts |
-| case_007 | "I can only take 6 credits this fall. Register me for CS07450, and add Calculus I (MATH01130) too only if both fit within my limit." | Credit arithmetic: 3 + 4 is over the limit. | listed: `44477` |
-| case_008 | "Register me for CS07450 if I meet its prerequisite. If I don't, register me for CS04222 instead so I can retake it." | A prerequisite earned with a D against a C- minimum, so the fallback applies. | rules: 3 correct sections |
-| case_009 | "I need one class for my Health and Society requirement. I'll be away from campus all fall, so it has to be fully online." | Which courses count, then online only; in-person and full online sections are traps. | rules: 5 correct sections |
-| case_010 | "Register me for Advanced Cell Biology (BIOL01430) and CS04222. I can't be on campus on Fridays." | Lecture-and-lab sections: one lab is on Friday, and one CS04222 section overlaps the remaining lab. | rules: 2 correct carts |
-| case_011 | "Register me for every class I still need to finish my Foundational Courses requirement." | One course met under an old id, one earned below the minimum grade, one withdrawn. | rules: 6 correct carts |
-| case_012 | "Register me for Operating Systems. If every section is full, put me on the waitlist for the Tuesday/Thursday section." | Every section is full, so the answer is a waitlist request, for one particular section. | listed: `42090` with `waitlist: true` |
-| case_013 | "Enroll me in CS04114 and CS06205. I don't want any classes on Fridays." | One of each course is full, one meets on Friday and also overlaps. | listed: 2 carts |
-| case_014 | "Sign me up for the Clinical Lab Science Seminar (CHEM05502) for 2 credits, and for a morning section of CS04114." | A variable-credit section (1–3 credits) and a time-of-day choice. | listed: `44459` at 2 credits + `41990` |
-| case_015 | "Register me for two classes that count toward my Computer Science restricted electives. No Friday classes, nothing that starts at 5 PM or later, and don't put me on any waitlists." | Which courses count, then day, time and seats. | rules: 2 correct carts |
-| aneesh_test | "Sign me up for my writing-intensive requirement and for whichever Communicative Literacy course I still need. I can only come to campus on Tuesdays and Thursdays, and I have to be done by 7 PM." | Requirements from the CS program guide: name the courses from requirement titles and the transcript (WA01302, CMS04205), then days, an end time, an evening section that overlaps, and seats. | rules: 6 correct carts |
+| `full_fallback` | Prompt: the first-choice course has every section full (a) or open seats (b); the fallback is the same | Notice that the first choice is full and apply the fallback | RC-001/002 |
+| `in_progress` | Transcript: the named course is in `courses_in_progress` (a), or another course is (b) | Don't register for a course already being taken | RC-005/006 |
+| `transfer` | Transcript: the transfer course is one of the requirement's options (a) or a general-education course (b) | Add up credits across completed and transfer courses | RC-003/004 |
+| `busy_block` | Prompt: a weekly commitment that starts 30 minutes into one section's meeting vs another's | Real interval overlap, not equal times (`busy` rule) | RC-007/008 |
+| `nested_groups` | Transcript: which courses of a `one_of_groups` requirement are done | Evaluate (A and B and C) or (A and B and D) | RC-009/010 |
+| `credit_limit` | Prompt: credit limit A + B (a) or A + B − 1 (b) | Credit arithmetic | RC-011/012 |
+| `modality` | Prompt: "fully online" vs "in person" | Modality constraint | SEM modality |
+| `days` | Prompt: Mondays/Wednesdays vs Tuesdays/Thursdays, in person | Meeting-day constraint | SEM weekday |
+| `grade_threshold` | Transcript: the grade is one step below the requirement's minimum (a) or at it (b) | Minimum passing grade | SEM grade_threshold |
+| `withdrawal` | Transcript: `W` (a) or `B` (b) | A W earns no credit | SEM withdrawal_credit |
 
-All sixteen were written by Claude and have not been checked by a teammate. `python
-run_semantic_eval.py --check` confirms each answer key behaves: listed carts score
-`semantic_ok`; in a rules case the valid examples pass and the invalid ones fail. For every
-rules case I also checked every combination of the real sections a student could reach for
-(sections of the named courses, or of courses that count toward the named requirements): the
-rules accept exactly the carts in the table.
+**200 pairs (400 cases).** Families take turns adding one pair each, so they stay even: 21 each
+for `full_fallback`, `in_progress`, `transfer`, `busy_block`, `credit_limit`, `modality` and
+`days`, 20 each for `grade_threshold` and `withdrawal`, and 13 for `nested_groups`, which runs
+out first. The generator goes through every program once, then goes round again with a new seed
+(up to 4 rounds), so a program can give one family a second pair, built from other courses. A
+later-round pair's id ends in `#<round>` (`transfer/philosophy-ba#3`, case
+`pair-transfer-philosophy-ba-3-a`). A pair with the same rules and change as one already in that
+program is skipped. Most families use 20 or more programs; `transfer` uses 8 and `nested_groups` 8.
 
-case_001–case_011 (formerly the sem_ and con_ cases) are rebuilt versions of eleven earlier cases that used invented
-sections (removed on 10/14; the first six are in git history at `e02b9f1`). Each keeps what
-its original tested, on real Fall 2026 sections, with two changes forced by the data:
+There is no campus family: all but 30 of the 5,129 sections are Glassboro, online or
+off-campus. `nested_groups` has little variety: the only `one_of_groups` requirement with open
+sections in a usable shape is Rowan Core Communicative Literacy, so all its pairs are that
+requirement in eight business programs. Its transcripts never hold a later course without the
+earlier one (no Composition II without I).
 
-- **case_009** tested a requirement satisfied by a course *attribute*; the tally has no
-  attributes, so its requirement is now a list of courses (an invented "Health and Society"
-  requirement over real courses).
-- **case_001** and **case_010** both use BIOL01430, the only course in the tally with both a
-  second campus and a Friday lab; case_010 adds a second course so the two cases differ.
+**One difference only.** A transcript-flip twin is not fabricated again: it is its base
+transcript with one row changed, via the fabricator's `edits` (e.g. `{"in": "completed_courses",
+"course_id": "SOC08120", "set": {"grade": "B"}}`, applied after the checks). Fabricating each
+variant separately let the one changed row steer the fabricator into a different transcript (7
+of 101 transcript pairs differed in 10 to 20 rows), so the twin could be answered from details
+that were never meant to change.
 
-Requirements and prerequisites are invented throughout (the tally has neither), so a course's
-real prerequisites are not checked unless a case lists them.
+Case ids are `pair-<family>-<program>-a` / `-b`, and `ground_truth.pair` is
+`{"id": "<family>/<program>", "variant": "a" | "b", "changed": "<the detail, short>",
+"difference": {...}}`. Each variant's `examples.invalid` begins with its twin's valid carts that
+it rejects. `--check` also runs `check_pairs()`, which fails a pair unless both variants are
+present, they differ in exactly one place (the prompt, or one transcript row), and each one
+rejects at least one cart its twin accepts, i.e. unless the changed detail really changes the answer.
+
+**`ground_truth.pair.difference`** spells out how this case differs from its twin. It is read
+from the inputs the model is given, not from the generator's notes, so an unintended difference
+would show up in it too:
+
+| Field | Meaning | Example (`pair-withdrawal-human-services-ba-a`) |
+|---|---|---|
+| `where` | What differs: `prompt` or `transcript` | `transcript` |
+| `this_case` | What this case has that the twin does not | `completed: SOC08120 Intro To Sociology (W)` |
+| `twin_case` | What the twin has instead | `completed: SOC08120 Intro To Sociology (B)` |
+| `twin_id` | The twin's case id | `pair-withdrawal-human-services-ba-b` |
+| `answer_here` | A correct answer for this case, in words | `a section of Introduction to Sociology (SOC08120)` |
+| `answer_in_twin` | A correct answer for the twin | `a section of Sociology of Social Welfare (SOC08223)` |
+| `summary` | All of the above in one sentence | "Only the transcript differs. Here: … So the answer here is …" |
+
+Like everything in `ground_truth`, it is never sent to the model. `python generate_pairs.py
+--annotate` rewrites it for every pair in the file without building anything.
+
+Paired accuracy is reported per run index: run *i* of variant a is paired with run *i* of
+variant b. It is broken down by family (the first part of the pair id). A pair whose call
+failed is counted as incomplete, not as a miss.
+
+**`pair_result` in a results file.** After a run (and on `--rescore`), every row of a pair case
+gets a `pair_result`, relating it to its twin's row in the same session and run: `pair_id`,
+`twin_id`, `same_answer_as_twin`, `pair_passed`, and an `explanation` that names the twin's
+outcome. The twin's own row has its outcome and answer, and the session summary has the pair
+totals. For example: *"Only its twin is correct; this case is a semantic_error. Pair failed. The
+model gave the same answer to both, so it ignored the change in the transcript …"*
+
+**Weak pairs.** In 18 of the 200 pairs, one answer is correct in both variants: 13 of 21
+`busy_block` pairs (a section that overlaps neither commitment) and 5 of 21 `transfer` pairs (a
+course that counts toward both requirements). A model can pass those without using the changed
+detail. When it does, by giving the same correct answer to both, `pair_result` says the pair
+passed only weakly. The other eight families have no such answer. Each pair case records this
+as `ground_truth.pair.has_shared_answer` (with a `shared_answer_example` crn when true), and a
+session summary's `paired_accuracy.strong_pairs_only` scores the other 182 pairs on their own.
+
+**Difficulty and chance baseline (every case, in both case files).** `ground_truth.difficulty`
+holds:
+- `candidate_courses`: the courses the case is about (its `schedule_from_tally.courses`).
+- `candidate_answers`: every non-cancelled section of those courses, or every pair of sections
+  when the answer is two named courses.
+- `correct_answers`: how many of those the rules accept.
+- `chance`: correct ÷ candidate, the probability of being right by picking one at random.
+- `rules` and `prompt_words`.
+
+Chance ranges from 0.006 to 1.0 (mean 0.31 for the pairs, 0.35 for the 250 cases), so raw
+accuracy is not comparable across families. A summary's `mean_chance_baseline` is the average
+over the cases it ran. A model at that rate is doing no better than picking a plausible
+section at random.
+
+Two caveats. Chance counts full sections among the candidates, since a careless model might
+pick one. And it measures picking a section, not structural decisions: in `credit_limit`, once
+the right courses are chosen, every section combination may be correct (chance 1.0), because
+the real test is whether to add the second course.
+
+`python generate_pairs.py --annotate` recomputes the flag and difficulty for every pair, and
+`python generate_cases.py --difficulty input_format_cases.json` does the same for other case
+files. New cases get them when generated. Neither changes what the model sees, the rules or the
+examples.
+
+### Earlier hand-built cases (removed 10/18)
+
+The 21 hand-built cases (`case_001`–`case_015`, `aneesh_test` and five `rowan_` cases) were
+removed on 10/18; the case file now holds only the 200 generated cases. They are in git
+history: the last commit with them is the one before this change. The six programs they used
+remain in `degree_requirements.json`. Results logged earlier ("Results so far") refer to them.
 
 ## Correctness model
 
@@ -646,45 +916,84 @@ Four tiers, stopping at the first failure:
 - **Tiers 1–2, format.** See [The cart message](#the-cart-message-didcomm-schema).
 - **Tier 3, consistency** — invariants hold. The term is the schedule's. Each section exists,
   is not cancelled, has a seat (or is full with waitlist room when the message asks to
-  waitlist), has valid credits, is not already held by the student, does not clash with
-  their enrollments, and has its prerequisites met; inside the cart, no two sections overlap
-  in time or belong to the same course.
+  waitlist), has valid credits and has its prerequisites met; inside the cart, no two
+  sections overlap in time or belong to the same course.
 - **Tier 4, semantic correctness** — the transaction achieves the user's intent. A case's
-  answer key is one of two kinds:
-    - **Listed carts** (`acceptable_crns`, `acceptable_carts`): the cart must equal one of them
-      (`check_semantic()`), ignoring section order.
-    - **Rules** (`rules`), for requests with too many correct carts to list: the cart must
-      satisfy every rule (`check_rules()`). `examples.valid` and `examples.invalid` are carts
-      `--check` uses to confirm the rules accept and reject what they should.
+  answer key is `rules`: the cart must satisfy every rule (`check_rules()`). `examples.valid`
+  and `examples.invalid` are carts `--check` uses to confirm the rules accept and reject what
+  they should.
 
   | Rule | The cart must… |
   |---|---|
-  | `count`, `credits` | have this many sections / total credits (`{"min", "max"}`) |
+  | `count`, `credits` | have this many sections / this many total credits (`{"min", "max"}`) |
   | `courses_count_toward` | have only courses that move one of these unmet requirements forward (from the degree audit, so passed courses don't count unless repeatable) |
   | `no_days` | have no meeting on these days |
   | `starts_before`, `ends_by` | have every meeting start before / end by this time |
-  | `modality_in`, `campus_in` | use only these modalities / campuses |
-  | `waitlist` | waitlist nothing, unless this is `true` |
-  | `must_include`, `must_include_courses`, `must_exclude_courses` | contain / not contain these sections or courses |
+  | `modality_in` | use only these modalities |
+  | `must_include_courses` | contain these courses |
+  | `courses_in` | have only courses from this list |
+  | `busy` | have no meeting that overlaps one of the student's fixed commitments (`[{days, start_time, end_time}]`; touching end to start is not an overlap) |
 
-  The student id and term code are always checked.
+  The student id and term code are always checked, and so is that no section is waitlisted
+  (no request asks for a waitlist).
+
+  Every verdict in a results file explains itself, tier by tier. `tiers` gives one line per
+  tier: what it checks, and `passed`, `failed` or `not reached` with a check count, e.g.
+  `"tier3": "consistency (invariants against the schedule and transcript): passed (9/9 checks passed)"`.
+  Then each tier's checks are listed in `tier1_checks` … `tier4_checks`, each with what it
+  `requires` in words, what was `found`, and whether it `passed`:
+
+  | List | Checks |
+  |---|---|
+  | `tier1_checks` | `json` (one JSON value, no prose or code fence); `envelope` (DIDComm v2: `id`, a `type` URI, a `body` object, well-formed optional headers) |
+  | `tier2_checks` | `type` (exactly our register type); `body` (exactly `student_id`, `term_code`, a non-empty `sections`); `sections` (every entry's fields present and well-formed); `unique_crns` |
+  | `tier3_checks` | `term`, then for each section (`section` = its crn): `exists`, `copied_fields`, `not_cancelled`, `seat` (or `waitlist`), `credits`, `prerequisites`, `one_section_per_course`, `no_time_conflict` |
+  | `tier4_checks` | the case's rules plus `student_id`, `term_code` and `waitlist` (each also names its `rule`) |
+
+  A tier that failed lists every check it ran, so a cart can show several Tier 3 problems; the
+  `outcome` and `detail` are still the first failure, as before. Tiers after the failing one
+  are `not reached` and have no checks. A failed transfer case's Tier 4 check, for example:
+
+  ```json
+  {"rule": "courses_count_toward",
+   "requires": "every course moves one of these unfinished requirements forward: PHIL-LOGIC",
+   "found": "40961 (PHIL09120) counts toward PHIL-ELECTIVES, FREE",
+   "passed": false}
+  ```
+
+  A failed Tier 4 check also has a `why`, in words: what the model chose, why that breaks the
+  rule, and what would have satisfied it. For example: how many minutes a section overlaps the
+  student's commitment; that a course would have counted toward a requirement the transcript
+  already completes; how far over the credit limit the cart is; which offered courses would
+  have counted. A `semantic_error` verdict also has `why_wrong`, placed right after `detail`.
+  It says which checks failed and what the request needed (the case's intended reasoning, from
+  its answer key's `implicit_relationship`):
+
+  ```json
+  "why_wrong": "1 of 5 Tier 4 checks failed (courses_count_toward). What the request needed: PHIL-FOUNDATIONAL needs 6 sh: 3 completed plus transfer PHIL09150 (3 sh, one of its options) meets it, so the request moves to PHIL-LOGIC."
+  ```
+
+  `outcome`, `detail` and `deviation_score` are as before (the rules a cart broke are the
+  `tier4_checks` with `passed: false`). To add these fields to an older results file, re-grade it: `python run_semantic_eval.py --test-file <cases> --output
+  <results> --rescore`. That re-scores the saved answers with the current scorer (no model call)
+  and prints any outcome that changed.
 
 ## Results so far
 
-Rows are in `semantic_eval_results.json`. OpenRouter, JSON rendering, current message body.
+Rows are in `semantic_eval_results_finalized.json`. OpenRouter, JSON rendering, the current
+message body and named-courses prompts; one sample per case. These runs are of the cases
+before the 10/15 rebuild on the CS guide (smaller prompts, invented requirements); they have not
+been rerun.
 
-| Date | Model | Case | Samples | Result | Cost |
+| Model | Case | Sections in prompt | Input tokens | Result | Cost |
 |---|---|---|---|---|---|
-| 2026-10-14 | `anthropic/claude-opus-5.5` | case_012, sections listed in the prompt | 1 | 1/1 `semantic_ok` (used `waitlist` as asked) | $0.012 |
-| 2026-10-14 | `anthropic/claude-opus-5.5` | case_015, **search mode** | 1 | 1/1 `semantic_ok` | $0.040 |
+| `anthropic/claude-opus-5.5` | case_011 | 21 | 7,735 | `semantic_ok` | $0.046 |
+| `anthropic/claude-opus-5.5` | case_006 | 97 | 25,649 | `semantic_ok` | $0.125 |
+| `anthropic/claude-opus-5.5` | case_009 | 115 | 29,245 | `semantic_ok` | $0.125 |
+| `anthropic/claude-opus-5.5` | aneesh_test | 220 | 54,310 | `semantic_ok` | $0.233 |
 
-- In case_015, Opus looked up each of the six courses in the electives requirement by course id
-  (6 searches, sent together in one turn), then answered `44477` + `41892`: 2 model calls,
-  6,948 input tokens, 10.9 s.
-- case_012 was run before it switched to search mode; case_013 and case_014 have not been run,
-  nor have the `csv` and `nl` renderings.
-- None of these runs is comparable with the current pipeline: they used the earlier message
-  body (crn only), and every case now lists its sections in one input instead of searching.
+The section list is 90–97% of every prompt, so cost follows the number of sections. The
+session has not been run against a model yet.
 
 Findings from removed runs (earlier message body or removed cases), kept because they bear on
 open questions:
@@ -697,7 +1006,10 @@ open questions:
   prerequisite was met only by transfer credit; the runs don't show why. That option depends
   on the provisional `TA` rule.
 - **No separation yet.** Opus 5.5 answered every input-format case it was given correctly
-  (18 runs), so the cases have not yet shown a difference between models.
+  (22 runs, including the 4 above), so the cases have not yet shown a difference between models.
+- **Searching.** In an earlier search mode (since removed; in git history at `45be488`), Opus
+  looked up the courses it needed by course id, all in one turn, and answered on the next
+  call: 2 model calls and about $0.03–0.04 per case.
 
 The results committed before 10/14 are in git history (`semantic_eval_results.json` at
 `e02b9f1`); results for the single-section message are at the same commit in
@@ -721,9 +1033,6 @@ The results committed before 10/14 are in git history (`semantic_eval_results.js
    or a separate measured deviation, given that it can fail an otherwise right cart?
 7. **Waitlisting and time conflicts.** A waitlisted section is still checked for time
    conflicts with the rest of the cart. Is that right, given the student isn't enrolled yet?
-8. **What the search tool offers.** It searches by course id, subject and title words. A real
-   registration site also filters by day, time, campus and attributes. Each filter we add
-   makes the task easier, so the tool's design is part of the experiment.
 
 The design's own open questions are in [§13](#13-open-questions--for-the-group).
 
@@ -732,10 +1041,8 @@ The design's own open questions are in [§13](#13-open-questions--for-the-group)
 - DIDComm envelope shape → `harness.parse_didcomm()`
 - Time-conflict logic (interval overlap) → `registration.check_consistency()`
 - Input-format open items: prerequisites as a consistency rule, `TA` meeting any minimum, best-attempt GPA → `registration.py` (`missing_prerequisites()`, `meets_minimum()`, `audit()`)
-- Answer-key shape (`acceptable_crns`, `acceptable_carts`) → `run_semantic_eval.acceptable_carts()`
-- Tier 4 by comparison to the answer key → `run_semantic_eval.check_semantic()`; by rules → `run_semantic_eval.check_rules()` (`RULES`)
-- The search tool: its arguments, 40 results per page, cancelled sections hidden → `section_tally.SEARCH_TOOL`, `search_sections()`
-- At most 12 model calls per answer → `harness.generate_with_tools(max_calls=12)`
+- Tier 4 by rules → `run_semantic_eval.check_rules()` (`RULES`)
+- The columns of the whole tally in the cached opening → `run_semantic_eval.TALLY_FIELDS`
 - In-memory SQLite → `registration.make_db()`
 - Cart message type URI (`example.org` placeholder) → `registration_message.schema.json`
 
@@ -950,6 +1257,20 @@ backends × models × domains × tasks × samples
 
 | Version | Date | Changes |
 |---|---|---|
+| 3.0 | 2026-10-19 | Research fields. The harness streams, and records per call `finish_reason` / `native_finish_reason`, `served_model`, `provider`, `generation_id`, `reasoning_tokens` and `first_token_ms`. New `--max-tokens` and `--effort`; every session records its `generation_settings`, `code_version` (commit, branch, uncommitted changes) and `test_file_sha256`; every row its `case_hashes`. Summaries gain 95% Wilson intervals, strong-pair accuracy, accuracy by case type, mean chance baseline, `error_types`, finish reasons, providers, first-token latency, a cost split (setup vs per case, per correct answer, per passed pair, earlier attempts, total spent) and a sampling note under 3 samples. Verdicts gain `error_type`. Case files gain `ground_truth.difficulty` (all cases) and `pair.has_shared_answer` (18 weak pairs). New `--compare` (McNemar's test). The four Sonnet sessions were backfilled with what is known about them. |
+| 2.9 | 2026-10-19 | A failed Tier 4 check explains itself in `why` (what was chosen, why it breaks the rule, what would have satisfied it), and a `semantic_error` verdict gets `why_wrong`: the failed checks plus the case's intended reasoning. |
+| 2.8 | 2026-10-19 | Results files become `{"sessions", "results"}`: one summary per session (settings, output contract, cached-opening info, token/cost/latency totals, outcome counts, mean deviation score, paired accuracy), and slim rows that name their session. Removed duplicates: per-row session fields, `ok`, `prompt_sent`, the per-row output contract, `raw_output` when `parsed_output` holds the same message, `tier3_detail`, `violated`, `tier4_summary`, and in `pair_result` the copies of this row's and the twin's outcome and answer. `TallySession` no longer writes into rows. The four Sonnet results files were converted with `--rescore`. |
+| 2.7 | 2026-10-19 | Verdicts explain Tiers 1-3 too: a `tiers` overview and `tier1_checks`, `tier2_checks` (from `didcomm_schema.validate_message()`) and `tier3_checks` (from `registration.consistency_checks()`; `check_consistency()` reports its first failure, so outcomes are unchanged). Pair rows get `pair_result`, relating each result to its twin's (`relate_pairs()`, after a run and on `--rescore`). 18 pairs found where one answer is valid in both variants (documented as weak pairs). |
+| 2.6 | 2026-10-19 | Tier 4 verdicts gain `tier4_summary` and `tier4_checks` (each check's rule, requirement in words, what the cart had, pass/fail). New `--rescore` re-grades a saved results file without calling a model. Paired accuracy counts a pair with a failed call as incomplete, not as a miss. |
+| 2.5 | 2026-10-18 | 200 pairs (400 cases): `generate_pairs.py` adds pairs to the file (`--total`), keeping those already there, with families taking turns and later rounds reusing programs with other courses. New `ground_truth.pair.difference` on every pair (`--annotate`). Transcript-flip twins are their base transcript plus one edited row (the fabricator's `edits`); `check_pairs()` now fails a pair whose cases differ in more than one place. 7 pairs that differed in 10 to 20 transcript rows were rebuilt, one of them (`withdrawal/human-services-ba`) from the original 40. |
+| 2.4 | 2026-10-18 | Counterfactual pairs: `generate_pairs.py` writes `paired_cases.json` (10 families, 40 pairs, 80 cases), modeled on the Tyler branch's BIRD-style pairs. New rules `courses_in` and `busy`; `--check` validates pairs (`check_pairs()`); runs print paired accuracy, and `--pair-report` computes it from a results file. The fabricator takes `transfer_rows` and `in_progress`. Fixed `generate_cases.Case.counts_toward()` recursing when its cache missed during `score()`. |
+| 2.3 | 2026-10-18 | Fifth case template, credit_limit (one per program, 50 cases; 250 in all), and the `credits` rule back in Tier 4. |
+| 2.2 | 2026-10-18 | Code that no current case or the OpenRouter session pipeline uses was removed: listed answer keys (`acceptable_crns` / `acceptable_carts`, `check_semantic()`, `evaluate_full()`), the rules `credits`, `campus_in`, `must_include`, `must_exclude_courses` and `waitlist: true`, the Ollama backend and `--backend` (§4.1 above describes the original dual-backend plan), `TaskSpec.domain`, the never-filled `enrollments` checks, `section_tally.py show`, and the fabricator's unused spec options. `ROWAN_PROGRAM_GUIDE_TASK.md` (a finished handoff) and `semantic_eval_results_random3.json` (results of removed cases) were deleted. |
+| 2.1 | 2026-10-18 | Four versions of the session's opening (`--tally raw / trimmed / raw-open / trimmed-open`); result rows drop backend, Ollama timers and prompt_sent, and gain session_id, tally_variant, session_cost_usd, session_avg_cost_per_prompt_usd. |
+| 2.0 | 2026-10-18 | The 21 hand-built cases removed; the case file holds the 200 generated cases (four per program). |
+| 1.9 | 2026-10-17 | Cases built from degree requirements: `degree_requirements.json` (50 programs from Rowan's Academic Program Guides), `fabricate.py` (a case names its program; its transcript is fabricated from a spec and checked with the audit), `generate_cases.py` (four verified cases per program, 200). The 21 hand-built cases now name their program and fabricate their transcripts around their original rows. 221 cases. See "Cases built from degree requirements". |
+| 1.8 | 2026-10-17 | The session is the default pipeline: the whole Section Tally is the opening turn, cached, followed by a fixed acknowledgement and then each case as its own request. `--whole-tally` is gone; `--named-courses` runs the earlier per-case portion. OpenRouter timeout raised to 10 minutes for the first (cache-writing) call. See "The session (the default)". |
+| 1.7 | 2026-10-15 | Rowan program guides: `program_guide`, `course_attributes`, `student.entry`, requirement fields `guide_section`, `course_groups` (rule `one_of_groups`), `course_ranges`, `recommended_courses`, `waived_if`, rule `credits_any`, and `graduation_rules.major_gpa`/`minimum_grade`; five `rowan_` cases (21 in all). The sixteen original cases rebuilt on the B.S. Computer Science guide (Fall 2026): full requirements, `program_guide`, `course_attributes`, `student.entry`; case_006 and case_009 prompts changed, case_011's old-id trap removed. See "Fields for Rowan program guides" and "The twenty-one cases". |
 | 1.6 | 2026-10-14 | Merged into README.md. The old §15 (implementation status as of 9/17) removed: it described code that has since changed, and the rest of this README now covers the current state. Its one still-true finding (Ollama timings) moved to §9; the changelog is renumbered §15. The 1.5 text is in git history. |
 | 1.5 | 2026-09-17 | Post-pivot pipeline implemented and verified: `harness.py` refactored to dual-backend (Ollama real, OpenRouter stub) + DIDComm output; `registration.py` domain testbed with a real consistency checker; `run_registration.py` end-to-end runner; README + .gitignore added. §15 rewritten to reflect built-and-verified state (3 of 4 outcome buckets fire automatically; semantic half stubbed pending §13.1). |
 | 1.4 | 2026-09-17 | Added §4.2 (phased execution): local-first/cloud-second sequencing with capability vs. confidence crossover triggers; documented the backend switch mechanism (DIDComm contract above the backend split; `Backend` protocol; OpenRouter stub until Phase 2). Decided harness stays Python (inference-latency-bound, churny research code, analysis ecosystem) rather than Rust. |

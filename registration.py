@@ -17,20 +17,13 @@ CREATE TABLE sections (
     section_id  TEXT PRIMARY KEY,
     course_id   TEXT NOT NULL,
     seats_total INTEGER NOT NULL,
-    seats_taken INTEGER NOT NULL,
-    meets       TEXT NOT NULL          -- provisional slot code, e.g. "MW14", "TR13"; '' if it uses `meetings`
+    seats_taken INTEGER NOT NULL
 );
-CREATE TABLE meetings (                -- structured times (input format); one row per day a section meets
+CREATE TABLE meetings (                -- one row per day a section meets
     section_id TEXT NOT NULL,
     day        TEXT NOT NULL,          -- "Monday" ... "Sunday"
     start_min  INTEGER NOT NULL,       -- minutes after midnight
     end_min    INTEGER NOT NULL,
-    FOREIGN KEY (section_id) REFERENCES sections(section_id)
-);
-CREATE TABLE enrollments (
-    student_id TEXT NOT NULL,
-    section_id TEXT NOT NULL,
-    PRIMARY KEY (student_id, section_id),
     FOREIGN KEY (section_id) REFERENCES sections(section_id)
 );
 CREATE TABLE term (                   -- the term this database's sections are offered in (input format)
@@ -63,15 +56,15 @@ CREATE TABLE prereq_missing (          -- prerequisites THIS student has not met
 );
 """
 
-def make_db(seed_sql: str = "") -> sqlite3.Connection:
+def make_db() -> sqlite3.Connection:
+    """An empty in-memory checker database; seed_db() fills it from an input object."""
     conn = sqlite3.connect(":memory:")
     conn.executescript(SCHEMA)
-    if seed_sql:
-        conn.executescript(seed_sql)
     conn.commit()
     return conn
 
 def _meetings(conn, section: str) -> list:
+    """A section's meetings as (day, start_min, end_min) rows from the checker database."""
     return conn.execute(
         "SELECT day, start_min, end_min FROM meetings WHERE section_id=?", (section,)).fetchall()
 
@@ -84,6 +77,7 @@ def _overlap(a: list, b: list):
     return None
 
 def _same_text(a, b) -> bool:
+    """Equality for copied text fields, ignoring case and surrounding spaces."""
     return str(a).strip().casefold() == str(b).strip().casefold()
 
 def _meeting_key(m: dict) -> tuple:
@@ -122,101 +116,117 @@ def _copy_differs(conn, item: dict, course: str, seats_total: int, seats_taken: 
         return f"meetings do not match the offered section's: {differs}"
     return None
 
-def check_consistency(conn, body: dict):
-    """Returns (ok, reason). Assumes body already passed schema validation."""
-    student = body["student_id"]
-    cart_course, cart_slot = {}, {}       # course / slot -> the cart section that holds it
-    cart_times = {}                       # cart section -> its structured meetings
-    enrolled_times = {row[0]: _meetings(conn, row[0]) for row in conn.execute(
-        "SELECT section_id FROM enrollments WHERE student_id=?", (student,))}
+def consistency_checks(conn, body: dict) -> list:
+    """Tier 3, every invariant in order: the term, then for each cart section its existence,
+    copied fields, cancellation, seat (or waitlist), credits, prerequisites, and the cart's
+    own rules (one section per course, no overlaps). Each check is {"check", "section",
+    "requires", "found", "passed", "reason"}; "reason" is the failure text check_consistency()
+    reports, None on a pass. A section that does not exist gets no further checks. Assumes
+    body already passed schema validation."""
+    checks = []
+
+    def check(name, section, requires, found, reason=None):
+        checks.append({"check": name, "section": section, "requires": requires, "found": found,
+                       "passed": reason is None, "reason": reason})
+
     term = conn.execute("SELECT term_code FROM term").fetchone()
-    if term and body["term_code"] != term[0]:
-        return False, f"term_code {body['term_code']} is not the term being registered for ({term[0]})"
+    if term:
+        check("term", None, f"term_code is the term being registered for ({term[0]})", f"term_code {body['term_code']}",
+              None if body["term_code"] == term[0] else
+              f"term_code {body['term_code']} is not the term being registered for ({term[0]})")
+    cart_course = {}                      # course -> the cart section that holds it
+    cart_times = {}                       # cart section -> its structured meetings
     for item in body["sections"]:
         section = item["crn"]
         row = conn.execute(
-            "SELECT course_id, seats_total, seats_taken, meets FROM sections WHERE section_id=?",
+            "SELECT course_id, seats_total, seats_taken FROM sections WHERE section_id=?",
             (section,)).fetchone()
+        check("exists", section, f"crn {section} is a section offered this term",
+              f"offered: {row[0]}" if row else "no section has this crn",
+              None if row else f"section {section} does not exist")
         if row is None:
-            return False, f"section {section} does not exist"
-        course, seats_total, seats_taken, meets = row
+            continue
+        course, seats_total, seats_taken = row
         wrong = _copy_differs(conn, item, course, seats_total, seats_taken)
-        if wrong:
-            return False, f"section {section}: {wrong}"
-        if conn.execute("SELECT 1 FROM enrollments WHERE student_id=? AND section_id=?",
-                        (student, section)).fetchone():
-            return False, f"already enrolled in {section}"
-        if conn.execute("SELECT 1 FROM cancelled_sections WHERE section_id=?", (section,)).fetchone():
-            return False, f"section {section} is cancelled"
+        check("copied_fields", section, "course_id, section, campus, modality, seats and meetings are copied exactly "
+              "from the offered section", wrong or "all match", f"section {section}: {wrong}" if wrong else None)
+        cancelled = conn.execute("SELECT 1 FROM cancelled_sections WHERE section_id=?", (section,)).fetchone()
+        check("not_cancelled", section, "the section is not cancelled", "cancelled" if cancelled else "not cancelled",
+              f"section {section} is cancelled" if cancelled else None)
+        seats = f"{seats_taken}/{seats_total} seats taken"
         if item.get("waitlist"):
             waitlist = conn.execute("SELECT capacity, enrolled FROM waitlists WHERE section_id=?",
                                     (section,)).fetchone()
-            if seats_taken < seats_total:
-                return False, (f"section {section} has open seats ({seats_taken}/{seats_total}), "
-                               f"so it cannot be waitlisted")
-            if waitlist is None:
-                return False, f"section {section} is full and has no waitlist"
-            if waitlist[1] >= waitlist[0]:
-                return False, f"the waitlist for section {section} is full ({waitlist[1]}/{waitlist[0]})"
-        elif seats_taken >= seats_total:
-            return False, f"section {section} is full ({seats_taken}/{seats_total})"
+            found = seats + (f", waitlist {waitlist[1]}/{waitlist[0]}" if waitlist else ", no waitlist")
+            reason = (f"section {section} has open seats ({seats_taken}/{seats_total}), so it cannot be waitlisted"
+                      if seats_taken < seats_total else
+                      f"section {section} is full and has no waitlist" if waitlist is None else
+                      f"the waitlist for section {section} is full ({waitlist[1]}/{waitlist[0]})"
+                      if waitlist[1] >= waitlist[0] else None)
+            check("waitlist", section, "a waitlisted section is full and its waitlist has room", found, reason)
+        else:
+            check("seat", section, "the section has a free seat", seats,
+                  f"section {section} is full ({seats_taken}/{seats_total})" if seats_taken >= seats_total else None)
         allowed = conn.execute("SELECT min_credits, max_credits FROM section_credits WHERE section_id=?",
                                (section,)).fetchone()
         chosen = item.get("credit_hours")
         if allowed:
             low, high = allowed
-            if low != high and chosen is None:
-                return False, (f"section {section} is variable-credit ({low:g}-{high:g}); "
-                               f"the message must give credit_hours")
-            if chosen is not None and not low <= chosen <= high:
-                allowed_text = f"{low:g}" if low == high else f"{low:g}-{high:g}"
-                return False, f"section {section}: credit_hours {chosen:g} is not {allowed_text}"
+            allowed_text = f"{low:g}" if low == high else f"{low:g}-{high:g}"
+            reason = (f"section {section} is variable-credit ({low:g}-{high:g}); the message must give credit_hours"
+                      if low != high and chosen is None else
+                      f"section {section}: credit_hours {chosen:g} is not {allowed_text}"
+                      if chosen is not None and not low <= chosen <= high else None)
+            check("credits", section, f"credit_hours is allowed for this section ({allowed_text})",
+                  f"credit_hours {chosen:g}" if chosen is not None else "credit_hours not given", reason)
         unmet = conn.execute(
             "SELECT requires, minimum_grade FROM prereq_missing WHERE course_id=?", (course,)).fetchone()
-        if unmet:
-            return False, (f"section {section}: {course} needs prerequisite {unmet[0]} "
-                           f"({unmet[1]} or better), which the transcript does not show")
-        # Time conflicts are found two ways: equal slot codes (sections seeded with `meets`),
-        # or overlapping time ranges on a shared day (sections seeded with `meetings`).
+        check("prerequisites", section, f"the transcript shows every prerequisite of {course}",
+              f"missing {unmet[0]} ({unmet[1]} or better)" if unmet else "no unmet prerequisite",
+              f"section {section}: {course} needs prerequisite {unmet[0]} ({unmet[1]} or better), "
+              f"which the transcript does not show" if unmet else None)
+        # A time conflict is two meetings on a shared day whose time ranges overlap.
         times = _meetings(conn, section)
-        conflict = conn.execute("""
-            SELECT e.section_id FROM enrollments e
-            JOIN sections s ON s.section_id = e.section_id
-            WHERE e.student_id=? AND s.meets=? AND s.meets != ''
-        """, (student, meets)).fetchone()
-        if conflict:
-            return False, f"time conflict with {conflict[0]} at {meets}"
-        for other, other_times in enrolled_times.items():
-            day = _overlap(times, other_times)
-            if day:
-                return False, f"time conflict with {other} on {day}"
         # Invariants that only exist for a cart: its sections against each other.
-        if course in cart_course:
-            return False, f"two sections of {course} in the cart: {cart_course[course]} and {section}"
-        if meets and meets in cart_slot:
-            return False, f"time conflict inside the cart: {cart_slot[meets]} and {section} at {meets}"
-        for other, other_times in cart_times.items():
-            day = _overlap(times, other_times)
-            if day:
-                return False, f"time conflict inside the cart: {other} and {section} on {day}"
-        cart_course[course], cart_times[section] = section, times
-        if meets:
-            cart_slot[meets] = section
-    return True, "consistent"
+        check("one_section_per_course", section, f"no other section of {course} is in the cart",
+              f"also {cart_course[course]}" if course in cart_course else "the only one",
+              f"two sections of {course} in the cart: {cart_course[course]} and {section}"
+              if course in cart_course else None)
+        clash = next(((other, day) for other, other_times in cart_times.items()
+                      for day in [_overlap(times, other_times)] if day), None)
+        check("no_time_conflict", section, "no meeting overlaps another section in the cart",
+              f"overlaps {clash[0]} on {clash[1]}" if clash else
+              ("no overlap" if cart_times else "the first section in the cart"),
+              f"time conflict inside the cart: {clash[0]} and {section} on {clash[1]}" if clash else None)
+        cart_course.setdefault(course, section)
+        cart_times[section] = times
+    return checks
+
+
+def check_consistency(conn, body: dict):
+    """Returns (ok, reason): the first failed invariant of consistency_checks(), else 'consistent'.
+    Assumes body already passed schema validation."""
+    failed = next((c for c in consistency_checks(conn, body) if not c["passed"]), None)
+    return (False, failed["reason"]) if failed else (True, "consistent")
 
 def evaluate(conn, raw_output: str) -> dict:
     # Tier 1: syntactic — is it a DIDComm plaintext message?
     # Tier 2: schema — is it OUR register message, with a well-formed cart?
+    """Tiers 1-3 for one raw model output against this database. A message that passes all
+    three comes back as consistent__semantic_TBD; run_semantic_eval.py adds Tier 4."""
     checked = validate_message(raw_output)
+    shown = {"tier1_checks": checked["tier1_checks"], "tier2_checks": checked["tier2_checks"]}
     if checked["outcome"] != "schema_ok":
-        return {"outcome": checked["outcome"], "detail": checked["detail"]}
-    # Tier 3: consistency — invariants
-    ok, reason = check_consistency(conn, checked["body"])
-    if not ok:
-        return {"outcome": "consistency_error", "detail": reason}
+        return {"outcome": checked["outcome"], "detail": checked["detail"], **shown, "tier3_checks": []}
+    # Tier 3: consistency — invariants (every one is listed; the first failure is the reason)
+    checks = consistency_checks(conn, checked["body"])
+    tier3 = [{k: v for k, v in c.items() if k != "reason"} for c in checks]
+    failed = next((c for c in checks if not c["passed"]), None)
+    if failed:
+        return {"outcome": "consistency_error", "detail": failed["reason"], **shown, "tier3_checks": tier3}
     # Tier 4: semantic — STUB here; run_semantic_eval.py adds it on top
     return {"outcome": "consistent__semantic_TBD",
-            "detail": "invariants hold"}
+            "detail": "invariants hold", **shown, "tier3_checks": tier3}
 
 
 # ── Input format: one JSON object per registration situation ──
@@ -227,7 +237,7 @@ _INPUT = Draft202012Validator(INPUT_SCHEMA)
 
 GRADE_ORDER = ["A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-"]   # highest to lowest
 GRADE_POINTS = dict(zip(GRADE_ORDER, [4.0, 3.7, 3.3, 3.0, 2.7, 2.3, 2.0, 1.7, 1.3, 1.0, 0.7]), F=0.0)
-CREDIT_RULES = ("credits_from", "credits_with_attribute")
+CREDIT_RULES = ("credits_from", "credits_with_attribute", "credits_any")
 
 def minutes(clock: str) -> int:
     """'1:05 PM' -> 785 (minutes after midnight)."""
@@ -236,6 +246,7 @@ def minutes(clock: str) -> int:
     return (hour % 12 + (12 if half == "PM" else 0)) * 60 + minute
 
 def _duplicates(values) -> list:
+    """Values that occur more than once, in first-seen order."""
     seen, repeated = set(), []
     for v in values:
         if v in seen and v not in repeated:
@@ -265,6 +276,31 @@ def validate_input(data) -> list:
                             f"credits_with_attribute rule, and only with it")
         if "credit_caps" in r and r["rule"] not in CREDIT_RULES:
             problems.append(f"requirement {r['req_id']}: credit_caps only applies to the credit rules")
+        if (r["rule"] == "one_of_groups") != ("course_groups" in r):
+            problems.append(f"requirement {r['req_id']}: `course_groups` goes with the "
+                            f"one_of_groups rule, and only with it")
+        if "course_ranges" in r and r["rule"] not in ("any_of", "credits_from"):
+            problems.append(f"requirement {r['req_id']}: course_ranges only applies to any_of and credits_from")
+        if r["rule"] in ("one_of_groups", "credits_any", "credits_with_attribute") and r["course_options"]:
+            problems.append(f"requirement {r['req_id']}: course_options must be empty for {r['rule']}")
+        if r["rule"] in ("all_of", "any_of", "credits_from") and not (r["course_options"] or r.get("course_ranges")):
+            problems.append(f"requirement {r['req_id']}: {r['rule']} needs course_options or course_ranges")
+        for cr in r.get("course_ranges", []):
+            if cr.get("min_number", 0) > cr.get("max_number", 999):
+                problems.append(f"requirement {r['req_id']}: a course range's min_number is more than its max_number")
+    any_course = [r["req_id"] for r in data["program_requirements"] if r["rule"] == "credits_any"]
+    if any_course and any_course[-1] != data["program_requirements"][-1]["req_id"]:
+        problems.append(f"requirement {any_course[-1]}: credits_any (free electives) must come last, "
+                        f"so every exclusive requirement takes its courses first")
+    guide = data.get("program_guide")
+    if guide:
+        low = sum(sec["credit_hours"]["min"] if isinstance(sec["credit_hours"], dict) else sec["credit_hours"]
+                  for sec in guide["sections"])
+        high = sum(sec["credit_hours"]["max"] if isinstance(sec["credit_hours"], dict) else sec["credit_hours"]
+                   for sec in guide["sections"])
+        if not low <= guide["total_credits"] <= high:
+            problems.append(f"program_guide: sections add up to {low:g}-{high:g} credits, "
+                            f"not total_credits {guide['total_credits']:g}")
     for s in sections:
         if s["seats_taken"] > s["seats_total"]:
             problems.append(f"crn {s['crn']}: seats_taken {s['seats_taken']} "
@@ -293,6 +329,12 @@ def _canonical(data: dict):
     same = {c: group[0] for group in data.get("course_equivalents", []) for c in group}
     return lambda course_id: same.get(course_id, course_id)
 
+def catalog_attributes(data: dict, course_id: str) -> set:
+    """A course's Rowan Core / Rowan Experience designations from `course_attributes`,
+    looked up under its own id and under any equivalent id."""
+    canon, table = _canonical(data), data.get("course_attributes", {})
+    return {a for listed, attrs in table.items() if canon(listed) == canon(course_id) for a in attrs}
+
 def _attempts(data: dict) -> list:
     """Every graded attempt on the transcript. In-progress courses have no grade, so none."""
     canon, transcript = _canonical(data), data["transcript"]
@@ -300,7 +342,7 @@ def _attempts(data: dict) -> list:
            [(c, False) for c in transcript["transfer_courses"]]
     return [{"id": i, "course": canon(c["course_id"]), "grade": c["grade"],
              "credits": c["credit_hours"], "institutional": institutional,
-             "attributes": set(c.get("attributes", []))}
+             "attributes": set(c.get("attributes", [])) | catalog_attributes(data, c["course_id"])}
             for i, (c, institutional) in enumerate(rows)]
 
 def _counted(pool: list, repeatable: set) -> list:
@@ -313,10 +355,38 @@ def _counted(pool: list, repeatable: set) -> list:
             best[a["course"]] = a
     return sorted(every + list(best.values()), key=lambda a: a["id"])
 
+def in_range(course: str, course_range: dict, canon) -> bool:
+    """Is the course in a family like 'any 300+ level PHYS course'? (See course_range in the schema.)"""
+    subject, discipline, number = course[:-5], course[-5:-3], course[-3:]
+    if subject != course_range["subject"] or not number.isdigit():
+        return False
+    if course_range.get("discipline", discipline) != discipline:
+        return False
+    if not course_range.get("min_number", 0) <= int(number) <= course_range.get("max_number", 999):
+        return False
+    return course not in {canon(c) for c in course_range.get("exclude", [])}
+
 def _matches(requirement: dict, course: str, attributes, canon) -> bool:
-    if requirement["rule"] == "credits_with_attribute":
+    """Does this course (with these attributes) fit the requirement's rule? Grades, credits and
+    exclusivity are handled by the caller."""
+    rule = requirement["rule"]
+    if rule == "credits_with_attribute":
         return requirement["attribute"] in attributes
-    return course in {canon(c) for c in requirement["course_options"]}
+    if rule == "credits_any":
+        return True
+    if rule == "one_of_groups":
+        return course in {canon(c) for group in requirement["course_groups"] for c in group}
+    return (course in {canon(c) for c in requirement["course_options"]}
+            or any(in_range(course, cr, canon) for cr in requirement.get("course_ranges", [])))
+
+def waived(data: dict, requirement: dict) -> bool:
+    """The guide's waivers: the requirement is met with no course when the student's entry
+    matches any condition in waived_if."""
+    entry, condition = data["student"].get("entry", {}), requirement.get("waived_if", {})
+    if condition.get("nj_associate_degree") and entry.get("nj_associate_degree"):
+        return True
+    needed = condition.get("transfer_credits_at_entry")
+    return needed is not None and entry.get("transfer_credits_at_entry", 0) >= needed
 
 def audit(data: dict) -> dict:
     """Degree audit: which requirements and graduation rules the transcript satisfies.
@@ -325,8 +395,11 @@ def audit(data: dict) -> dict:
     unless both are marked `exclusive`; then the earlier requirement takes it.
     """
     canon, attempts = _canonical(data), _attempts(data)
-    taken_exclusively, requirements = set(), {}
+    taken_exclusively, major_used, requirements = set(), set(), {}
     for r in data["program_requirements"]:
+        if waived(data, r):
+            requirements[r["req_id"]] = {"rule": r["rule"], "satisfied": True, "waived": True}
+            continue
         repeatable = {canon(c) for c in r.get("repeatable", [])}
         pool = _counted([a for a in attempts
                          if meets_minimum(a["grade"], r["minimum_grade"])
@@ -339,6 +412,13 @@ def audit(data: dict) -> dict:
             result["satisfied"], used = not result["missing"], pool
         elif r["rule"] == "any_of":
             result["satisfied"], used = bool(pool), sorted(pool, key=lambda a: _rank(a["grade"]))[:1]
+        elif r["rule"] == "one_of_groups":
+            have = {a["course"] for a in pool}
+            groups = [sorted({canon(c) for c in g}) for g in r["course_groups"]]
+            closest = min(groups, key=lambda g: len(set(g) - have))      # first group on a tie
+            result["missing"] = sorted(set(closest) - have)
+            result["satisfied"] = not result["missing"]
+            used = [a for a in pool if a["course"] in closest]
         else:
             caps = [({canon(c) for c in cap["course_options"]}, cap["max_credits"])
                     for cap in r.get("credit_caps", [])]
@@ -358,8 +438,12 @@ def audit(data: dict) -> dict:
             result.update(earned_credits=earned,
                           remaining_credits=max(0, r["credit_hours"] - earned),
                           satisfied=earned >= r["credit_hours"])
+            if caps:
+                result["cap_remaining"] = [max(0, limit - u) for (_, limit), u in zip(caps, cap_used)]
         if r.get("exclusive"):
             taken_exclusively |= {a["id"] for a in used}
+        if r.get("guide_section") == "major":
+            major_used |= {a["id"] for a in used}
         requirements[r["req_id"]] = result
 
     # Graduation-wide rules (spec open item 7). Quality points and GPA are derived here,
@@ -373,6 +457,7 @@ def audit(data: dict) -> dict:
         "residency_credits": sum(a["credits"] for a in earned if a["institutional"]),
         "minimum_gpa": round(sum(GRADE_POINTS[a["grade"]] * a["credits"] for a in graded) / gpa_credits, 3)
                        if gpa_credits else None,
+        "major_gpa": _major_gpa(data, attempts, repeatable),
     }
     rules = data.get("graduation_rules", {})
     graduation = {name: {"value": value, "required": rules.get(name),
@@ -381,14 +466,32 @@ def audit(data: dict) -> dict:
                   for name, value in totals.items()}
     return {"requirements": requirements, "graduation": graduation}
 
+def _major_gpa(data: dict, attempts: list, repeatable: set):
+    """GPA over every Rowan-graded attempt (best attempt per course, F included) at a course
+    that a guide_section 'major' requirement names, the rule behind 'an overall GPA of 2.5 or
+    better in all courses that satisfy major requirements'. None when there is none."""
+    canon = _canonical(data)
+    major = [r for r in data["program_requirements"]
+             if r.get("guide_section") == "major" and r["rule"] != "credits_any"]
+    graded = _counted([a for a in attempts if a["institutional"] and a["grade"] in GRADE_POINTS
+                       and any(_matches(r, a["course"], a["attributes"], canon) for r in major)], repeatable)
+    credits = sum(a["credits"] for a in graded)
+    return round(sum(GRADE_POINTS[a["grade"]] * a["credits"] for a in graded) / credits, 3) if credits else None
+
 def counts_toward(data: dict, course_id: str, attributes=()) -> list:
     """The req_ids of UNMET requirements that taking this course would move forward."""
     canon, course = _canonical(data), _canonical(data)(course_id)
+    attributes = set(attributes) | catalog_attributes(data, course_id)
     status = audit(data)["requirements"]
     progressing = []
     for r in data["program_requirements"]:
-        if status[r["req_id"]]["satisfied"] or not _matches(r, course, set(attributes), canon):
+        if status[r["req_id"]]["satisfied"] or not _matches(r, course, attributes, canon):
             continue
+        capped = [remaining for cap, remaining in zip(r.get("credit_caps", []),
+                                                      status[r["req_id"]].get("cap_remaining", []))
+                  if course in {canon(c) for c in cap["course_options"]}]
+        if capped and min(capped) <= 0:
+            continue                      # its credits would not count: the cap is used up
         earned = any(a["course"] == course and meets_minimum(a["grade"], r["minimum_grade"])
                      for a in _attempts(data))
         if not earned or course in {canon(c) for c in r.get("repeatable", [])}:
@@ -421,7 +524,7 @@ def seed_db(data: dict) -> sqlite3.Connection:
         if s.get("waitlist"):
             conn.execute("INSERT INTO waitlists VALUES (?, ?, ?)",
                          (s["crn"], s["waitlist"]["capacity"], s["waitlist"]["enrolled"]))
-        conn.execute("INSERT INTO sections VALUES (?, ?, ?, ?, '')",
+        conn.execute("INSERT INTO sections VALUES (?, ?, ?, ?)",
                      (s["crn"], s["course_id"], s["seats_total"], s["seats_taken"]))
         conn.execute("INSERT INTO section_details VALUES (?, ?, ?, ?, ?)",
                      (s["crn"], s["section"], s["campus"], s["modality"], json.dumps(s["meetings"])))

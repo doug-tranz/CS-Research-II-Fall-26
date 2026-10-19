@@ -35,6 +35,7 @@ Draft202012Validator.check_schema(SCHEMA)
 
 
 def _validator(def_name: str) -> Draft202012Validator:
+    """A validator for one entry of the schema's $defs (envelope or register)."""
     return Draft202012Validator({"$ref": f"#/$defs/{def_name}", "$defs": SCHEMA["$defs"]})
 
 
@@ -43,7 +44,7 @@ _REGISTER = _validator("register")
 
 # Goes in TaskSpec.output_contract. The example uses a student and sections
 # that appear in no test case, so a correct answer requires ADAPTING the
-# shape -- not copying the example (same rule as the original run_registration.py).
+# shape -- not copying the example.
 SECTION_FIELDS = ("crn", "course_id", "section", "credit_hours", "seats_total", "seats_taken",
                   "campus", "modality", "meetings")
 _EXAMPLE = {
@@ -92,38 +93,75 @@ def _errors(validator: Draft202012Validator, message) -> list:
     return [f"{'/'.join(map(str, e.absolute_path)) or '<message>'}: {e.message}" for e in found]
 
 
+def _check(requires: str, errors: list, found_ok: str) -> dict:
+    """One Tier 1-2 check for a verdict's tier1_checks / tier2_checks."""
+    return {"requires": requires, "found": "; ".join(errors) if errors else found_ok, "passed": not errors}
+
+
+# Tier 2's schema errors, sorted into checks by where in the message they are.
+_REGISTER_PARTS = (
+    ("type", f'"type" is exactly "{MESSAGE_TYPE}"',
+     lambda path: path == "type"),
+    ("body", 'the body has exactly "student_id" (string), "term_code" (string) and "sections" (a non-empty list)',
+     lambda path: path.startswith("body") and not path.startswith("body/sections/")),
+    ("sections", "every section entry has exactly the copied fields (crn, course_id, section, credit_hours, "
+                 "seats, campus, modality, meetings), each well-formed (full day names, 12-hour times)",
+     lambda path: path.startswith("body/sections/")),
+)
+
+
 def validate_message(raw: str) -> dict:
     """
     raw: the model's output, verbatim.
 
     Returns {"outcome": "syntactic_error" | "schema_error" | "schema_ok",
-             "detail": str, "errors": [str], "body": dict | None}
-    body is set only on schema_ok; pass it on to the consistency check.
+             "detail": str, "errors": [str], "body": dict | None,
+             "tier1_checks": [...], "tier2_checks": [...]}
+    body is set only on schema_ok; pass it on to the consistency check. Each check is
+    {"check", "requires", "found", "passed"}; a tier that was not reached has no checks.
     """
     try:
         message = json.loads(raw)
     except (json.JSONDecodeError, TypeError) as e:
         return {"outcome": "syntactic_error", "detail": f"invalid JSON ({e})",
-                "errors": ["<message>: not valid JSON"], "body": None}
+                "errors": ["<message>: not valid JSON"], "body": None,
+                "tier1_checks": [{"check": "json", **_check("the whole answer is one JSON value, with no prose or "
+                                                            "code fence around it", [f"invalid JSON ({e})"], "")}],
+                "tier2_checks": []}
+    tier1 = [{"check": "json", **_check("the whole answer is one JSON value, with no prose or code fence around it",
+                                        [], "valid JSON")}]
 
     errors = _errors(_ENVELOPE, message)
+    tier1.append({"check": "envelope", **_check(
+        'a DIDComm v2 plaintext message: an object with an "id" string, a "type" message-type URI and a '
+        '"body" object; any optional headers (typ, from, to, created_time) well-formed',
+        errors, "valid DIDComm envelope")})
     if errors:
         return {"outcome": "syntactic_error",
                 "detail": f"not a DIDComm plaintext message: {errors}",
-                "errors": errors, "body": None}
+                "errors": errors, "body": None, "tier1_checks": tier1, "tier2_checks": []}
 
     errors = _errors(_REGISTER, message)
+    paths = [(e.split(":", 1)[0], e) for e in errors]
+    tier2 = [{"check": name, **_check(requires, [e for path, e in paths if belongs(path)], "as required")}
+             for name, requires, belongs in _REGISTER_PARTS]
+    rest = [e for path, e in paths if not any(belongs(path) for _, _, belongs in _REGISTER_PARTS)]
+    if rest:
+        tier2.append({"check": "other", **_check("nothing else in the message breaks the register schema",
+                                                 rest, "as required")})
     if not errors:                       # JSON Schema cannot say "no crn twice" for objects
         crns = [item["crn"] for item in message["body"]["sections"]]
         errors = [f"body/sections: crn {crn} is listed more than once"
                   for crn in sorted({c for c in crns if crns.count(c) > 1})]
+        tier2.append({"check": "unique_crns", **_check("no crn appears twice in the cart", errors,
+                                                       f"{len(crns)} distinct crn{'' if len(crns) == 1 else 's'}")})
     if errors:
         return {"outcome": "schema_error",
                 "detail": f"not a valid register message: {errors}",
-                "errors": errors, "body": None}
+                "errors": errors, "body": None, "tier1_checks": tier1, "tier2_checks": tier2}
 
     return {"outcome": "schema_ok", "detail": "valid register message",
-            "errors": [], "body": message["body"]}
+            "errors": [], "body": message["body"], "tier1_checks": tier1, "tier2_checks": tier2}
 
 
 if __name__ == "__main__":
