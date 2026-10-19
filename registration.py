@@ -120,7 +120,7 @@ def consistency_checks(conn, body: dict) -> list:
     """Tier 3, every invariant in order: the term, then for each cart section its existence,
     copied fields, cancellation, seat (or waitlist), credits, prerequisites, and the cart's
     own rules (one section per course, no overlaps). Each check is {"check", "section",
-    "requires", "found", "passed", "reason"}; "reason" is the failure text check_consistency()
+    "requires", "found", "passed", "reason"}; "reason" is the failure text evaluate()
     reports, None on a pass. A section that does not exist gets no further checks. Assumes
     body already passed schema validation."""
     checks = []
@@ -201,13 +201,6 @@ def consistency_checks(conn, body: dict) -> list:
         cart_course.setdefault(course, section)
         cart_times[section] = times
     return checks
-
-
-def check_consistency(conn, body: dict):
-    """Returns (ok, reason): the first failed invariant of consistency_checks(), else 'consistent'.
-    Assumes body already passed schema validation."""
-    failed = next((c for c in consistency_checks(conn, body) if not c["passed"]), None)
-    return (False, failed["reason"]) if failed else (True, "consistent")
 
 def evaluate(conn, raw_output: str) -> dict:
     # Tier 1: syntactic — is it a DIDComm plaintext message?

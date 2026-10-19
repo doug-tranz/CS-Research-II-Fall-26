@@ -72,22 +72,12 @@
         "per_case_marginal_usd_est": 0.066035,
         "per_correct_answer_usd": 0.250412,
         "per_passed_pair_usd": 0.500824,
-        "earlier_attempts_usd": 1.1745,
-        "total_spent_usd": 2.676973,
         "note": "All costs are what OpenRouter billed for the original model calls; re-grading a results file (--rescore) makes no model call and costs nothing."
       },
       "latency": {
         "mean_total_ms": 6698,
         "mean_first_token_ms": null
       },
-      "earlier_attempts": [
-        {
-          "session_id": "trimmed-20261019T151833Z",
-          "cost_usd": 1.1745,
-          "calls_made": 1,
-          "note": "ran out of OpenRouter credits after 1 of 6 calls; results deleted and the session rerun"
-        }
-      ],
       "paired_accuracy": {
         "passed": 3,
         "scored": 3,

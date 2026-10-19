@@ -301,9 +301,8 @@ except `deviation_score` (per row, and averaged in the summary).
   the shared opening) and `per_case_marginal_usd_est` (one more case once the cache is warm).
   These two are estimates: OpenRouter reports one cost per call, so the marginal cost is the
   median cost of cache-reading calls, and setup is what the writing call cost above that.
-  Also `per_correct_answer_usd`, `per_passed_pair_usd`, and, when a session records
-  `earlier_attempts` (failed tries that were billed and then rerun), `earlier_attempts_usd` and
-  `total_spent_usd`. `--rescore` makes no model call and costs nothing.
+  Also `per_correct_answer_usd` and `per_passed_pair_usd`. `--rescore` makes no model call
+  and costs nothing.
 
 **`results[]`, one row per call:**
 - **Identity:** `task_id`, `session_id`, `run_index`, `ts`, `case_hashes` (`input`: a hash of
@@ -343,13 +342,13 @@ how often only A or only B was right, and p. With one sample per case and a hand
 expect p near 1: run `-n 3` or more on more cases before claiming a difference.
 
 **Sessions run before 2026-10-19's streaming harness** (the four `pairs_sonnet_*.json`) have no
-finish reasons, providers, thinking tokens or first-token times. Their `generation_settings`,
-`code_version` (the commit, with uncommitted changes that were not recorded) and
-`earlier_attempts` were filled in afterwards from what is known about those runs.
+finish reasons, providers, thinking tokens or first-token times. Their `generation_settings`
+and `code_version` (the commit, with uncommitted changes that were not recorded) were filled in
+afterwards from what is known about those runs.
 
 Dropped as duplicates: `ok` (= `error` is null), `prompt_sent`, the per-row copies of the
-session's fields, and, in verdicts, `tier3_detail`, `violated` and `tier4_summary` (all
-restated in `tiers` and the check lists). `--rescore` rewrites an older file (a bare array of
+session's fields. Older verdicts' `tier3_detail` and `violated` (restated in `tiers` and the
+check lists) are no longer produced and are dropped from an older file. `--rescore` rewrites an older file (a bare array of
 rows) in this layout.
 
 ## Troubleshooting
@@ -1039,7 +1038,7 @@ The design's own open questions are in [§13](#13-open-questions--for-the-group)
 ## Provisional (will change; isolated to one spot each)
 
 - DIDComm envelope shape → `harness.parse_didcomm()`
-- Time-conflict logic (interval overlap) → `registration.check_consistency()`
+- Time-conflict logic (interval overlap) → `registration.consistency_checks()`
 - Input-format open items: prerequisites as a consistency rule, `TA` meeting any minimum, best-attempt GPA → `registration.py` (`missing_prerequisites()`, `meets_minimum()`, `audit()`)
 - Tier 4 by rules → `run_semantic_eval.check_rules()` (`RULES`)
 - The columns of the whole tally in the cached opening → `run_semantic_eval.TALLY_FIELDS`
@@ -1257,6 +1256,8 @@ backends × models × domains × tasks × samples
 
 | Version | Date | Changes |
 |---|---|---|
+| 3.2 | 2026-10-19 | Removed `earlier_attempts` and `cost.total_spent_usd` (and `earlier_attempts_usd`) from session summaries and from the four Sonnet results files; `cost.total_usd` is the session's cost. |
+| 3.1 | 2026-10-19 | Obsolete code removed: `registration.check_consistency()` (replaced by `consistency_checks()`); verdicts no longer build `tier3_detail` and `violated` only to drop them; `pair_summary()` formats `pair_stats()` instead of repeating its counting; leftover keys from intermediate file layouts. No file was obsolete. |
 | 3.0 | 2026-10-19 | Research fields. The harness streams, and records per call `finish_reason` / `native_finish_reason`, `served_model`, `provider`, `generation_id`, `reasoning_tokens` and `first_token_ms`. New `--max-tokens` and `--effort`; every session records its `generation_settings`, `code_version` (commit, branch, uncommitted changes) and `test_file_sha256`; every row its `case_hashes`. Summaries gain 95% Wilson intervals, strong-pair accuracy, accuracy by case type, mean chance baseline, `error_types`, finish reasons, providers, first-token latency, a cost split (setup vs per case, per correct answer, per passed pair, earlier attempts, total spent) and a sampling note under 3 samples. Verdicts gain `error_type`. Case files gain `ground_truth.difficulty` (all cases) and `pair.has_shared_answer` (18 weak pairs). New `--compare` (McNemar's test). The four Sonnet sessions were backfilled with what is known about them. |
 | 2.9 | 2026-10-19 | A failed Tier 4 check explains itself in `why` (what was chosen, why it breaks the rule, what would have satisfied it), and a `semantic_error` verdict gets `why_wrong`: the failed checks plus the case's intended reasoning. |
 | 2.8 | 2026-10-19 | Results files become `{"sessions", "results"}`: one summary per session (settings, output contract, cached-opening info, token/cost/latency totals, outcome counts, mean deviation score, paired accuracy), and slim rows that name their session. Removed duplicates: per-row session fields, `ok`, `prompt_sent`, the per-row output contract, `raw_output` when `parsed_output` holds the same message, `tier3_detail`, `violated`, `tier4_summary`, and in `pair_result` the copies of this row's and the twin's outcome and answer. `TallySession` no longer writes into rows. The four Sonnet results files were converted with `--rescore`. |

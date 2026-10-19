@@ -6,7 +6,7 @@ from the input format (README.md, "The input format"), sends it to a model,
 and scores the answer through all four tiers:
 
   Tiers 1-2  syntactic + schema   didcomm_schema.validate_message()  } via
-  Tier 3     consistency          registration.check_consistency()   } registration.evaluate()
+  Tier 3     consistency          registration.consistency_checks()  } registration.evaluate()
   Tier 4     semantic             check_rules(), below
 
 The model NEVER sees `ground_truth`. It is loaded separately and used only
@@ -609,8 +609,7 @@ def check_rules(body: dict, case: dict) -> dict:
         why_wrong = (f"{len(failed)} of {len(checks)} Tier 4 checks failed ({_names(c['rule'] for c in failed)}). "
                      f"What the request needed: {intended(case)}")
         return {"outcome": "semantic_error", "detail": f"rules broken: {violated}",
-                "deviation_score": len(violated) / checked, "violated": sorted(violated),
-                "tier4_checks": checks, "why_wrong": why_wrong}
+                "deviation_score": len(violated) / checked, "tier4_checks": checks, "why_wrong": why_wrong}
     return {"outcome": "semantic_ok", "detail": "satisfies every rule", "deviation_score": 0.0,
             "tier4_checks": checks}
 
@@ -625,8 +624,7 @@ def evaluate_case(case: dict, raw_output: str, conn=None) -> dict:
         verdict = dict(base)         # failed at Tier 1-3: keep that verdict as it is
     else:
         body, _ = parse_didcomm(raw_output)
-        verdict = {**check_rules(body, case), "tier3_detail": base["detail"],
-                   **{k: base[k] for k in ("tier1_checks", "tier2_checks", "tier3_checks")}}
+        verdict = {**check_rules(body, case), **{k: base[k] for k in ("tier1_checks", "tier2_checks", "tier3_checks")}}
     tag = error_type(verdict, case)
     if tag:
         verdict["error_type"] = tag
@@ -697,8 +695,8 @@ TIER_NAMES = {1: "syntactic (JSON, DIDComm envelope)", 2: "schema (our register 
 
 # A verdict's keys in the order grading happens: the result, the per-tier overview, then each
 # tier's own fields from Tier 1 to Tier 4, and Tier 4's score last.
-VERDICT_ORDER = ("outcome", "detail", "error_type", "why_wrong", "tiers", "tier1_checks", "tier2_checks", "tier3_detail", "tier3_checks",
-                 "tier4_summary", "tier4_checks", "deviation_score", "violated")
+VERDICT_ORDER = ("outcome", "detail", "error_type", "why_wrong", "tiers", "tier1_checks", "tier2_checks", "tier3_checks",
+                 "tier4_checks", "deviation_score")
 
 
 def _with_tiers(verdict: dict) -> dict:
@@ -817,32 +815,18 @@ def pair_stats(pairs: dict, outcomes: dict, weak: set = frozenset()) -> dict:
 
 
 def pair_summary(pairs: dict, outcomes: dict) -> list:
-    """Lines reporting paired accuracy. outcomes: (case_id, run_index) -> outcome. A pair is
-    scored once per run index both its variants have; the family is the pair id's first part.
-    A pair whose call failed in that run (generation_failed) says nothing about the model, so it
-    is counted as incomplete, not as a miss."""
-    passed, total, incomplete, families = 0, 0, 0, {}
-    runs = sorted({run for _, run in outcomes})
-    for pair_id, variants in sorted(pairs.items()):
-        for run in runs:
-            got = [outcomes.get((variants.get(v), run)) for v in PAIR_VARIANTS]
-            if got == [None, None]:
-                continue
-            if None in got or "generation_failed" in got:
-                incomplete += 1
-                continue
-            ok = all(outcome == "semantic_ok" for outcome in got)
-            family = families.setdefault(pair_id.split("/")[0], [0, 0])
-            family[0] += ok
-            family[1] += 1
-            passed += ok
-            total += 1
-    note = f"; {incomplete} incomplete (a call failed or a variant was not run), not scored" if incomplete else ""
-    if not total:
-        return [f"Paired accuracy: no complete pairs{note}"] if incomplete else []
-    lines = [f"Paired accuracy: {passed}/{total} pairs with both variants semantic_ok ({100 * passed / total:.0f}%){note}"]
-    lines += [f"    {name:18s} {ok}/{n}" for name, (ok, n) in sorted(families.items())]
-    return lines
+    """Lines reporting paired accuracy (pair_stats(), printed). outcomes: (case_id, run_index) ->
+    outcome."""
+    stats = pair_stats(pairs, outcomes)
+    if not stats:
+        return []
+    note = (f"; {stats['incomplete']} incomplete (a call failed or a variant was not run), not scored"
+            if stats["incomplete"] else "")
+    if not stats["scored"]:
+        return [f"Paired accuracy: no complete pairs{note}"]
+    lines = [f"Paired accuracy: {stats['passed']}/{stats['scored']} pairs with both variants semantic_ok "
+             f"({100 * stats['rate']:.0f}%){note}"]
+    return lines + [f"    {name:18s} {count}" for name, count in stats["by_family"].items()]
 
 
 def _answer(row: dict) -> list:
@@ -1218,8 +1202,9 @@ def readable_row(row: dict, verdict: dict) -> dict:
 SESSION_FIELDS = ("model", "tally_variant", "shared_context", "session_cost_usd", "session_avg_cost_per_prompt_usd")
 # Duplicates dropped from a row: prompt_sent (prompt_readable holds it, parsed), ok (= error is null).
 ROW_DROPPED = ("prompt_sent", "ok")
-# Verdict fields that repeat others: tiers.tier3, the failed tier4_checks, and tiers.tier4's count.
-VERDICT_DROPPED = ("tier3_detail", "violated", "tier4_summary")
+# Verdict fields of older results files that repeat others (tiers.tier3, the failed tier4_checks);
+# dropped when such a file is read and saved again.
+VERDICT_DROPPED = ("tier3_detail", "violated")
 ROW_ORDER = ("task_id", "session_id", "run_index", "ts", "case_hashes", "prompt_readable", "parsed_output",
              "raw_output", "error", "finish_reason", "native_finish_reason", "served_model", "provider",
              "generation_id", "prompt_tokens", "cached_tokens", "cache_write_tokens", "completion_tokens",
@@ -1304,7 +1289,7 @@ def _rate(k: int, n: int) -> dict:
     return {"count": f"{k}/{n}", "rate": round(k / n, 3) if n else None, "ci95": wilson(k, n)}
 
 
-def _cost_breakdown(rows: list, correct: int, passed_pairs: int | None, earlier: list) -> dict:
+def _cost_breakdown(rows: list, correct: int, passed_pairs: int | None) -> dict:
     """What the session cost, split into the one-time cache write of the shared opening and the
     marginal cost of one case, plus cost per correct answer and per passed pair. The split is an
     estimate: OpenRouter reports one cost per call, so the marginal cost is the median cost of
@@ -1315,15 +1300,11 @@ def _cost_breakdown(rows: list, correct: int, passed_pairs: int | None, earlier:
     marginal = reads[len(reads) // 2] if reads else None
     writes = [r["usd_cost"] for r in ok if r.get("cache_write_tokens")]
     setup = round(max(0.0, sum(writes) - len(writes) * marginal), 6) if writes and marginal is not None else None
-    earlier_usd = sum(e.get("cost_usd", 0) for e in earlier)
     out = {"total_usd": round(cost, 6), "avg_per_call_usd": round(cost / len(rows), 6) if rows else None,
            "setup_usd_est": setup, "per_case_marginal_usd_est": round(marginal, 6) if marginal is not None else None,
            "per_correct_answer_usd": round(cost / correct, 6) if correct else None}
     if passed_pairs is not None:
         out["per_passed_pair_usd"] = round(cost / passed_pairs, 6) if passed_pairs else None
-    if earlier:
-        out["earlier_attempts_usd"] = round(earlier_usd, 6)
-        out["total_spent_usd"] = round(cost + earlier_usd, 6)
     out["note"] = ("All costs are what OpenRouter billed for the original model calls; re-grading a results "
                    "file (--rescore) makes no model call and costs nothing.")
     return out
@@ -1368,7 +1349,7 @@ def summarize_session(meta: dict, rows: list, pairs: dict, cases: dict | None = 
     stats = pair_stats(pairs, {(r["task_id"], r["run_index"]): r["verdict"]["outcome"] for r in rows}, weak)
     sampling = meta.get("samples_per_case")
     summary = {
-        **{k: v for k, v in meta.items() if v is not None and k != "earlier_attempts"},
+        **{k: v for k, v in meta.items() if v is not None},
         "started": min((r["ts"] for r in rows), default=None), "ended": max((r["ts"] for r in rows), default=None),
         "cases": sorted({r["task_id"] for r in rows}), "calls": calls,
         "generation_failures": calls - len(ok),
@@ -1382,12 +1363,10 @@ def summarize_session(meta: dict, rows: list, pairs: dict, cases: dict | None = 
         "served_by": served or "not recorded (calls made before 2026-10-19 streaming)",
         "tokens": {**tokens, "cache_read_share": f"{100 * tokens['cached_tokens'] / tokens['prompt_tokens']:.0f}%"
                    if tokens["prompt_tokens"] else None},
-        "cost": _cost_breakdown(rows, correct, stats.get("passed") if stats else None, meta.get("earlier_attempts", [])),
+        "cost": _cost_breakdown(rows, correct, stats.get("passed") if stats else None),
         "latency": {"mean_total_ms": round(sum(r["latency_ms"] for r in ok) / len(ok)) if ok else None,
                     "mean_first_token_ms": round(sum(first) / len(first)) if first else None},
     }
-    if meta.get("earlier_attempts"):
-        summary["earlier_attempts"] = meta["earlier_attempts"]
     if stats:
         summary["paired_accuracy"] = stats
     if sampling is not None and sampling < 3:
@@ -1398,9 +1377,7 @@ def summarize_session(meta: dict, rows: list, pairs: dict, cases: dict | None = 
 
 SUMMARY_TOTALS = ("started", "ended", "cases", "calls", "generation_failures", "outcomes", "semantic_ok",
                   "semantic_ok_by_case_type", "mean_chance_baseline", "mean_deviation_score", "error_types",
-                  "finish_reasons", "served_by", "tokens", "cost", "latency", "paired_accuracy", "sampling_note",
-                  # older summary layouts
-                  "cost_usd", "avg_cost_per_call_usd", "mean_latency_ms")
+                  "finish_reasons", "served_by", "tokens", "cost", "latency", "paired_accuracy", "sampling_note")
 
 
 def rebuild_summaries(case_file: str, sessions: list, results: list) -> list:
