@@ -46,24 +46,302 @@ import argparse
 import copy
 import json
 import random
+import re
 import zlib
+from functools import lru_cache
 from itertools import combinations
 from pathlib import Path
 
 import fabricate
-import generate_cases as gc
 import registration as reg
+import run_semantic_eval as rse
+import section_tally
+from harness import parse_didcomm
 
 PAIR_FILE = Path("paired_cases.json")
 ONE = {"count": {"min": 1, "max": 1}}
 TRANSFER_SCHOOL = "Rowan College of South Jersey"
 
 
+# ── Building and scoring a case (the generator's toolkit) ──
+# A case is built against the whole Fall 2026 Section Tally, and every candidate answer is
+# scored the way a model's answer is, so each answer key matches the grader.
+
+THROUGH = "Spring 2026"
+
+
+DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+
+# (name, rules, text for one class, text for two)
+CONSTRAINTS = [
+    ("no_friday", {"no_days": ["Friday"]}, "No Friday classes.", "No Friday classes."),
+    ("tue_thu", {"no_days": ["Monday", "Wednesday", "Friday", "Saturday", "Sunday"], "modality_in": ["in-person"]},
+     "I can only be on campus Tuesdays and Thursdays, and I want it in person.",
+     "I can only be on campus Tuesdays and Thursdays, and I want both in person."),
+    ("mon_wed", {"no_days": ["Tuesday", "Thursday", "Friday", "Saturday", "Sunday"], "modality_in": ["in-person"]},
+     "I can only be on campus Mondays and Wednesdays, and I want it in person.",
+     "I can only be on campus Mondays and Wednesdays, and I want both in person."),
+    ("online", {"modality_in": ["online"]}, "It has to be fully online.", "They both have to be fully online."),
+    ("in_person", {"modality_in": ["in-person"]}, "I only want in-person classes.", "I only want in-person classes."),
+    ("ends_by_5", {"ends_by": "5:00 PM"}, "I work evenings, so nothing that ends after 5 PM.",
+     "I work evenings, so nothing that ends after 5 PM."),
+    ("before_5", {"starts_before": "5:00 PM"}, "Nothing that starts at 5 PM or later.", "Nothing that starts at 5 PM or later."),
+]
+
+
+BELOW = {"C-": "D+", "C": "C-", "C+": "C", "B-": "C+", "B": "B-"}
+
+
+@lru_cache(maxsize=None)
+def tally():
+    """The whole Fall 2026 Section Tally (read once)."""
+    return section_tally.full_schedule()
+
+
+@lru_cache(maxsize=None)
+def by_course():
+    """course id -> its non-cancelled sections."""
+    out = {}
+    for s in tally()["sections"]:
+        if not s.get("cancelled"):
+            out.setdefault(s["course_id"], []).append(s)
+    return out
+
+
+def is_open(s):
+    """Has a free seat."""
+    return s["seats_taken"] < s["seats_total"]
+
+
+def title_of(course, prog):
+    """A course's name for a prompt: the guide's title when it reads as one, else the Section
+    Tally's, without honors / attribute decorations, in title case."""
+    guide = re.sub(r"\s+OR$", "", prog.get("course_titles", {}).get(course, ""))
+    clean = guide and len(guide) <= 60 and not re.search(r"\b(OR|SATISFIES|MINIMUM|PREREQ)\b", guide)
+    raw = guide if clean else (fabricate._title(course, prog) or course)
+    raw = re.sub(r"^HONORS\s+", "", raw)
+    raw = re.sub(r"\s*-\s*(WI|RS|W|R)$", "", raw).strip(" -")
+    small = {"and", "of", "the", "for", "in", "to", "a", "an", "or", "with", "on", "at"}
+
+    def word(w, first):
+        if any(ch.isdigit() for ch in w) or w.strip(",.:()") in ACRONYMS:
+            return w
+        return "/".join(p.capitalize() if first or p.lower() not in small else p.lower() for p in w.split("/"))
+    return " ".join(word(w, i == 0) for i, w in enumerate(raw.replace("&", " & ").split()))
+
+
+ACRONYMS = {"US", "U.S.", "GIS", "IOS", "AI", "TV", "PR", "CS", "ECE", "BME", "HRM", "MIS", "SQL", "STEM", "ABA", "IS&A",
+            "I", "II", "III", "IV", "V", "VI", "DNA", "RTF", "SCL", "MCB", "TBS", "HES", "EKG", "PHW", "UX", "CAD"}
+
+
+def _titled(r):
+    """Has a short title of its own that a prompt can name."""
+    title = r.get("title")
+    return bool(title and len(title) <= 60 and " or " not in title.lower())
+
+
+def label_of(r):
+    """What a prompt calls a requirement: its title, else its category."""
+    if _titled(r):
+        return r["title"]
+    name = r["category"].split(": ", 1)[-1]
+    return name.split(" (")[0]
+
+
+def phrase(label):
+    """'my <label> requirement', without saying 'requirement' twice."""
+    ends = ("requirement", "requirements", "courses", "electives", "elective", "sequence", "bank", "studies")
+    return f"my {label}" + ("" if label.lower().endswith(ends) else " requirement")
+
+
+def same_label(prog, r):
+    """Every requirement a prompt naming r's label could mean: those with the same title, or,
+    when the label is a category ("Non-Program Courses"), every requirement in that category."""
+    if _titled(r):
+        return [x["req_id"] for x in prog["program_requirements"] if _titled(x) and x["title"] == r["title"]]
+    base = r["category"].split(" (")[0]
+    return [x["req_id"] for x in prog["program_requirements"] if x["category"].split(" (")[0] == base]
+
+
+COUNTS_TOWARD = reg.counts_toward
+
+
+class Case:
+    """One generated case: build it, then score carts against the whole tally."""
+
+    def __init__(self, case):
+        """Builds the case against the whole tally and seeds its checker database once."""
+        self.raw = case
+        self.case = rse.resolve_case({**case, "schedule_from_tally": {"whole": True}})
+        self.data = self.case["input"]
+        self.conn = reg.seed_db(self.data)
+        self._counts = {}
+
+    def counts_toward(self, course):
+        """registration.counts_toward() for this case, cached per course. Calls the original
+        function, since score() swaps reg.counts_toward for this one while it runs."""
+        if course not in self._counts:
+            self._counts[course] = COUNTS_TOWARD(self.data, course)
+        return self._counts[course]
+
+    def score(self, cart, rules):
+        """Tiers 1-4 for a cart under `rules`, as (outcome, detail)."""
+        raw = rse.expected_message(self.case, [s["crn"] if isinstance(s, dict) else s for s in cart])
+        base = reg.evaluate(self.conn, raw)
+        if base["outcome"] != "consistent__semantic_TBD":
+            return base["outcome"], base["detail"]
+        original = COUNTS_TOWARD
+        rse.reg.counts_toward = lambda data, course, attrs=(): self.counts_toward(course)
+        try:
+            verdict = rse.check_rules(parse_didcomm(raw)[0], {**self.case, "ground_truth": {"rules": rules}})
+        finally:
+            rse.reg.counts_toward = original
+        return verdict["outcome"], verdict["detail"]
+
+
+def plan_transcript(prog, targets, avoid, seed, rows=(), extra_complete=(), skip=()):
+    """A fabricate spec: every requirement before the earliest target is complete (except
+    those that need an avoided course), the targets stay unmet."""
+    reqs = prog["program_requirements"]
+    ids = [r["req_id"] for r in reqs]
+    first = min(ids.index(t) for t in targets)
+    complete = []
+    for i, r in enumerate(reqs):
+        if r["req_id"] in targets or r["req_id"] in skip or r["rule"] == "credits_any":
+            continue
+        if i < first or r["req_id"] in extra_complete or r["guide_section"] in ("rowan_core", "rowan_experience"):
+            needs = set(r["course_options"]) if r["rule"] == "all_of" else set()
+            if needs & set(avoid):
+                continue
+            complete.append(r["req_id"])
+    return {"seed": seed, "through": THROUGH, "complete": complete, "rows": list(rows), "avoid": sorted(avoid),
+            "keep_unmet": sorted(targets)}
+
+
+def make_case(key, n, prog, fab, prompt, student_id, rng):
+    """A case dict with its transcript fabricated, catalog year set from its credits."""
+    probe = fabricate.build_input({"program": key, "student": {"student_id": student_id, "catalog_year": "Fall 2022",
+                                                               "entry": {"type": "first_year"}},
+                                   "transcript": {"fabricate": fab}, "prompt": prompt})
+    # About 15 credits a term: that many terms back from Spring 2026 gives the entry Fall. A fixed
+    # row from an earlier term pushes the catalog year back to that row's academic year.
+    credits = sum(r["credit_hours"] for r in probe["transcript"]["completed_courses"])
+    terms = max(2, min(8, round(credits / 15)))
+    year = 2026 - (terms + 1) // 2
+    catalog = f"Fall {year}"
+    for r in fab["rows"]:
+        if int(r["term"].split()[1]) < year or (r["term"].startswith("Spring") and int(r["term"].split()[1]) == year):
+            catalog = "Fall " + str(int(r["term"].split()[1]) - (1 if r["term"].startswith("Spring") else 0))
+    return {"case_id": f"{key}-{n}",
+            "input": {"program": key,
+                      "student": {"student_id": student_id, "catalog_year": catalog, "entry": {"type": "first_year"}},
+                      "transcript": {"fabricate": fab}, "prompt": prompt}}
+
+
+def judge(c, candidates, rules, size):
+    """Accepted carts of `size` sections drawn from `candidates`, and the rejected singles."""
+    from itertools import combinations, product
+    accepted, rejected = [], []
+    if size == 1:
+        for s in candidates:
+            outcome, detail = c.score([s], rules)
+            (accepted if outcome == "semantic_ok" else rejected).append(([s["crn"]], outcome, detail))
+    else:
+        a_secs, b_secs = candidates
+        for sa, sb in product(a_secs, b_secs):
+            outcome, detail = c.score([sa, sb], rules)
+            (accepted if outcome == "semantic_ok" else rejected).append(([sa["crn"], sb["crn"]], outcome, detail))
+    return accepted, rejected
+
+
+def examples(acc, rej, knocked, rng, extra_invalid=()):
+    """The answer key's example carts: up to four accepted carts as valid; as invalid, the carts
+    the constraint knocked out, then near misses (full sections, other rule breaks), then
+    the template's own traps (extra_invalid)."""
+    valid = [x[0] for x in acc]
+    rng.shuffle(valid)
+    invalid, seen = [], set()
+    for cart in sorted(knocked)[:3]:
+        invalid.append(list(cart))
+        seen.add(tuple(cart))
+    for cart, outcome, detail in rej:
+        if len(invalid) >= 6:
+            break
+        key = tuple(cart)
+        if key not in seen and (outcome != "semantic_error" or "full" in detail or len(invalid) < 4):
+            invalid.append(cart)
+            seen.add(key)
+    for cart in extra_invalid:
+        if tuple(cart) not in seen and len(invalid) < 8:
+            invalid.append(list(cart))
+    return {"valid": sorted(valid[:4]), "invalid": invalid}
+
+
+def summarize(acc, rej, size):
+    """The implicit_relationship text: how many carts are correct and why the others fail."""
+    full = sorted({crn for cart, outcome, d in rej if "is full" in d for crn in cart})
+    prereq = sorted({crn for cart, o, d in rej if "prerequisite" in d for crn in cart})
+    conflict = [cart for cart, o, d in rej if "time conflict" in d]
+    broke = [cart for cart, o, d in rej if o == "semantic_error"]
+    parts = [f"{len(acc)} correct {'section' if size == 1 else 'cart'}{'s' if len(acc) != 1 else ''}: "
+             + ", ".join("+".join(x[0]) for x in acc[:10]) + (" ..." if len(acc) > 10 else "")]
+    if full:
+        parts.append(f"full sections (no waitlist allowed): {', '.join(full[:8])}{' ...' if len(full) > 8 else ''}")
+    if prereq:
+        parts.append(f"missing a prerequisite: {', '.join(prereq[:6])}")
+    if conflict:
+        parts.append(f"{len(conflict)} pair(s) overlap in time, e.g. {'+'.join(conflict[0])}")
+    if broke:
+        parts.append(f"{len(broke)} {'section' if size == 1 else 'cart'}(s) break a rule of the request")
+    return "; ".join(parts) + "."
+
+
+def candidate_courses(c, req_id):
+    """Offered courses that would move this requirement forward for this student."""
+    r = next(x for x in c.data["program_requirements"] if x["req_id"] == req_id)
+    canon = reg._canonical(c.data)
+    courses = [cid for cid in by_course() if reg._matches(r, canon(cid), reg.catalog_attributes(c.data, cid), canon)]
+    return [cid for cid in courses if req_id in c.counts_toward(cid)]
+
+
+def _fixed_credits(course):
+    """The credits every section of a course carries, or None (variable credit, or sections disagree)."""
+    values = {json.dumps(s["credit_hours"]) for s in by_course().get(course, [])}
+    if len(values) != 1:
+        return None
+    credits = json.loads(values.pop())
+    return None if isinstance(credits, dict) else credits
+
+
+def difficulty(case, c=None):
+    """ground_truth.difficulty for a case: how many answers a model could plausibly give (every
+    non-cancelled section of the case's candidate courses, or every pair of sections when the
+    answer is two named courses), how many of those are correct, the chance of a correct answer
+    by picking one of them at random, the number of rules, and the prompt's length in words.
+    c: the case's Case, if already built."""
+    c = c or Case(case)
+    rules = case["ground_truth"]["rules"]
+    courses = (case.get("schedule_from_tally") or {}).get("courses", [])
+    size = rules.get("count", {}).get("max", 1)
+    if size == 2 and len(rules.get("must_include_courses", [])) == 2:
+        a, b = rules["must_include_courses"]
+        candidates = (by_course().get(a, []), by_course().get(b, []))
+        total = len(candidates[0]) * len(candidates[1])
+    else:
+        candidates = [s for cid in courses for s in by_course().get(cid, [])]
+        total, size = len(candidates), 1
+    accepted, _ = judge(c, candidates, rules, size) if total else ([], [])
+    return {"candidate_courses": len(courses), "candidate_answers": total, "correct_answers": len(accepted),
+            "chance": round(len(accepted) / total, 4) if total else None, "rules": len(rules),
+            "prompt_words": len(case["input"]["prompt"].split())}
+
+
 # ── shared pieces ──
 
 def open_secs(course):
     """A course's Fall 2026 sections with a free seat."""
-    return [s for s in gc.by_course().get(course, []) if gc.is_open(s)]
+    return [s for s in by_course().get(course, []) if is_open(s)]
 
 
 def major_pool(prog, rules=("all_of", "any_of", "credits_from"), sections=("major",), most=25):
@@ -72,21 +350,21 @@ def major_pool(prog, rules=("all_of", "any_of", "credits_from"), sections=("majo
     for r in prog["program_requirements"]:
         if r["rule"] in rules and r["guide_section"] in sections:
             for cid in r["course_options"]:
-                if 1 <= len(gc.by_course().get(cid, [])) <= most and (r["req_id"], cid) not in pool:
+                if 1 <= len(by_course().get(cid, [])) <= most and (r["req_id"], cid) not in pool:
                     pool.append((r["req_id"], cid))
     return pool
 
 
 def named(course, prog):
     """'Title (COURSE)' for a prompt."""
-    return f"{gc.title_of(course, prog)} ({course})"
+    return f"{title_of(course, prog)} ({course})"
 
 
 def build(key, prog, fab, prompt, sid):
     """(raw case, Case) for a transcript spec and prompt; None when the spec cannot be fabricated."""
     try:
-        case = gc.make_case(key, 0, prog, fab, prompt, sid, None)
-        return case, gc.Case(case)
+        case = make_case(key, 0, prog, fab, prompt, sid, None)
+        return case, Case(case)
     except ValueError:
         return None
 
@@ -113,7 +391,7 @@ def plural_days(days):
 
 def unique_label(prog, r):
     """True when a prompt naming r's label can only mean r."""
-    return gc.same_label(prog, r) == [r["req_id"]]
+    return same_label(prog, r) == [r["req_id"]]
 
 
 def pair(family, key, a, b, changed, targets, courses, rng):
@@ -121,7 +399,7 @@ def pair(family, key, a, b, changed, targets, courses, rng):
     a, b: (raw case, Case, rules, candidates, size, why)."""
     scored = []
     for case, c, rules, candidates, size, why in (a, b):
-        acc, rej = gc.judge(c, candidates, rules, size)
+        acc, rej = judge(c, candidates, rules, size)
         if not acc:
             return None
         scored.append((case, c, rules, acc, rej, why, size))
@@ -132,7 +410,7 @@ def pair(family, key, a, b, changed, targets, courses, rng):
         return None
     out = []
     for i, ((case, c, rules, acc, rej, why, size), variant) in enumerate(zip(scored, "ab")):
-        ex = gc.examples(acc, rej, {tuple(cart) for cart in cross[i]}, rng)
+        ex = examples(acc, rej, {tuple(cart) for cart in cross[i]}, rng)
         # check_pairs() reads only the saved valid examples: keep one the twin rejects
         theirs = cross[1 - i]
         if not set(map(tuple, ex["valid"])) & set(map(tuple, theirs)):
@@ -141,7 +419,7 @@ def pair(family, key, a, b, changed, targets, courses, rng):
         case["schedule_from_tally"] = {"named_courses": True, "courses": sorted(set(courses))}
         case["ground_truth"] = {
             "rules": rules, "examples": ex,
-            "implicit_relationship": why + " " + gc.summarize(acc, rej, size)
+            "implicit_relationship": why + " " + summarize(acc, rej, size)
                                      + f" Its twin's answers {', '.join('+'.join(x) for x in cross[i][:4])} are wrong here.",
             "case_type": family, "targets": targets,
             "pair": {"id": f"{family}/{key}", "variant": variant, "changed": changed}}
@@ -163,14 +441,14 @@ def f_full_fallback(key, prog, rng, sid):
             if len({x, y, z}) < 3:
                 continue
             targets = sorted({rz, rx, ry})
-            fab = gc.plan_transcript(prog, targets, [x, y, z], rng.randrange(10 ** 6))
+            fab = plan_transcript(prog, targets, [x, y, z], rng.randrange(10 ** 6))
             then = f"If every section of it is full, register me for {named(y, prog)} instead."
             built = build(key, prog, fab, f"Register me for {named(z, prog)}. {then}", sid)
             if not built:
                 continue
             case_a, c = built
             case_b = reprompt(case_a, f"Register me for {named(x, prog)}. {then}")
-            cands = [s for cid in (x, y, z) for s in gc.by_course()[cid]]
+            cands = [s for cid in (x, y, z) for s in by_course()[cid]]
             got = pair("full_fallback", key,
                        (case_a, c, {**ONE, "courses_in": [y]}, cands, 1,
                         f"Every Fall 2026 section of {z} is full, so the fallback {y} applies."),
@@ -194,7 +472,7 @@ def f_in_progress(key, prog, rng, sid):
         prompt = (f"Register me for {named(x, prog)} this fall. If I'm already taking it this semester, register me "
                   f"for {named(y, prog)} instead.")
         # b is a's transcript with only the in-progress course swapped, so nothing else can differ
-        fab = {**gc.plan_transcript(prog, targets, [x, y, v], seed), "through": "Fall 2025",
+        fab = {**plan_transcript(prog, targets, [x, y, v], seed), "through": "Fall 2025",
                "in_progress": [{"term": "Spring 2026", "course_id": x}]}
         twin = {**fab, "edits": [{"in": "courses_in_progress", "course_id": x,
                                   "set": {"course_id": v, "credit_hours": fabricate._tally().get(v, (None, None))[1] or 3}}]}
@@ -202,7 +480,7 @@ def f_in_progress(key, prog, rng, sid):
         if not all(built):
             continue
         (case_a, ca), (case_b, cb) = built
-        cands = [s for cid in (x, y) for s in gc.by_course()[cid]]
+        cands = [s for cid in (x, y) for s in by_course()[cid]]
         got = pair("in_progress", key,
                    (case_a, ca, {**ONE, "courses_in": [y]}, cands, 1,
                     f"{x} is in courses_in_progress (Spring 2026), so the fallback {y} applies."),
@@ -223,23 +501,23 @@ def f_transfer(key, prog, rng, sid):
     seconds = [r for r in reqs if r["rule"] in ("any_of", "credits_from") and r["guide_section"] == "major"
                and unique_label(prog, r)]
     rng.shuffle(firsts)
-    gened = [cid for cid in gc.by_course() if cid[:-5] in fabricate.GENED_SUBJECTS and cid[-3:].isdigit()
-             and int(cid[-3:]) < 300 and gc._fixed_credits(cid) == 3]
+    gened = [cid for cid in by_course() if cid[:-5] in fabricate.GENED_SUBJECTS and cid[-3:].isdigit()
+             and int(cid[-3:]) < 300 and _fixed_credits(cid) == 3]
     for r1 in firsts:
-        opts = [cid for cid in dict.fromkeys(r1["course_options"]) if gc._fixed_credits(cid)]
+        opts = [cid for cid in dict.fromkeys(r1["course_options"]) if _fixed_credits(cid)]
         if len(opts) < 3:
             continue
         rng.shuffle(opts)
         t, rows, earned = opts[0], [], 0
         for cid in opts[1:]:
-            if earned >= r1["credit_hours"] - gc._fixed_credits(t):
+            if earned >= r1["credit_hours"] - _fixed_credits(t):
                 break
             rows.append(cid)
-            earned += gc._fixed_credits(cid)
-        if not earned < r1["credit_hours"] <= earned + gc._fixed_credits(t):
+            earned += _fixed_credits(cid)
+        if not earned < r1["credit_hours"] <= earned + _fixed_credits(t):
             continue
         canon = lambda cid: cid
-        other = [cid for cid in gened if gc._fixed_credits(cid) == gc._fixed_credits(t)
+        other = [cid for cid in gened if _fixed_credits(cid) == _fixed_credits(t)
                  and not reg._matches(r1, cid, (), canon)]
         if not other:
             continue
@@ -249,10 +527,10 @@ def f_transfer(key, prog, rng, sid):
             seed = rng.randrange(10 ** 6)
             row_specs = [{"term": term, "course_id": cid, "grade": "B"}
                          for cid, term in zip(rows, ["Fall 2025", "Spring 2026"] * len(rows))]
-            prompt = (f"Register me for one class that counts toward {gc.phrase(gc.label_of(r1))}. If I've already "
-                      f"finished it, register me for one that counts toward {gc.phrase(gc.label_of(r2))} instead.")
+            prompt = (f"Register me for one class that counts toward {phrase(label_of(r1))}. If I've already "
+                      f"finished it, register me for one that counts toward {phrase(label_of(r2))} instead.")
             # b is a's transcript with only the transfer course swapped, so nothing else can differ
-            fab = {**gc.plan_transcript(prog, targets, opts + [t2], seed, rows=row_specs), "keep_unmet": [r2["req_id"]],
+            fab = {**plan_transcript(prog, targets, opts + [t2], seed, rows=row_specs), "keep_unmet": [r2["req_id"]],
                    "transfer_rows": [{"institution": TRANSFER_SCHOOL, "course_id": t, "grade": "TA"}]}
             twin = {**fab, "edits": [{"in": "transfer_courses", "course_id": t, "set": {"course_id": t2}}]}
             built = [build(key, prog, f, prompt, sid) for f in (fab, twin)]
@@ -262,15 +540,15 @@ def f_transfer(key, prog, rng, sid):
             status_a, status_b = reg.audit(ca.data)["requirements"], reg.audit(cb.data)["requirements"]
             if not status_a[r1["req_id"]]["satisfied"] or status_b[r1["req_id"]]["satisfied"]:
                 continue
-            courses = sorted(set(gc.candidate_courses(cb, r1["req_id"])) | set(gc.candidate_courses(ca, r2["req_id"])))
-            cands = [s for cid in courses for s in gc.by_course().get(cid, [])]
+            courses = sorted(set(candidate_courses(cb, r1["req_id"])) | set(candidate_courses(ca, r2["req_id"])))
+            cands = [s for cid in courses for s in by_course().get(cid, [])]
             if not cands or len(cands) > 160:
                 continue
             h = r1["credit_hours"]
             got = pair("transfer", key,
                        (case_a, ca, {**ONE, "courses_count_toward": [r2["req_id"]]}, cands, 1,
                         f"{r1['req_id']} needs {h:g} sh: {earned:g} completed plus transfer {t} "
-                        f"({gc._fixed_credits(t):g} sh, one of its options) meets it, so the request moves to {r2['req_id']}."),
+                        f"({_fixed_credits(t):g} sh, one of its options) meets it, so the request moves to {r2['req_id']}."),
                        (case_b, cb, {**ONE, "courses_count_toward": [r1["req_id"]]}, cands, 1,
                         f"{r1['req_id']} needs {h:g} sh: {earned:g} completed, and transfer {t2} is not one of its "
                         f"options, so it is unmet and the answer counts toward it."),
@@ -296,7 +574,7 @@ def f_busy_block(key, prog, rng, sid):
     pool = [(r, c) for r, c in major_pool(prog) if len([s for s in open_secs(c) if busy_block(s)]) >= 2]
     rng.shuffle(pool)
     for rx, x in pool[:4]:
-        fab = gc.plan_transcript(prog, [rx], [x], rng.randrange(10 ** 6))
+        fab = plan_transcript(prog, [rx], [x], rng.randrange(10 ** 6))
         built = build(key, prog, fab, "", sid)
         if not built or reg.missing_prerequisites(built[1].data, x):
             continue
@@ -309,7 +587,7 @@ def f_busy_block(key, prog, rng, sid):
             text = lambda b: (f"Register me for {named(x, prog)}. I work {plural_days(b['days'])} from {b['start_time']} "
                               f"to {b['end_time']}, so the class can't overlap that.")
             case_a, case_b = reprompt(case, text(b1)), reprompt(case, text(b2))
-            cands = gc.by_course()[x]
+            cands = by_course()[x]
             rules = lambda b: {**ONE, "must_include_courses": [x], "busy": [b]}
             got = pair("busy_block", key,
                        (case_a, c, rules(b1), cands, 1,
@@ -356,17 +634,17 @@ def f_nested_groups(key, prog, rng, sid):
         options = [o for o in options if len(o[0] & o[1]) == best]
         h1, h2 = rng.choice(options)
         seed = rng.randrange(10 ** 6)
-        prompt = f"Register me for the one class I still need to finish {gc.phrase(gc.label_of(r))}."
+        prompt = f"Register me for the one class I still need to finish {phrase(label_of(r))}."
         built = []
         for held in (h1, h2):
             rows = [{"term": term, "course_id": cid, "grade": "B"}
                     for cid, term in zip(sorted(held), ["Fall 2025", "Spring 2026"] * len(held))]
-            fab = gc.plan_transcript(prog, [r["req_id"]], sorted(every), seed, rows=rows, skip=[r["req_id"]])
+            fab = plan_transcript(prog, [r["req_id"]], sorted(every), seed, rows=rows, skip=[r["req_id"]])
             built.append(build(key, prog, fab, prompt, sid))
         if not all(built):
             continue
         (case_a, ca), (case_b, cb) = built
-        cands = [s for cid in sorted(every) for s in gc.by_course().get(cid, [])]
+        cands = [s for cid in sorted(every) for s in by_course().get(cid, [])]
         groups_text = " or ".join("(" + " and ".join(g) + ")" for g in groups)
         got = pair("nested_groups", key,
                    (case_a, ca, {**ONE, "courses_in": completers(set(h1), groups)}, cands, 1,
@@ -384,14 +662,14 @@ def f_nested_groups(key, prog, rng, sid):
 
 def f_credit_limit(key, prog, rng, sid):
     """'I can take at most <A+B | A+B-1> credits. Register me for <A>, and add <B> too only if both fit.'"""
-    pool = [(r, c) for r, c in major_pool(prog, sections=("major", "non_program")) if open_secs(c) and gc._fixed_credits(c)]
+    pool = [(r, c) for r, c in major_pool(prog, sections=("major", "non_program")) if open_secs(c) and _fixed_credits(c)]
     rng.shuffle(pool)
     for (ra, a), (rb, b) in list(combinations(pool, 2))[:8]:
         if a == b:
             continue
-        ca, cb = gc._fixed_credits(a), gc._fixed_credits(b)
+        ca, cb = _fixed_credits(a), _fixed_credits(b)
         targets = sorted({ra, rb})
-        fab = gc.plan_transcript(prog, targets, [a, b], rng.randrange(10 ** 6))
+        fab = plan_transcript(prog, targets, [a, b], rng.randrange(10 ** 6))
         built = build(key, prog, fab, "", sid)
         if not built:
             continue
@@ -402,10 +680,10 @@ def f_credit_limit(key, prog, rng, sid):
         got = pair("credit_limit", key,
                    (case_a, c,
                     {"count": {"min": 2, "max": 2}, "must_include_courses": [a, b], "credits": {"max": ca + cb}},
-                    (gc.by_course()[a], gc.by_course()[b]), 2,
+                    (by_course()[a], by_course()[b]), 2,
                     f"{a} ({ca:g} sh) + {b} ({cb:g} sh) = {ca + cb:g}, within the limit: one section of each."),
                    (case_b, c,
-                    {**ONE, "must_include_courses": [a], "credits": {"max": ca + cb - 1}}, gc.by_course()[a], 1,
+                    {**ONE, "must_include_courses": [a], "credits": {"max": ca + cb - 1}}, by_course()[a], 1,
                     f"{a} ({ca:g} sh) + {b} ({cb:g} sh) = {ca + cb:g}, over the limit of {ca + cb - 1:g}: {a} alone."),
                    f"credit limit: {ca + cb:g} vs {ca + cb - 1:g}", targets, [a, b], rng)
         if got:
@@ -415,11 +693,11 @@ def f_credit_limit(key, prog, rng, sid):
 
 def _constraint_pair(family, key, prog, rng, sid, first, second, changed):
     """One named course under two constraints (CONSTRAINTS names) that pick different sections."""
-    rules_of = {name: (extra, text) for name, extra, text, _ in gc.CONSTRAINTS}
+    rules_of = {name: (extra, text) for name, extra, text, _ in CONSTRAINTS}
     pool = [(r, c) for r, c in major_pool(prog) if len(open_secs(c)) >= 2]
     rng.shuffle(pool)
     for rx, x in pool[:6]:
-        fab = gc.plan_transcript(prog, [rx], [x], rng.randrange(10 ** 6))
+        fab = plan_transcript(prog, [rx], [x], rng.randrange(10 ** 6))
         built = build(key, prog, fab, "", sid)
         if not built:
             continue
@@ -428,7 +706,7 @@ def _constraint_pair(family, key, prog, rng, sid, first, second, changed):
         for name in (first, second):
             extra, text = rules_of[name]
             v = reprompt(case, f"Register me for {named(x, prog)}. {text}")
-            variants.append((v, c, {**ONE, "must_include_courses": [x], **extra}, gc.by_course()[x], 1,
+            variants.append((v, c, {**ONE, "must_include_courses": [x], **extra}, by_course()[x], 1,
                              f"Only sections of {x} that satisfy '{text}' are correct."))
         got = pair(family, key, variants[0], variants[1], changed, [rx], [x], rng)
         if got:
@@ -450,9 +728,9 @@ def _grade_pair(family, key, prog, rng, sid, grades, prompt_of, changed_of):
     """The transcript holds <X> with grade grades[0] (a: retake X) or grades[1] (b: take Y)."""
     choices = []
     for r in prog["program_requirements"]:
-        if r["minimum_grade"] in gc.BELOW and r["rule"] in ("all_of", "any_of") and r["guide_section"] in ("major", "non_program"):
+        if r["minimum_grade"] in BELOW and r["rule"] in ("all_of", "any_of") and r["guide_section"] in ("major", "non_program"):
             for cid in r["course_options"]:
-                if open_secs(cid) and len(gc.by_course()[cid]) <= 40:
+                if open_secs(cid) and len(by_course()[cid]) <= 40:
                     choices.append((r, cid))
     rng.shuffle(choices)
     others = [(r, c) for r, c in major_pool(prog) if open_secs(c)]
@@ -462,13 +740,13 @@ def _grade_pair(family, key, prog, rng, sid, grades, prompt_of, changed_of):
             targets = sorted({r["req_id"], ry})
             seed = rng.randrange(10 ** 6)
             # b is a's transcript with only x's grade edited, so nothing else can differ
-            fab = gc.plan_transcript(prog, targets, [x, y], seed, rows=[{"term": gc.THROUGH, "course_id": x, "grade": low}])
+            fab = plan_transcript(prog, targets, [x, y], seed, rows=[{"term": THROUGH, "course_id": x, "grade": low}])
             twin = {**fab, "edits": [{"in": "completed_courses", "course_id": x, "set": {"grade": high}}]}
             built = [build(key, prog, f, prompt_of(x, y), sid) for f in (fab, twin)]
             if not all(built):
                 continue
             (case_a, ca), (case_b, cb) = built
-            cands = [s for cid in (x, y) for s in gc.by_course()[cid]]
+            cands = [s for cid in (x, y) for s in by_course()[cid]]
             got = pair(family, key,
                        (case_a, ca, {**ONE, "courses_in": [x]}, cands, 1,
                         f"{x} at {low} does not count toward {r['req_id']} (minimum {r['minimum_grade']}), so retake it."),
@@ -482,7 +760,7 @@ def _grade_pair(family, key, prog, rng, sid, grades, prompt_of, changed_of):
 
 def f_grade_threshold(key, prog, rng, sid):
     """'If my grade in <X> doesn't count toward my major, retake it; otherwise <Y>.' Grade below vs at the minimum."""
-    return _grade_pair("grade_threshold", key, prog, rng, sid, lambda m: (gc.BELOW[m], m),
+    return _grade_pair("grade_threshold", key, prog, rng, sid, lambda m: (BELOW[m], m),
                        lambda x, y: (f"If my grade in {named(x, prog)} last spring doesn't count toward my major, "
                                      f"register me to retake it. Otherwise, register me for {named(y, prog)}."),
                        lambda x, lo, hi: f"grade in {x}: {lo} (below the minimum) vs {hi} (the minimum)")
@@ -541,13 +819,13 @@ def answer_text(rules, prog):
     elif "courses_in" in rules:
         text = "a section of " + " or ".join(names(rules["courses_in"]))
     else:
-        labels = {r["req_id"]: gc.label_of(r) for r in prog["program_requirements"]}
+        labels = {r["req_id"]: label_of(r) for r in prog["program_requirements"]}
         text = "one class that counts toward " + " or ".join(
             f"{labels.get(r, r)} ({r})" for r in rules.get("courses_count_toward", []))
     if "modality_in" in rules:
         text += f", {' or '.join(rules['modality_in'])}"
     if "no_days" in rules:
-        allowed = [d for d in gc.DAYS if d not in rules["no_days"]]
+        allowed = [d for d in DAYS if d not in rules["no_days"]]
         text += f", meeting only on {plural_days(allowed)}" if len(allowed) <= 3 else f", with nothing on {plural_days(rules['no_days'])}"
     for b in rules.get("busy", []):
         text += f", not overlapping {plural_days(b['days'])} {b['start_time']}-{b['end_time']}"
@@ -585,7 +863,7 @@ def shared_answer(a, b, ca, cb):
     if ra.get("count", {}).get("max") != 1 or rb.get("count", {}).get("max") != 1:
         return None                         # a one-section answer cannot fit a two-section variant
     courses = sorted(set(a["schedule_from_tally"]["courses"]) | set(b["schedule_from_tally"]["courses"]))
-    for s in (s for cid in courses for s in gc.by_course().get(cid, [])):
+    for s in (s for cid in courses for s in by_course().get(cid, [])):
         if ca.score([s["crn"]], ra)[0] == "semantic_ok" and cb.score([s["crn"]], rb)[0] == "semantic_ok":
             return s["crn"]
     return None
@@ -605,14 +883,14 @@ def annotate(cases, full=False):
             odd.append(pid)
         if full or any("has_shared_answer" not in c["ground_truth"]["pair"] or "difficulty" not in c["ground_truth"]
                        for c in (a, b)):
-            ca, cb = gc.Case(a), gc.Case(b)
+            ca, cb = Case(a), Case(b)
             crn = shared_answer(a, b, ca, cb)
             for case, c in ((a, ca), (b, cb)):
                 case["ground_truth"]["pair"]["has_shared_answer"] = crn is not None
                 case["ground_truth"]["pair"].pop("shared_answer_example", None)
                 if crn:
                     case["ground_truth"]["pair"]["shared_answer_example"] = crn
-                case["ground_truth"]["difficulty"] = gc.difficulty(case, c)
+                case["ground_truth"]["difficulty"] = difficulty(case, c)
     return odd
 
 

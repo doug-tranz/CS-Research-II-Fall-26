@@ -26,17 +26,17 @@ Contents: [What's here](#whats-here) · [Setup](#setup) · [Run](#run) ·
 | `didcomm_schema.py` | `validate_message()`: Tiers 1–2 against the message schema. `OUTPUT_CONTRACT`: the prompt text that tells a model the format. |
 | `registration.py` | Registration domain testbed: SQLite schema, `evaluate()` (Tiers 1–2 from `didcomm_schema`, then Tier 3 consistency over the whole cart). Also the input format: `validate_input()`, `audit()` (degree audit), `missing_prerequisites()`, and `seed_db()`. |
 | `run_semantic_eval.py` | The pipeline. Runs a session (`TallySession`): the whole Section Tally as the opening turn, cached, then each case as its own request (as JSON, CSV or plain text); scores each answer on all four tiers. `check_rules()` (Tier 4) and `evaluate_case()` live here. See [The session](#the-session-the-default). |
-| `degree_requirements.json` (50) | Degree requirements for 50 Rowan programs, parsed from their Academic Program Guides: requirements, program guide, course attributes, graduation rules, and guide-stated prerequisites. A case names its program instead of writing these out. See [Cases built from degree requirements](#cases-built-from-degree-requirements). |
+| `degree_requirements.json` (50) | Degree requirements for 50 Rowan programs, parsed from their Academic Program Guides: requirements, program guide, course attributes, graduation rules, and guide-stated prerequisites. A case names its program instead of writing these out. See [Degree programs and fabricated transcripts](#degree-programs-and-fabricated-transcripts). |
 | `fabricate.py` | Builds a case's input from its program and fabricates its transcript from a short spec (which requirements are complete, a seed, trap rows); checks the result with the degree audit. |
-| `generate_cases.py` | Writes five test cases per program (250), with rules answer keys verified against every candidate cart in the Section Tally. |
-| `generate_pairs.py` | Writes counterfactual pairs (200 pairs, 400 cases): two cases that differ in one detail of the prompt or transcript, which flips the answer. See [Counterfactual pairs](#counterfactual-pairs-paired_casesjson). |
-| `paired_cases.json` (400) | The pairs, in the same case format; run with `--test-file paired_cases.json`. |
-| `input_format_cases.json` (250) | The test cases: each names its program, fabricates its transcript, and carries an answer key. The sections come from the Section Tally: in a session, the whole tally; with `--named-courses`, every open section of each course the case names (`"schedule_from_tally": {"named_courses": true}`). |
+| `generate_pairs.py` | Writes the test cases: counterfactual pairs (200 pairs, 400 cases), two cases that differ in one detail of the prompt or transcript, which flips the answer. Builds each case, fabricates its transcript and scores every candidate answer to write the answer key. See [Counterfactual pairs](#counterfactual-pairs-paired_casesjson). |
+| `paired_cases.json` (400) | The test cases (the runner's default case file): each names its program, fabricates its transcript, and carries an answer key and its pair. The sections come from the Section Tally: in a session, the whole tally; with `--named-courses`, every section of each course the case names. |
 | `section_tally.py` | Reads Rowan's Section Tally export, turns rows into input-format sections, and gives each case its sections: the named courses' (`course_schedule()`) or the whole tally (`full_schedule()`). See [Sections from the Section Tally](#sections-from-the-section-tally). |
 | `section_tally_fall2026.csv` | The Fall 2026 Section Tally export, as downloaded (renamed). The pipeline reads this one file. |
-| `semantic_eval_results_finalized.json` | Results of `run_semantic_eval.py`, as an indented JSON array. New runs go to `semantic_eval_results.json` unless `--output` names another file. |
+| `pairs_sonnet_*.json` | Results of Claude Sonnet 5.5 on 3 pairs under each of the four tally versions. New runs go to `semantic_eval_results.json` unless `--output` names another file. |
 
-Earlier work is in git history, not in the working tree: the single-section message
+Earlier work is in git history, not in the working tree. The 250 single (unpaired) cases and
+their generator (`input_format_cases.json`, `generate_cases.py`) were removed on 10/20; the last
+commit with them is `0afe332`. Older still: the single-section message
 (`old_schema/`) and the 30 cases whose input was a bare list of sections (`test_cases.jsonl`,
 `semantic_test_cases.jsonl`, `cart_test_cases.jsonl`). The last commit with all of them is
 `e02b9f1`; for example `git show e02b9f1:cart_test_cases.jsonl`.
@@ -121,7 +121,7 @@ All commands are run from the repo root with `(venv)` active.
 
 ```bash
 python run_semantic_eval.py --model anthropic/claude-opus-5.5
-python run_semantic_eval.py --model anthropic/claude-opus-5.5 --task-ids case_006 case_009
+python run_semantic_eval.py --model anthropic/claude-opus-5.5 --task-ids pair-transfer-philosophy-ba-a pair-transfer-philosophy-ba-b
 python run_semantic_eval.py --model anthropic/claude-opus-5.5 --named-courses   # the earlier way
 python run_semantic_eval.py --check                                              # no model, no cost
 ```
@@ -129,7 +129,7 @@ python run_semantic_eval.py --check                                             
 | Option | Meaning | Default |
 |---|---|---|
 | `--model` | One model ID (required unless `--check`) | |
-| `--test-file` | Which case file to run | `input_format_cases.json` |
+| `--test-file` | Which case file to run | `paired_cases.json` |
 | `--task-ids` | Run only these cases | all cases in the file |
 | `-n` | Samples per case | `1` |
 | `--rendering` | How a case's own state is shown to the model: `json`, `csv` or `nl` (plain text) | `json` |
@@ -198,9 +198,9 @@ holds the same 5,129 sections.
 
 Cost on Opus 5.5 (prices: input $4 per million tokens; a cache write costs 1.25×, a cache read
 $0.20 per million): about $2.05 for the first case (the write), then about $0.13 per case
-(about $0.08 to read the tally, $0.04 for the case, plus the answer). All 250 cases come to
-about $33 with `--tally trimmed` (about $22 with `trimmed-open`, $49 with `raw`; use `--task-ids`
-to run fewer), against roughly $410 for the session without caching. Only providers that cache honor the marker: caching through
+(about $0.08 to read the tally, $0.04 for the case, plus the answer). All 200 pairs (400 calls)
+come to an estimated $57 with `--tally trimmed` (about $39 with `trimmed-open`, $75 with `raw`;
+about half that on Sonnet 5.5; use `--task-ids` to run fewer). Only providers that cache honor the marker: caching through
 OpenRouter was confirmed on Claude (a second call read the whole opening from the cache at
 about a sixth of the cost). The first call can take minutes, so the
 OpenRouter request timeout is 10 minutes.
@@ -256,9 +256,10 @@ group agrees.
 a total:
 
 ```
-case_012 run 0: semantic_ok          | matches ground truth exactly
+pair-transfer-philosophy-ba-b: semantic_ok          | satisfies every rule
 
-5/5 semantic_ok on anthropic/claude-opus-5.5. Cost $0.1005. Full results in semantic_eval_results.json
+5/6 semantic_ok on anthropic/claude-sonnet-5.5. Cost $1.4941. Full results in pairs_sonnet_trimmed.json (session trimmed-20261019T225009Z)
+Paired accuracy: 2/3 pairs with both variants semantic_ok (67%)
 ```
 
 | Outcome | Tier | Meaning |
@@ -323,10 +324,10 @@ except `deviation_score` (per row, and averaged in the summary).
   twin's outcome.
 
 **`error_type`** names what went wrong, so failures can be counted.
-- **A failed pair or template case** is named for the reasoning it tests: `fallback_not_applied`,
+- **A failed pair case** is named for the reasoning its family tests: `fallback_not_applied`,
   `in_progress_course_ignored`, `transfer_credit_ignored`, `time_overlap_missed`,
   `and_or_requirement_misread`, `credit_arithmetic`, `modality_ignored`, `meeting_days_ignored`,
-  `minimum_grade_misread`, `withdrawal_counted_as_credit`, `already_passed_course_retaken`.
+  `minimum_grade_misread`, `withdrawal_counted_as_credit`.
 - **Any other semantic error** is named for its first broken rule: `wrong_number_of_sections`,
   `requirement_mismatch`, `named_course_missing`, `time_limit_ignored`, `wrong_course`, and so on.
 - **A consistency error** is named for its first failed Tier 3 check: `full_section`,
@@ -555,10 +556,10 @@ from is set by the case:
 
 ```json
 {
-  "case_id": "case_015",
-  "input": { "student": {}, "transcript": {}, "program_requirements": [], "prompt": "Register me for two classes that count toward my ..." },
-  "schedule_from_tally": { "named_courses": true },
-  "ground_truth": { "rules": { "count": {"min": 2, "max": 2}, "courses_count_toward": ["cs_electives"], "no_days": ["Friday"] } }
+  "case_id": "pair-busy_block-journalism-ba-a",
+  "input": { "program": "journalism-ba", "student": {}, "transcript": {"fabricate": {}}, "prompt": "Register me for News Media Literacy (JRN02101). I work Mondays and Wednesdays ..." },
+  "schedule_from_tally": { "named_courses": true, "courses": ["JRN02101"] },
+  "ground_truth": { "rules": { "count": {"min": 1, "max": 1}, "must_include_courses": ["JRN02101"], "busy": [{"days": ["Monday", "Wednesday"], "start_time": "10:00 AM", "end_time": "11:15 AM"}] } }
 }
 ```
 
@@ -569,8 +570,8 @@ With `named_courses`, `run_semantic_eval.named_courses()` collects every course 
 names: each requirement's `course_options`, each course with a `prerequisites` entry, and each
 course id written in the prompt. `section_tally.course_schedule()` then takes every section of
 those courses, in export order, leaving out cancelled ones and skipping courses with no section
-this term (28 of the 47 electives in aneesh_test). `"courses": [...]` adds courses the input does
-not name by id, e.g. case_012's "Operating Systems" (CS06395) and the look-alike CS03570. The
+this term. `"courses": [...]` adds courses the input does not name by id; the pair generator
+lists each case's candidate courses there, so `--named-courses` shows the model all of them. The
 prompt and the checker's database hold the same sections, so a crn from outside them is a
 `consistency_error` ("does not exist").
 
@@ -699,7 +700,7 @@ What the checker does and does not read:
   so whether a course "counts toward the degree" is decided by the author, with the audit
   as a cross-check.
 
-### Cases built from degree requirements
+### Degree programs and fabricated transcripts
 
 **The requirements file.** `degree_requirements.json` holds 50 programs, keyed like
 `marketing-bs` or `english-ba`. Six are the programs the earlier hand-built cases used (CS,
@@ -735,42 +736,6 @@ designates. It then runs the degree audit and stops with an error unless every `
 requirement is met and every `keep_unmet` one is not. The same seed always gives the same
 transcript. `run_semantic_eval.resolve_case()` calls it, so validation, the checker and the
 prompt all see the full input object.
-
-**Five generated cases per program.** `python generate_cases.py` writes cases `<program>-1` to
-`-5` (250 in all) from templates, each falling back to another when a program or this term's
-sections cannot support it:
-
-| Template | Prompt | Count |
-|---|---|---|
-| requirement | "Register me for one class that counts toward my <requirement>." + a constraint | 74 |
-| named_pair | "Enroll me in <course A> and <course B>." (two required courses not yet taken) | 47 |
-| attribute | "I still need a class for my <Rowan Core literacy / Rowan Experience> requirement." | 45 |
-| retake | "I got a <grade below the minimum> in <course> last spring. If that doesn't count toward my major, register me to retake it." | 30 |
-| passed | "One class toward <requirement>; I don't want to retake anything I've already passed." | 3 |
-| fallback | "Sign me up for <course with no Fall 2026 section>. If it isn't offered, register me for another class toward <requirement>." | 1 |
-| credit_limit (case `-5`) | "I can take at most N credits this fall. Register me for <course A>, and add <course B> too only if both fit within my limit." | 50: both fit in 28, only A in 22 |
-
-**The credit-limit template** tests credit arithmetic in both directions. N is drawn per
-program as either A + B credits (both fit: the answer is one section of each, not overlapping;
-taking A alone is wrong) or A + B - 1 (they do not fit: the answer is A alone; adding B breaks
-the limit). A and B are untaken required courses with fixed credits, or, for programs without
-such a pair (Africana Studies, Philosophy), two electives from one list. The key uses the
-`credits` rule (`{"max": N}`). Template 5 has its own seed and student ids (S5001 on), so
-adding it left cases 1-4 unchanged.
-
-The constraint is one of: no Friday classes; Tuesdays/Thursdays or Mondays/Wednesdays in person;
-fully online; in person only; nothing ending after 5 PM; nothing starting at 5 PM or later. The
-generator keeps a constraint only if it leaves at least one correct cart and rules out at least
-one cart that would otherwise be correct. When a prompt names a category shared by several
-requirements ("my Non-Program Courses"), the key accepts a course toward any unmet one of them.
-
-Every answer key is a rules key. The generator scores every candidate cart (every Fall 2026
-section of every course that could count, or every pair of the two named courses' sections)
-against the whole Section Tally, the way a session run scores a model, and records the accepted
-set in `implicit_relationship`, up to four valid examples, and invalid examples drawn from the
-near misses (constraint violations, full sections, conflicts, earned courses, wrong counts).
-`ground_truth.case_type` and `ground_truth.targets` say which template and requirements a case
-tests. `schedule_from_tally.courses` lists the candidate courses, so `--named-courses` shows them too.
 
 Caveats: requirements and attribute designations are only what the guides state, so a course a
 model knows to be, say, Global Literacy counts only if the input designates it; real
@@ -885,7 +850,7 @@ holds:
 - `chance`: correct ÷ candidate, the probability of being right by picking one at random.
 - `rules` and `prompt_words`.
 
-Chance ranges from 0.006 to 1.0 (mean 0.31 for the pairs, 0.35 for the 250 cases), so raw
+Chance ranges from 0.006 to 1.0 (mean 0.31), so raw
 accuracy is not comparable across families. A summary's `mean_chance_baseline` is the average
 over the cases it ran. A model at that rate is doing no better than picking a plausible
 section at random.
@@ -895,17 +860,17 @@ pick one. And it measures picking a section, not structural decisions: in `credi
 the right courses are chosen, every section combination may be correct (chance 1.0), because
 the real test is whether to add the second course.
 
-`python generate_pairs.py --annotate` recomputes the flag and difficulty for every pair, and
-`python generate_cases.py --difficulty input_format_cases.json` does the same for other case
-files. New cases get them when generated. Neither changes what the model sees, the rules or the
+`python generate_pairs.py --annotate` recomputes the flag and difficulty for every pair. New
+pairs get them when generated. Neither changes what the model sees, the rules or the
 examples.
 
-### Earlier hand-built cases (removed 10/18)
+### Removed case files
 
-The 21 hand-built cases (`case_001`–`case_015`, `aneesh_test` and five `rowan_` cases) were
-removed on 10/18; the case file now holds only the 200 generated cases. They are in git
-history: the last commit with them is the one before this change. The six programs they used
-remain in `degree_requirements.json`. Results logged earlier ("Results so far") refer to them.
+The 21 hand-built cases (`case_001`–`case_015`, `aneesh_test` and five `rowan_` cases) were removed
+on 10/18, and the 250 generated single cases (`input_format_cases.json`, `<program>-1` to `-5`)
+and `generate_cases.py` on 10/20: the pipeline now runs on the pairs only. Both are in git history
+(the hand-built cases at `bc6c9ba`, the single cases at `0afe332`). The six programs the hand-built
+cases used remain in `degree_requirements.json`.
 
 ## Correctness model
 
@@ -979,10 +944,12 @@ Four tiers, stopping at the first failure:
 
 ## Results so far
 
-Rows are in `semantic_eval_results_finalized.json`. OpenRouter, JSON rendering, the current
-message body and named-courses prompts; one sample per case. These runs are of the cases
-before the 10/15 rebuild on the CS guide (smaller prompts, invented requirements); they have not
-been rerun.
+**Current runs:** `pairs_sonnet_raw.json`, `pairs_sonnet_trimmed.json`, `pairs_sonnet_raw-open.json`
+and `pairs_sonnet_trimmed-open.json` hold Claude Sonnet 5.5 at medium effort on the same 3 random
+pairs under each tally version (one sample per case); each file's session summary has the totals.
+
+**Earlier runs** (below) are of hand-built cases that no longer exist, before the 10/15 rebuild on
+the CS guide; their rows are in git history (`semantic_eval_results_finalized.json` at `bc6c9ba`).
 
 | Model | Case | Sections in prompt | Input tokens | Result | Cost |
 |---|---|---|---|---|---|
@@ -991,8 +958,7 @@ been rerun.
 | `anthropic/claude-opus-5.5` | case_009 | 115 | 29,245 | `semantic_ok` | $0.125 |
 | `anthropic/claude-opus-5.5` | aneesh_test | 220 | 54,310 | `semantic_ok` | $0.233 |
 
-The section list is 90–97% of every prompt, so cost follows the number of sections. The
-session has not been run against a model yet.
+The section list was 90–97% of every prompt, so cost followed the number of sections.
 
 Findings from removed runs (earlier message body or removed cases), kept because they bear on
 open questions:
@@ -1256,6 +1222,7 @@ backends × models × domains × tasks × samples
 
 | Version | Date | Changes |
 |---|---|---|
+| 3.3 | 2026-10-20 | The pipeline runs on the pairs only: `input_format_cases.json` (250 single cases) and `generate_cases.py` removed; the helpers the pair generator needs (building and scoring a case, transcripts, course and requirement names, difficulty) moved into `generate_pairs.py` unchanged (regenerated pairs match the stored ones). `paired_cases.json` is the default `--test-file`; the single-case error types (`retake`, `passed`, `fallback`) removed. |
 | 3.2 | 2026-10-19 | Removed `earlier_attempts` and `cost.total_spent_usd` (and `earlier_attempts_usd`) from session summaries and from the four Sonnet results files; `cost.total_usd` is the session's cost. |
 | 3.1 | 2026-10-19 | Obsolete code removed: `registration.check_consistency()` (replaced by `consistency_checks()`); verdicts no longer build `tier3_detail` and `violated` only to drop them; `pair_summary()` formats `pair_stats()` instead of repeating its counting; leftover keys from intermediate file layouts. No file was obsolete. |
 | 3.0 | 2026-10-19 | Research fields. The harness streams, and records per call `finish_reason` / `native_finish_reason`, `served_model`, `provider`, `generation_id`, `reasoning_tokens` and `first_token_ms`. New `--max-tokens` and `--effort`; every session records its `generation_settings`, `code_version` (commit, branch, uncommitted changes) and `test_file_sha256`; every row its `case_hashes`. Summaries gain 95% Wilson intervals, strong-pair accuracy, accuracy by case type, mean chance baseline, `error_types`, finish reasons, providers, first-token latency, a cost split (setup vs per case, per correct answer, per passed pair, earlier attempts, total spent) and a sampling note under 3 samples. Verdicts gain `error_type`. Case files gain `ground_truth.difficulty` (all cases) and `pair.has_shared_answer` (18 weak pairs). New `--compare` (McNemar's test). The four Sonnet sessions were backfilled with what is known about them. |

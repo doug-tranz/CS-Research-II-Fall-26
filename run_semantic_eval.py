@@ -12,10 +12,12 @@ and scores the answer through all four tiers:
 The model NEVER sees `ground_truth`. It is loaded separately and used only
 here, after generation, so it can never leak into the prompt.
 
-A case file is an indented JSON array of cases. Each names its degree program and
-fabricates its transcript (fabricate.py), and carries a rules answer key:
-    {"case_id": "marketing-bs-1", "input": {"program": "marketing-bs", ...},
-     "ground_truth": {"rules": {...}, "examples": {...}, "implicit_relationship": "..."}}
+The case file (paired_cases.json, written by generate_pairs.py) is an indented JSON array of
+counterfactual pairs of cases. Each case names its degree program, fabricates its transcript
+(fabricate.py), and carries a rules answer key and its pair:
+    {"case_id": "pair-transfer-philosophy-ba-a", "input": {"program": "philosophy-ba", ...},
+     "ground_truth": {"rules": {...}, "examples": {...}, "implicit_relationship": "...",
+                      "pair": {"id": "transfer/philosophy-ba", "variant": "a", ...}}}
 
 THE SESSION (the default): the whole Section Tally is the session's first turn, cached,
 and every case is then its own request after it (TallySession, below). Each case sees
@@ -25,13 +27,13 @@ the courses it names.
 
 HOW TO RUN:
     python run_semantic_eval.py --model anthropic/claude-opus-5.5
-    python run_semantic_eval.py --model anthropic/claude-opus-5.5 --task-ids marketing-bs-1 -n 5
+    python run_semantic_eval.py --model anthropic/claude-opus-5.5 --task-ids pair-transfer-philosophy-ba-a pair-transfer-philosophy-ba-b -n 3
     python run_semantic_eval.py --model anthropic/claude-opus-5.5 --named-courses
     python run_semantic_eval.py --check      # scores every answer key; no model, no cost
 
 Requires OPENROUTER_API_KEY to be set.
-Appends full results (including the verdict) to semantic_eval_results.json,
-an indented JSON array with one object per generation.
+Appends full results to semantic_eval_results.json (or --output): {"sessions": [...],
+"results": [...]}, one summary per run and one row per call.
 """
 
 import argparse
@@ -261,7 +263,7 @@ def resolve_case(case: dict) -> dict:
     return {**case, "input": data}
 
 
-def load_test_cases(path="input_format_cases.json", task_ids=None, whole=False) -> list:
+def load_test_cases(path="paired_cases.json", task_ids=None, whole=False) -> list:
     """The cases in a file (only `task_ids`, if given), with any schedule_from_tally filled in.
     Cases are chosen BEFORE the tally is read, so a case that does not use it never fails on it.
     whole=True runs every tally-based case with the whole Section Tally (the session; main()
@@ -636,9 +638,7 @@ FAMILY_ERRORS = {"full_fallback": "fallback_not_applied", "in_progress": "in_pro
                  "transfer": "transfer_credit_ignored", "busy_block": "time_overlap_missed",
                  "nested_groups": "and_or_requirement_misread", "credit_limit": "credit_arithmetic",
                  "modality": "modality_ignored", "days": "meeting_days_ignored",
-                 "grade_threshold": "minimum_grade_misread", "withdrawal": "withdrawal_counted_as_credit",
-                 "retake": "minimum_grade_misread", "passed": "already_passed_course_retaken",
-                 "fallback": "fallback_not_applied"}
+                 "grade_threshold": "minimum_grade_misread", "withdrawal": "withdrawal_counted_as_credit"}
 # Otherwise a semantic error is named by its first failed rule, a consistency error by its first
 # failed Tier 3 check, and a format error by its first failed Tier 1-2 check.
 RULE_ERRORS = {"student_id": "wrong_student", "term_code": "wrong_term", "count": "wrong_number_of_sections",
@@ -1461,7 +1461,7 @@ def main():
     without one."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", help="required unless --check")
-    parser.add_argument("--test-file", default="input_format_cases.json")
+    parser.add_argument("--test-file", default="paired_cases.json")
     parser.add_argument("--output", default="semantic_eval_results.json")
     parser.add_argument("--task-ids", nargs="+", help="run only these cases, e.g. case_012 case_013")
     parser.add_argument("-n", type=int, default=1, help="samples per case")
