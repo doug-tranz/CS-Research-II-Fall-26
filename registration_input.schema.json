@@ -1,0 +1,930 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/course-registration/1.0/input.schema.json",
+  "title": "Registration input: one registration situation",
+  "description": "Registration Input Format Specification, v0.3 (draft), plus the fields that implement its open items 4-7: prerequisites, course_equivalents, graduation_rules, attributes, and the extra requirement fields. Everything here is sent to the model. Rules that span several fields are checked in registration.validate_input(). Section and meeting fields follow Rowan's Section Tally export (section_tally.py): session, instructor, title_note, part_of_term, waitlist, reserved_seats, room_capacity, cancelled, meeting location, and times written with or without a leading zero. The Rowan program-guide fields (program_guide, course_attributes, student.entry, and the requirement fields guide_section, course_groups, course_ranges, recommended_courses, waived_if, and the one_of_groups and credits_any rules) mirror the layout of Rowan's Academic Program Guides: university graduation requirements, Rowan Core literacies, Rowan Experience attributes, Non-Program courses, Major requirements and Free Electives.",
+  "type": "object",
+  "required": [
+    "student",
+    "transcript",
+    "program_requirements",
+    "schedule",
+    "prompt"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "student": {
+      "$ref": "#/$defs/student"
+    },
+    "transcript": {
+      "$ref": "#/$defs/transcript"
+    },
+    "program_requirements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/requirement"
+      }
+    },
+    "schedule": {
+      "$ref": "#/$defs/schedule"
+    },
+    "prompt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "prerequisites": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/prerequisite"
+      }
+    },
+    "course_equivalents": {
+      "description": "Each group lists course ids that are the same course under different catalog years.",
+      "type": "array",
+      "items": {
+        "type": "array",
+        "minItems": 2,
+        "uniqueItems": true,
+        "items": {
+          "$ref": "#/$defs/course_id"
+        }
+      }
+    },
+    "graduation_rules": {
+      "$ref": "#/$defs/graduation_rules"
+    },
+    "program_guide": {
+      "$ref": "#/$defs/program_guide"
+    },
+    "course_attributes": {
+      "description": "Rowan Core literacy and Rowan Experience designations by course id, as the Section Tally lists them under course details > Attributes (e.g. PSY01107: [\"HUML\", \"RS\"]). The Section Tally export has no attributes column, so a case lists the ones it needs. A course's attributes here count for the credits_with_attribute rule just like attributes written on a transcript row or a section.",
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/course_id"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/attributes"
+      }
+    }
+  },
+  "$defs": {
+    "course_id": {
+      "description": "Subject code plus course number, no space. Never a number: leading zeros matter.",
+      "type": "string",
+      "pattern": "^[A-Z]{2,4}[A-Z0-9]{5}$"
+    },
+    "term": {
+      "type": "string",
+      "pattern": "^(Winter|Spring|Summer|Fall) \\d{4}$"
+    },
+    "credit_hours": {
+      "type": "number",
+      "minimum": 0
+    },
+    "level": {
+      "enum": [
+        "UG",
+        "GR"
+      ]
+    },
+    "passing_grade": {
+      "description": "Passing letter grades, highest to lowest. minimum_grade is compared in this order.",
+      "enum": [
+        "A",
+        "A-",
+        "B+",
+        "B",
+        "B-",
+        "C+",
+        "C",
+        "C-",
+        "D+",
+        "D",
+        "D-"
+      ]
+    },
+    "grade": {
+      "enum": [
+        "A",
+        "A-",
+        "B+",
+        "B",
+        "B-",
+        "C+",
+        "C",
+        "C-",
+        "D+",
+        "D",
+        "D-",
+        "F",
+        "W",
+        "TA"
+      ]
+    },
+    "clock_time": {
+      "description": "h:mm AM/PM or hh:mm AM/PM, as the Section Tally writes it",
+      "type": "string",
+      "pattern": "^(0?[1-9]|1[0-2]):[0-5]\\d (AM|PM)$"
+    },
+    "student": {
+      "type": "object",
+      "required": [
+        "student_id",
+        "degree",
+        "major",
+        "program_id",
+        "catalog_year"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "student_id": {
+          "type": "string",
+          "pattern": "^\\S+$"
+        },
+        "degree": {
+          "type": "string",
+          "minLength": 1
+        },
+        "major": {
+          "type": "string",
+          "minLength": 1
+        },
+        "minor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "program_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "catalog_year": {
+          "$ref": "#/$defs/term"
+        },
+        "entry": {
+          "$ref": "#/$defs/student_entry"
+        }
+      }
+    },
+    "transcript": {
+      "type": "object",
+      "required": [
+        "completed_courses",
+        "transfer_courses",
+        "courses_in_progress"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "completed_courses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/completed_course"
+          }
+        },
+        "transfer_courses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/transfer_course"
+          }
+        },
+        "courses_in_progress": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/course_in_progress"
+          }
+        }
+      }
+    },
+    "completed_course": {
+      "type": "object",
+      "required": [
+        "term",
+        "course_id",
+        "grade",
+        "credit_hours"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "term": {
+          "$ref": "#/$defs/term"
+        },
+        "course_id": {
+          "$ref": "#/$defs/course_id"
+        },
+        "campus": {
+          "type": "string",
+          "minLength": 1
+        },
+        "level": {
+          "$ref": "#/$defs/level"
+        },
+        "title": {
+          "type": "string"
+        },
+        "grade": {
+          "$ref": "#/$defs/grade"
+        },
+        "credit_hours": {
+          "$ref": "#/$defs/credit_hours"
+        },
+        "attributes": {
+          "$ref": "#/$defs/attributes"
+        }
+      }
+    },
+    "transfer_course": {
+      "type": "object",
+      "required": [
+        "institution",
+        "course_id",
+        "grade",
+        "credit_hours"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "institution": {
+          "type": "string",
+          "minLength": 1
+        },
+        "course_id": {
+          "$ref": "#/$defs/course_id"
+        },
+        "title": {
+          "type": "string"
+        },
+        "grade": {
+          "$ref": "#/$defs/grade"
+        },
+        "credit_hours": {
+          "$ref": "#/$defs/credit_hours"
+        },
+        "attributes": {
+          "$ref": "#/$defs/attributes"
+        }
+      }
+    },
+    "course_in_progress": {
+      "description": "No grade yet, so `grade` is not an allowed field.",
+      "type": "object",
+      "required": [
+        "term",
+        "course_id",
+        "credit_hours"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "term": {
+          "$ref": "#/$defs/term"
+        },
+        "course_id": {
+          "$ref": "#/$defs/course_id"
+        },
+        "campus": {
+          "type": "string",
+          "minLength": 1
+        },
+        "level": {
+          "$ref": "#/$defs/level"
+        },
+        "title": {
+          "type": "string"
+        },
+        "credit_hours": {
+          "$ref": "#/$defs/credit_hours"
+        },
+        "attributes": {
+          "$ref": "#/$defs/attributes"
+        }
+      }
+    },
+    "requirement": {
+      "type": "object",
+      "required": [
+        "req_id",
+        "category",
+        "rule",
+        "course_options",
+        "credit_hours",
+        "minimum_grade"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "req_id": {
+          "type": "string",
+          "pattern": "^\\S+$"
+        },
+        "category": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rule": {
+          "enum": [
+            "all_of",
+            "any_of",
+            "credits_from",
+            "credits_with_attribute",
+            "one_of_groups",
+            "credits_any"
+          ]
+        },
+        "course_options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/course_id"
+          },
+          "description": "Courses named by the rule. Empty for credits_with_attribute, credits_any and one_of_groups."
+        },
+        "title": {
+          "type": "string"
+        },
+        "credit_hours": {
+          "$ref": "#/$defs/credit_hours"
+        },
+        "minimum_grade": {
+          "$ref": "#/$defs/passing_grade"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "attribute": {
+          "description": "For credits_with_attribute: the attribute a course must carry.",
+          "type": "string",
+          "pattern": "^\\S+$"
+        },
+        "repeatable": {
+          "description": "Courses whose credits count every time they are earned.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/course_id"
+          }
+        },
+        "credit_caps": {
+          "description": "For the credit rules: at most max_credits from these courses count.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "course_options",
+              "max_credits"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "course_options": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/course_id"
+                }
+              },
+              "max_credits": {
+                "$ref": "#/$defs/credit_hours"
+              }
+            }
+          }
+        },
+        "exclusive": {
+          "description": "True if a course used here cannot also be used by another exclusive requirement. By default one course may count toward several requirements.",
+          "type": "boolean"
+        },
+        "guide_section": {
+          "$ref": "#/$defs/guide_section"
+        },
+        "course_groups": {
+          "description": "For one_of_groups: satisfied when EVERY course of ANY ONE group is earned, e.g. Physics' choice of a Biology, Chemistry or Computer Science two-course sequence, or 'COMP01111 + COMP01112 + (CMS04205 or CMS04206)' written as two groups.",
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/$defs/course_id"
+            }
+          }
+        },
+        "course_ranges": {
+          "description": "For any_of and the credit rules: course families that also count, beside course_options, as a guide writes them ('any 300+ level Physics course', 'any psychology course except ...').",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/course_range"
+          }
+        },
+        "recommended_courses": {
+          "description": "The guide's 'Recommendation from major' for this requirement. Informational: any course that satisfies the rule counts.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/course_id"
+          }
+        },
+        "waived_if": {
+          "$ref": "#/$defs/waived_if"
+        }
+      }
+    },
+    "schedule": {
+      "type": "object",
+      "required": [
+        "term",
+        "term_code",
+        "sections"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "term": {
+          "$ref": "#/$defs/term"
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/section"
+          }
+        },
+        "term_code": {
+          "description": "The registrar's code for the term, e.g. 202640 (Fall 2026).",
+          "type": "string",
+          "pattern": "^\\d{6}$"
+        }
+      }
+    },
+    "section": {
+      "type": "object",
+      "required": [
+        "crn",
+        "course_id",
+        "section",
+        "credit_hours",
+        "seats_total",
+        "seats_taken",
+        "campus",
+        "modality",
+        "meetings"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "crn": {
+          "description": "The id the model's registration message must use.",
+          "type": "string",
+          "pattern": "^\\S+$"
+        },
+        "course_id": {
+          "$ref": "#/$defs/course_id"
+        },
+        "section": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string"
+        },
+        "credit_hours": {
+          "$ref": "#/$defs/section_credit_hours"
+        },
+        "seats_total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "seats_taken": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "campus": {
+          "type": "string",
+          "minLength": 1
+        },
+        "modality": {
+          "enum": [
+            "in-person",
+            "online",
+            "hybrid"
+          ]
+        },
+        "meetings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/meeting"
+          }
+        },
+        "attributes": {
+          "$ref": "#/$defs/attributes"
+        },
+        "session": {
+          "description": "Tally `Session`.",
+          "enum": [
+            "Day",
+            "Evening",
+            "Weekend",
+            "Online",
+            "Hybrid"
+          ]
+        },
+        "title_note": {
+          "description": "Text the tally appends to a title in parentheses: a restriction, a topic or a former name.",
+          "type": "string",
+          "minLength": 1
+        },
+        "instructor": {
+          "description": "Tally `Instructor(s)`, verbatim. STAFF = not yet assigned; several names are run together.",
+          "type": "string"
+        },
+        "part_of_term": {
+          "description": "Tally `Part of Term`, e.g. 'Full Term01-SEP - 17-DEC'.",
+          "type": "string"
+        },
+        "waitlist": {
+          "type": "object",
+          "required": [
+            "capacity",
+            "enrolled"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "capacity": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "enrolled": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "reserved_seats": {
+          "type": "object",
+          "required": [
+            "total",
+            "remaining"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "total": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "remaining": {
+              "type": "integer"
+            }
+          }
+        },
+        "room_capacity": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cancelled": {
+          "description": "Registering for a cancelled section is a consistency error.",
+          "type": "boolean"
+        },
+        "room_capacity_marked": {
+          "description": "The tally wrote an asterisk after Room Cap (e.g. '40*', or '*' alone). Its meaning is not documented.",
+          "type": "boolean"
+        },
+        "meeting_note": {
+          "description": "Meeting text from the tally that names no days, e.g. a list of rooms. Not used for conflicts.",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "meeting": {
+      "type": "object",
+      "required": [
+        "days"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "days": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday"
+            ]
+          }
+        },
+        "start_time": {
+          "$ref": "#/$defs/clock_time"
+        },
+        "end_time": {
+          "$ref": "#/$defs/clock_time"
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "location": {
+          "description": "Building and room, e.g. 'Robinson Hall 207'.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "description": "Days, and usually a time range. A meeting with days but no times is time-to-be-arranged.",
+      "dependentRequired": {
+        "start_time": [
+          "end_time"
+        ],
+        "end_time": [
+          "start_time"
+        ]
+      }
+    },
+    "attributes": {
+      "description": "Catalog attributes a course carries, e.g. a general-education area. Used by the credits_with_attribute rule.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^\\S+$"
+      }
+    },
+    "prerequisite": {
+      "description": "Before taking course_id, every course in requires must be earned at or above minimum_grade.",
+      "type": "object",
+      "required": [
+        "course_id",
+        "requires",
+        "minimum_grade"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "course_id": {
+          "$ref": "#/$defs/course_id"
+        },
+        "requires": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/course_id"
+          }
+        },
+        "minimum_grade": {
+          "$ref": "#/$defs/passing_grade"
+        }
+      }
+    },
+    "graduation_rules": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "total_credits": {
+          "description": "Earned credits needed to graduate.",
+          "type": "number",
+          "minimum": 0
+        },
+        "minimum_gpa": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "residency_credits": {
+          "description": "Credits that must be earned at this institution.",
+          "type": "number",
+          "minimum": 0
+        },
+        "major_gpa": {
+          "description": "Program-specific: minimum GPA over the courses that satisfy requirements with guide_section 'major' (e.g. 2.5 for Rowan's business majors).",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "minimum_grade": {
+          "description": "University-wide: lowest grade that applies to graduation/degree requirements (Rowan: D-). A requirement's own minimum_grade may be higher.",
+          "$ref": "#/$defs/passing_grade"
+        }
+      }
+    },
+    "section_credit_hours": {
+      "description": "A number, or a range for a variable-credit section.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/credit_hours"
+        },
+        {
+          "type": "object",
+          "required": [
+            "min",
+            "max"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "min": {
+              "$ref": "#/$defs/credit_hours"
+            },
+            "max": {
+              "$ref": "#/$defs/credit_hours"
+            }
+          }
+        }
+      ]
+    },
+    "student_entry": {
+      "description": "How the student entered Rowan. Decides the guide's waivers: the Rowan Core is waived for an earned A.A. or A.S. from a NJ community/county college, and the Rowan Seminar for 24 or more approved credits transferred at initial entry.",
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "enum": [
+            "first_year",
+            "transfer"
+          ]
+        },
+        "transfer_credits_at_entry": {
+          "$ref": "#/$defs/credit_hours"
+        },
+        "nj_associate_degree": {
+          "description": "Earned A.A. or A.S. from a NJ community/county college.",
+          "type": "boolean"
+        }
+      }
+    },
+    "guide_section": {
+      "description": "Where a requirement sits in a Rowan Academic Program Guide. rowan_core: one of the six literacies (only Communicative Literacy's 9 sh are counted in this section; the others' credits count elsewhere). rowan_experience: LIT, WI or RS. non_program: required courses outside the major department. major: the major's own sections (foundational, required, electives...). free_electives: the remaining credits to reach the total.",
+      "enum": [
+        "rowan_core",
+        "rowan_experience",
+        "non_program",
+        "major",
+        "free_electives"
+      ]
+    },
+    "course_range": {
+      "description": "Courses by subject and number. A Rowan course id is a subject (2-4 letters), a 2-character discipline code and a 3-digit number whose first digit is the level: PHYS00340 is subject PHYS, discipline 00, number 340.",
+      "type": "object",
+      "required": [
+        "subject"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "subject": {
+          "type": "string",
+          "pattern": "^[A-Z]{2,4}$"
+        },
+        "discipline": {
+          "type": "string",
+          "pattern": "^[A-Z0-9]{2}$"
+        },
+        "min_number": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 999
+        },
+        "max_number": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 999
+        },
+        "exclude": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/course_id"
+          }
+        }
+      }
+    },
+    "waived_if": {
+      "description": "The requirement counts as met, with no course, when the student's entry matches ANY condition given.",
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "nj_associate_degree": {
+          "const": true
+        },
+        "transfer_credits_at_entry": {
+          "description": "At least this many credits transferred at entry.",
+          "$ref": "#/$defs/credit_hours"
+        }
+      }
+    },
+    "program_guide": {
+      "description": "The Academic Program Guide the requirements come from: what the guide says about itself and its section totals. The model sees it; program_requirements are what the audit checks.",
+      "type": "object",
+      "required": [
+        "program_name",
+        "effective_term",
+        "total_credits",
+        "sections"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "program_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "department": {
+          "type": "string",
+          "minLength": 1
+        },
+        "contact_email": {
+          "type": "string",
+          "pattern": "^\\S+@\\S+$"
+        },
+        "effective_term": {
+          "description": "'Effective Fall 2025' on the guide: the entry term it is written for.",
+          "$ref": "#/$defs/term"
+        },
+        "source_url": {
+          "type": "string",
+          "pattern": "^https?://\\S+$"
+        },
+        "total_credits": {
+          "$ref": "#/$defs/credit_hours"
+        },
+        "sections": {
+          "description": "Each guide section and the credits counted in it, in guide order. They sum to total_credits.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "section",
+              "credit_hours"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "section": {
+                "$ref": "#/$defs/guide_section"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "credit_hours": {
+                "$ref": "#/$defs/section_credit_hours"
+              },
+              "notes": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "rowan_core": {
+          "type": "object",
+          "required": [
+            "literacies"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "literacies": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "COML",
+                  "ARTL",
+                  "GLBL",
+                  "HUML",
+                  "QNTL",
+                  "SCIL"
+                ]
+              }
+            },
+            "min_credits_per_literacy": {
+              "$ref": "#/$defs/credit_hours"
+            }
+          }
+        },
+        "rowan_experience": {
+          "type": "object",
+          "required": [
+            "attributes"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "attributes": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "LIT",
+                  "WI",
+                  "RS"
+                ]
+              }
+            }
+          }
+        },
+        "program_rules": {
+          "description": "Program-specific graduation requirements, as the guide words them.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

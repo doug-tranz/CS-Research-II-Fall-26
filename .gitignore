@@ -1,0 +1,15 @@
+# generated data — not source
+runs.jsonl
+*.jsonl
+*.db
+*.sqlite
+
+# python
+venv/
+__pycache__/
+*.pyc
+.env
+
+# os / editor
+.DS_Store
+*.swp

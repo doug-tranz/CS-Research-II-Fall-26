@@ -1,0 +1,4748 @@
+{
+  "sessions": [
+    {
+      "session_id": "trimmed-20261019T225009Z",
+      "model": "anthropic/claude-sonnet-5.5",
+      "test_file": "paired_cases.json",
+      "test_file_sha256": "92a593db98275da8",
+      "code_version": {
+        "commit": "0afe3328d369c4b71262bff01374bd3718bd82ba",
+        "branch": "Khalil-context-path",
+        "uncommitted_changes": true,
+        "changed_files": [
+          "pairs_sonnet_raw-open.json",
+          "pairs_sonnet_raw.json",
+          "pairs_sonnet_trimmed-open.json",
+          "pairs_sonnet_trimmed.json"
+        ]
+      },
+      "tally_variant": "trimmed",
+      "rendering": "json",
+      "samples_per_case": 1,
+      "cache_ttl": "5m",
+      "generation_settings": {
+        "temperature": 0,
+        "stream": true,
+        "usage": {
+          "include": true
+        },
+        "reasoning": {
+          "effort": "medium"
+        }
+      },
+      "shared_context": "752,801 characters, sha256 d783c5f69e6e, cache ttl 5m",
+      "output_contract": "Respond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"term_code\": <string>, \"sections\": [<section entry>, ...]}, with at least one section and no crn twice. Each section entry MUST have exactly these fields, copied from the offered section: \"crn\", \"course_id\", \"section\", \"seats_total\", \"seats_taken\", \"campus\", \"modality\", \"meetings\" (each meeting's \"days\", and its \"start_time\" and \"end_time\" when it has them; \"type\" and \"location\" may be copied too), plus \"credit_hours\": <number>, the credits the student takes (the section's credits, or a number in the range of a variable-credit section). An entry MAY also have \"waitlist\": true (ONLY to join the waitlist of a full section). Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"term_code\": \"201920\", \"sections\": [{\"crn\": \"90512\", \"course_id\": \"HIST01150\", \"section\": \"2\", \"credit_hours\": 3, \"seats_total\": 35, \"seats_taken\": 20, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"9:30 AM\", \"end_time\": \"10:45 AM\", \"type\": \"Class\", \"location\": \"Bunce Hall 101\"}]}, {\"crn\": \"90877\", \"course_id\": \"ART09900\", \"section\": \"1\", \"credit_hours\": 2, \"seats_total\": 5, \"seats_taken\": 1, \"campus\": \"Glassboro\", \"modality\": \"online\", \"meetings\": []}, {\"crn\": \"91004\", \"course_id\": \"BIOL01120\", \"section\": \"4\", \"credit_hours\": 4, \"seats_total\": 24, \"seats_taken\": 24, \"campus\": \"Camden\", \"modality\": \"hybrid\", \"meetings\": [{\"days\": [\"Monday\"], \"start_time\": \"1:00 PM\", \"end_time\": \"3:50 PM\"}], \"waitlist\": true}]}} Each \"crn\" MUST be the crn of an offered section, and every other copied field MUST equal that section's value. \"term_code\" MUST be the schedule's term_code, and \"student_id\" MUST be the student's student_id. The sections offered this term are listed in the Section Tally at the start of this conversation; only sections in it exist. Copy a section's fields from its row there: crn, course_id, section, seats_total, seats_taken, campus and modality as written, and meetings as a list with each meeting's days (full day names), start_time and end_time.",
+      "started": "2026-10-19T22:50:10.013451+00:00",
+      "ended": "2026-10-19T22:51:17.951465+00:00",
+      "cases": [
+        "pair-credit_limit-nutrition-bs-a",
+        "pair-credit_limit-nutrition-bs-b",
+        "pair-in_progress-anthropology-ba-a",
+        "pair-in_progress-anthropology-ba-b",
+        "pair-withdrawal-writing-arts-ba-a",
+        "pair-withdrawal-writing-arts-ba-b"
+      ],
+      "calls": 6,
+      "generation_failures": 0,
+      "outcomes": {
+        "semantic_ok": 5,
+        "syntactic_error": 1
+      },
+      "semantic_ok": {
+        "count": "5/6",
+        "rate": 0.833,
+        "ci95": [
+          0.436,
+          0.97
+        ]
+      },
+      "semantic_ok_by_case_type": {
+        "credit_limit": "2/2",
+        "in_progress": "2/2",
+        "withdrawal": "1/2"
+      },
+      "mean_chance_baseline": 0.3055,
+      "mean_deviation_score": 0.0,
+      "error_types": {
+        "not_json": 1
+      },
+      "finish_reasons": {
+        "stop (end_turn)": 6
+      },
+      "served_by": {
+        "anthropic/claude-sonnet-5.5 via Claude Platform on AWS": 6
+      },
+      "tokens": {
+        "prompt_tokens": 2809529,
+        "cached_tokens": 2308845,
+        "cache_write_tokens": 461769,
+        "completion_tokens": 3096,
+        "reasoning_tokens": 1446,
+        "cache_read_share": "82%"
+      },
+      "cost": {
+        "total_usd": 1.494097,
+        "avg_per_call_usd": 0.249016,
+        "setup_usd_est": 1.108096,
+        "per_case_marginal_usd_est": 0.064497,
+        "per_correct_answer_usd": 0.298819,
+        "per_passed_pair_usd": 0.747049,
+        "note": "All costs are what OpenRouter billed for the original model calls; re-grading a results file (--rescore) makes no model call and costs nothing."
+      },
+      "latency": {
+        "mean_total_ms": 11972,
+        "mean_first_token_ms": 9766
+      },
+      "paired_accuracy": {
+        "passed": 2,
+        "scored": 3,
+        "rate": 0.667,
+        "ci95": [
+          0.208,
+          0.939
+        ],
+        "strong_pairs_only": {
+          "count": "2/3",
+          "rate": 0.667,
+          "ci95": [
+            0.208,
+            0.939
+          ]
+        },
+        "weak_pairs_scored": 0,
+        "incomplete": 0,
+        "by_family": {
+          "credit_limit": "1/1",
+          "in_progress": "1/1",
+          "withdrawal": "0/1"
+        }
+      },
+      "sampling_note": "1 sample(s) per case: intervals are wide, and a difference between sessions can be chance. Use -n 3 or more, and --compare for a paired test."
+    }
+  ],
+  "results": [
+    {
+      "task_id": "pair-in_progress-anthropology-ba-a",
+      "session_id": "trimmed-20261019T225009Z",
+      "run_index": 0,
+      "ts": "2026-10-19T22:50:10.013451+00:00",
+      "case_hashes": {
+        "input": "ad74d8cf2802367c",
+        "rules": "7ca6c847d66abce6"
+      },
+      "prompt_readable": {
+        "known_state": {
+          "student": {
+            "degree": "Bachelor of Arts",
+            "major": "Anthropology",
+            "program_id": "ANTHROPOLOGY-BA",
+            "student_id": "S8434",
+            "catalog_year": "Fall 2024",
+            "entry": {
+              "type": "first_year"
+            }
+          },
+          "transcript": {
+            "completed_courses": [
+              {
+                "term": "Spring 2025",
+                "course_id": "BIOL01113",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "GEN BIOLOGY: NON-BIOLOGY MAJOR",
+                "grade": "A",
+                "credit_hours": 4,
+                "attributes": [
+                  "SCIL"
+                ]
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "CMS04205",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PUBLIC SPEAKING",
+                "grade": "A",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "COMP01111",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION I",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "COMP01112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION II",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "ENGL02116",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO GLOBAL LITS IN ENGLISH",
+                "grade": "B+",
+                "credit_hours": 3,
+                "attributes": [
+                  "LIT"
+                ]
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "GEOG16100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "EARTH, PEOPLE, AND ENVIRONMENT",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "RS"
+                ]
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "GEOG16140",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "WORLD REGIONAL GEOGRAPHY",
+                "grade": "B",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "PHIL09211",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "ANCIENT PHILOSOPHY-WI",
+                "grade": "A-",
+                "credit_hours": 3,
+                "attributes": [
+                  "GLBL"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "PHIL09241",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "SOCIAL & POLITICAL PHIL-WI",
+                "grade": "C+",
+                "credit_hours": 3,
+                "attributes": [
+                  "WI"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "PHIL09341",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "BIOMEDICAL ETHICS-WI",
+                "grade": "B-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "POSC07110",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "AMERICAN GOVERNMENT",
+                "grade": "B-",
+                "credit_hours": 3,
+                "attributes": [
+                  "HUML"
+                ]
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "STAT02100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "QNTL"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "THD07215",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "EXPERIENCING ACTING",
+                "grade": "C+",
+                "credit_hours": 3,
+                "attributes": [
+                  "ARTL"
+                ]
+              }
+            ],
+            "transfer_courses": [],
+            "courses_in_progress": [
+              {
+                "term": "Spring 2026",
+                "course_id": "ANTH02221",
+                "title": "HUMAN VARIATION",
+                "credit_hours": 3
+              }
+            ]
+          },
+          "program_requirements": [
+            {
+              "req_id": "CORE-COML",
+              "category": "Rowan Core: Communicative Literacy (COML)",
+              "rule": "all_of",
+              "course_options": [
+                "COMP01111",
+                "COMP01112",
+                "CMS04205"
+              ],
+              "title": "Communicative Literacy",
+              "credit_hours": 9,
+              "minimum_grade": "D-",
+              "notes": "The three courses or their official equivalents; the only Rowan Core credits counted in the Rowan Core section.",
+              "exclusive": true,
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-ARTL",
+              "category": "Rowan Core: Artistic Literacy (ARTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Artistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated ARTL; its credits count in another section.",
+              "attribute": "ARTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-GLBL",
+              "category": "Rowan Core: Global Literacy (GLBL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Global Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated GLBL; its credits count in another section.",
+              "attribute": "GLBL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              },
+              "recommended_courses": [
+                "ANTH02275"
+              ]
+            },
+            {
+              "req_id": "CORE-HUML",
+              "category": "Rowan Core: Humanistic Literacy (HUML)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Humanistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated HUML; its credits count in another section.",
+              "attribute": "HUML",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-QNTL",
+              "category": "Rowan Core: Quantitative Literacy (QNTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Quantitative Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated QNTL; its credits count in another section.",
+              "attribute": "QNTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              },
+              "recommended_courses": [
+                "STAT02100",
+                "STAT02260",
+                "STAT02102",
+                "STAT00280"
+              ]
+            },
+            {
+              "req_id": "CORE-SCIL",
+              "category": "Rowan Core: Scientific Literacy (SCIL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Scientific Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated SCIL; its credits count in another section.",
+              "attribute": "SCIL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              },
+              "recommended_courses": [
+                "ANTH02301"
+              ]
+            },
+            {
+              "req_id": "EXP-LIT",
+              "category": "Rowan Experience: Broad-Based Literature Attribute (LIT)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Broad-Based Literature Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the LIT attribute; its credits count in another section.",
+              "attribute": "LIT",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-WI",
+              "category": "Rowan Experience: Writing Intensive Attribute (WI)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Writing Intensive Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the WI attribute; its credits count in another section.",
+              "attribute": "WI",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-RS",
+              "category": "Rowan Experience: Rowan Seminar Attribute (RS)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Rowan Seminar Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the RS attribute; its credits count in another section.",
+              "attribute": "RS",
+              "guide_section": "rowan_experience",
+              "waived_if": {
+                "transfer_credits_at_entry": 24
+              }
+            },
+            {
+              "req_id": "NONPROG-GEOG",
+              "category": "Non-Program Courses",
+              "rule": "any_of",
+              "course_options": [
+                "GEOG16110",
+                "GEOG16140"
+              ],
+              "title": "Cultural Geography or World Regional Geography",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "exclusive": true,
+              "guide_section": "non_program"
+            },
+            {
+              "req_id": "NONPROG-ETHICS",
+              "category": "Non-Program Courses",
+              "rule": "any_of",
+              "course_options": [
+                "PHIL09150",
+                "PHIL09151",
+                "PHIL09222",
+                "PHIL09218",
+                "PHIL09341",
+                "PHIL09346"
+              ],
+              "title": "Intro to Ethics, Business Ethics, Environmental Ethics, Biomedical Ethics or Feminist Ethics",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "exclusive": true,
+              "guide_section": "non_program"
+            },
+            {
+              "req_id": "ANTH-FOUNDATIONAL",
+              "category": "Major Requirements: Foundational Courses",
+              "rule": "all_of",
+              "course_options": [
+                "ANTH02202",
+                "ANTH02203",
+                "ANTH02221",
+                "ANTH02250",
+                "ANTH02295"
+              ],
+              "credit_hours": 15,
+              "minimum_grade": "D-",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ANTH-METHODS",
+              "category": "Major Requirements: Upper Level and Capstone Courses",
+              "rule": "any_of",
+              "course_options": [
+                "ANTH02315",
+                "ANTH02324"
+              ],
+              "title": "Forensic Anthropology or Archaeological Field Methods",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ANTH-UPPER",
+              "category": "Major Requirements: Upper Level and Capstone Courses",
+              "rule": "all_of",
+              "course_options": [
+                "ANTH02395",
+                "ANTH02450"
+              ],
+              "credit_hours": 7,
+              "minimum_grade": "D-",
+              "notes": "Anthropological Theory and Anthropology Senior Seminar.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ANTH-ELECTIVES",
+              "category": "Major Requirements: Anthropology Electives",
+              "rule": "credits_from",
+              "course_options": [
+                "ANTH02144",
+                "INTR01444",
+                "ANTH02200",
+                "ANTH02205",
+                "ANTH02210",
+                "ANTH02215",
+                "ANTH02225",
+                "ANTH02240",
+                "ANTH02245",
+                "ANTH02270",
+                "ANTH02275",
+                "ANTH02280",
+                "ANTH02290",
+                "ANTH02301",
+                "ANTH02305",
+                "ANTH02310",
+                "ANTH02311",
+                "ANTH02312",
+                "ANTH02321",
+                "ANTH02322",
+                "ANTH02323",
+                "ANTH02326",
+                "ANTH02335",
+                "ANTH02336",
+                "ANTH02350",
+                "ANTH02355",
+                "ANTH02371",
+                "ANTH02375",
+                "ANTH02376",
+                "ANTH02378",
+                "ANTH02400",
+                "ANTH02420"
+              ],
+              "credit_hours": 12,
+              "minimum_grade": "D-",
+              "notes": "12 sh from the list, or one of the optional concentrations (Archaeology/Cultural Resource Management, Forensic/Physical, Medical, Public Culture/Museum Studies).",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "FREE",
+              "category": "Free Electives",
+              "rule": "credits_any",
+              "course_options": [],
+              "title": "Free Electives",
+              "credit_hours": 56,
+              "minimum_grade": "D-",
+              "notes": "Any credits not used by an exclusive requirement above; choose ones that satisfy unmet Rowan Core or Rowan Experience requirements.",
+              "exclusive": true,
+              "guide_section": "free_electives"
+            }
+          ],
+          "graduation_rules": {
+            "total_credits": 120,
+            "minimum_gpa": 2.0,
+            "residency_credits": 30,
+            "minimum_grade": "D-",
+            "major_gpa": 2.0
+          },
+          "program_guide": {
+            "program_name": "B.A. in Anthropology",
+            "department": "Department of Sociology & Anthropology",
+            "contact_email": "rosado@rowan.edu",
+            "effective_term": "Fall 2018",
+            "source_url": "https://sites.rowan.edu/registrar/_docs/ba-anthropology_rc_program_guide.pdf",
+            "total_credits": 120,
+            "sections": [
+              {
+                "section": "rowan_core",
+                "title": "Rowan Core Requirements (Communicative Literacy)",
+                "credit_hours": 9
+              },
+              {
+                "section": "non_program",
+                "title": "Non-Program Courses",
+                "credit_hours": 18,
+                "notes": "Courses here cannot be in the major department. The guide also asks for two semesters of one foreign language, a Humanistic or Global literacy course and any Rowan Core course, which cannot be listed as fixed courses."
+              },
+              {
+                "section": "major",
+                "title": "Major Requirements",
+                "credit_hours": 37,
+                "notes": "Foundational 15, Upper Level and Capstone 10, Anthropology Electives 12."
+              },
+              {
+                "section": "free_electives",
+                "title": "Free Electives",
+                "credit_hours": 56
+              }
+            ],
+            "rowan_core": {
+              "literacies": [
+                "COML",
+                "ARTL",
+                "GLBL",
+                "HUML",
+                "QNTL",
+                "SCIL"
+              ],
+              "min_credits_per_literacy": 3
+            },
+            "rowan_experience": {
+              "attributes": [
+                "LIT",
+                "WI",
+                "RS"
+              ]
+            },
+            "program_rules": [
+              "At least 120 sh of coursework that applies to the degree.",
+              "Cumulative GPA of at least 2.0 in Rowan University coursework (transfer credit does not count toward the GPA).",
+              "At least 30 sh completed at/through Rowan University.",
+              "Only grades of D- or above apply to graduation/degree requirements.",
+              "Rowan Core and Rowan Experience requirements must be met; one course may satisfy one Rowan Core literacy and several Rowan Experience attributes.",
+              "The Rowan Core is waived for transfer students with an earned A.A. or A.S. from a NJ community/county college; the Rowan Seminar is waived for students transferring 24 or more approved credits at initial entry.",
+              "Minimum 2.0 GPA in major courses.",
+              "Letter grades only in Anthropology courses; up to 10% of overall credits may be P/NC.",
+              "30 credits in upper-level (300, 400, 500) courses, including 19 upper-level anthropology credits.",
+              "The registrar lists this guide for all students who entered Fall 2021 or later; the PDF says Effective Fall 2018."
+            ]
+          },
+          "course_attributes": {
+            "ANTH02202": [
+              "GLBL"
+            ],
+            "ANTH02275": [
+              "GLBL"
+            ],
+            "ANTH02301": [
+              "SCIL"
+            ],
+            "CMS04205": [
+              "COML"
+            ],
+            "COMP01111": [
+              "COML"
+            ],
+            "COMP01112": [
+              "COML"
+            ],
+            "STAT00280": [
+              "QNTL"
+            ],
+            "STAT02100": [
+              "QNTL"
+            ],
+            "STAT02102": [
+              "QNTL"
+            ],
+            "STAT02260": [
+              "QNTL"
+            ]
+          },
+          "schedule": {
+            "term": "Fall 2026",
+            "term_code": "202640"
+          }
+        },
+        "intent": "Register me for Human Variation (ANTH02221) this fall. If I'm already taking it this semester, register me for Natives of South America (ANTH02210) instead."
+      },
+      "parsed_output": {
+        "id": "7c1e5a42-3b8d-4f6a-9e21-5d0a8b3c4f17",
+        "type": "https://example.org/course-registration/1.0/register",
+        "body": {
+          "student_id": "S8434",
+          "term_code": "202640",
+          "sections": [
+            {
+              "crn": "46074",
+              "course_id": "ANTH02210",
+              "section": "1",
+              "credit_hours": 3,
+              "seats_total": 29,
+              "seats_taken": 28,
+              "campus": "Glassboro",
+              "modality": "in-person",
+              "meetings": [
+                {
+                  "days": [
+                    "Monday",
+                    "Wednesday"
+                  ],
+                  "start_time": "12:30 PM",
+                  "end_time": "1:45 PM",
+                  "type": "Class",
+                  "location": "Robinson Hall 205"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "error": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "end_turn",
+      "served_model": "anthropic/claude-sonnet-5.5",
+      "provider": "Claude Platform on AWS",
+      "generation_id": "gen-1792450211-sMClhJX0IBR4QQqZEpax",
+      "prompt_tokens": 468164,
+      "cached_tokens": 0,
+      "cache_write_tokens": 461769,
+      "completion_tokens": 538,
+      "reasoning_tokens": 311,
+      "first_token_ms": 29418.62620000029,
+      "latency_ms": 31430.964900006074,
+      "usd_cost": 1.1725925,
+      "verdict": {
+        "outcome": "semantic_ok",
+        "detail": "satisfies every rule",
+        "tiers": {
+          "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
+          "tier2": "schema (our register message): passed (4/4 checks passed)",
+          "tier3": "consistency (invariants against the schedule and transcript): passed (9/9 checks passed)",
+          "tier4": "semantic (the request's rules): passed (5/5 checks passed)"
+        },
+        "tier1_checks": [
+          {
+            "check": "json",
+            "requires": "the whole answer is one JSON value, with no prose or code fence around it",
+            "found": "valid JSON",
+            "passed": true
+          },
+          {
+            "check": "envelope",
+            "requires": "a DIDComm v2 plaintext message: an object with an \"id\" string, a \"type\" message-type URI and a \"body\" object; any optional headers (typ, from, to, created_time) well-formed",
+            "found": "valid DIDComm envelope",
+            "passed": true
+          }
+        ],
+        "tier2_checks": [
+          {
+            "check": "type",
+            "requires": "\"type\" is exactly \"https://example.org/course-registration/1.0/register\"",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "body",
+            "requires": "the body has exactly \"student_id\" (string), \"term_code\" (string) and \"sections\" (a non-empty list)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "sections",
+            "requires": "every section entry has exactly the copied fields (crn, course_id, section, credit_hours, seats, campus, modality, meetings), each well-formed (full day names, 12-hour times)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "unique_crns",
+            "requires": "no crn appears twice in the cart",
+            "found": "1 distinct crn",
+            "passed": true
+          }
+        ],
+        "tier3_checks": [
+          {
+            "check": "term",
+            "section": null,
+            "requires": "term_code is the term being registered for (202640)",
+            "found": "term_code 202640",
+            "passed": true
+          },
+          {
+            "check": "exists",
+            "section": "46074",
+            "requires": "crn 46074 is a section offered this term",
+            "found": "offered: ANTH02210",
+            "passed": true
+          },
+          {
+            "check": "copied_fields",
+            "section": "46074",
+            "requires": "course_id, section, campus, modality, seats and meetings are copied exactly from the offered section",
+            "found": "all match",
+            "passed": true
+          },
+          {
+            "check": "not_cancelled",
+            "section": "46074",
+            "requires": "the section is not cancelled",
+            "found": "not cancelled",
+            "passed": true
+          },
+          {
+            "check": "seat",
+            "section": "46074",
+            "requires": "the section has a free seat",
+            "found": "28/29 seats taken",
+            "passed": true
+          },
+          {
+            "check": "credits",
+            "section": "46074",
+            "requires": "credit_hours is allowed for this section (3)",
+            "found": "credit_hours 3",
+            "passed": true
+          },
+          {
+            "check": "prerequisites",
+            "section": "46074",
+            "requires": "the transcript shows every prerequisite of ANTH02210",
+            "found": "no unmet prerequisite",
+            "passed": true
+          },
+          {
+            "check": "one_section_per_course",
+            "section": "46074",
+            "requires": "no other section of ANTH02210 is in the cart",
+            "found": "the only one",
+            "passed": true
+          },
+          {
+            "check": "no_time_conflict",
+            "section": "46074",
+            "requires": "no meeting overlaps another section in the cart",
+            "found": "the first section in the cart",
+            "passed": true
+          }
+        ],
+        "tier4_checks": [
+          {
+            "rule": "student_id",
+            "requires": "the message is for student S8434",
+            "found": "student_id 'S8434'",
+            "passed": true
+          },
+          {
+            "rule": "term_code",
+            "requires": "the message is for term 202640",
+            "found": "term_code '202640'",
+            "passed": true
+          },
+          {
+            "rule": "count",
+            "requires": "exactly 1 section in the cart",
+            "found": "1: 46074",
+            "passed": true
+          },
+          {
+            "rule": "waitlist",
+            "requires": "no section is waitlisted (no request asks for a waitlist)",
+            "found": "nothing waitlisted",
+            "passed": true
+          },
+          {
+            "rule": "courses_in",
+            "requires": "every course is one of ANTH02210",
+            "found": "courses: ANTH02210",
+            "passed": true
+          }
+        ],
+        "deviation_score": 0.0
+      },
+      "pair_result": {
+        "pair_id": "in_progress/anthropology-ba",
+        "twin_id": "pair-in_progress-anthropology-ba-b",
+        "same_answer_as_twin": false,
+        "pair_passed": true,
+        "explanation": "Both cases are correct and the answer changed with the transcript (courses_in_progress: ANTH02221 vs ANTH02312): the model used the changed detail. Pair passed."
+      }
+    },
+    {
+      "task_id": "pair-in_progress-anthropology-ba-b",
+      "session_id": "trimmed-20261019T225009Z",
+      "run_index": 0,
+      "ts": "2026-10-19T22:50:41.547465+00:00",
+      "case_hashes": {
+        "input": "4995a29b2669cb9a",
+        "rules": "d6418dcbe198b7d2"
+      },
+      "prompt_readable": {
+        "known_state": {
+          "student": {
+            "degree": "Bachelor of Arts",
+            "major": "Anthropology",
+            "program_id": "ANTHROPOLOGY-BA",
+            "student_id": "S8434",
+            "catalog_year": "Fall 2024",
+            "entry": {
+              "type": "first_year"
+            }
+          },
+          "transcript": {
+            "completed_courses": [
+              {
+                "term": "Spring 2025",
+                "course_id": "BIOL01113",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "GEN BIOLOGY: NON-BIOLOGY MAJOR",
+                "grade": "A",
+                "credit_hours": 4,
+                "attributes": [
+                  "SCIL"
+                ]
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "CMS04205",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PUBLIC SPEAKING",
+                "grade": "A",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "COMP01111",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION I",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "COMP01112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION II",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "ENGL02116",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO GLOBAL LITS IN ENGLISH",
+                "grade": "B+",
+                "credit_hours": 3,
+                "attributes": [
+                  "LIT"
+                ]
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "GEOG16100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "EARTH, PEOPLE, AND ENVIRONMENT",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "RS"
+                ]
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "GEOG16140",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "WORLD REGIONAL GEOGRAPHY",
+                "grade": "B",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "PHIL09211",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "ANCIENT PHILOSOPHY-WI",
+                "grade": "A-",
+                "credit_hours": 3,
+                "attributes": [
+                  "GLBL"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "PHIL09241",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "SOCIAL & POLITICAL PHIL-WI",
+                "grade": "C+",
+                "credit_hours": 3,
+                "attributes": [
+                  "WI"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "PHIL09341",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "BIOMEDICAL ETHICS-WI",
+                "grade": "B-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "POSC07110",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "AMERICAN GOVERNMENT",
+                "grade": "B-",
+                "credit_hours": 3,
+                "attributes": [
+                  "HUML"
+                ]
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "STAT02100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "QNTL"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "THD07215",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "EXPERIENCING ACTING",
+                "grade": "C+",
+                "credit_hours": 3,
+                "attributes": [
+                  "ARTL"
+                ]
+              }
+            ],
+            "transfer_courses": [],
+            "courses_in_progress": [
+              {
+                "term": "Spring 2026",
+                "course_id": "ANTH02312",
+                "title": "ANTH PERS PHY GROWTH",
+                "credit_hours": 3
+              }
+            ]
+          },
+          "program_requirements": [
+            {
+              "req_id": "CORE-COML",
+              "category": "Rowan Core: Communicative Literacy (COML)",
+              "rule": "all_of",
+              "course_options": [
+                "COMP01111",
+                "COMP01112",
+                "CMS04205"
+              ],
+              "title": "Communicative Literacy",
+              "credit_hours": 9,
+              "minimum_grade": "D-",
+              "notes": "The three courses or their official equivalents; the only Rowan Core credits counted in the Rowan Core section.",
+              "exclusive": true,
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-ARTL",
+              "category": "Rowan Core: Artistic Literacy (ARTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Artistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated ARTL; its credits count in another section.",
+              "attribute": "ARTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-GLBL",
+              "category": "Rowan Core: Global Literacy (GLBL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Global Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated GLBL; its credits count in another section.",
+              "attribute": "GLBL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              },
+              "recommended_courses": [
+                "ANTH02275"
+              ]
+            },
+            {
+              "req_id": "CORE-HUML",
+              "category": "Rowan Core: Humanistic Literacy (HUML)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Humanistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated HUML; its credits count in another section.",
+              "attribute": "HUML",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-QNTL",
+              "category": "Rowan Core: Quantitative Literacy (QNTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Quantitative Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated QNTL; its credits count in another section.",
+              "attribute": "QNTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              },
+              "recommended_courses": [
+                "STAT02100",
+                "STAT02260",
+                "STAT02102",
+                "STAT00280"
+              ]
+            },
+            {
+              "req_id": "CORE-SCIL",
+              "category": "Rowan Core: Scientific Literacy (SCIL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Scientific Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated SCIL; its credits count in another section.",
+              "attribute": "SCIL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              },
+              "recommended_courses": [
+                "ANTH02301"
+              ]
+            },
+            {
+              "req_id": "EXP-LIT",
+              "category": "Rowan Experience: Broad-Based Literature Attribute (LIT)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Broad-Based Literature Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the LIT attribute; its credits count in another section.",
+              "attribute": "LIT",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-WI",
+              "category": "Rowan Experience: Writing Intensive Attribute (WI)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Writing Intensive Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the WI attribute; its credits count in another section.",
+              "attribute": "WI",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-RS",
+              "category": "Rowan Experience: Rowan Seminar Attribute (RS)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Rowan Seminar Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the RS attribute; its credits count in another section.",
+              "attribute": "RS",
+              "guide_section": "rowan_experience",
+              "waived_if": {
+                "transfer_credits_at_entry": 24
+              }
+            },
+            {
+              "req_id": "NONPROG-GEOG",
+              "category": "Non-Program Courses",
+              "rule": "any_of",
+              "course_options": [
+                "GEOG16110",
+                "GEOG16140"
+              ],
+              "title": "Cultural Geography or World Regional Geography",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "exclusive": true,
+              "guide_section": "non_program"
+            },
+            {
+              "req_id": "NONPROG-ETHICS",
+              "category": "Non-Program Courses",
+              "rule": "any_of",
+              "course_options": [
+                "PHIL09150",
+                "PHIL09151",
+                "PHIL09222",
+                "PHIL09218",
+                "PHIL09341",
+                "PHIL09346"
+              ],
+              "title": "Intro to Ethics, Business Ethics, Environmental Ethics, Biomedical Ethics or Feminist Ethics",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "exclusive": true,
+              "guide_section": "non_program"
+            },
+            {
+              "req_id": "ANTH-FOUNDATIONAL",
+              "category": "Major Requirements: Foundational Courses",
+              "rule": "all_of",
+              "course_options": [
+                "ANTH02202",
+                "ANTH02203",
+                "ANTH02221",
+                "ANTH02250",
+                "ANTH02295"
+              ],
+              "credit_hours": 15,
+              "minimum_grade": "D-",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ANTH-METHODS",
+              "category": "Major Requirements: Upper Level and Capstone Courses",
+              "rule": "any_of",
+              "course_options": [
+                "ANTH02315",
+                "ANTH02324"
+              ],
+              "title": "Forensic Anthropology or Archaeological Field Methods",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ANTH-UPPER",
+              "category": "Major Requirements: Upper Level and Capstone Courses",
+              "rule": "all_of",
+              "course_options": [
+                "ANTH02395",
+                "ANTH02450"
+              ],
+              "credit_hours": 7,
+              "minimum_grade": "D-",
+              "notes": "Anthropological Theory and Anthropology Senior Seminar.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ANTH-ELECTIVES",
+              "category": "Major Requirements: Anthropology Electives",
+              "rule": "credits_from",
+              "course_options": [
+                "ANTH02144",
+                "INTR01444",
+                "ANTH02200",
+                "ANTH02205",
+                "ANTH02210",
+                "ANTH02215",
+                "ANTH02225",
+                "ANTH02240",
+                "ANTH02245",
+                "ANTH02270",
+                "ANTH02275",
+                "ANTH02280",
+                "ANTH02290",
+                "ANTH02301",
+                "ANTH02305",
+                "ANTH02310",
+                "ANTH02311",
+                "ANTH02312",
+                "ANTH02321",
+                "ANTH02322",
+                "ANTH02323",
+                "ANTH02326",
+                "ANTH02335",
+                "ANTH02336",
+                "ANTH02350",
+                "ANTH02355",
+                "ANTH02371",
+                "ANTH02375",
+                "ANTH02376",
+                "ANTH02378",
+                "ANTH02400",
+                "ANTH02420"
+              ],
+              "credit_hours": 12,
+              "minimum_grade": "D-",
+              "notes": "12 sh from the list, or one of the optional concentrations (Archaeology/Cultural Resource Management, Forensic/Physical, Medical, Public Culture/Museum Studies).",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "FREE",
+              "category": "Free Electives",
+              "rule": "credits_any",
+              "course_options": [],
+              "title": "Free Electives",
+              "credit_hours": 56,
+              "minimum_grade": "D-",
+              "notes": "Any credits not used by an exclusive requirement above; choose ones that satisfy unmet Rowan Core or Rowan Experience requirements.",
+              "exclusive": true,
+              "guide_section": "free_electives"
+            }
+          ],
+          "graduation_rules": {
+            "total_credits": 120,
+            "minimum_gpa": 2.0,
+            "residency_credits": 30,
+            "minimum_grade": "D-",
+            "major_gpa": 2.0
+          },
+          "program_guide": {
+            "program_name": "B.A. in Anthropology",
+            "department": "Department of Sociology & Anthropology",
+            "contact_email": "rosado@rowan.edu",
+            "effective_term": "Fall 2018",
+            "source_url": "https://sites.rowan.edu/registrar/_docs/ba-anthropology_rc_program_guide.pdf",
+            "total_credits": 120,
+            "sections": [
+              {
+                "section": "rowan_core",
+                "title": "Rowan Core Requirements (Communicative Literacy)",
+                "credit_hours": 9
+              },
+              {
+                "section": "non_program",
+                "title": "Non-Program Courses",
+                "credit_hours": 18,
+                "notes": "Courses here cannot be in the major department. The guide also asks for two semesters of one foreign language, a Humanistic or Global literacy course and any Rowan Core course, which cannot be listed as fixed courses."
+              },
+              {
+                "section": "major",
+                "title": "Major Requirements",
+                "credit_hours": 37,
+                "notes": "Foundational 15, Upper Level and Capstone 10, Anthropology Electives 12."
+              },
+              {
+                "section": "free_electives",
+                "title": "Free Electives",
+                "credit_hours": 56
+              }
+            ],
+            "rowan_core": {
+              "literacies": [
+                "COML",
+                "ARTL",
+                "GLBL",
+                "HUML",
+                "QNTL",
+                "SCIL"
+              ],
+              "min_credits_per_literacy": 3
+            },
+            "rowan_experience": {
+              "attributes": [
+                "LIT",
+                "WI",
+                "RS"
+              ]
+            },
+            "program_rules": [
+              "At least 120 sh of coursework that applies to the degree.",
+              "Cumulative GPA of at least 2.0 in Rowan University coursework (transfer credit does not count toward the GPA).",
+              "At least 30 sh completed at/through Rowan University.",
+              "Only grades of D- or above apply to graduation/degree requirements.",
+              "Rowan Core and Rowan Experience requirements must be met; one course may satisfy one Rowan Core literacy and several Rowan Experience attributes.",
+              "The Rowan Core is waived for transfer students with an earned A.A. or A.S. from a NJ community/county college; the Rowan Seminar is waived for students transferring 24 or more approved credits at initial entry.",
+              "Minimum 2.0 GPA in major courses.",
+              "Letter grades only in Anthropology courses; up to 10% of overall credits may be P/NC.",
+              "30 credits in upper-level (300, 400, 500) courses, including 19 upper-level anthropology credits.",
+              "The registrar lists this guide for all students who entered Fall 2021 or later; the PDF says Effective Fall 2018."
+            ]
+          },
+          "course_attributes": {
+            "ANTH02202": [
+              "GLBL"
+            ],
+            "ANTH02275": [
+              "GLBL"
+            ],
+            "ANTH02301": [
+              "SCIL"
+            ],
+            "CMS04205": [
+              "COML"
+            ],
+            "COMP01111": [
+              "COML"
+            ],
+            "COMP01112": [
+              "COML"
+            ],
+            "STAT00280": [
+              "QNTL"
+            ],
+            "STAT02100": [
+              "QNTL"
+            ],
+            "STAT02102": [
+              "QNTL"
+            ],
+            "STAT02260": [
+              "QNTL"
+            ]
+          },
+          "schedule": {
+            "term": "Fall 2026",
+            "term_code": "202640"
+          }
+        },
+        "intent": "Register me for Human Variation (ANTH02221) this fall. If I'm already taking it this semester, register me for Natives of South America (ANTH02210) instead."
+      },
+      "parsed_output": {
+        "id": "7c1e4a52-3b9d-4f0a-8e26-5d7a91c3b8f4",
+        "type": "https://example.org/course-registration/1.0/register",
+        "body": {
+          "student_id": "S8434",
+          "term_code": "202640",
+          "sections": [
+            {
+              "crn": "42698",
+              "course_id": "ANTH02221",
+              "section": "3",
+              "credit_hours": 3,
+              "seats_total": 27,
+              "seats_taken": 25,
+              "campus": "Glassboro",
+              "modality": "in-person",
+              "meetings": [
+                {
+                  "days": [
+                    "Tuesday",
+                    "Thursday"
+                  ],
+                  "start_time": "9:30 AM",
+                  "end_time": "10:45 AM",
+                  "type": "Class",
+                  "location": "Robinson Hall 205"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "error": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "end_turn",
+      "served_model": "anthropic/claude-sonnet-5.5",
+      "provider": "Claude Platform on AWS",
+      "generation_id": "gen-1792450242-r5ZvjobylqMOlSU4E11y",
+      "prompt_tokens": 468169,
+      "cached_tokens": 461769,
+      "cache_write_tokens": 0,
+      "completion_tokens": 552,
+      "reasoning_tokens": 324,
+      "first_token_ms": 16405.216399987694,
+      "latency_ms": 18944.29739995394,
+      "usd_cost": 0.0644969,
+      "verdict": {
+        "outcome": "semantic_ok",
+        "detail": "satisfies every rule",
+        "tiers": {
+          "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
+          "tier2": "schema (our register message): passed (4/4 checks passed)",
+          "tier3": "consistency (invariants against the schedule and transcript): passed (9/9 checks passed)",
+          "tier4": "semantic (the request's rules): passed (5/5 checks passed)"
+        },
+        "tier1_checks": [
+          {
+            "check": "json",
+            "requires": "the whole answer is one JSON value, with no prose or code fence around it",
+            "found": "valid JSON",
+            "passed": true
+          },
+          {
+            "check": "envelope",
+            "requires": "a DIDComm v2 plaintext message: an object with an \"id\" string, a \"type\" message-type URI and a \"body\" object; any optional headers (typ, from, to, created_time) well-formed",
+            "found": "valid DIDComm envelope",
+            "passed": true
+          }
+        ],
+        "tier2_checks": [
+          {
+            "check": "type",
+            "requires": "\"type\" is exactly \"https://example.org/course-registration/1.0/register\"",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "body",
+            "requires": "the body has exactly \"student_id\" (string), \"term_code\" (string) and \"sections\" (a non-empty list)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "sections",
+            "requires": "every section entry has exactly the copied fields (crn, course_id, section, credit_hours, seats, campus, modality, meetings), each well-formed (full day names, 12-hour times)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "unique_crns",
+            "requires": "no crn appears twice in the cart",
+            "found": "1 distinct crn",
+            "passed": true
+          }
+        ],
+        "tier3_checks": [
+          {
+            "check": "term",
+            "section": null,
+            "requires": "term_code is the term being registered for (202640)",
+            "found": "term_code 202640",
+            "passed": true
+          },
+          {
+            "check": "exists",
+            "section": "42698",
+            "requires": "crn 42698 is a section offered this term",
+            "found": "offered: ANTH02221",
+            "passed": true
+          },
+          {
+            "check": "copied_fields",
+            "section": "42698",
+            "requires": "course_id, section, campus, modality, seats and meetings are copied exactly from the offered section",
+            "found": "all match",
+            "passed": true
+          },
+          {
+            "check": "not_cancelled",
+            "section": "42698",
+            "requires": "the section is not cancelled",
+            "found": "not cancelled",
+            "passed": true
+          },
+          {
+            "check": "seat",
+            "section": "42698",
+            "requires": "the section has a free seat",
+            "found": "25/27 seats taken",
+            "passed": true
+          },
+          {
+            "check": "credits",
+            "section": "42698",
+            "requires": "credit_hours is allowed for this section (3)",
+            "found": "credit_hours 3",
+            "passed": true
+          },
+          {
+            "check": "prerequisites",
+            "section": "42698",
+            "requires": "the transcript shows every prerequisite of ANTH02221",
+            "found": "no unmet prerequisite",
+            "passed": true
+          },
+          {
+            "check": "one_section_per_course",
+            "section": "42698",
+            "requires": "no other section of ANTH02221 is in the cart",
+            "found": "the only one",
+            "passed": true
+          },
+          {
+            "check": "no_time_conflict",
+            "section": "42698",
+            "requires": "no meeting overlaps another section in the cart",
+            "found": "the first section in the cart",
+            "passed": true
+          }
+        ],
+        "tier4_checks": [
+          {
+            "rule": "student_id",
+            "requires": "the message is for student S8434",
+            "found": "student_id 'S8434'",
+            "passed": true
+          },
+          {
+            "rule": "term_code",
+            "requires": "the message is for term 202640",
+            "found": "term_code '202640'",
+            "passed": true
+          },
+          {
+            "rule": "count",
+            "requires": "exactly 1 section in the cart",
+            "found": "1: 42698",
+            "passed": true
+          },
+          {
+            "rule": "waitlist",
+            "requires": "no section is waitlisted (no request asks for a waitlist)",
+            "found": "nothing waitlisted",
+            "passed": true
+          },
+          {
+            "rule": "courses_in",
+            "requires": "every course is one of ANTH02221",
+            "found": "courses: ANTH02221",
+            "passed": true
+          }
+        ],
+        "deviation_score": 0.0
+      },
+      "pair_result": {
+        "pair_id": "in_progress/anthropology-ba",
+        "twin_id": "pair-in_progress-anthropology-ba-a",
+        "same_answer_as_twin": false,
+        "pair_passed": true,
+        "explanation": "Both cases are correct and the answer changed with the transcript (courses_in_progress: ANTH02221 vs ANTH02312): the model used the changed detail. Pair passed."
+      }
+    },
+    {
+      "task_id": "pair-credit_limit-nutrition-bs-a",
+      "session_id": "trimmed-20261019T225009Z",
+      "run_index": 0,
+      "ts": "2026-10-19T22:51:00.611110+00:00",
+      "case_hashes": {
+        "input": "b8c044f0ea855220",
+        "rules": "4e38c668fda329bb"
+      },
+      "prompt_readable": {
+        "known_state": {
+          "student": {
+            "degree": "Bachelor of Science",
+            "major": "Nutrition",
+            "program_id": "NUTRITION-BS",
+            "student_id": "S7057",
+            "catalog_year": "Fall 2023",
+            "entry": {
+              "type": "first_year"
+            }
+          },
+          "transcript": {
+            "completed_courses": [
+              {
+                "term": "Fall 2024",
+                "course_id": "BIOL01113",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "GEN BIOLOGY: NON-BIOLOGY MAJOR",
+                "grade": "A",
+                "credit_hours": 4
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "BIOL10210",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "HUMAN ANAT & PHYSIOLOGY I",
+                "grade": "A",
+                "credit_hours": 4
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "BIOL10212",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "HUMAN ANAT & PHYSIOLOGY II",
+                "grade": "A-",
+                "credit_hours": 4
+              },
+              {
+                "term": "Spring 2024",
+                "course_id": "CHEM06100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "CHEMISTRY I",
+                "grade": "B-",
+                "credit_hours": 4
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "CMS04205",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PUBLIC SPEAKING",
+                "grade": "B",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2023",
+                "course_id": "COMP01111",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION I",
+                "grade": "B",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2023",
+                "course_id": "COMP01112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION II",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2023",
+                "course_id": "ECON04101",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO ECON-MACROECON",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "HUML"
+                ]
+              },
+              {
+                "term": "Spring 2024",
+                "course_id": "ECON04102",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO ECON-MICROECON",
+                "grade": "A-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2024",
+                "course_id": "ENGL02112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "LIT"
+                ]
+              },
+              {
+                "term": "Fall 2023",
+                "course_id": "GEOG16160",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "DIGITAL EARTH: MAPPING & GIS",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "ARTL"
+                ]
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "HES00272",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "TECHNOLOGY AND ASSESSMENT",
+                "grade": "A",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "HES00301",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "RESEARCH METHODS IN HES",
+                "grade": "B",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "HLT00227",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "CONSUMER HEALTH DECISIONS",
+                "grade": "B-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "HPW00350",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "HEALTH BEHAVIOR THEORY/COUNSEL",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2023",
+                "course_id": "MATH03125",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "CALC TECHNIC/APPLIC",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "QNTL"
+                ]
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "NUT00200",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "BASIC NUTRITION",
+                "grade": "A-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "NUT00210",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "MACRONUTRIENTS",
+                "grade": "B",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "NUT00220",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "MICRONUTRIENTS",
+                "grade": "A-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "NUT00230",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO NUTRITION PROFESSIONS",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "NUT00300",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "LIFECYCLE NUTRITION",
+                "grade": "A-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "NUT00310",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "MGMT FOOD & NUTRITION SERVICES",
+                "grade": "A-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "NUT00415",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "NUTRITION FOR FITNESS",
+                "grade": "B-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "NUT00420",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "CONTEMP ISSUES IN NUTRITION",
+                "grade": "B-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2024",
+                "course_id": "PHIL09121",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO TO PHIL-WI",
+                "grade": "C+",
+                "credit_hours": 3,
+                "attributes": [
+                  "WI"
+                ]
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "PHYS00220",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRODUCTORY MECHANICS",
+                "grade": "C+",
+                "credit_hours": 4,
+                "attributes": [
+                  "SCIL"
+                ]
+              },
+              {
+                "term": "Spring 2024",
+                "course_id": "PSY01107",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "ESSENTIALS OF PSYCHOLOGY",
+                "grade": "A-",
+                "credit_hours": 3,
+                "attributes": [
+                  "RS"
+                ]
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "RTF03294",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "CONTEMP INTERNATIONAL CINEMA",
+                "grade": "C+",
+                "credit_hours": 3,
+                "attributes": [
+                  "GLBL"
+                ]
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "STAT02100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "ELEMENTARY STATISTICS",
+                "grade": "A",
+                "credit_hours": 3
+              }
+            ],
+            "transfer_courses": [],
+            "courses_in_progress": []
+          },
+          "program_requirements": [
+            {
+              "req_id": "CORE-COML",
+              "category": "Rowan Core: Communicative Literacy (COML)",
+              "rule": "all_of",
+              "course_options": [
+                "COMP01111",
+                "COMP01112",
+                "CMS04205"
+              ],
+              "title": "Communicative Literacy",
+              "credit_hours": 9,
+              "minimum_grade": "D-",
+              "notes": "The three courses or their official equivalents; the only Rowan Core credits counted in the Rowan Core section.",
+              "exclusive": true,
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-ARTL",
+              "category": "Rowan Core: Artistic Literacy (ARTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Artistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated ARTL; its credits count in another section.",
+              "attribute": "ARTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-GLBL",
+              "category": "Rowan Core: Global Literacy (GLBL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Global Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated GLBL; its credits count in another section.",
+              "attribute": "GLBL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-HUML",
+              "category": "Rowan Core: Humanistic Literacy (HUML)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Humanistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated HUML; its credits count in another section.",
+              "attribute": "HUML",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              },
+              "recommended_courses": [
+                "ECON04102"
+              ]
+            },
+            {
+              "req_id": "CORE-QNTL",
+              "category": "Rowan Core: Quantitative Literacy (QNTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Quantitative Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated QNTL; its credits count in another section.",
+              "attribute": "QNTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              },
+              "recommended_courses": [
+                "STAT02100"
+              ]
+            },
+            {
+              "req_id": "CORE-SCIL",
+              "category": "Rowan Core: Scientific Literacy (SCIL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Scientific Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated SCIL; its credits count in another section.",
+              "attribute": "SCIL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              },
+              "recommended_courses": [
+                "BIOL01113",
+                "BIOL01104"
+              ]
+            },
+            {
+              "req_id": "EXP-LIT",
+              "category": "Rowan Experience: Broad-Based Literature Attribute (LIT)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Broad-Based Literature Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the LIT attribute; its credits count in another section.",
+              "attribute": "LIT",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-WI",
+              "category": "Rowan Experience: Writing Intensive Attribute (WI)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Writing Intensive Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the WI attribute; its credits count in another section.",
+              "attribute": "WI",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-RS",
+              "category": "Rowan Experience: Rowan Seminar Attribute (RS)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Rowan Seminar Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the RS attribute; its credits count in another section.",
+              "attribute": "RS",
+              "guide_section": "rowan_experience",
+              "waived_if": {
+                "transfer_credits_at_entry": 24
+              },
+              "recommended_courses": [
+                "NUT00230"
+              ]
+            },
+            {
+              "req_id": "NONPROG",
+              "category": "Non-Program Courses",
+              "rule": "all_of",
+              "course_options": [
+                "BIOL10210",
+                "BIOL10212",
+                "CHEM06100",
+                "ECON04102"
+              ],
+              "credit_hours": 15,
+              "minimum_grade": "D-",
+              "notes": "ECON04102 satisfies Humanistic Literacy.",
+              "exclusive": true,
+              "guide_section": "non_program"
+            },
+            {
+              "req_id": "NONPROG-BIOL",
+              "category": "Non-Program Courses",
+              "rule": "any_of",
+              "course_options": [
+                "BIOL01113",
+                "BIOL01104"
+              ],
+              "title": "General Biology Human Focus or Intro to Evolution",
+              "credit_hours": 4,
+              "minimum_grade": "D-",
+              "notes": "Satisfies Scientific Literacy.",
+              "exclusive": true,
+              "guide_section": "non_program"
+            },
+            {
+              "req_id": "NUT-MAJOR",
+              "category": "Major Requirements: Nutrition Major Courses",
+              "rule": "all_of",
+              "course_options": [
+                "HES00272",
+                "HES00301",
+                "HLT00227",
+                "HPW00350",
+                "NUT00200",
+                "NUT00210",
+                "NUT00230",
+                "NUT00220",
+                "NUT00300",
+                "NUT00310",
+                "NUT00415",
+                "NUT00420",
+                "STAT02100"
+              ],
+              "credit_hours": 39,
+              "minimum_grade": "C-",
+              "notes": "STAT02100 Elementary Statistics satisfies Quantitative Literacy.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "NUT-EXERCISE",
+              "category": "Major Requirements: Exercise Science Concentration Courses",
+              "rule": "all_of",
+              "course_options": [
+                "HES00116",
+                "HES00329",
+                "HES00343",
+                "HES00345",
+                "HES00401",
+                "HES00412",
+                "HES00483",
+                "HLT00262",
+                "HPW00340"
+              ],
+              "credit_hours": 32,
+              "minimum_grade": "C-",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "FREE",
+              "category": "Free Electives",
+              "rule": "credits_any",
+              "course_options": [],
+              "title": "Free Electives",
+              "credit_hours": 12,
+              "minimum_grade": "D-",
+              "notes": "Any credits not used by an exclusive requirement above; choose ones that satisfy unmet Rowan Core or Rowan Experience requirements.",
+              "exclusive": true,
+              "guide_section": "free_electives"
+            }
+          ],
+          "graduation_rules": {
+            "total_credits": 120,
+            "minimum_gpa": 2.0,
+            "residency_credits": 30,
+            "minimum_grade": "D-"
+          },
+          "program_guide": {
+            "program_name": "B.S. in Nutrition",
+            "department": "Department of Health and Exercise Science",
+            "contact_email": "wellnessmgt@rowan.edu",
+            "effective_term": "Fall 2021",
+            "source_url": "https://sites.rowan.edu/registrar/_docs/guide-to-those-who-entered-fall-2021-or-later-bs-nutrition.pdf",
+            "total_credits": 120,
+            "sections": [
+              {
+                "section": "rowan_core",
+                "title": "Rowan Core Requirements",
+                "credit_hours": 15,
+                "notes": "The guide counts 15 sh in this section."
+              },
+              {
+                "section": "non_program",
+                "title": "Non-Program Courses",
+                "credit_hours": 22,
+                "notes": "Courses here cannot be in the major department; one Broad-Based Literature course (3 sh) is not named."
+              },
+              {
+                "section": "major",
+                "title": "Major Requirements",
+                "credit_hours": 71,
+                "notes": "Nutrition Major Courses 39, Exercise Science Concentration 32."
+              },
+              {
+                "section": "free_electives",
+                "title": "Free Electives",
+                "credit_hours": 12
+              }
+            ],
+            "rowan_core": {
+              "literacies": [
+                "COML",
+                "ARTL",
+                "GLBL",
+                "HUML",
+                "QNTL",
+                "SCIL"
+              ],
+              "min_credits_per_literacy": 3
+            },
+            "rowan_experience": {
+              "attributes": [
+                "LIT",
+                "WI",
+                "RS"
+              ]
+            },
+            "program_rules": [
+              "At least 120 sh of coursework that applies to the degree.",
+              "Cumulative GPA of at least 2.0 in Rowan University coursework (transfer credit does not count toward the GPA).",
+              "At least 30 sh completed at/through Rowan University.",
+              "Only grades of D- or above apply to graduation/degree requirements.",
+              "Rowan Core and Rowan Experience requirements must be met; one course may satisfy one Rowan Core literacy and several Rowan Experience attributes.",
+              "The Rowan Core is waived for transfer students with an earned A.A. or A.S. from a NJ community/county college; the Rowan Seminar is waived for students transferring 24 or more approved credits at initial entry.",
+              "Grade of C- or better in all courses satisfying Major requirements.",
+              "The guide prints Anatomy and Physiology 2 as 'BIOL 01212' (BIOL10212) and calls ECON04102 'Introduction to Macroeconomics' (ECON04102 is Microeconomics).",
+              "Several courses need 20 professional development hours (PDH)."
+            ]
+          },
+          "course_attributes": {
+            "BIOL01104": [
+              "SCIL"
+            ],
+            "BIOL01113": [
+              "SCIL"
+            ],
+            "CMS04205": [
+              "COML"
+            ],
+            "COMP01111": [
+              "COML"
+            ],
+            "COMP01112": [
+              "COML"
+            ],
+            "ECON04102": [
+              "HUML"
+            ],
+            "NUT00230": [
+              "RS"
+            ],
+            "STAT02100": [
+              "QNTL"
+            ]
+          },
+          "schedule": {
+            "term": "Fall 2026",
+            "term_code": "202640"
+          }
+        },
+        "intent": "I can take at most 6 credits this fall. Register me for Exercise for Special Populations (HES00412), and add Exercise Prescription (HES00401) too only if both fit within my limit."
+      },
+      "parsed_output": {
+        "id": "7c1e4a52-9b3d-4f6a-8e21-5d0a9c3b7f14",
+        "type": "https://example.org/course-registration/1.0/register",
+        "body": {
+          "student_id": "S7057",
+          "term_code": "202640",
+          "sections": [
+            {
+              "crn": "43051",
+              "course_id": "HES00412",
+              "section": "1",
+              "credit_hours": 3,
+              "seats_total": 30,
+              "seats_taken": 16,
+              "campus": "Glassboro",
+              "modality": "in-person",
+              "meetings": [
+                {
+                  "days": [
+                    "Tuesday",
+                    "Thursday"
+                  ],
+                  "start_time": "8:00 AM",
+                  "end_time": "9:15 AM",
+                  "type": "Class",
+                  "location": "James Hall 2101"
+                }
+              ]
+            },
+            {
+              "crn": "43044",
+              "course_id": "HES00401",
+              "section": "2",
+              "credit_hours": 3,
+              "seats_total": 30,
+              "seats_taken": 25,
+              "campus": "Glassboro",
+              "modality": "in-person",
+              "meetings": [
+                {
+                  "days": [
+                    "Tuesday",
+                    "Thursday"
+                  ],
+                  "start_time": "12:30 PM",
+                  "end_time": "1:45 PM",
+                  "type": "Class",
+                  "location": "James Hall 1056"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "error": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "end_turn",
+      "served_model": "anthropic/claude-sonnet-5.5",
+      "provider": "Claude Platform on AWS",
+      "generation_id": "gen-1792450261-rdWXn2jN0ZtW6kU95TgK",
+      "prompt_tokens": 468852,
+      "cached_tokens": 461769,
+      "cache_write_tokens": 0,
+      "completion_tokens": 627,
+      "reasoning_tokens": 268,
+      "first_token_ms": 3872.4742000340484,
+      "latency_ms": 5888.037400029134,
+      "usd_cost": 0.0666129,
+      "verdict": {
+        "outcome": "semantic_ok",
+        "detail": "satisfies every rule",
+        "tiers": {
+          "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
+          "tier2": "schema (our register message): passed (4/4 checks passed)",
+          "tier3": "consistency (invariants against the schedule and transcript): passed (17/17 checks passed)",
+          "tier4": "semantic (the request's rules): passed (6/6 checks passed)"
+        },
+        "tier1_checks": [
+          {
+            "check": "json",
+            "requires": "the whole answer is one JSON value, with no prose or code fence around it",
+            "found": "valid JSON",
+            "passed": true
+          },
+          {
+            "check": "envelope",
+            "requires": "a DIDComm v2 plaintext message: an object with an \"id\" string, a \"type\" message-type URI and a \"body\" object; any optional headers (typ, from, to, created_time) well-formed",
+            "found": "valid DIDComm envelope",
+            "passed": true
+          }
+        ],
+        "tier2_checks": [
+          {
+            "check": "type",
+            "requires": "\"type\" is exactly \"https://example.org/course-registration/1.0/register\"",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "body",
+            "requires": "the body has exactly \"student_id\" (string), \"term_code\" (string) and \"sections\" (a non-empty list)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "sections",
+            "requires": "every section entry has exactly the copied fields (crn, course_id, section, credit_hours, seats, campus, modality, meetings), each well-formed (full day names, 12-hour times)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "unique_crns",
+            "requires": "no crn appears twice in the cart",
+            "found": "2 distinct crns",
+            "passed": true
+          }
+        ],
+        "tier3_checks": [
+          {
+            "check": "term",
+            "section": null,
+            "requires": "term_code is the term being registered for (202640)",
+            "found": "term_code 202640",
+            "passed": true
+          },
+          {
+            "check": "exists",
+            "section": "43051",
+            "requires": "crn 43051 is a section offered this term",
+            "found": "offered: HES00412",
+            "passed": true
+          },
+          {
+            "check": "copied_fields",
+            "section": "43051",
+            "requires": "course_id, section, campus, modality, seats and meetings are copied exactly from the offered section",
+            "found": "all match",
+            "passed": true
+          },
+          {
+            "check": "not_cancelled",
+            "section": "43051",
+            "requires": "the section is not cancelled",
+            "found": "not cancelled",
+            "passed": true
+          },
+          {
+            "check": "seat",
+            "section": "43051",
+            "requires": "the section has a free seat",
+            "found": "16/30 seats taken",
+            "passed": true
+          },
+          {
+            "check": "credits",
+            "section": "43051",
+            "requires": "credit_hours is allowed for this section (3)",
+            "found": "credit_hours 3",
+            "passed": true
+          },
+          {
+            "check": "prerequisites",
+            "section": "43051",
+            "requires": "the transcript shows every prerequisite of HES00412",
+            "found": "no unmet prerequisite",
+            "passed": true
+          },
+          {
+            "check": "one_section_per_course",
+            "section": "43051",
+            "requires": "no other section of HES00412 is in the cart",
+            "found": "the only one",
+            "passed": true
+          },
+          {
+            "check": "no_time_conflict",
+            "section": "43051",
+            "requires": "no meeting overlaps another section in the cart",
+            "found": "the first section in the cart",
+            "passed": true
+          },
+          {
+            "check": "exists",
+            "section": "43044",
+            "requires": "crn 43044 is a section offered this term",
+            "found": "offered: HES00401",
+            "passed": true
+          },
+          {
+            "check": "copied_fields",
+            "section": "43044",
+            "requires": "course_id, section, campus, modality, seats and meetings are copied exactly from the offered section",
+            "found": "all match",
+            "passed": true
+          },
+          {
+            "check": "not_cancelled",
+            "section": "43044",
+            "requires": "the section is not cancelled",
+            "found": "not cancelled",
+            "passed": true
+          },
+          {
+            "check": "seat",
+            "section": "43044",
+            "requires": "the section has a free seat",
+            "found": "25/30 seats taken",
+            "passed": true
+          },
+          {
+            "check": "credits",
+            "section": "43044",
+            "requires": "credit_hours is allowed for this section (3)",
+            "found": "credit_hours 3",
+            "passed": true
+          },
+          {
+            "check": "prerequisites",
+            "section": "43044",
+            "requires": "the transcript shows every prerequisite of HES00401",
+            "found": "no unmet prerequisite",
+            "passed": true
+          },
+          {
+            "check": "one_section_per_course",
+            "section": "43044",
+            "requires": "no other section of HES00401 is in the cart",
+            "found": "the only one",
+            "passed": true
+          },
+          {
+            "check": "no_time_conflict",
+            "section": "43044",
+            "requires": "no meeting overlaps another section in the cart",
+            "found": "no overlap",
+            "passed": true
+          }
+        ],
+        "tier4_checks": [
+          {
+            "rule": "student_id",
+            "requires": "the message is for student S7057",
+            "found": "student_id 'S7057'",
+            "passed": true
+          },
+          {
+            "rule": "term_code",
+            "requires": "the message is for term 202640",
+            "found": "term_code '202640'",
+            "passed": true
+          },
+          {
+            "rule": "count",
+            "requires": "exactly 2 sections in the cart",
+            "found": "2: 43051, 43044",
+            "passed": true
+          },
+          {
+            "rule": "credits",
+            "requires": "at most 6 credits in all",
+            "found": "6 credits (43051: 3 + 43044: 3)",
+            "passed": true
+          },
+          {
+            "rule": "waitlist",
+            "requires": "no section is waitlisted (no request asks for a waitlist)",
+            "found": "nothing waitlisted",
+            "passed": true
+          },
+          {
+            "rule": "must_include_courses",
+            "requires": "the cart contains HES00412, HES00401",
+            "found": "courses: HES00401, HES00412",
+            "passed": true
+          }
+        ],
+        "deviation_score": 0.0
+      },
+      "pair_result": {
+        "pair_id": "credit_limit/nutrition-bs",
+        "twin_id": "pair-credit_limit-nutrition-bs-b",
+        "same_answer_as_twin": false,
+        "pair_passed": true,
+        "explanation": "Both cases are correct and the answer changed with the prompt (credit limit: 6 vs 5): the model used the changed detail. Pair passed."
+      }
+    },
+    {
+      "task_id": "pair-credit_limit-nutrition-bs-b",
+      "session_id": "trimmed-20261019T225009Z",
+      "run_index": 0,
+      "ts": "2026-10-19T22:51:06.663366+00:00",
+      "case_hashes": {
+        "input": "643fbeb5401096b5",
+        "rules": "f5fc76eeee70f37b"
+      },
+      "prompt_readable": {
+        "known_state": {
+          "student": {
+            "degree": "Bachelor of Science",
+            "major": "Nutrition",
+            "program_id": "NUTRITION-BS",
+            "student_id": "S7057",
+            "catalog_year": "Fall 2023",
+            "entry": {
+              "type": "first_year"
+            }
+          },
+          "transcript": {
+            "completed_courses": [
+              {
+                "term": "Fall 2024",
+                "course_id": "BIOL01113",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "GEN BIOLOGY: NON-BIOLOGY MAJOR",
+                "grade": "A",
+                "credit_hours": 4
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "BIOL10210",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "HUMAN ANAT & PHYSIOLOGY I",
+                "grade": "A",
+                "credit_hours": 4
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "BIOL10212",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "HUMAN ANAT & PHYSIOLOGY II",
+                "grade": "A-",
+                "credit_hours": 4
+              },
+              {
+                "term": "Spring 2024",
+                "course_id": "CHEM06100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "CHEMISTRY I",
+                "grade": "B-",
+                "credit_hours": 4
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "CMS04205",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PUBLIC SPEAKING",
+                "grade": "B",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2023",
+                "course_id": "COMP01111",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION I",
+                "grade": "B",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2023",
+                "course_id": "COMP01112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION II",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2023",
+                "course_id": "ECON04101",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO ECON-MACROECON",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "HUML"
+                ]
+              },
+              {
+                "term": "Spring 2024",
+                "course_id": "ECON04102",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO ECON-MICROECON",
+                "grade": "A-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2024",
+                "course_id": "ENGL02112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "LIT"
+                ]
+              },
+              {
+                "term": "Fall 2023",
+                "course_id": "GEOG16160",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "DIGITAL EARTH: MAPPING & GIS",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "ARTL"
+                ]
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "HES00272",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "TECHNOLOGY AND ASSESSMENT",
+                "grade": "A",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "HES00301",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "RESEARCH METHODS IN HES",
+                "grade": "B",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "HLT00227",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "CONSUMER HEALTH DECISIONS",
+                "grade": "B-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "HPW00350",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "HEALTH BEHAVIOR THEORY/COUNSEL",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2023",
+                "course_id": "MATH03125",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "CALC TECHNIC/APPLIC",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "QNTL"
+                ]
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "NUT00200",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "BASIC NUTRITION",
+                "grade": "A-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "NUT00210",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "MACRONUTRIENTS",
+                "grade": "B",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "NUT00220",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "MICRONUTRIENTS",
+                "grade": "A-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "NUT00230",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO NUTRITION PROFESSIONS",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "NUT00300",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "LIFECYCLE NUTRITION",
+                "grade": "A-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "NUT00310",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "MGMT FOOD & NUTRITION SERVICES",
+                "grade": "A-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "NUT00415",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "NUTRITION FOR FITNESS",
+                "grade": "B-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "NUT00420",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "CONTEMP ISSUES IN NUTRITION",
+                "grade": "B-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2024",
+                "course_id": "PHIL09121",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO TO PHIL-WI",
+                "grade": "C+",
+                "credit_hours": 3,
+                "attributes": [
+                  "WI"
+                ]
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "PHYS00220",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRODUCTORY MECHANICS",
+                "grade": "C+",
+                "credit_hours": 4,
+                "attributes": [
+                  "SCIL"
+                ]
+              },
+              {
+                "term": "Spring 2024",
+                "course_id": "PSY01107",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "ESSENTIALS OF PSYCHOLOGY",
+                "grade": "A-",
+                "credit_hours": 3,
+                "attributes": [
+                  "RS"
+                ]
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "RTF03294",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "CONTEMP INTERNATIONAL CINEMA",
+                "grade": "C+",
+                "credit_hours": 3,
+                "attributes": [
+                  "GLBL"
+                ]
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "STAT02100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "ELEMENTARY STATISTICS",
+                "grade": "A",
+                "credit_hours": 3
+              }
+            ],
+            "transfer_courses": [],
+            "courses_in_progress": []
+          },
+          "program_requirements": [
+            {
+              "req_id": "CORE-COML",
+              "category": "Rowan Core: Communicative Literacy (COML)",
+              "rule": "all_of",
+              "course_options": [
+                "COMP01111",
+                "COMP01112",
+                "CMS04205"
+              ],
+              "title": "Communicative Literacy",
+              "credit_hours": 9,
+              "minimum_grade": "D-",
+              "notes": "The three courses or their official equivalents; the only Rowan Core credits counted in the Rowan Core section.",
+              "exclusive": true,
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-ARTL",
+              "category": "Rowan Core: Artistic Literacy (ARTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Artistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated ARTL; its credits count in another section.",
+              "attribute": "ARTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-GLBL",
+              "category": "Rowan Core: Global Literacy (GLBL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Global Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated GLBL; its credits count in another section.",
+              "attribute": "GLBL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-HUML",
+              "category": "Rowan Core: Humanistic Literacy (HUML)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Humanistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated HUML; its credits count in another section.",
+              "attribute": "HUML",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              },
+              "recommended_courses": [
+                "ECON04102"
+              ]
+            },
+            {
+              "req_id": "CORE-QNTL",
+              "category": "Rowan Core: Quantitative Literacy (QNTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Quantitative Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated QNTL; its credits count in another section.",
+              "attribute": "QNTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              },
+              "recommended_courses": [
+                "STAT02100"
+              ]
+            },
+            {
+              "req_id": "CORE-SCIL",
+              "category": "Rowan Core: Scientific Literacy (SCIL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Scientific Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated SCIL; its credits count in another section.",
+              "attribute": "SCIL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              },
+              "recommended_courses": [
+                "BIOL01113",
+                "BIOL01104"
+              ]
+            },
+            {
+              "req_id": "EXP-LIT",
+              "category": "Rowan Experience: Broad-Based Literature Attribute (LIT)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Broad-Based Literature Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the LIT attribute; its credits count in another section.",
+              "attribute": "LIT",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-WI",
+              "category": "Rowan Experience: Writing Intensive Attribute (WI)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Writing Intensive Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the WI attribute; its credits count in another section.",
+              "attribute": "WI",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-RS",
+              "category": "Rowan Experience: Rowan Seminar Attribute (RS)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Rowan Seminar Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the RS attribute; its credits count in another section.",
+              "attribute": "RS",
+              "guide_section": "rowan_experience",
+              "waived_if": {
+                "transfer_credits_at_entry": 24
+              },
+              "recommended_courses": [
+                "NUT00230"
+              ]
+            },
+            {
+              "req_id": "NONPROG",
+              "category": "Non-Program Courses",
+              "rule": "all_of",
+              "course_options": [
+                "BIOL10210",
+                "BIOL10212",
+                "CHEM06100",
+                "ECON04102"
+              ],
+              "credit_hours": 15,
+              "minimum_grade": "D-",
+              "notes": "ECON04102 satisfies Humanistic Literacy.",
+              "exclusive": true,
+              "guide_section": "non_program"
+            },
+            {
+              "req_id": "NONPROG-BIOL",
+              "category": "Non-Program Courses",
+              "rule": "any_of",
+              "course_options": [
+                "BIOL01113",
+                "BIOL01104"
+              ],
+              "title": "General Biology Human Focus or Intro to Evolution",
+              "credit_hours": 4,
+              "minimum_grade": "D-",
+              "notes": "Satisfies Scientific Literacy.",
+              "exclusive": true,
+              "guide_section": "non_program"
+            },
+            {
+              "req_id": "NUT-MAJOR",
+              "category": "Major Requirements: Nutrition Major Courses",
+              "rule": "all_of",
+              "course_options": [
+                "HES00272",
+                "HES00301",
+                "HLT00227",
+                "HPW00350",
+                "NUT00200",
+                "NUT00210",
+                "NUT00230",
+                "NUT00220",
+                "NUT00300",
+                "NUT00310",
+                "NUT00415",
+                "NUT00420",
+                "STAT02100"
+              ],
+              "credit_hours": 39,
+              "minimum_grade": "C-",
+              "notes": "STAT02100 Elementary Statistics satisfies Quantitative Literacy.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "NUT-EXERCISE",
+              "category": "Major Requirements: Exercise Science Concentration Courses",
+              "rule": "all_of",
+              "course_options": [
+                "HES00116",
+                "HES00329",
+                "HES00343",
+                "HES00345",
+                "HES00401",
+                "HES00412",
+                "HES00483",
+                "HLT00262",
+                "HPW00340"
+              ],
+              "credit_hours": 32,
+              "minimum_grade": "C-",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "FREE",
+              "category": "Free Electives",
+              "rule": "credits_any",
+              "course_options": [],
+              "title": "Free Electives",
+              "credit_hours": 12,
+              "minimum_grade": "D-",
+              "notes": "Any credits not used by an exclusive requirement above; choose ones that satisfy unmet Rowan Core or Rowan Experience requirements.",
+              "exclusive": true,
+              "guide_section": "free_electives"
+            }
+          ],
+          "graduation_rules": {
+            "total_credits": 120,
+            "minimum_gpa": 2.0,
+            "residency_credits": 30,
+            "minimum_grade": "D-"
+          },
+          "program_guide": {
+            "program_name": "B.S. in Nutrition",
+            "department": "Department of Health and Exercise Science",
+            "contact_email": "wellnessmgt@rowan.edu",
+            "effective_term": "Fall 2021",
+            "source_url": "https://sites.rowan.edu/registrar/_docs/guide-to-those-who-entered-fall-2021-or-later-bs-nutrition.pdf",
+            "total_credits": 120,
+            "sections": [
+              {
+                "section": "rowan_core",
+                "title": "Rowan Core Requirements",
+                "credit_hours": 15,
+                "notes": "The guide counts 15 sh in this section."
+              },
+              {
+                "section": "non_program",
+                "title": "Non-Program Courses",
+                "credit_hours": 22,
+                "notes": "Courses here cannot be in the major department; one Broad-Based Literature course (3 sh) is not named."
+              },
+              {
+                "section": "major",
+                "title": "Major Requirements",
+                "credit_hours": 71,
+                "notes": "Nutrition Major Courses 39, Exercise Science Concentration 32."
+              },
+              {
+                "section": "free_electives",
+                "title": "Free Electives",
+                "credit_hours": 12
+              }
+            ],
+            "rowan_core": {
+              "literacies": [
+                "COML",
+                "ARTL",
+                "GLBL",
+                "HUML",
+                "QNTL",
+                "SCIL"
+              ],
+              "min_credits_per_literacy": 3
+            },
+            "rowan_experience": {
+              "attributes": [
+                "LIT",
+                "WI",
+                "RS"
+              ]
+            },
+            "program_rules": [
+              "At least 120 sh of coursework that applies to the degree.",
+              "Cumulative GPA of at least 2.0 in Rowan University coursework (transfer credit does not count toward the GPA).",
+              "At least 30 sh completed at/through Rowan University.",
+              "Only grades of D- or above apply to graduation/degree requirements.",
+              "Rowan Core and Rowan Experience requirements must be met; one course may satisfy one Rowan Core literacy and several Rowan Experience attributes.",
+              "The Rowan Core is waived for transfer students with an earned A.A. or A.S. from a NJ community/county college; the Rowan Seminar is waived for students transferring 24 or more approved credits at initial entry.",
+              "Grade of C- or better in all courses satisfying Major requirements.",
+              "The guide prints Anatomy and Physiology 2 as 'BIOL 01212' (BIOL10212) and calls ECON04102 'Introduction to Macroeconomics' (ECON04102 is Microeconomics).",
+              "Several courses need 20 professional development hours (PDH)."
+            ]
+          },
+          "course_attributes": {
+            "BIOL01104": [
+              "SCIL"
+            ],
+            "BIOL01113": [
+              "SCIL"
+            ],
+            "CMS04205": [
+              "COML"
+            ],
+            "COMP01111": [
+              "COML"
+            ],
+            "COMP01112": [
+              "COML"
+            ],
+            "ECON04102": [
+              "HUML"
+            ],
+            "NUT00230": [
+              "RS"
+            ],
+            "STAT02100": [
+              "QNTL"
+            ]
+          },
+          "schedule": {
+            "term": "Fall 2026",
+            "term_code": "202640"
+          }
+        },
+        "intent": "I can take at most 5 credits this fall. Register me for Exercise for Special Populations (HES00412), and add Exercise Prescription (HES00401) too only if both fit within my limit."
+      },
+      "parsed_output": {
+        "id": "7c1d4e52-3b8a-4f0e-9a26-5d8e1b7c2f40",
+        "type": "https://example.org/course-registration/1.0/register",
+        "body": {
+          "student_id": "S7057",
+          "term_code": "202640",
+          "sections": [
+            {
+              "crn": "43051",
+              "course_id": "HES00412",
+              "section": "1",
+              "credit_hours": 3,
+              "seats_total": 30,
+              "seats_taken": 16,
+              "campus": "Glassboro",
+              "modality": "in-person",
+              "meetings": [
+                {
+                  "days": [
+                    "Tuesday",
+                    "Thursday"
+                  ],
+                  "start_time": "8:00 AM",
+                  "end_time": "9:15 AM",
+                  "type": "Class",
+                  "location": "James Hall 2101"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "error": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "end_turn",
+      "served_model": "anthropic/claude-sonnet-5.5",
+      "provider": "Claude Platform on AWS",
+      "generation_id": "gen-1792450267-p0fRmETdOuP1g4VrKV83",
+      "prompt_tokens": 468852,
+      "cached_tokens": 461769,
+      "cache_write_tokens": 0,
+      "completion_tokens": 474,
+      "reasoning_tokens": 250,
+      "first_token_ms": 3591.4709999924526,
+      "latency_ms": 5179.531599977054,
+      "usd_cost": 0.0650829,
+      "verdict": {
+        "outcome": "semantic_ok",
+        "detail": "satisfies every rule",
+        "tiers": {
+          "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
+          "tier2": "schema (our register message): passed (4/4 checks passed)",
+          "tier3": "consistency (invariants against the schedule and transcript): passed (9/9 checks passed)",
+          "tier4": "semantic (the request's rules): passed (6/6 checks passed)"
+        },
+        "tier1_checks": [
+          {
+            "check": "json",
+            "requires": "the whole answer is one JSON value, with no prose or code fence around it",
+            "found": "valid JSON",
+            "passed": true
+          },
+          {
+            "check": "envelope",
+            "requires": "a DIDComm v2 plaintext message: an object with an \"id\" string, a \"type\" message-type URI and a \"body\" object; any optional headers (typ, from, to, created_time) well-formed",
+            "found": "valid DIDComm envelope",
+            "passed": true
+          }
+        ],
+        "tier2_checks": [
+          {
+            "check": "type",
+            "requires": "\"type\" is exactly \"https://example.org/course-registration/1.0/register\"",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "body",
+            "requires": "the body has exactly \"student_id\" (string), \"term_code\" (string) and \"sections\" (a non-empty list)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "sections",
+            "requires": "every section entry has exactly the copied fields (crn, course_id, section, credit_hours, seats, campus, modality, meetings), each well-formed (full day names, 12-hour times)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "unique_crns",
+            "requires": "no crn appears twice in the cart",
+            "found": "1 distinct crn",
+            "passed": true
+          }
+        ],
+        "tier3_checks": [
+          {
+            "check": "term",
+            "section": null,
+            "requires": "term_code is the term being registered for (202640)",
+            "found": "term_code 202640",
+            "passed": true
+          },
+          {
+            "check": "exists",
+            "section": "43051",
+            "requires": "crn 43051 is a section offered this term",
+            "found": "offered: HES00412",
+            "passed": true
+          },
+          {
+            "check": "copied_fields",
+            "section": "43051",
+            "requires": "course_id, section, campus, modality, seats and meetings are copied exactly from the offered section",
+            "found": "all match",
+            "passed": true
+          },
+          {
+            "check": "not_cancelled",
+            "section": "43051",
+            "requires": "the section is not cancelled",
+            "found": "not cancelled",
+            "passed": true
+          },
+          {
+            "check": "seat",
+            "section": "43051",
+            "requires": "the section has a free seat",
+            "found": "16/30 seats taken",
+            "passed": true
+          },
+          {
+            "check": "credits",
+            "section": "43051",
+            "requires": "credit_hours is allowed for this section (3)",
+            "found": "credit_hours 3",
+            "passed": true
+          },
+          {
+            "check": "prerequisites",
+            "section": "43051",
+            "requires": "the transcript shows every prerequisite of HES00412",
+            "found": "no unmet prerequisite",
+            "passed": true
+          },
+          {
+            "check": "one_section_per_course",
+            "section": "43051",
+            "requires": "no other section of HES00412 is in the cart",
+            "found": "the only one",
+            "passed": true
+          },
+          {
+            "check": "no_time_conflict",
+            "section": "43051",
+            "requires": "no meeting overlaps another section in the cart",
+            "found": "the first section in the cart",
+            "passed": true
+          }
+        ],
+        "tier4_checks": [
+          {
+            "rule": "student_id",
+            "requires": "the message is for student S7057",
+            "found": "student_id 'S7057'",
+            "passed": true
+          },
+          {
+            "rule": "term_code",
+            "requires": "the message is for term 202640",
+            "found": "term_code '202640'",
+            "passed": true
+          },
+          {
+            "rule": "count",
+            "requires": "exactly 1 section in the cart",
+            "found": "1: 43051",
+            "passed": true
+          },
+          {
+            "rule": "credits",
+            "requires": "at most 5 credits in all",
+            "found": "3 credits (43051: 3)",
+            "passed": true
+          },
+          {
+            "rule": "waitlist",
+            "requires": "no section is waitlisted (no request asks for a waitlist)",
+            "found": "nothing waitlisted",
+            "passed": true
+          },
+          {
+            "rule": "must_include_courses",
+            "requires": "the cart contains HES00412",
+            "found": "courses: HES00412",
+            "passed": true
+          }
+        ],
+        "deviation_score": 0.0
+      },
+      "pair_result": {
+        "pair_id": "credit_limit/nutrition-bs",
+        "twin_id": "pair-credit_limit-nutrition-bs-a",
+        "same_answer_as_twin": false,
+        "pair_passed": true,
+        "explanation": "Both cases are correct and the answer changed with the prompt (credit limit: 6 vs 5): the model used the changed detail. Pair passed."
+      }
+    },
+    {
+      "task_id": "pair-withdrawal-writing-arts-ba-a",
+      "session_id": "trimmed-20261019T225009Z",
+      "run_index": 0,
+      "ts": "2026-10-19T22:51:11.991749+00:00",
+      "case_hashes": {
+        "input": "5a66f2e700069dff",
+        "rules": "2de41302930db028"
+      },
+      "prompt_readable": {
+        "known_state": {
+          "student": {
+            "degree": "Bachelor of Arts",
+            "major": "Writing Arts",
+            "program_id": "WRITING-ARTS-BA",
+            "student_id": "S8193",
+            "catalog_year": "Fall 2024",
+            "entry": {
+              "type": "first_year"
+            }
+          },
+          "transcript": {
+            "completed_courses": [
+              {
+                "term": "Spring 2025",
+                "course_id": "ANTH02275",
+                "campus": "Glassboro",
+                "level": "UG",
+                "grade": "B+",
+                "credit_hours": 3,
+                "attributes": [
+                  "GLBL"
+                ]
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "CMS04205",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PUBLIC SPEAKING",
+                "grade": "B-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "COMP01111",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION I",
+                "grade": "B",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "COMP01112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION II",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "DS01100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRODUCTION TO DATA SCIENCE",
+                "grade": "A-",
+                "credit_hours": 3,
+                "attributes": [
+                  "QNTL"
+                ]
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "ENGL02112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "grade": "A",
+                "credit_hours": 3,
+                "attributes": [
+                  "LIT"
+                ]
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "MUS40201",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "HISTORY OF POPULAR MUSIC",
+                "grade": "A-",
+                "credit_hours": 3,
+                "attributes": [
+                  "ARTL"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "PHIL09213",
+                "campus": "Glassboro",
+                "level": "UG",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "WI"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "PHIL09261",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PHIL PERSPECTIVES ON SCI-WI",
+                "grade": "B+",
+                "credit_hours": 3,
+                "attributes": [
+                  "HUML"
+                ]
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "PHYS00130",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "BLDG MOMENTUM PHYS STU-RS",
+                "grade": "A",
+                "credit_hours": 1,
+                "attributes": [
+                  "RS"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "PHYS00220",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRODUCTORY MECHANICS",
+                "grade": "B",
+                "credit_hours": 4,
+                "attributes": [
+                  "SCIL"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "WA01200",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRODUCTION TO WRITING ARTS",
+                "grade": "A-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "WA07309",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "WRITING CHILDREN'S STORIES",
+                "grade": "W",
+                "credit_hours": 3
+              }
+            ],
+            "transfer_courses": [],
+            "courses_in_progress": []
+          },
+          "program_requirements": [
+            {
+              "req_id": "CORE-COML",
+              "category": "Rowan Core: Communicative Literacy (COML)",
+              "rule": "all_of",
+              "course_options": [
+                "COMP01111",
+                "COMP01112",
+                "CMS04205"
+              ],
+              "title": "Communicative Literacy",
+              "credit_hours": 9,
+              "minimum_grade": "D-",
+              "notes": "The three courses or their official equivalents; the only Rowan Core credits counted in the Rowan Core section.",
+              "exclusive": true,
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-ARTL",
+              "category": "Rowan Core: Artistic Literacy (ARTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Artistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated ARTL; its credits count in another section.",
+              "attribute": "ARTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-GLBL",
+              "category": "Rowan Core: Global Literacy (GLBL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Global Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated GLBL; its credits count in another section.",
+              "attribute": "GLBL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-HUML",
+              "category": "Rowan Core: Humanistic Literacy (HUML)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Humanistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated HUML; its credits count in another section.",
+              "attribute": "HUML",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-QNTL",
+              "category": "Rowan Core: Quantitative Literacy (QNTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Quantitative Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated QNTL; its credits count in another section.",
+              "attribute": "QNTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-SCIL",
+              "category": "Rowan Core: Scientific Literacy (SCIL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Scientific Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated SCIL; its credits count in another section.",
+              "attribute": "SCIL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "EXP-LIT",
+              "category": "Rowan Experience: Broad-Based Literature Attribute (LIT)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Broad-Based Literature Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the LIT attribute; its credits count in another section.",
+              "attribute": "LIT",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-WI",
+              "category": "Rowan Experience: Writing Intensive Attribute (WI)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Writing Intensive Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the WI attribute; its credits count in another section.",
+              "attribute": "WI",
+              "guide_section": "rowan_experience",
+              "recommended_courses": [
+                "WA01300"
+              ]
+            },
+            {
+              "req_id": "EXP-RS",
+              "category": "Rowan Experience: Rowan Seminar Attribute (RS)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Rowan Seminar Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the RS attribute; its credits count in another section.",
+              "attribute": "RS",
+              "guide_section": "rowan_experience",
+              "waived_if": {
+                "transfer_credits_at_entry": 24
+              }
+            },
+            {
+              "req_id": "WA-INTRO",
+              "category": "Major Requirements: Introductory Courses",
+              "rule": "all_of",
+              "course_options": [
+                "WA01200"
+              ],
+              "title": "Introduction to Writing Arts",
+              "credit_hours": 3,
+              "minimum_grade": "C-",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "WA-INTRO-READING",
+              "category": "Major Requirements: Introductory Courses",
+              "rule": "any_of",
+              "course_options": [
+                "WA01201",
+                "WA01250",
+                "CMS04250"
+              ],
+              "title": "How Writers Read, Tutoring Writing or Communication Theory",
+              "credit_hours": 3,
+              "minimum_grade": "C-",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "WA-INTRO-CREATIVE",
+              "category": "Major Requirements: Introductory Courses",
+              "rule": "any_of",
+              "course_options": [
+                "WA07290",
+                "WA07309"
+              ],
+              "title": "Creative Writing 1 or Writing Children's Stories",
+              "credit_hours": 3,
+              "minimum_grade": "C-",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "WA-INTERMEDIATE",
+              "category": "Major Requirements: Intermediate Courses",
+              "rule": "all_of",
+              "course_options": [
+                "WA01300",
+                "WA01301"
+              ],
+              "credit_hours": 6,
+              "minimum_grade": "C-",
+              "notes": "WA01300 The Writer's Mind satisfies Writing Intensive.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "WA-ADVANCED",
+              "category": "Major Requirements: Advanced Courses",
+              "rule": "all_of",
+              "course_options": [
+                "WA01445",
+                "WA01450"
+              ],
+              "credit_hours": 4,
+              "minimum_grade": "C-",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "WA-LANGUAGE",
+              "category": "Major Requirements: Elements of Language",
+              "rule": "any_of",
+              "course_options": [
+                "WA01350",
+                "CMS04325",
+                "CMS04225",
+                "ENGL05301",
+                "ANTH02250"
+              ],
+              "credit_hours": 3,
+              "minimum_grade": "C-",
+              "notes": "Or completion of the second semester of a 200-level language.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "WA-CONCENTRATION",
+              "category": "Major Requirements: Writing Arts Concentrations",
+              "rule": "credits_from",
+              "course_options": [
+                "WA07290",
+                "WA07309",
+                "WA07415",
+                "WA07291",
+                "WA07391",
+                "WA07392",
+                "WA07395",
+                "WA01304",
+                "WA01358",
+                "WA01370",
+                "WA01250",
+                "JRN02332",
+                "RTF03393",
+                "RTF03493",
+                "WA01322",
+                "CMS04215",
+                "CMS04315",
+                "JRN02314",
+                "JRN02317",
+                "JRN02321",
+                "JRN02335",
+                "RTF03275",
+                "RTF03295",
+                "WA01302",
+                "WA01325",
+                "WA01326",
+                "WA01330",
+                "JRN02313"
+              ],
+              "credit_hours": 12,
+              "minimum_grade": "C-",
+              "notes": "12 sh from the Creative Writing, New Media Writing and Publishing, or Technical and Professional Writing concentration lists; 12 sh from one of them puts the concentration on the transcript.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "FREE",
+              "category": "Free Electives",
+              "rule": "credits_any",
+              "course_options": [],
+              "title": "Free Electives",
+              "credit_hours": 59,
+              "minimum_grade": "D-",
+              "notes": "Any credits not used by an exclusive requirement above; choose ones that satisfy unmet Rowan Core or Rowan Experience requirements.",
+              "exclusive": true,
+              "guide_section": "free_electives"
+            }
+          ],
+          "graduation_rules": {
+            "total_credits": 120,
+            "minimum_gpa": 2.0,
+            "residency_credits": 30,
+            "minimum_grade": "D-"
+          },
+          "program_guide": {
+            "program_name": "B.A. in Writing Arts",
+            "department": "Department of Writing Arts",
+            "effective_term": "Fall 2018",
+            "source_url": "https://sites.rowan.edu/registrar/_docs/program-guide-writing-arts-ba---rc.pdf",
+            "total_credits": 120,
+            "sections": [
+              {
+                "section": "rowan_core",
+                "title": "Rowan Core Requirements (Communicative Literacy)",
+                "credit_hours": 9
+              },
+              {
+                "section": "non_program",
+                "title": "Non-Program Courses",
+                "credit_hours": 18,
+                "notes": "Courses here cannot be in the major department; none are named."
+              },
+              {
+                "section": "major",
+                "title": "Major Requirements",
+                "credit_hours": 34,
+                "notes": "Introductory 9, Intermediate 6, Advanced 4, Elements of Language 3, Concentration 12."
+              },
+              {
+                "section": "free_electives",
+                "title": "Free Electives",
+                "credit_hours": 59
+              }
+            ],
+            "rowan_core": {
+              "literacies": [
+                "COML",
+                "ARTL",
+                "GLBL",
+                "HUML",
+                "QNTL",
+                "SCIL"
+              ],
+              "min_credits_per_literacy": 3
+            },
+            "rowan_experience": {
+              "attributes": [
+                "LIT",
+                "WI",
+                "RS"
+              ]
+            },
+            "program_rules": [
+              "At least 120 sh of coursework that applies to the degree.",
+              "Cumulative GPA of at least 2.0 in Rowan University coursework (transfer credit does not count toward the GPA).",
+              "At least 30 sh completed at/through Rowan University.",
+              "Only grades of D- or above apply to graduation/degree requirements.",
+              "Rowan Core and Rowan Experience requirements must be met; one course may satisfy one Rowan Core literacy and several Rowan Experience attributes.",
+              "The Rowan Core is waived for transfer students with an earned A.A. or A.S. from a NJ community/county college; the Rowan Seminar is waived for students transferring 24 or more approved credits at initial entry.",
+              "Grade of C- or better in all courses satisfying Major requirements.",
+              "The registrar lists this guide for all students who entered Fall 2021 or later; the PDF says Effective Fall 2018."
+            ]
+          },
+          "course_attributes": {
+            "CMS04205": [
+              "COML"
+            ],
+            "COMP01111": [
+              "COML"
+            ],
+            "COMP01112": [
+              "COML"
+            ],
+            "WA01300": [
+              "WI"
+            ],
+            "WA01302": [
+              "WI"
+            ]
+          },
+          "schedule": {
+            "term": "Fall 2026",
+            "term_code": "202640"
+          }
+        },
+        "intent": "Register me for Writing Children Stories (WA07309) if I haven't earned credit for it yet. If I have, register me for How Writers Read (WA01201) instead."
+      },
+      "parsed_output": {
+        "id": "7c1d2e4a-5b3f-4a6e-9d10-2f8a6b3c9e21",
+        "type": "https://example.org/course-registration/1.0/register",
+        "body": {
+          "student_id": "S8193",
+          "term_code": "202640",
+          "sections": [
+            {
+              "crn": "40907",
+              "course_id": "WA07309",
+              "section": "2",
+              "credit_hours": 3,
+              "seats_total": 18,
+              "seats_taken": 8,
+              "campus": "Glassboro",
+              "modality": "in-person",
+              "meetings": [
+                {
+                  "days": [
+                    "Tuesday",
+                    "Thursday"
+                  ],
+                  "start_time": "2:00 PM",
+                  "end_time": "3:15 PM",
+                  "type": "Class",
+                  "location": "Winans Hall 113"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "error": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "end_turn",
+      "served_model": "anthropic/claude-sonnet-5.5",
+      "provider": "Claude Platform on AWS",
+      "generation_id": "gen-1792450273-owYK6CvvWC4Qqozy4ns8",
+      "prompt_tokens": 467746,
+      "cached_tokens": 461769,
+      "cache_write_tokens": 0,
+      "completion_tokens": 519,
+      "reasoning_tokens": 293,
+      "first_token_ms": 3742.3008999903686,
+      "latency_ms": 5857.368599972688,
+      "usd_cost": 0.0633209,
+      "verdict": {
+        "outcome": "semantic_ok",
+        "detail": "satisfies every rule",
+        "tiers": {
+          "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
+          "tier2": "schema (our register message): passed (4/4 checks passed)",
+          "tier3": "consistency (invariants against the schedule and transcript): passed (9/9 checks passed)",
+          "tier4": "semantic (the request's rules): passed (5/5 checks passed)"
+        },
+        "tier1_checks": [
+          {
+            "check": "json",
+            "requires": "the whole answer is one JSON value, with no prose or code fence around it",
+            "found": "valid JSON",
+            "passed": true
+          },
+          {
+            "check": "envelope",
+            "requires": "a DIDComm v2 plaintext message: an object with an \"id\" string, a \"type\" message-type URI and a \"body\" object; any optional headers (typ, from, to, created_time) well-formed",
+            "found": "valid DIDComm envelope",
+            "passed": true
+          }
+        ],
+        "tier2_checks": [
+          {
+            "check": "type",
+            "requires": "\"type\" is exactly \"https://example.org/course-registration/1.0/register\"",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "body",
+            "requires": "the body has exactly \"student_id\" (string), \"term_code\" (string) and \"sections\" (a non-empty list)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "sections",
+            "requires": "every section entry has exactly the copied fields (crn, course_id, section, credit_hours, seats, campus, modality, meetings), each well-formed (full day names, 12-hour times)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "unique_crns",
+            "requires": "no crn appears twice in the cart",
+            "found": "1 distinct crn",
+            "passed": true
+          }
+        ],
+        "tier3_checks": [
+          {
+            "check": "term",
+            "section": null,
+            "requires": "term_code is the term being registered for (202640)",
+            "found": "term_code 202640",
+            "passed": true
+          },
+          {
+            "check": "exists",
+            "section": "40907",
+            "requires": "crn 40907 is a section offered this term",
+            "found": "offered: WA07309",
+            "passed": true
+          },
+          {
+            "check": "copied_fields",
+            "section": "40907",
+            "requires": "course_id, section, campus, modality, seats and meetings are copied exactly from the offered section",
+            "found": "all match",
+            "passed": true
+          },
+          {
+            "check": "not_cancelled",
+            "section": "40907",
+            "requires": "the section is not cancelled",
+            "found": "not cancelled",
+            "passed": true
+          },
+          {
+            "check": "seat",
+            "section": "40907",
+            "requires": "the section has a free seat",
+            "found": "8/18 seats taken",
+            "passed": true
+          },
+          {
+            "check": "credits",
+            "section": "40907",
+            "requires": "credit_hours is allowed for this section (3)",
+            "found": "credit_hours 3",
+            "passed": true
+          },
+          {
+            "check": "prerequisites",
+            "section": "40907",
+            "requires": "the transcript shows every prerequisite of WA07309",
+            "found": "no unmet prerequisite",
+            "passed": true
+          },
+          {
+            "check": "one_section_per_course",
+            "section": "40907",
+            "requires": "no other section of WA07309 is in the cart",
+            "found": "the only one",
+            "passed": true
+          },
+          {
+            "check": "no_time_conflict",
+            "section": "40907",
+            "requires": "no meeting overlaps another section in the cart",
+            "found": "the first section in the cart",
+            "passed": true
+          }
+        ],
+        "tier4_checks": [
+          {
+            "rule": "student_id",
+            "requires": "the message is for student S8193",
+            "found": "student_id 'S8193'",
+            "passed": true
+          },
+          {
+            "rule": "term_code",
+            "requires": "the message is for term 202640",
+            "found": "term_code '202640'",
+            "passed": true
+          },
+          {
+            "rule": "count",
+            "requires": "exactly 1 section in the cart",
+            "found": "1: 40907",
+            "passed": true
+          },
+          {
+            "rule": "waitlist",
+            "requires": "no section is waitlisted (no request asks for a waitlist)",
+            "found": "nothing waitlisted",
+            "passed": true
+          },
+          {
+            "rule": "courses_in",
+            "requires": "every course is one of WA07309",
+            "found": "courses: WA07309",
+            "passed": true
+          }
+        ],
+        "deviation_score": 0.0
+      },
+      "pair_result": {
+        "pair_id": "withdrawal/writing-arts-ba",
+        "twin_id": "pair-withdrawal-writing-arts-ba-b",
+        "same_answer_as_twin": false,
+        "pair_passed": false,
+        "explanation": "Only this case is correct; its twin is a syntactic_error. Pair failed. The model changed its answer between the two, but not to a correct one in its twin."
+      }
+    },
+    {
+      "task_id": "pair-withdrawal-writing-arts-ba-b",
+      "session_id": "trimmed-20261019T225009Z",
+      "run_index": 0,
+      "ts": "2026-10-19T22:51:17.951465+00:00",
+      "case_hashes": {
+        "input": "e06ed2f900d6c2b7",
+        "rules": "694b4a444b30a56a"
+      },
+      "prompt_readable": {
+        "known_state": {
+          "student": {
+            "degree": "Bachelor of Arts",
+            "major": "Writing Arts",
+            "program_id": "WRITING-ARTS-BA",
+            "student_id": "S8193",
+            "catalog_year": "Fall 2024",
+            "entry": {
+              "type": "first_year"
+            }
+          },
+          "transcript": {
+            "completed_courses": [
+              {
+                "term": "Spring 2025",
+                "course_id": "ANTH02275",
+                "campus": "Glassboro",
+                "level": "UG",
+                "grade": "B+",
+                "credit_hours": 3,
+                "attributes": [
+                  "GLBL"
+                ]
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "CMS04205",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PUBLIC SPEAKING",
+                "grade": "B-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "COMP01111",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION I",
+                "grade": "B",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "COMP01112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION II",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "DS01100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRODUCTION TO DATA SCIENCE",
+                "grade": "A-",
+                "credit_hours": 3,
+                "attributes": [
+                  "QNTL"
+                ]
+              },
+              {
+                "term": "Fall 2024",
+                "course_id": "ENGL02112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "grade": "A",
+                "credit_hours": 3,
+                "attributes": [
+                  "LIT"
+                ]
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "MUS40201",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "HISTORY OF POPULAR MUSIC",
+                "grade": "A-",
+                "credit_hours": 3,
+                "attributes": [
+                  "ARTL"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "PHIL09213",
+                "campus": "Glassboro",
+                "level": "UG",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "WI"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "PHIL09261",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PHIL PERSPECTIVES ON SCI-WI",
+                "grade": "B+",
+                "credit_hours": 3,
+                "attributes": [
+                  "HUML"
+                ]
+              },
+              {
+                "term": "Spring 2025",
+                "course_id": "PHYS00130",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "BLDG MOMENTUM PHYS STU-RS",
+                "grade": "A",
+                "credit_hours": 1,
+                "attributes": [
+                  "RS"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "PHYS00220",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRODUCTORY MECHANICS",
+                "grade": "B",
+                "credit_hours": 4,
+                "attributes": [
+                  "SCIL"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "WA01200",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRODUCTION TO WRITING ARTS",
+                "grade": "A-",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "WA07309",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "WRITING CHILDREN'S STORIES",
+                "grade": "B",
+                "credit_hours": 3
+              }
+            ],
+            "transfer_courses": [],
+            "courses_in_progress": []
+          },
+          "program_requirements": [
+            {
+              "req_id": "CORE-COML",
+              "category": "Rowan Core: Communicative Literacy (COML)",
+              "rule": "all_of",
+              "course_options": [
+                "COMP01111",
+                "COMP01112",
+                "CMS04205"
+              ],
+              "title": "Communicative Literacy",
+              "credit_hours": 9,
+              "minimum_grade": "D-",
+              "notes": "The three courses or their official equivalents; the only Rowan Core credits counted in the Rowan Core section.",
+              "exclusive": true,
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-ARTL",
+              "category": "Rowan Core: Artistic Literacy (ARTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Artistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated ARTL; its credits count in another section.",
+              "attribute": "ARTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-GLBL",
+              "category": "Rowan Core: Global Literacy (GLBL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Global Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated GLBL; its credits count in another section.",
+              "attribute": "GLBL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-HUML",
+              "category": "Rowan Core: Humanistic Literacy (HUML)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Humanistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated HUML; its credits count in another section.",
+              "attribute": "HUML",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-QNTL",
+              "category": "Rowan Core: Quantitative Literacy (QNTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Quantitative Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated QNTL; its credits count in another section.",
+              "attribute": "QNTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-SCIL",
+              "category": "Rowan Core: Scientific Literacy (SCIL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Scientific Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated SCIL; its credits count in another section.",
+              "attribute": "SCIL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "EXP-LIT",
+              "category": "Rowan Experience: Broad-Based Literature Attribute (LIT)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Broad-Based Literature Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the LIT attribute; its credits count in another section.",
+              "attribute": "LIT",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-WI",
+              "category": "Rowan Experience: Writing Intensive Attribute (WI)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Writing Intensive Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the WI attribute; its credits count in another section.",
+              "attribute": "WI",
+              "guide_section": "rowan_experience",
+              "recommended_courses": [
+                "WA01300"
+              ]
+            },
+            {
+              "req_id": "EXP-RS",
+              "category": "Rowan Experience: Rowan Seminar Attribute (RS)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Rowan Seminar Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the RS attribute; its credits count in another section.",
+              "attribute": "RS",
+              "guide_section": "rowan_experience",
+              "waived_if": {
+                "transfer_credits_at_entry": 24
+              }
+            },
+            {
+              "req_id": "WA-INTRO",
+              "category": "Major Requirements: Introductory Courses",
+              "rule": "all_of",
+              "course_options": [
+                "WA01200"
+              ],
+              "title": "Introduction to Writing Arts",
+              "credit_hours": 3,
+              "minimum_grade": "C-",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "WA-INTRO-READING",
+              "category": "Major Requirements: Introductory Courses",
+              "rule": "any_of",
+              "course_options": [
+                "WA01201",
+                "WA01250",
+                "CMS04250"
+              ],
+              "title": "How Writers Read, Tutoring Writing or Communication Theory",
+              "credit_hours": 3,
+              "minimum_grade": "C-",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "WA-INTRO-CREATIVE",
+              "category": "Major Requirements: Introductory Courses",
+              "rule": "any_of",
+              "course_options": [
+                "WA07290",
+                "WA07309"
+              ],
+              "title": "Creative Writing 1 or Writing Children's Stories",
+              "credit_hours": 3,
+              "minimum_grade": "C-",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "WA-INTERMEDIATE",
+              "category": "Major Requirements: Intermediate Courses",
+              "rule": "all_of",
+              "course_options": [
+                "WA01300",
+                "WA01301"
+              ],
+              "credit_hours": 6,
+              "minimum_grade": "C-",
+              "notes": "WA01300 The Writer's Mind satisfies Writing Intensive.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "WA-ADVANCED",
+              "category": "Major Requirements: Advanced Courses",
+              "rule": "all_of",
+              "course_options": [
+                "WA01445",
+                "WA01450"
+              ],
+              "credit_hours": 4,
+              "minimum_grade": "C-",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "WA-LANGUAGE",
+              "category": "Major Requirements: Elements of Language",
+              "rule": "any_of",
+              "course_options": [
+                "WA01350",
+                "CMS04325",
+                "CMS04225",
+                "ENGL05301",
+                "ANTH02250"
+              ],
+              "credit_hours": 3,
+              "minimum_grade": "C-",
+              "notes": "Or completion of the second semester of a 200-level language.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "WA-CONCENTRATION",
+              "category": "Major Requirements: Writing Arts Concentrations",
+              "rule": "credits_from",
+              "course_options": [
+                "WA07290",
+                "WA07309",
+                "WA07415",
+                "WA07291",
+                "WA07391",
+                "WA07392",
+                "WA07395",
+                "WA01304",
+                "WA01358",
+                "WA01370",
+                "WA01250",
+                "JRN02332",
+                "RTF03393",
+                "RTF03493",
+                "WA01322",
+                "CMS04215",
+                "CMS04315",
+                "JRN02314",
+                "JRN02317",
+                "JRN02321",
+                "JRN02335",
+                "RTF03275",
+                "RTF03295",
+                "WA01302",
+                "WA01325",
+                "WA01326",
+                "WA01330",
+                "JRN02313"
+              ],
+              "credit_hours": 12,
+              "minimum_grade": "C-",
+              "notes": "12 sh from the Creative Writing, New Media Writing and Publishing, or Technical and Professional Writing concentration lists; 12 sh from one of them puts the concentration on the transcript.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "FREE",
+              "category": "Free Electives",
+              "rule": "credits_any",
+              "course_options": [],
+              "title": "Free Electives",
+              "credit_hours": 59,
+              "minimum_grade": "D-",
+              "notes": "Any credits not used by an exclusive requirement above; choose ones that satisfy unmet Rowan Core or Rowan Experience requirements.",
+              "exclusive": true,
+              "guide_section": "free_electives"
+            }
+          ],
+          "graduation_rules": {
+            "total_credits": 120,
+            "minimum_gpa": 2.0,
+            "residency_credits": 30,
+            "minimum_grade": "D-"
+          },
+          "program_guide": {
+            "program_name": "B.A. in Writing Arts",
+            "department": "Department of Writing Arts",
+            "effective_term": "Fall 2018",
+            "source_url": "https://sites.rowan.edu/registrar/_docs/program-guide-writing-arts-ba---rc.pdf",
+            "total_credits": 120,
+            "sections": [
+              {
+                "section": "rowan_core",
+                "title": "Rowan Core Requirements (Communicative Literacy)",
+                "credit_hours": 9
+              },
+              {
+                "section": "non_program",
+                "title": "Non-Program Courses",
+                "credit_hours": 18,
+                "notes": "Courses here cannot be in the major department; none are named."
+              },
+              {
+                "section": "major",
+                "title": "Major Requirements",
+                "credit_hours": 34,
+                "notes": "Introductory 9, Intermediate 6, Advanced 4, Elements of Language 3, Concentration 12."
+              },
+              {
+                "section": "free_electives",
+                "title": "Free Electives",
+                "credit_hours": 59
+              }
+            ],
+            "rowan_core": {
+              "literacies": [
+                "COML",
+                "ARTL",
+                "GLBL",
+                "HUML",
+                "QNTL",
+                "SCIL"
+              ],
+              "min_credits_per_literacy": 3
+            },
+            "rowan_experience": {
+              "attributes": [
+                "LIT",
+                "WI",
+                "RS"
+              ]
+            },
+            "program_rules": [
+              "At least 120 sh of coursework that applies to the degree.",
+              "Cumulative GPA of at least 2.0 in Rowan University coursework (transfer credit does not count toward the GPA).",
+              "At least 30 sh completed at/through Rowan University.",
+              "Only grades of D- or above apply to graduation/degree requirements.",
+              "Rowan Core and Rowan Experience requirements must be met; one course may satisfy one Rowan Core literacy and several Rowan Experience attributes.",
+              "The Rowan Core is waived for transfer students with an earned A.A. or A.S. from a NJ community/county college; the Rowan Seminar is waived for students transferring 24 or more approved credits at initial entry.",
+              "Grade of C- or better in all courses satisfying Major requirements.",
+              "The registrar lists this guide for all students who entered Fall 2021 or later; the PDF says Effective Fall 2018."
+            ]
+          },
+          "course_attributes": {
+            "CMS04205": [
+              "COML"
+            ],
+            "COMP01111": [
+              "COML"
+            ],
+            "COMP01112": [
+              "COML"
+            ],
+            "WA01300": [
+              "WI"
+            ],
+            "WA01302": [
+              "WI"
+            ]
+          },
+          "schedule": {
+            "term": "Fall 2026",
+            "term_code": "202640"
+          }
+        },
+        "intent": "Register me for Writing Children Stories (WA07309) if I haven't earned credit for it yet. If I have, register me for How Writers Read (WA01201) instead."
+      },
+      "raw_output": "The student has already completed WA07309 (Spring 2026, grade B), so the instruction falls back to WA01201 (How Writers Read).\n\nThe Section Tally lists one section of it: crn 40844, section 1, 3 credits, seats 20 total and 18 taken, Glassboro, in-person, Tuesday/Thursday 03:30 PM-04:45 PM in 260 Victoria Street 301 (Class). It has seats open, so no waitlist is needed.\n\n{\"id\":\"7c1e5b2a-3d4f-4a6b-9e8c-1f2a3b4c5d6e\",\"type\":\"https://example.org/course-registration/1.0/register\",\"body\":{\"student_id\":\"S8193\",\"term_code\":\"202640\",\"sections\":[{\"crn\":\"40844\",\"course_id\":\"WA01201\",\"section\":\"1\",\"credit_hours\":3,\"seats_total\":20,\"seats_taken\":18,\"campus\":\"Glassboro\",\"modality\":\"in-person\",\"meetings\":[{\"days\":[\"Tuesday\",\"Thursday\"],\"start_time\":\"3:30 PM\",\"end_time\":\"4:45 PM\",\"type\":\"Class\",\"location\":\"260 Victoria Street 301\"}]}]}}",
+      "error": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "end_turn",
+      "served_model": "anthropic/claude-sonnet-5.5",
+      "provider": "Claude Platform on AWS",
+      "generation_id": "gen-1792450279-xfiA5oLCCMf4BndEAHqa",
+      "prompt_tokens": 467746,
+      "cached_tokens": 461769,
+      "cache_write_tokens": 0,
+      "completion_tokens": 386,
+      "reasoning_tokens": 0,
+      "first_token_ms": 1567.889700003434,
+      "latency_ms": 4531.748300010804,
+      "usd_cost": 0.0619909,
+      "verdict": {
+        "outcome": "syntactic_error",
+        "detail": "invalid JSON (Expecting value: line 1 column 1 (char 0))",
+        "error_type": "not_json",
+        "tiers": {
+          "tier1": "syntactic (JSON, DIDComm envelope): failed (0/1 checks passed)",
+          "tier2": "schema (our register message): not reached",
+          "tier3": "consistency (invariants against the schedule and transcript): not reached",
+          "tier4": "semantic (the request's rules): not reached"
+        },
+        "tier1_checks": [
+          {
+            "check": "json",
+            "requires": "the whole answer is one JSON value, with no prose or code fence around it",
+            "found": "invalid JSON (Expecting value: line 1 column 1 (char 0))",
+            "passed": false
+          }
+        ],
+        "tier2_checks": [],
+        "tier3_checks": [],
+        "tier4_checks": []
+      },
+      "pair_result": {
+        "pair_id": "withdrawal/writing-arts-ba",
+        "twin_id": "pair-withdrawal-writing-arts-ba-a",
+        "same_answer_as_twin": false,
+        "pair_passed": false,
+        "explanation": "Only its twin is correct; this case is a syntactic_error. Pair failed. The model changed its answer between the two, but not to a correct one in this case."
+      }
+    }
+  ]
+}
