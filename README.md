@@ -25,12 +25,12 @@ Contents: [What's here](#whats-here) · [Setup](#setup) · [Run](#run) ·
 | `registration_message.schema.json` | The message rules, as JSON Schema (draft 2020-12). Source of truth for the cart message. |
 | `didcomm_schema.py` | `validate_message()`: Tiers 1–2 against the message schema. `OUTPUT_CONTRACT`: the prompt text that tells a model the format. |
 | `registration.py` | Registration domain testbed: SQLite schema, `evaluate()` (Tiers 1–2 from `didcomm_schema`, then Tier 3 consistency over the whole cart). Also the input format: `validate_input()`, `audit()` (degree audit), `missing_prerequisites()`, and `seed_db()`. |
-| `run_semantic_eval.py` | The pipeline. Runs a session (`TallySession`): the whole Section Tally as the opening turn, cached, then each case as its own request (as JSON, CSV or plain text); scores each answer on all four tiers. `check_rules()` (Tier 4) and `evaluate_case()` live here. See [The session](#the-session-the-default). |
+| `run_semantic_eval.py` | The pipeline. Runs a session (`TallySession`): the whole Section Tally as the opening turn, cached, then each case as its own request (as JSON, CSV or plain text); scores each answer on all four tiers. `check_rules()` (Tier 4) and `evaluate_case()` live here. See [The session](#the-session). |
 | `degree_requirements.json` (50) | Degree requirements for 50 Rowan programs, parsed from their Academic Program Guides: requirements, program guide, course attributes, graduation rules, and guide-stated prerequisites. A case names its program instead of writing these out. See [Degree programs and fabricated transcripts](#degree-programs-and-fabricated-transcripts). |
 | `fabricate.py` | Builds a case's input from its program and fabricates its transcript from a short spec (which requirements are complete, a seed, trap rows); checks the result with the degree audit. |
 | `generate_pairs.py` | Writes the test cases: counterfactual pairs (200 pairs, 400 cases), two cases that differ in one detail of the prompt or transcript, which flips the answer. Builds each case, fabricates its transcript and scores every candidate answer to write the answer key. See [Counterfactual pairs](#counterfactual-pairs-paired_casesjson). |
-| `paired_cases.json` (400) | The test cases (the runner's default case file): each names its program, fabricates its transcript, and carries an answer key and its pair. The sections come from the Section Tally: in a session, the whole tally; with `--named-courses`, every section of each course the case names. |
-| `section_tally.py` | Reads Rowan's Section Tally export, turns rows into input-format sections, and gives each case its sections: the named courses' (`course_schedule()`) or the whole tally (`full_schedule()`). See [Sections from the Section Tally](#sections-from-the-section-tally). |
+| `paired_cases.json` (400) | The test cases (the runner's default case file): each names its program, fabricates its transcript, and carries an answer key and its pair. Its sections are the whole Section Tally, sent once per session in the cached opening. |
+| `section_tally.py` | Reads Rowan's Section Tally export and turns its rows into input-format sections (`full_schedule()`, every section). See [Sections from the Section Tally](#sections-from-the-section-tally). |
 | `section_tally_fall2026.csv` | The Fall 2026 Section Tally export, as downloaded (renamed). The pipeline reads this one file. |
 | `pairs_sonnet_*.json` | Results of Claude Sonnet 5.5 on 3 pairs under each of the four tally versions. New runs go to `semantic_eval_results.json` unless `--output` names another file. |
 
@@ -120,9 +120,8 @@ All commands are run from the repo root with `(venv)` active.
 ### The test cases, all four tiers
 
 ```bash
-python run_semantic_eval.py --model anthropic/claude-opus-5.5
-python run_semantic_eval.py --model anthropic/claude-opus-5.5 --task-ids pair-transfer-philosophy-ba-a pair-transfer-philosophy-ba-b
-python run_semantic_eval.py --model anthropic/claude-opus-5.5 --named-courses   # the earlier way
+python run_semantic_eval.py --model anthropic/claude-sonnet-5.5 --max-cost 5
+python run_semantic_eval.py --model anthropic/claude-sonnet-5.5 --task-ids pair-transfer-philosophy-ba-a pair-transfer-philosophy-ba-b -n 3
 python run_semantic_eval.py --check                                              # no model, no cost
 ```
 
@@ -130,92 +129,95 @@ python run_semantic_eval.py --check                                             
 |---|---|---|
 | `--model` | One model ID (required unless `--check`) | |
 | `--test-file` | Which case file to run | `paired_cases.json` |
-| `--task-ids` | Run only these cases | all cases in the file |
-| `-n` | Samples per case | `1` |
-| `--rendering` | How a case's own state is shown to the model: `json`, `csv` or `nl` (plain text) | `json` |
-| `--check` | Score each case's own answer key and exit. No model call | off |
-| `--named-courses` | No session: each case's prompt lists only the sections of the courses it names (below) | off |
-| `--tally` | Which version of the Section Tally opens the session: `raw`, `trimmed`, `raw-open`, `trimmed-open` (see below) | `trimmed` |
-| `--cache-ttl` | How long the session's cached opening lives between calls, `5m` or `1h` | `5m` |
-| `--output` | Results file | `semantic_eval_results.json` |
-| `--pair-report` | Print paired accuracy per model from `--output`, using `--test-file`'s pairs, and exit. No model call | off |
-| `--rescore` | Re-grade the saved answers in `--output` with the current scorer and rewrite their verdicts. No model call | off |
-| `--max-tokens` | Cap on output tokens per call (sent and recorded) | the provider's default |
+| `--task-ids` | Run only these cases (give both halves of a pair) | all cases in the file |
+| `-n` | Samples per case (3 or more to compare sessions) | `1` |
+| `--tally` | Which version of the Section Tally opens the session: `raw`, `trimmed`, `compact`, `raw-open`, `trimmed-open` (see below) | `trimmed` |
 | `--effort` | Reasoning effort sent to the model: `minimal`, `low`, `medium`, `high`, `xhigh` | the model's default |
+| `--max-tokens` | Cap on output tokens per call, thinking included; far above the ~500-1,000 a call uses, so it only stops a runaway answer | `16000` |
+| `--max-cost` | USD. The run prints its estimated cost first and does not start above this; it also stops once the calls made have cost this much | no limit |
+| `--cache-ttl` | How long the session's cached opening lives between calls, `5m` or `1h` (use `1h` when calls may be more than 5 minutes apart) | `5m` |
+| `--rendering` | How a case's own state is shown to the model: `json`, `csv` or `nl` (plain text) | `json` |
+| `--output` | Results file (runs are appended; name a new file for a fresh run) | `semantic_eval_results.json` |
+| `--check` | Score each case's own answer key and every pair, and exit. No model call | off |
+| `--pair-report` | Print paired accuracy per session from `--output`, and exit. No model call | off |
+| `--rescore` | Re-grade the saved answers in `--output` with the current scorer and rewrite their verdicts. No model call | off |
 | `--compare A B` | McNemar's test between two results files, per case and per pair. No model call | |
 
-Appends every sample to the results file. When the cases include pairs, the run also prints
-paired accuracy (see [Counterfactual pairs](#counterfactual-pairs-paired_casesjson)).
+Every sample is appended to the results file, and the run prints paired accuracy at the end
+(see [Counterfactual pairs](#counterfactual-pairs-paired_casesjson)).
 
-### The session (the default)
+### The session
 
-A run is one session:
+Every run is one session:
 
 1. **Start the session** (`TallySession` in `run_semantic_eval.py`): read the whole Section
-   Tally once and build the opening turn: a short key to the columns, then every section,
-   5,129 rows, as CSV (`render_tally()`, about 753,000 characters, roughly 400k tokens).
-2. **Prompt each case.** Every case is one call with four turns: the system prompt; the
-   Section Tally (byte-identical every time, marked for prompt caching); the model's fixed
-   reply, "I have read the Section Tally. Send the registration request."
-   (`harness.SESSION_ACK`); then the case: its student, transcript, requirements, program
-   guide, request and the term (8k-9k tokens). The model never sees another case or its
-   answer, so the order of cases does not matter.
-3. **Close the session.** It prints the model calls, input tokens, how many were written to
-   and read from the cache, and the cost. The cache expires on its own (5 minutes after its
-   last use, or 1 hour with `--cache-ttl 1h`); a run with gaps longer than that pays to write it again.
+   Tally once and build the opening turn in the chosen `--tally` version: a short key to the
+   columns, then every section, 5,129 rows, as CSV.
+2. **Estimate the cost.** From OpenRouter's current prices for the model, the run prints an
+   estimate (one cache write of the opening, a cache read of it per later call, each case's own
+   turn and an answer), leaning high. With `--max-cost`, it does not start above that.
+3. **Prompt each case.** Every case is one call with four turns (`harness.build_messages()`):
+   - the system prompt;
+   - the opening: the Section Tally **and the output instructions**, byte-identical every
+     time and marked for prompt caching;
+   - the model's fixed reply, "I have read the Section Tally. Send the registration request."
+     (`harness.SESSION_ACK`);
+   - the case: its student, transcript, requirements, program guide, request and the term.
+   The model never sees another case or its answer, so the order of cases does not matter.
+   With `--max-cost`, the run stops once the calls made have cost that much.
+4. **Close the session.** It prints the model calls, input tokens, how many were written to
+   and read from the cache, and the cost, and writes the session summary into the results file.
 
-**Four versions of the opening** (`--tally`). The checker holds all 5,129 sections in every
+The API keeps no state between calls, so every call resends the opening; the provider's prompt
+cache is what makes that cheap. The first call writes the opening to the cache (1.25x the
+input price) and later calls read it from there (Sonnet 5.5: $0.10 per million tokens against
+$2.00 uncached). The cache expires 5 minutes after its last use, or 1 hour with
+`--cache-ttl 1h`; a run with gaps longer than that pays to write it again. The output
+instructions sit inside the cached opening because they are the same for every case: they
+are cached with the tally instead of being resent at full price in every case's own turn.
+The summary records this as `prompt_layout`.
+
+**Five versions of the opening** (`--tally`). The checker holds all 5,129 sections in every
 version, so the answer keys are the same; a correct cart never needs a full or cancelled section.
 
-| # | `--tally` | The opening | Rows | Size |
-|---|---|---|---|---|
-| 1 | `raw` | The export as downloaded: every row and column (instructor, part of term, room capacity, reserved seats...) | 5,129 | 1.27M characters, ~674k tokens |
-| 2 | `trimmed` (default) | Converted rows; columns no check uses dropped (`TALLY_FIELDS`) | 5,129 | 753k characters, ~386k tokens |
-| 3 | `raw-open` | Every column, but full and cancelled sections dropped | 2,860 | 720k characters, ~380k tokens |
-| 4 | `trimmed-open` | Converted rows, trimmed columns (also no waitlist / cancelled), full and cancelled dropped | 2,860 | 410k characters, ~210k tokens |
+| `--tally` | The opening | Rows | Size |
+|---|---|---|---|
+| `raw` | The export as downloaded: every row and column (instructor, part of term, room capacity, reserved seats...) | 5,129 | 1.27M characters, ~674k tokens |
+| `trimmed` (default) | Converted rows; columns no check uses dropped (`TALLY_FIELDS`) | 5,129 | 753k characters, ~462k tokens |
+| `compact` | `trimmed` without each meeting's room and type and without the waitlist column (`COMPACT_FIELDS`); full and cancelled sections stay | 5,129 | 595k characters (21% smaller), ~370k tokens (estimated) |
+| `raw-open` | Every column, but full and cancelled sections dropped | 2,860 | 720k characters, ~381k tokens |
+| `trimmed-open` | Converted rows, trimmed columns (also no waitlist / cancelled), full and cancelled dropped | 2,860 | 410k characters, ~254k tokens |
 
-With a raw opening the instructions say how to build a message entry from the CSV columns (course_id =
-Subj + Course#, seats_taken = Enrolled, modality from Session, meetings from Meeting Time with full day
-names); with an open-only opening they add that full and cancelled sections are not listed. Costs scale
-with the opening: roughly ×1.75 for `raw`, ×1 for `raw-open`, ×0.55 for `trimmed-open` against
-`trimmed`. Only `trimmed-open` fits a 256k context.
+Token counts are the cache writes measured on Claude Sonnet 5.5. `compact` drops only what no
+check and no answer key uses: the time checks read a meeting's days and times, Tier 3 lets a
+message leave out a meeting's room and type, and no request asks for a waitlist. It keeps full
+and cancelled sections, so the full-section fallback pairs and the cancelled-section trap still
+work; that is why it is the cost-saving choice that leaves the semantic checks as they are,
+where the `-open` versions drop the full sections those pairs depend on. Add new versions rather
+than change `trimmed`, so results stay comparable across runs.
 
-**Result rows.** Each row names its `session_id` and `tally_variant`; when the session closes,
-every row of that session gets `session_cost_usd` (the whole session) and
-`session_avg_cost_per_prompt_usd`. `prompt_sent` is not logged: `prompt_readable` holds the
-same text, parsed.
+With a raw opening the instructions say how to build a message entry from the CSV columns
+(course_id = Subj + Course#, seats_taken = Enrolled, modality from Session, meetings from
+Meeting Time with full day names); with an open-only opening they add that full and cancelled
+sections are not listed.
 
-The model API keeps no state between calls, so "kept in its context" means every call resends
-the tally; the provider's prompt cache is what makes that cheap. The first call writes the
-tally to the cache and later calls read it from there.
+**Cost per call** (Claude Sonnet 5.5, `trimmed`, measured): about $0.068, of which $0.046 is
+reading the cached tally, $0.013 the case's own turn and $0.009 the answer, after a one-time
+cache write of about $1.15. All 200 pairs (400 calls) come to about $28 on Sonnet and $57 on
+Opus 5.5; `compact` is about 15% less. Only providers that cache honor the marker; caching
+through OpenRouter is confirmed on Claude. The first call can take minutes, so the OpenRouter
+request timeout is 10 minutes.
 
-The opening's columns are what a model needs to choose a section and copy it into the
-message: crn, course_id, section, title, title_note, credit_hours, seats_total, seats_taken,
-waitlist, campus, modality, meetings, cancelled. Instructor, part_of_term, room capacity,
-session and reserved seats are left out (`TALLY_FIELDS`). Full and cancelled sections are
-included, so the full-section, waitlist and cancelled-section traps still work. The checker
-holds the same 5,129 sections.
-
-Cost on Opus 5.5 (prices: input $4 per million tokens; a cache write costs 1.25×, a cache read
-$0.20 per million): about $2.05 for the first case (the write), then about $0.13 per case
-(about $0.08 to read the tally, $0.04 for the case, plus the answer). All 200 pairs (400 calls)
-come to an estimated $57 with `--tally trimmed` (about $39 with `trimmed-open`, $75 with `raw`;
-about half that on Sonnet 5.5; use `--task-ids` to run fewer). Only providers that cache honor the marker: caching through
-OpenRouter was confirmed on Claude (a second call read the whole opening from the cache at
-about a sixth of the cost). The first call can take minutes, so the
-OpenRouter request timeout is 10 minutes.
+**Batch pricing.** OpenRouter's `:batch` models (e.g. `anthropic/claude-sonnet-5.5:batch`) are
+half price, cache reads and writes included, and need no code change: pass the batch model as
+`--model`. Two cautions before a large batch run. Cache hits inside a batch are best-effort, and
+with this opening a miss costs about as much as 13 hits save, so batch pays only if about 93% of
+calls hit the cache: try a few calls first and read the summary's `tokens.cache_read_share`.
+And batch latency is queue time, so `latency` and `first_token_ms` say nothing about the model.
 
 What is measured: the model must find the right few sections among 5,129, so a wrong answer
-can come from reading a very long input as well as from reasoning. The tally does not fit
-Claude Haiku 4.5 (200k tokens), Grok 4.7 (500k) or the local Llama (131k); run those with
-`--named-courses`.
-
-### Named courses (`--named-courses`, the earlier pipeline)
-
-No session: each case is one call whose prompt holds the student, transcript, requirements,
-request and every open section of the courses the case names (`schedule_from_tally` in the
-case file). The CS cases put about 490 sections in the prompt, about 130k input tokens or
-about $0.50 per call on Opus 5.5; the rowan_ cases about 350-510 sections, $0.35-0.50.
+can come from reading a very long input as well as from reasoning. The opening does not fit
+models with a context window below about 400k tokens (e.g. Claude Haiku 4.5, 200k).
 
 ### The validators alone
 
@@ -235,20 +237,19 @@ python run_semantic_eval.py --model anthropic/claude-sonnet-5
 python run_semantic_eval.py --model openai/gpt-5.5
 ```
 
-Models we've already tried (price is per call on the early single-section task; the current
-cases are longer, so expect more):
+Estimated cost per call on `--tally trimmed` (the cached tally read, the case and an answer;
+the first call of a session adds the cache write):
 
-| Model ID | Tier | ~Cost per call |
+| Model ID | ~Cost per call | Cache write, once per session |
 |---|---|---|
-| `anthropic/claude-haiku-4.5` | low | $0.0006 |
-| `anthropic/claude-sonnet-5` | mid | $0.0013 |
-| `anthropic/claude-opus-5.5` | high | $0.004 |
-| `anthropic/claude-fable-5.1` | top | $0.007 (often blocked, see Troubleshooting) |
-| `meta-llama/llama-3.1-8b-instruct` | small open model | very cheap |
+| `anthropic/claude-haiku-5.5` | $0.03 | $0.29 |
+| `anthropic/claude-sonnet-5.5` | $0.068 (measured) | $1.15 (measured) |
+| `anthropic/claude-opus-5.5` | $0.14 | $2.31 |
+| `anthropic/claude-fable-5.1` | $0.23 | $5.77 |
 
-**Watch the cost.** Cost ≈ price per call × number of models × number of calls. Try new
-models with `-n 1` or a couple of `--task-ids` first. Avoid very expensive models unless the
-group agrees.
+**Watch the cost.** Cost ≈ cache write + price per call × number of calls, per model and tally
+version. Use `--max-cost`, and try new models on a couple of `--task-ids` first. Avoid very
+expensive models unless the group agrees.
 
 ## Read the results
 
@@ -279,13 +280,12 @@ except `deviation_score` (per row, and averaged in the summary).
 
 **`sessions[]`, one summary per run.**
 - **Settings (to repeat the run):** `session_id`, `model`, `test_file` and `test_file_sha256`,
-  `code_version` (git `commit`, `branch`, and `uncommitted_changes` with the `changed_files`;
-  with uncommitted changes the commit alone does not reproduce the run), `tally_variant` (null
-  with `--named-courses`), `rendering`, `samples_per_case`, `cache_ttl`,
+  `tally_variant`, `rendering`, `samples_per_case`, `cache_ttl`,
   `generation_settings` (exactly what every call sent: `temperature`, `stream`, `usage`, and
-  `max_tokens` / `reasoning.effort` when `--max-tokens` / `--effort` are given; otherwise the
-  provider's defaults apply), `shared_context` (the cached opening's size and hash) and
-  `output_contract`.
+  `max_tokens`, and `reasoning.effort` when `--effort` is given), `prompt_layout` (how a call is
+  laid out), `shared_context` (the cached opening's sizes and hash), `output_contract` (the
+  instructions in the cached opening), and `cost_estimate_usd` / `max_cost_usd`;
+  `stopped_at_max_cost: true` when `--max-cost` ended the run early.
 - **Correctness:** `cases`, `calls`, `generation_failures`, `outcomes`; `semantic_ok` as
   `{count, rate, ci95}` (a 95% Wilson interval, over calls that did not fail);
   `semantic_ok_by_case_type`; `mean_chance_baseline` (the average chance of a correct answer by
@@ -310,7 +310,7 @@ except `deviation_score` (per row, and averaged in the summary).
   what the model saw; `rules`: a hash of the answer key's rules), so a result can be tied to the
   exact case version it ran on.
 - **What was sent:** `prompt_readable`, the case's own turn as `known_state` and `intent`; the
-  output contract is in the summary, and stays in a row only if it differed.
+  output instructions are in the cached opening (the summary's `output_contract`).
 - **What came back:** `parsed_output`, the model's message. `raw_output` (the verbatim text) is
   kept only when it is not JSON, e.g. wrapped in a code fence, so the parsed copy would be lossy.
 - **The call:** `error` (null when the call succeeded); `finish_reason` and
@@ -342,15 +342,12 @@ runs McNemar's exact test on the case runs both files have, per case and per pai
 how often only A or only B was right, and p. With one sample per case and a handful of cases,
 expect p near 1: run `-n 3` or more on more cases before claiming a difference.
 
-**Sessions run before 2026-10-19's streaming harness** (the four `pairs_sonnet_*.json`) have no
-finish reasons, providers, thinking tokens or first-token times. Their `generation_settings`
-and `code_version` (the commit, with uncommitted changes that were not recorded) were filled in
-afterwards from what is known about those runs.
+**The four `pairs_sonnet_*.json` sessions** ran before the instructions moved into the cached
+opening: their calls sent the instructions at the end of each case's own turn (same words). Their
+summaries say so in `prompt_layout`.
 
-Dropped as duplicates: `ok` (= `error` is null), `prompt_sent`, the per-row copies of the
-session's fields. Older verdicts' `tier3_detail` and `violated` (restated in `tiers` and the
-check lists) are no longer produced and are dropped from an older file. `--rescore` rewrites an older file (a bare array of
-rows) in this layout.
+Dropped as duplicates: `ok` (= `error` is null), `prompt_sent`, and the per-row copies of the
+session's fields.
 
 ## Troubleshooting
 
@@ -545,51 +542,31 @@ How one input object is used:
   so the model and the checker see the same situation.
 - **Scoring.** `run_semantic_eval.evaluate_case()` runs all four tiers.
 
-A test case wraps one input object with an id and an answer key. Where the sections come
-from is set by the case:
-
-| Case gives | The model sees | Who picks the sections |
-|---|---|---|
-| `"schedule_from_tally": {"whole": true}` (what the default run, the session, gives every tally-based case) | Every section in the tally, in the session's opening turn; the case's own turn carries only the term | The model, from all 5,129 |
-| `"schedule_from_tally": {"named_courses": true}` (what every case file says; used with `--named-courses`), optionally with `"courses": [...]` | Every open section of every course the input names, listed in the prompt, in one input | The pipeline (which courses); the model (which sections) |
-| `input.schedule` written out | That schedule | The case author |
+A test case wraps one input object with an id, its candidate courses and an answer key:
 
 ```json
 {
   "case_id": "pair-busy_block-journalism-ba-a",
   "input": { "program": "journalism-ba", "student": {}, "transcript": {"fabricate": {}}, "prompt": "Register me for News Media Literacy (JRN02101). I work Mondays and Wednesdays ..." },
-  "schedule_from_tally": { "named_courses": true, "courses": ["JRN02101"] },
+  "candidate_courses": ["JRN02101"],
   "ground_truth": { "rules": { "count": {"min": 1, "max": 1}, "must_include_courses": ["JRN02101"], "busy": [{"days": ["Monday", "Wednesday"], "start_time": "10:00 AM", "end_time": "11:15 AM"}] } }
 }
 ```
 
-`run_semantic_eval.load_test_cases()` fills in `input.schedule` from
-`section_tally_fall2026.csv` when it loads the file (`resolve_case()`).
-
-With `named_courses`, `run_semantic_eval.named_courses()` collects every course the input
-names: each requirement's `course_options`, each course with a `prerequisites` entry, and each
-course id written in the prompt. `section_tally.course_schedule()` then takes every section of
-those courses, in export order, leaving out cancelled ones and skipping courses with no section
-this term. `"courses": [...]` adds courses the input does not name by id; the pair generator
-lists each case's candidate courses there, so `--named-courses` shows the model all of them. The
-prompt and the checker's database hold the same sections, so a crn from outside them is a
-`consistency_error` ("does not exist").
-
-In whole mode the schedule is the whole tally (5,129 sections, cancelled ones flagged): the
-checker's database holds every section, and the prompt's own part carries only the term,
-because the sections are the session's opening turn (see "The session"). A case gives
-`schedule` or `schedule_from_tally`, never both.
-
-Cases are picked (`--task-ids`) before the export is read, so a case that does not use the
-tally runs even if the export is missing; a case that uses it stops with a clear error.
+`run_semantic_eval.load_test_cases()` builds the full input object when it loads a case
+(`resolve_case()`): the program from `degree_requirements.json`, the fabricated transcript, and
+the whole Section Tally as `schedule` (5,129 sections, cancelled ones flagged). The checker's
+database holds every section; the case's own turn carries only the term, because the sections
+are the session's opening (see "The session"). A case never writes out a schedule. Its
+`candidate_courses` (the courses the case is about) are not shown to the model: the pair
+generator and the chance baseline use them.
 
 ### Sections from the Section Tally
 
 The schedule can come from Rowan's real Section Tally (Fall 2026, 5,129 sections, 138
 subjects) instead of invented sections. The data is one file, `section_tally_fall2026.csv`:
-the export as downloaded, renamed, read whole on each run (about 20 ms). A case picks its
-sections with `schedule_from_tally` (above), which calls `section_tally.course_schedule()` or
-`section_tally.full_schedule()`; `section_tally.load_schedule("CS")` gives a whole subject. All 5,129 sections convert and
+the export as downloaded, renamed, read whole on each run (about 20 ms). Every case gets
+all of them (`section_tally.full_schedule()`). All 5,129 sections convert and
 validate (`python section_tally.py check`, which fails if the export is missing or empty).
 To use a newer export, save it under the same name and rerun `python run_semantic_eval.py
 --check`: answer keys depend on seat counts and times, so a refresh can change them.
@@ -610,7 +587,7 @@ To use a newer export, save it under the same name and rerun `python run_semanti
 | `Wait Cap`, `Wait Enrolled` | `waitlist` | only when the cap is above 0 |
 | `Max Reserved`, `Left Reserved` | `reserved_seats` | only when above 0 |
 | `Room Cap` | `room_capacity`, `room_capacity_marked` | the number; `NA` → left out; a trailing `*` → `room_capacity_marked: true` |
-| `Cancelled` | `cancelled` | cancelled sections are left out of a schedule unless asked for; then they carry `cancelled: true` |
+| `Cancelled` | `cancelled` | cancelled sections stay in the schedule with `cancelled: true` |
 | `Term Code` | `schedule.term_code`, `schedule.term` | `202640` → `Fall 2026` |
 
 What changed in the input format so the tally fits:
@@ -626,9 +603,6 @@ What changed in the input format so the tally fits:
 
 Open points:
 
-- **A whole subject is too big for one prompt.** All 168 open CS sections come to about
-  86,000 characters as JSON (about 37,000 as CSV). A case carries the sections of the courses
-  its program guide names instead: 350–500 sections, about 86k–132k tokens (see "Cases built from degree requirements").
 - **The `*` after `Room Cap`** (296 sections) is not documented in the export.
 - **Only the Fall term code is known.** `TERM_SEASONS` in `section_tally.py` maps the last two
   digits (`40` → Fall); others are added when a tally for that term shows its dates.
@@ -687,9 +661,7 @@ requirements and Free Electives. These fields let an input carry one:
 `counts_toward()` skips a course whose credit cap is used up. Known limitation:
 `counts_toward()` does not simulate `exclusive`, so a course that an earlier exclusive
 requirement would take is still reported for a later one; the cases are written so this does
-not change an answer. `named_courses()` includes `course_groups` and `recommended_courses`
-but does not expand `course_ranges`; a case adds a range's offered courses with
-`schedule_from_tally.courses`.
+not change an answer.
 
 What the checker does and does not read:
 
@@ -843,7 +815,7 @@ session summary's `paired_accuracy.strong_pairs_only` scores the other 182 pairs
 
 **Difficulty and chance baseline (every case, in both case files).** `ground_truth.difficulty`
 holds:
-- `candidate_courses`: the courses the case is about (its `schedule_from_tally.courses`).
+- `candidate_courses`: how many courses the case is about (its `candidate_courses` list).
 - `candidate_answers`: every non-cancelled section of those courses, or every pair of sections
   when the answer is two named courses.
 - `correct_answers`: how many of those the rules accept.
@@ -1007,7 +979,7 @@ The design's own open questions are in [§13](#13-open-questions--for-the-group)
 - Time-conflict logic (interval overlap) → `registration.consistency_checks()`
 - Input-format open items: prerequisites as a consistency rule, `TA` meeting any minimum, best-attempt GPA → `registration.py` (`missing_prerequisites()`, `meets_minimum()`, `audit()`)
 - Tier 4 by rules → `run_semantic_eval.check_rules()` (`RULES`)
-- The columns of the whole tally in the cached opening → `run_semantic_eval.TALLY_FIELDS`
+- The columns of the tally in the cached opening → `run_semantic_eval.TALLY_FIELDS`, `COMPACT_FIELDS`, `OPEN_FIELDS`
 - In-memory SQLite → `registration.make_db()`
 - Cart message type URI (`example.org` placeholder) → `registration_message.schema.json`
 
@@ -1222,6 +1194,8 @@ backends × models × domains × tasks × samples
 
 | Version | Date | Changes |
 |---|---|---|
+| 3.5 | 2026-10-21 | `code_version` removed from session summaries (and from the five Sonnet results files), with the git lookup that built it. `--max-cost` reads each provider's prices, including long-prompt rates (Claude Haiku 5.5 costs five times as much from 100k prompt tokens). `pairs_sonnet_compact.json`: Sonnet 5.5, medium effort, on the same 3 pairs with the `compact` tally. |
+| 3.4 | 2026-10-21 | Cost cuts that leave the semantic checks as they are: a `compact` tally version (`trimmed` without meeting rooms and types and the waitlist column, 21% smaller); the output instructions move into the cached opening (`prompt_layout` in the summary); `--max-tokens` defaults to 16000; `--max-cost` prints an estimate, refuses to start above it and stops a run that reaches it; batch pricing documented. `--named-courses` removed with `named_courses()` and `section_tally.course_schedule()`: every run is a session over the whole tally, and cases carry `candidate_courses` instead of `schedule_from_tally`. Removed: conversion of old-format results files and the verdict fields only older files had. |
 | 3.3 | 2026-10-20 | The pipeline runs on the pairs only: `input_format_cases.json` (250 single cases) and `generate_cases.py` removed; the helpers the pair generator needs (building and scoring a case, transcripts, course and requirement names, difficulty) moved into `generate_pairs.py` unchanged (regenerated pairs match the stored ones). `paired_cases.json` is the default `--test-file`; the single-case error types (`retake`, `passed`, `fallback`) removed. |
 | 3.2 | 2026-10-19 | Removed `earlier_attempts` and `cost.total_spent_usd` (and `earlier_attempts_usd`) from session summaries and from the four Sonnet results files; `cost.total_usd` is the session's cost. |
 | 3.1 | 2026-10-19 | Obsolete code removed: `registration.check_consistency()` (replaced by `consistency_checks()`); verdicts no longer build `tier3_detail` and `violated` only to drop them; `pair_summary()` formats `pair_stats()` instead of repeating its counting; leftover keys from intermediate file layouts. No file was obsolete. |

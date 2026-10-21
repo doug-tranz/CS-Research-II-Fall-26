@@ -5,17 +5,6 @@
       "model": "anthropic/claude-sonnet-5.5",
       "test_file": "paired_cases.json",
       "test_file_sha256": "92a593db98275da8",
-      "code_version": {
-        "commit": "0afe3328d369c4b71262bff01374bd3718bd82ba",
-        "branch": "Khalil-context-path",
-        "uncommitted_changes": true,
-        "changed_files": [
-          "pairs_sonnet_raw-open.json",
-          "pairs_sonnet_raw.json",
-          "pairs_sonnet_trimmed-open.json",
-          "pairs_sonnet_trimmed.json"
-        ]
-      },
       "tally_variant": "raw-open",
       "rendering": "json",
       "samples_per_case": 1,
@@ -32,6 +21,7 @@
       },
       "shared_context": "719,534 characters, sha256 b68edce5bbfc, cache ttl 5m",
       "output_contract": "Respond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"term_code\": <string>, \"sections\": [<section entry>, ...]}, with at least one section and no crn twice. Each section entry MUST have exactly these fields, copied from the offered section: \"crn\", \"course_id\", \"section\", \"seats_total\", \"seats_taken\", \"campus\", \"modality\", \"meetings\" (each meeting's \"days\", and its \"start_time\" and \"end_time\" when it has them; \"type\" and \"location\" may be copied too), plus \"credit_hours\": <number>, the credits the student takes (the section's credits, or a number in the range of a variable-credit section). An entry MAY also have \"waitlist\": true (ONLY to join the waitlist of a full section). Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"term_code\": \"201920\", \"sections\": [{\"crn\": \"90512\", \"course_id\": \"HIST01150\", \"section\": \"2\", \"credit_hours\": 3, \"seats_total\": 35, \"seats_taken\": 20, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"9:30 AM\", \"end_time\": \"10:45 AM\", \"type\": \"Class\", \"location\": \"Bunce Hall 101\"}]}, {\"crn\": \"90877\", \"course_id\": \"ART09900\", \"section\": \"1\", \"credit_hours\": 2, \"seats_total\": 5, \"seats_taken\": 1, \"campus\": \"Glassboro\", \"modality\": \"online\", \"meetings\": []}, {\"crn\": \"91004\", \"course_id\": \"BIOL01120\", \"section\": \"4\", \"credit_hours\": 4, \"seats_total\": 24, \"seats_taken\": 24, \"campus\": \"Camden\", \"modality\": \"hybrid\", \"meetings\": [{\"days\": [\"Monday\"], \"start_time\": \"1:00 PM\", \"end_time\": \"3:50 PM\"}], \"waitlist\": true}]}} Each \"crn\" MUST be the crn of an offered section, and every other copied field MUST equal that section's value. \"term_code\" MUST be the schedule's term_code, and \"student_id\" MUST be the student's student_id. The sections offered this term are the rows of the Section Tally export at the start of this conversation; only sections in it exist. Build each section entry from its row: crn = CRN; course_id = Subj followed by Course# (CS + 04114 = CS04114); section = Sect; seats_total = Max; seats_taken = Enrolled (or Max, if Enrolled is higher); campus = Campus; modality = \"online\" when Session is Online, \"hybrid\" when it is Hybrid, otherwise \"in-person\"; credit_hours from Hours (3.00 = 3; a range such as 1.00 to 3.00 means variable credit); meetings from Meeting Time: each group such as 'MW 09:30 AM - 10:45 AM Business Hall 101 (Class)' is one meeting with its days as full day names (M Monday, T Tuesday, W Wednesday, R Thursday, F Friday, S Saturday, U Sunday), start_time and end_time; N/A means no meetings. A section is full when Enrolled >= Max, and cannot be registered for when Cancelled is true. Full and cancelled sections are not listed.",
+      "prompt_layout": "system prompt | user: Section Tally (cached) | assistant: fixed acknowledgement | user: known state + intent + output instructions (the layout before 2026-10-21)",
       "started": "2026-10-19T22:51:28.854854+00:00",
       "ended": "2026-10-19T22:52:10.845100+00:00",
       "cases": [

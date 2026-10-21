@@ -173,7 +173,7 @@ class Case:
     def __init__(self, case):
         """Builds the case against the whole tally and seeds its checker database once."""
         self.raw = case
-        self.case = rse.resolve_case({**case, "schedule_from_tally": {"whole": True}})
+        self.case = rse.resolve_case(case)
         self.data = self.case["input"]
         self.conn = reg.seed_db(self.data)
         self._counts = {}
@@ -322,7 +322,7 @@ def difficulty(case, c=None):
     c: the case's Case, if already built."""
     c = c or Case(case)
     rules = case["ground_truth"]["rules"]
-    courses = (case.get("schedule_from_tally") or {}).get("courses", [])
+    courses = case.get("candidate_courses", [])
     size = rules.get("count", {}).get("max", 1)
     if size == 2 and len(rules.get("must_include_courses", [])) == 2:
         a, b = rules["must_include_courses"]
@@ -416,7 +416,7 @@ def pair(family, key, a, b, changed, targets, courses, rng):
         if not set(map(tuple, ex["valid"])) & set(map(tuple, theirs)):
             ex["valid"] = sorted(ex["valid"][:3] + [theirs[0]])
         case["case_id"] = f"pair-{family}-{key}-{variant}"
-        case["schedule_from_tally"] = {"named_courses": True, "courses": sorted(set(courses))}
+        case["candidate_courses"] = sorted(set(courses))
         case["ground_truth"] = {
             "rules": rules, "examples": ex,
             "implicit_relationship": why + " " + summarize(acc, rej, size)
@@ -862,7 +862,7 @@ def shared_answer(a, b, ca, cb):
     ra, rb = a["ground_truth"]["rules"], b["ground_truth"]["rules"]
     if ra.get("count", {}).get("max") != 1 or rb.get("count", {}).get("max") != 1:
         return None                         # a one-section answer cannot fit a two-section variant
-    courses = sorted(set(a["schedule_from_tally"]["courses"]) | set(b["schedule_from_tally"]["courses"]))
+    courses = sorted(set(a["candidate_courses"]) | set(b["candidate_courses"]))
     for s in (s for cid in courses for s in by_course().get(cid, [])):
         if ca.score([s["crn"]], ra)[0] == "semantic_ok" and cb.score([s["crn"]], rb)[0] == "semantic_ok":
             return s["crn"]

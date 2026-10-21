@@ -16,19 +16,17 @@ The case file (paired_cases.json, written by generate_pairs.py) is an indented J
 counterfactual pairs of cases. Each case names its degree program, fabricates its transcript
 (fabricate.py), and carries a rules answer key and its pair:
     {"case_id": "pair-transfer-philosophy-ba-a", "input": {"program": "philosophy-ba", ...},
+     "candidate_courses": [...],
      "ground_truth": {"rules": {...}, "examples": {...}, "implicit_relationship": "...",
                       "pair": {"id": "transfer/philosophy-ba", "variant": "a", ...}}}
 
-THE SESSION (the default): the whole Section Tally is the session's first turn, cached,
-and every case is then its own request after it (TallySession, below). Each case sees
-the tally and its own request, never another case or its answer. --named-courses runs
-the earlier way instead: no session, and each case's prompt lists only the sections of
-the courses it names.
+THE SESSION: every run is one session. The whole Section Tally and the output instructions
+open it, cached, and every case is then its own request after it (TallySession, below). Each
+case sees the tally and its own request, never another case or its answer.
 
 HOW TO RUN:
-    python run_semantic_eval.py --model anthropic/claude-opus-5.5
-    python run_semantic_eval.py --model anthropic/claude-opus-5.5 --task-ids pair-transfer-philosophy-ba-a pair-transfer-philosophy-ba-b -n 3
-    python run_semantic_eval.py --model anthropic/claude-opus-5.5 --named-courses
+    python run_semantic_eval.py --model anthropic/claude-sonnet-5.5 --max-cost 5
+    python run_semantic_eval.py --model anthropic/claude-sonnet-5.5 --task-ids pair-transfer-philosophy-ba-a pair-transfer-philosophy-ba-b -n 3
     python run_semantic_eval.py --check      # scores every answer key; no model, no cost
 
 Requires OPENROUTER_API_KEY to be set.
@@ -38,16 +36,16 @@ Appends full results to semantic_eval_results.json (or --output): {"sessions": [
 
 import argparse
 import hashlib
-import subprocess
 import csv
 import io
 from datetime import datetime, timezone
 import json
 import re
+import requests
 import sys
 from dataclasses import asdict
 from pathlib import Path
-from harness import TaskSpec, OpenRouterBackend, generate, parse_didcomm, _context_label as shared_context_info
+from harness import TaskSpec, OpenRouterBackend, generate, parse_didcomm, context_label, PROMPT_LAYOUT
 import registration as reg
 import section_tally
 import fabricate
@@ -71,36 +69,19 @@ def _normalize(value):
 # The answer key is `rules`: what any correct cart must satisfy (RULES below). `examples`
 # gives carts that must pass ("valid") and must fail ("invalid"); a cart is a list of crns.
 
-TALLY_KEYS = {"named_courses", "courses", "whole"}
-_COURSE_IN_TEXT = re.compile(r"\b[A-Z]{2,4}\d[A-Z0-9]{4}\b")
-
-
-def named_courses(data: dict) -> list:
-    """Every course an input names: each requirement's course_options, course_groups and
-    recommended_courses, each course with a prerequisites entry, and each course id written
-    in the prompt. In first-seen order. (A course_ranges family is not expanded: a case adds
-    the family's offered courses with schedule_from_tally's `courses`.)"""
-    named = [c for r in data["program_requirements"]
-             for c in r["course_options"] + [c for g in r.get("course_groups", []) for c in g]
-             + r.get("recommended_courses", [])]
-    named += [p["course_id"] for p in data.get("prerequisites", [])]
-    named += _COURSE_IN_TEXT.findall(data["prompt"])
-    return list(dict.fromkeys(named))
-
-def is_whole(case: dict) -> bool:
-    """True when the model reads the whole Section Tally from the session's cached opening."""
-    return bool((case.get("schedule_from_tally") or {}).get("whole"))
-
-
-# ── The session's opening: the Section Tally, in one of four versions (--tally) ──
-#   1 raw           the export as downloaded: every row, every column
-#   2 trimmed       converted rows, columns no check uses left out (TALLY_FIELDS)
-#   3 raw-open      every column, but full and cancelled sections left out
-#   4 trimmed-open  converted rows, trimmed columns, full and cancelled sections left out
+# ── The session's opening: the Section Tally, in one of five versions (--tally) ──
+#   raw           the export as downloaded: every row, every column
+#   trimmed       converted rows, columns no check uses left out (TALLY_FIELDS)
+#   compact       trimmed, without meeting rooms and types and without the waitlist column:
+#                 nothing a check or an answer key uses (the time checks read days and
+#                 times only; no request asks for a waitlist); full and cancelled sections stay
+#   raw-open      every column, but full and cancelled sections left out
+#   trimmed-open  converted rows, trimmed columns, full and cancelled sections left out
 # The checker always holds all 5,129 sections, so the answer keys are the same in every
 # version (a correct cart never needs a full or cancelled section: waitlists are not asked for).
-TALLY_VARIANTS = {"raw": (True, False), "trimmed": (False, False), "raw-open": (True, True),
-                  "trimmed-open": (False, True)}
+TALLY_VARIANTS = {  # name: (raw export?, open sections only?, compact?)
+    "raw": (True, False, False), "trimmed": (False, False, False), "compact": (False, False, True),
+    "raw-open": (True, True, False), "trimmed-open": (False, True, False)}
 
 # Told to the model in a session, after the output contract.
 WHOLE_CONTRACT = (
@@ -130,6 +111,7 @@ TALLY_FIELDS = ("crn", "course_id", "section", "title", "title_note", "credit_ho
                 "seats_total", "seats_taken", "waitlist", "campus", "modality", "meetings",
                 "cancelled")
 OPEN_FIELDS = tuple(f for f in TALLY_FIELDS if f not in ("waitlist", "cancelled"))
+COMPACT_FIELDS = tuple(f for f in TALLY_FIELDS if f != "waitlist")
 
 
 def _is_open(s: dict) -> bool:
@@ -137,11 +119,15 @@ def _is_open(s: dict) -> bool:
     return not s.get("cancelled") and s["seats_taken"] < s["seats_total"]
 
 
-def render_tally(schedule: dict, open_only: bool = False) -> str:
-    """The trimmed Section Tally as the session's shared opening: a short key, then one CSV row
-    per section. Built once per session and sent byte-identical with every case."""
+def render_tally(schedule: dict, open_only: bool = False, compact: bool = False) -> str:
+    """The converted Section Tally as the session's shared opening: a short key, then one CSV row
+    per section. Built once per session and sent byte-identical with every case. compact leaves
+    out each meeting's room and type and the waitlist column."""
     sections = [s for s in schedule["sections"] if _is_open(s)] if open_only else schedule["sections"]
-    fields = OPEN_FIELDS if open_only else TALLY_FIELDS
+    if compact:
+        sections = [{**s, "meetings": [{k: v for k, v in m.items() if k not in ("location", "type")}
+                                       for m in s["meetings"]]} for s in sections]
+    fields = OPEN_FIELDS if open_only else COMPACT_FIELDS if compact else TALLY_FIELDS
     rows = [{field: s.get(field, "") for field in fields} for s in sections]
     which = "Every open section" if open_only else "Every section"
     key = (
@@ -150,10 +136,11 @@ def render_tally(schedule: dict, open_only: bool = False) -> str:
         "Tally. Columns: crn (the section's id); course_id; section; title; title_note (a "
         "restriction, topic or former name); credit_hours (a range such as 1-12 means "
         "variable credit); seats_total and seats_taken"
-        + (" " if open_only else " (full when seats_taken >= seats_total); waitlist (its capacity "
-                                 "and how many are on it); ")
-        + "campus; modality (in-person, online or hybrid); meetings (each as 'Days start-end, "
-        "location (type)', several separated by '; '; 'none scheduled' means no set times)"
+        + (" " if open_only else " (full when seats_taken >= seats_total); ")
+        + ("" if open_only or compact else "waitlist (its capacity and how many are on it); ")
+        + "campus; modality (in-person, online or hybrid); meetings (each as "
+        + ("'Days start-end'" if compact else "'Days start-end, location (type)'")
+        + ", several separated by '; '; 'none scheduled' means no set times)"
         + (". Full and cancelled sections are not listed.\n\n" if open_only else
            "; cancelled (True means it cannot be registered for).\n\n"))
     return key + _table("sections", rows)
@@ -177,11 +164,12 @@ def render_raw(open_only: bool = False) -> str:
 
 
 class TallySession:
-    """The pipeline's session (the default run):
+    """The pipeline's session (every run is one):
         start  read the Section Tally once and build the opening turn in the chosen version
                (TALLY_VARIANTS)
-        run    each case is its own call: the opening turn (cached), the model's fixed
-               acknowledgement (harness.SESSION_ACK), then that case's request
+        run    each case is its own call: the opening turn and the output instructions
+               (cached), the model's fixed acknowledgement (harness.SESSION_ACK), then that
+               case's request
         close  report what the session cost and how much of the input came from the cache (the
                results file's session summary keeps the same totals; run_cases() writes it)
     The API keeps no state, so every call resends the opening and the provider's cache keeps
@@ -191,7 +179,7 @@ class TallySession:
     def __init__(self, ttl: str = "5m", variant: str = "trimmed"):
         """ttl: cache lifetime; variant: a TALLY_VARIANTS key."""
         self.ttl, self.variant, self.text = ttl, variant, ""
-        self.raw, self.open_only = TALLY_VARIANTS[variant]
+        self.raw, self.open_only, self.compact = TALLY_VARIANTS[variant]
         self.contract = (RAW_CONTRACT if self.raw else WHOLE_CONTRACT) + (OPEN_NOTE if self.open_only else "")
         self.id = f"{variant}-{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}"
         self.calls = self.prompt = self.cached = self.written = 0
@@ -200,7 +188,7 @@ class TallySession:
     def __enter__(self):
         """Reads the Section Tally once and builds the opening turn."""
         schedule = section_tally.full_schedule()
-        self.text = render_raw(self.open_only) if self.raw else render_tally(schedule, self.open_only)
+        self.text = render_raw(self.open_only) if self.raw else render_tally(schedule, self.open_only, self.compact)
         rows = sum(1 for s in schedule["sections"] if _is_open(s)) if self.open_only else len(schedule["sections"])
         print(f"session {self.id} started: Section Tally ({self.variant}), {rows:,} sections, "
               f"{len(self.text):,} characters, cache ttl {self.ttl}")
@@ -225,56 +213,26 @@ class TallySession:
 
 
 def resolve_case(case: dict) -> dict:
-    """A case takes its schedule from the Section Tally instead of writing it out:
-        "schedule_from_tally": {"named_courses": true, "courses": [...]}
-            every section of every course the input names (named_courses()), plus of the
-            optional `courses` (e.g. a course the prompt names only by title), listed in the
-            prompt, so the model reads everything in one input (what every case file says;
-            the run uses it with --named-courses)
-        "schedule_from_tally": {"whole": true}
-            the whole tally, read from the session's opening turn (TallySession); the
-            checker sees every section (the default run switches every case to this)
-    This fills in input.schedule from the Section Tally export (section_tally.TALLY_CSV),
-    so everything after it (validation, database, scoring) sees an ordinary input object.
-    A case whose input names a `program` is first built from degree_requirements.json, with
-    its transcript fabricated from the case's spec (fabricate.build_input())."""
-    if "program" in case.get("input", {}):
-        case = {**case, "input": fabricate.build_input(case["input"])}
-    ref = case.get("schedule_from_tally")
-    if ref is None:
-        return case
-    name = case.get("case_id", "<no id>")
-    if not isinstance(ref, dict) or set(ref) - TALLY_KEYS:
-        raise ValueError(f"{name}: schedule_from_tally takes named_courses (and courses), "
-                         f"or whole, nothing else")
-    if ref.get("whole") and set(ref) != {"whole"}:
-        raise ValueError(f"{name}: with whole, the model reads every section; give nothing else")
-    if not (ref.get("named_courses") or ref.get("whole")):
-        raise ValueError(f"{name}: schedule_from_tally needs named_courses: true or whole: true")
-    if "schedule" in case["input"]:
-        raise ValueError(f"{name}: give input.schedule or schedule_from_tally, not both")
-    data = {key: value for key, value in case["input"].items() if key != "prompt"}
-    if ref.get("whole"):
-        data["schedule"] = section_tally.full_schedule()
-    else:
-        data["schedule"] = section_tally.course_schedule(
-            named_courses(case["input"]) + list(ref.get("courses", [])))
+    """The full input object of a case: built from its degree program (degree_requirements.json)
+    with its transcript fabricated from the case's spec (fabricate.build_input()), and the whole
+    Section Tally as its schedule, so validation, the checker's database and scoring see every
+    section, as the model does in the session's opening. (`candidate_courses` is metadata for the
+    generator and the chance baseline; nothing here reads it.)"""
+    data = fabricate.build_input(case["input"])
+    if "schedule" in data:
+        raise ValueError(f"{case.get('case_id', '<no id>')}: the schedule is the whole Section Tally; "
+                         f"the case must not write one out")
+    data = {key: value for key, value in data.items() if key != "prompt"}
+    data["schedule"] = section_tally.full_schedule()
     data["prompt"] = case["input"]["prompt"]
     return {**case, "input": data}
 
 
-def load_test_cases(path="paired_cases.json", task_ids=None, whole=False) -> list:
-    """The cases in a file (only `task_ids`, if given), with any schedule_from_tally filled in.
-    Cases are chosen BEFORE the tally is read, so a case that does not use it never fails on it.
-    whole=True runs every tally-based case with the whole Section Tally (the session; main()
-    does this unless --named-courses) in place of the portion its file names; the case file
-    itself is unchanged."""
+def load_test_cases(path="paired_cases.json", task_ids=None) -> list:
+    """The cases in a file (only `task_ids`, if given), each resolved to its full input object."""
     cases = json.loads(Path(path).read_text(encoding="utf-8"))
     if task_ids:
         cases = [case for case in cases if case.get("case_id") in task_ids]
-    if whole:
-        cases = [{**case, "schedule_from_tally": {"whole": True}} if "schedule_from_tally" in case
-                 else case for case in cases]
     return [resolve_case(case) for case in cases]
 
 
@@ -1129,16 +1087,14 @@ def render_nl(state: dict) -> str:
     return "\n".join(lines)
 
 
-def to_task(case: dict, rendering: str = "json", session: "TallySession | None" = None) -> TaskSpec:
+def to_task(case: dict, rendering: str, session: TallySession) -> TaskSpec:
     """What the model sees: the whole input object, never the answer key.
-    `prompt` becomes the intent; the rest is the known state. In a session the sections are
-    not in the case's own text: they are the session's opening turn."""
+    `prompt` becomes the intent; the rest is the known state. The sections are not in the
+    case's own text: they are the session's opening turn, which also carries the output
+    instructions (the same for every case, so they are cached with it)."""
     data = case["input"]
     state = {key: value for key, value in data.items() if key != "prompt"}
-    if is_whole(case):                        # the sections are the session's opening
-        state["schedule"] = {"term": data["schedule"]["term"], "term_code": data["schedule"]["term_code"]}
-    if is_whole(case) and session is None:
-        raise ValueError(f"{case['case_id']} reads the whole tally: run it inside a TallySession")
+    state["schedule"] = {"term": data["schedule"]["term"], "term_code": data["schedule"]["term_code"]}
     if rendering == "json":
         inputs = json.dumps(state)
     elif rendering == "csv":      # harness.py labels the state "JSON", so say what it really is
@@ -1149,28 +1105,28 @@ def to_task(case: dict, rendering: str = "json", session: "TallySession | None" 
         task_id=case["case_id"],
         inputs=inputs,
         intent=data["prompt"],
-        output_contract=OUTPUT_CONTRACT + CRN_CONTRACT + (session.contract if is_whole(case) else ""),
-        shared_context=session.text if is_whole(case) else "",
-        shared_context_ttl=session.ttl if is_whole(case) else "5m",
+        output_contract=OUTPUT_CONTRACT + CRN_CONTRACT + session.contract,
+        shared_context=session.text,
+        shared_context_ttl=session.ttl,
     )
 
 
 # ── Logging ──
 
 def readable_prompt(prompt_sent: str) -> dict:
-    """prompt_sent split into its parts, for reading: the known state (an object when it was
-    sent as JSON, otherwise its lines), the intent, and the output contract.
-    The layout is harness.build_messages(): 'Known state (JSON):\\n<state>\\n\\nIntent: <intent>\\n\\n<contract>'."""
+    """The case's own turn split into its parts, for reading: the known state (an object when
+    it was sent as JSON, otherwise its lines) and the intent. The layout is
+    harness.build_messages(): 'Known state (JSON):\\n<state>\\n\\nIntent: <intent>'; the output
+    instructions are in the session's cached opening (its summary's output_contract)."""
     head = "Known state (JSON):\n"
     if not prompt_sent.startswith(head) or "\n\nIntent: " not in prompt_sent:
         return {"text": prompt_sent.splitlines()}
-    state, _, rest = prompt_sent[len(head):].partition("\n\nIntent: ")
-    intent, _, contract = rest.partition("\n\n")
+    state, _, intent = prompt_sent[len(head):].partition("\n\nIntent: ")
     try:
         state = json.loads(state)
     except json.JSONDecodeError:
         state = state.splitlines()           # the csv and nl renderings
-    return {"known_state": state, "intent": intent, "output_contract": contract}
+    return {"known_state": state, "intent": intent}
 
 
 def readable_row(row: dict, verdict: dict) -> dict:
@@ -1198,13 +1154,10 @@ def readable_row(row: dict, verdict: dict) -> dict:
 # opening, output contract) and its totals; a result row holds only what is its own and names
 # its session. Nothing is stored twice, except deviation_score (also averaged in the summary).
 
-# Fields that are the same for every row of a session: kept once, in its summary.
-SESSION_FIELDS = ("model", "tally_variant", "shared_context", "session_cost_usd", "session_avg_cost_per_prompt_usd")
+# Fields of a generation that are the same for every row of a session: kept once, in its summary.
+SESSION_FIELDS = ("model", "shared_context")
 # Duplicates dropped from a row: prompt_sent (prompt_readable holds it, parsed), ok (= error is null).
 ROW_DROPPED = ("prompt_sent", "ok")
-# Verdict fields of older results files that repeat others (tiers.tier3, the failed tier4_checks);
-# dropped when such a file is read and saved again.
-VERDICT_DROPPED = ("tier3_detail", "violated")
 ROW_ORDER = ("task_id", "session_id", "run_index", "ts", "case_hashes", "prompt_readable", "parsed_output",
              "raw_output", "error", "finish_reason", "native_finish_reason", "served_model", "provider",
              "generation_id", "prompt_tokens", "cached_tokens", "cache_write_tokens", "completion_tokens",
@@ -1219,8 +1172,7 @@ def answer_text(row: dict) -> str:
 
 def slim_row(row: dict) -> dict:
     """A result row without its session's shared fields or duplicates: the raw answer is kept
-    only when it is not JSON (otherwise parsed_output holds it), and the output contract only
-    where it differs from the session's (the caller passes that check). Idempotent."""
+    only when it is not JSON (otherwise parsed_output holds it). Idempotent."""
     out = {k: v for k, v in row.items() if k not in SESSION_FIELDS + ROW_DROPPED}
     if out.get("parsed_output") is not None and "raw_output" in out:
         try:
@@ -1232,46 +1184,24 @@ def slim_row(row: dict) -> dict:
         out.pop("parsed_output", None)
     if out.get("raw_output") == "" and out.get("error") is not None:
         del out["raw_output"]                 # a failed call returned nothing; error says why
-    if isinstance(out.get("verdict"), dict):
-        out["verdict"] = {k: v for k, v in out["verdict"].items() if k not in VERDICT_DROPPED}
     ordered = {k: out[k] for k in ROW_ORDER if k in out}
     return {**ordered, **{k: v for k, v in out.items() if k not in ordered}}
 
 
 def load_results(path: str) -> tuple:
-    """(sessions, results) from a results file, [] and [] if there is none. An older file (a
-    bare list of rows, each carrying its session's fields) is converted: each session's shared
-    fields become its summary's, and rows without a session are grouped by model."""
+    """(sessions, results) from a results file, [] and [] if there is none."""
     file = Path(path)
     if not file.exists():
         return [], []
     data = json.loads(file.read_text(encoding="utf-8"))
-    if isinstance(data, dict):
-        return data.get("sessions", []), data.get("results", [])
-    sessions = {}
-    for row in data:
-        sid = row.get("session_id") or f"named-{row.get('model', 'unknown')}"
-        row["session_id"] = sid
-        s = sessions.setdefault(sid, {"session_id": sid})
-        for field in ("model", "tally_variant", "shared_context"):
-            s.setdefault(field, row.get(field))
-        contract = (row.get("prompt_readable") or {}).get("output_contract")
-        if contract is not None:
-            s.setdefault("output_contract", contract)
-    return list(sessions.values()), data
+    if not isinstance(data, dict):
+        raise ValueError(f"{path} is not a results file of this pipeline ({{\"sessions\", \"results\"}})")
+    return data.get("sessions", []), data.get("results", [])
 
 
 def save_results(path: str, sessions: list, results: list) -> None:
-    """Writes the results file; every row is slimmed, and a row's output contract is dropped
-    when it is its session's."""
-    contract = {s["session_id"]: s.get("output_contract") for s in sessions}
-    rows = []
-    for row in results:
-        row = slim_row(row)
-        readable = row.get("prompt_readable")
-        if isinstance(readable, dict) and readable.get("output_contract") == contract.get(row.get("session_id")):
-            row["prompt_readable"] = {k: v for k, v in readable.items() if k != "output_contract"}
-        rows.append(row)
+    """Writes the results file, every row slimmed."""
+    rows = [slim_row(row) for row in results]
     Path(path).write_text(json.dumps({"sessions": sessions, "results": rows}, indent=2) + "\n", encoding="utf-8")
 
 
@@ -1417,22 +1347,6 @@ def case_hashes(case: dict) -> dict:
     return {"input": digest(case.get("input")), "rules": digest((case.get("ground_truth") or {}).get("rules"))}
 
 
-def code_version() -> dict:
-    """The git commit the code ran from, and whether the working tree had uncommitted changes
-    (then the commit alone does not reproduce the run; the changed files are listed)."""
-    def git(*args):
-        try:
-            return subprocess.run(["git", *args], capture_output=True, text=True, timeout=20,
-                                  cwd=Path(__file__).parent).stdout.rstrip("\n")
-        except (OSError, subprocess.SubprocessError):
-            return ""
-    commit = git("rev-parse", "HEAD").strip()
-    # porcelain lines are "XY path": two status letters (either may be a space), a space, the path
-    changed = [line[3:] for line in git("status", "--porcelain").splitlines() if line.strip()]
-    return {"commit": commit or None, "branch": git("rev-parse", "--abbrev-ref", "HEAD").strip() or None,
-            "uncommitted_changes": bool(changed), "changed_files": changed}
-
-
 # ── Runner ──
 
 def check_cases(cases: list) -> int:
@@ -1457,33 +1371,35 @@ def check_cases(cases: list) -> int:
 
 def main():
     """Command line. --check scores every answer key and exits; otherwise every case is validated
-    first (nothing is spent on a broken case), then run in a session or, with --named-courses,
-    without one."""
+    first (nothing is spent on a broken case), the run's cost is estimated (and refused above
+    --max-cost), then the cases run in one session."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", help="required unless --check")
     parser.add_argument("--test-file", default="paired_cases.json")
     parser.add_argument("--output", default="semantic_eval_results.json")
-    parser.add_argument("--task-ids", nargs="+", help="run only these cases, e.g. case_012 case_013")
+    parser.add_argument("--task-ids", nargs="+", help="run only these cases (give both halves of a pair)")
     parser.add_argument("-n", type=int, default=1, help="samples per case")
     parser.add_argument("--rendering", choices=RENDERINGS, default="json",
                         help="how a case's state is shown to the model")
     parser.add_argument("--check", action="store_true",
                         help="score each case's own answer key and exit; no model call")
-    parser.add_argument("--named-courses", action="store_true",
-                        help="no session: each case's prompt lists only the sections of the courses "
-                             "it names (the earlier pipeline)")
     parser.add_argument("--tally", choices=list(TALLY_VARIANTS), default="trimmed",
-                        help="the session's opening: 1 raw (the CSV as downloaded), 2 trimmed (converted, "
-                             "unused columns dropped), 3 raw-open (raw, full and cancelled sections "
-                             "dropped), 4 trimmed-open (both)")
+                        help="the session's opening: raw (the CSV as downloaded), trimmed (converted, unused "
+                             "columns dropped), compact (trimmed without meeting rooms, types and waitlists), "
+                             "raw-open / trimmed-open (full and cancelled sections dropped)")
     parser.add_argument("--cache-ttl", choices=["5m", "1h"], default="5m",
-                        help="how long the session's cached opening lives between calls")
+                        help="how long the session's cached opening lives between calls (1h for slow runs)")
+    parser.add_argument("--max-cost", type=float,
+                        help="USD: refuse to start when the estimated cost is higher, and stop the run once "
+                             "the calls made have cost this much")
     parser.add_argument("--pair-report", action="store_true",
-                        help="print paired accuracy per model from --output against --test-file's pairs and exit")
+                        help="print paired accuracy per session from --output against --test-file's pairs and exit")
     parser.add_argument("--rescore", action="store_true",
                         help="re-grade the saved answers in --output with the current scorer and rewrite their "
                              "verdicts; no model call")
-    parser.add_argument("--max-tokens", type=int, help="cap on output tokens per call (default: the provider's)")
+    parser.add_argument("--max-tokens", type=int, default=16000,
+                        help="cap on output tokens per call, thinking included (well above the ~500-1,000 a "
+                             "call uses; it only stops a runaway answer)")
     parser.add_argument("--effort", choices=["minimal", "low", "medium", "high", "xhigh"],
                         help="reasoning effort sent to the model (default: the model's own; recorded either way)")
     parser.add_argument("--compare", nargs=2, metavar=("A", "B"),
@@ -1500,22 +1416,89 @@ def main():
     if args.compare:
         compare(args.test_file, *args.compare)
         return
-    cases = load_test_cases(args.test_file, args.task_ids, whole=not args.named_courses)
+    cases = load_test_cases(args.test_file, args.task_ids)
     if args.check:
         sys.exit(1 if check_cases(cases) else 0)
     if not args.model:
         parser.error("--model is required unless --check is given")
+    if not cases:
+        parser.error("no cases to run: check --task-ids against --test-file")
 
     backend = OpenRouterBackend(max_tokens=args.max_tokens, effort=args.effort)
     for case in cases:                       # every case is sound before anything is spent
         problems = validate_case(case)
         if problems:
             raise ValueError(f"{case.get('case_id')} is not a valid test case: {problems}")
-    if any(is_whole(case) for case in cases):
-        with TallySession(args.cache_ttl, args.tally) as session:
-            run_cases(cases, backend, args, session)
-    else:
-        run_cases(cases, backend, args)
+    with TallySession(args.cache_ttl, args.tally) as session:
+        estimate = estimate_cost(args.model, session, cases, args.n, args.rendering, args.max_tokens)
+        print(estimate["text"])
+        if args.max_cost is not None and estimate["usd"] is not None and estimate["usd"] > args.max_cost:
+            print(f"not started: the estimate (${estimate['usd']:.2f}) is above --max-cost ${args.max_cost:g}; "
+                  f"run fewer cases (--task-ids, -n), a smaller --tally, or raise --max-cost")
+            return
+        run_cases(cases, backend, args, session, estimate)
+
+
+# Tokens per character of the session's opening, measured on Claude in the 2026-10-19 runs:
+# the registrar's CSV (raw) tokenizes denser than the converted tables. The case's own turn is
+# estimated at 0.5 tokens per character and an answer at 1,500 tokens (thinking included), both
+# on the high side of what the runs used, so the estimate leans high.
+TOKENS_PER_CHAR = {True: 0.54, False: 0.62}
+CASE_TOKENS_PER_CHAR, ANSWER_TOKENS = 0.5, 1500
+
+
+def model_price(model: str, prompt_tokens: float) -> dict | None:
+    """OpenRouter's per-token prices for `model` at this prompt size: the highest across its
+    providers (OpenRouter may route to any of them), with each provider's long-prompt prices
+    applied when the prompt reaches their threshold (e.g. Claude Haiku 5.5 costs five times as
+    much from 100k prompt tokens). The general model list shows only the base prices, so the
+    per-provider endpoints are read; the list is the fallback. None when the model is unknown."""
+    keys = ("prompt", "completion", "input_cache_read", "input_cache_write")
+    url = f"https://openrouter.ai/api/v1/models/{model.split(':')[0]}/endpoints"
+    endpoints = (requests.get(url, timeout=30).json().get("data") or {}).get("endpoints") or []
+    prices = []
+    for e in endpoints:
+        p = dict(e.get("pricing") or {})
+        for tier in sorted(p.pop("overrides", None) or [], key=lambda o: o.get("min_prompt_tokens", 0)):
+            if prompt_tokens >= tier.get("min_prompt_tokens", float("inf")):
+                p.update({k: v for k, v in tier.items() if k in keys})
+        prices.append(p)
+    if not prices:
+        listed = requests.get("https://openrouter.ai/api/v1/models", timeout=30).json()["data"]
+        return next((m["pricing"] for m in listed if m["id"] == model), None)
+    worst = {k: max(float(p[k]) for p in prices if p.get(k)) for k in keys if any(p.get(k) for p in prices)}
+    if model.endswith(":batch"):        # endpoints list the standard prices; batch is half of each
+        worst = {k: v / 2 for k, v in worst.items()}
+    return worst
+
+
+def estimate_cost(model: str, session: TallySession, cases: list, n: int, rendering: str,
+                  max_tokens: int | None) -> dict:
+    """The run's estimated cost from OpenRouter's current prices for `model`: one cache write of
+    the opening, a cache read of it on every later call, each case's own turn at the input price,
+    and each answer at the output price. {"usd": float or None, "text": one line to print}."""
+    first = to_task(cases[0], rendering, session)
+    opening = (len(first.shared_context) + len(first.output_contract)) * TOKENS_PER_CHAR[session.raw]
+    try:
+        price = model_price(model, opening)
+        why = None if price else f"{model} has no prices on OpenRouter"
+    except Exception as e:              # no prices: run without an estimate (--max-cost still stops the run)
+        price, why = None, f"OpenRouter's prices could not be read ({type(e).__name__})"
+    if price is None:
+        return {"usd": None, "text": f"cost estimate unavailable: {why}; --max-cost still stops the run "
+                                     f"once it is reached"}
+    p_in, p_out = float(price["prompt"]), float(price["completion"])
+    p_read = float(price.get("input_cache_read") or 0.1 * p_in)
+    p_write = float(price.get("input_cache_write") or 1.25 * p_in)
+    calls = len(cases) * n
+    case_tokens = sum(len(to_task(c, rendering, session).inputs) + len(c["input"]["prompt"]) for c in cases) \
+        * CASE_TOKENS_PER_CHAR * n
+    answer = min(ANSWER_TOKENS, max_tokens or ANSWER_TOKENS)
+    usd = opening * p_write + (calls - 1) * opening * p_read + case_tokens * p_in + calls * answer * p_out
+    return {"usd": round(usd, 4),
+            "text": f"estimated cost: ${usd:.2f} for {calls} call(s) on {model} (cache write ${opening * p_write:.2f}, "
+                    f"then about ${(usd - opening * p_write) / calls:.3f} per call; prices from OpenRouter, "
+                    f"tokens estimated on the high side)"}
 
 
 def mcnemar(only_a: int, only_b: int) -> float:
@@ -1534,7 +1517,7 @@ def compare(case_file: str, file_a: str, file_b: str) -> None:
     failed call: per case, and per pair when the cases are pairs. Prints the counts and p."""
     def outcomes(path):
         sessions, results = load_results(path)
-        label = ", ".join(f"{s.get('model')} / {s.get('tally_variant') or 'named'}" for s in sessions)
+        label = ", ".join(f"{s.get('model')} / {s.get('tally_variant')}" for s in sessions)
         return label, {(r["task_id"], r["run_index"]): r["verdict"]["outcome"] for r in results}
     (la, a), (lb, b) = outcomes(file_a), outcomes(file_b)
     keys = sorted(k for k in set(a) & set(b) if "generation_failed" not in (a[k], b[k]))
@@ -1564,21 +1547,14 @@ def compare(case_file: str, file_a: str, file_b: str) -> None:
 def rescore(case_file: str, results_file: str) -> None:
     """Re-grades every saved answer in a results file with the current scorer (all four tiers),
     rewrites its verdict and pair_result, and rebuilds the session summaries. A row whose call
-    failed keeps its verdict. Each case is graded against the schedule its session used: the
-    whole tally when the session had one, else the named courses. Prints any outcome that
-    changed. An older file (a bare list of rows) is rewritten in the current layout."""
+    failed keeps its verdict. Prints any outcome that changed."""
     sessions, results = load_results(results_file)
-    variant = {s["session_id"]: s.get("tally_variant") for s in sessions}
-    ids = {row["task_id"] for row in results}
-    whole = load_test_cases(case_file, ids, whole=True) if any(variant.get(r["session_id"]) for r in results) else []
-    named = load_test_cases(case_file, ids) if any(not variant.get(r["session_id"]) for r in results) else []
-    by_id = {"whole": {c["case_id"]: c for c in whole}, "named": {c["case_id"]: c for c in named}}
+    by_id = {c["case_id"]: c for c in load_test_cases(case_file, {row["task_id"] for row in results})}
     changed = graded = 0
     for row in results:
         if row.get("error") is not None:
-            row["verdict"].setdefault("error_type", "call_failed")
             continue
-        case = by_id["whole" if variant.get(row["session_id"]) else "named"][row["task_id"]]
+        case = by_id[row["task_id"]]
         verdict = evaluate_case(case, answer_text(row))
         tag = call_error_type(verdict, row.get("finish_reason"), row.get("native_finish_reason"))
         if tag:
@@ -1594,30 +1570,32 @@ def rescore(case_file: str, results_file: str) -> None:
           + (f"; pair_result on {related} rows" if related else ""))
 
 
-def run_cases(cases: list, backend, args, session: TallySession | None = None) -> None:
+def run_cases(cases: list, backend, args, session: TallySession, estimate: dict) -> None:
     """Runs every case n times: generate, score through all four tiers, print one line, and
-    append the row to the results file. At the end, sets each pair row's pair_result and writes
-    the session's summary (settings and totals) into the file, then prints the totals and
-    paired accuracy."""
-    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    first = to_task(cases[0], args.rendering, session) if cases else None
+    append the row to the results file; stops early once the calls have cost --max-cost. At
+    the end, sets each pair row's pair_result and writes the session's summary (settings and
+    totals) into the file, then prints the totals and paired accuracy."""
+    first = to_task(cases[0], args.rendering, session)
     raw_cases = {c["case_id"]: c for c in json.loads(Path(args.test_file).read_text(encoding="utf-8"))}
-    meta = {"session_id": session.id if session else f"named-{stamp}", "model": args.model,
+    meta = {"session_id": session.id, "model": args.model,
             "test_file": args.test_file, "test_file_sha256": file_hash(args.test_file),
-            "code_version": code_version(), "tally_variant": session.variant if session else None,
-            "rendering": args.rendering, "samples_per_case": args.n,
-            "cache_ttl": session.ttl if session else None,
-            "generation_settings": backend.settings,
-            "shared_context": shared_context_info(first) if first and first.shared_context else None,
-            "output_contract": first.output_contract if first else None}
+            "tally_variant": session.variant,
+            "rendering": args.rendering, "samples_per_case": args.n, "cache_ttl": session.ttl,
+            "generation_settings": backend.settings, "prompt_layout": PROMPT_LAYOUT,
+            "shared_context": context_label(first), "output_contract": first.output_contract,
+            "cost_estimate_usd": estimate["usd"], "max_cost_usd": args.max_cost}
     if args.n < 3:
         print(f"note: {args.n} sample(s) per case; use -n 3 or more to compare sessions reliably")
     passed, runs, cost, outcomes = 0, 0, 0.0, {}
+    stopped = False
     for case in cases:
         task = to_task(case, args.rendering, session)
         hashes = case_hashes(raw_cases.get(case["case_id"], case))
 
         for run_index in range(args.n):
+            if args.max_cost is not None and cost >= args.max_cost:
+                stopped = True
+                break
             result = generate(backend, args.model, task, run_index=run_index)
             if result.ok:
                 verdict = evaluate_case(case, result.raw_output)
@@ -1627,19 +1605,26 @@ def run_cases(cases: list, backend, args, session: TallySession | None = None) -
             else:
                 verdict = {"outcome": "generation_failed", "detail": result.error, "error_type": "call_failed"}
 
-            if session:
-                session.record(result)
+            session.record(result)
             passed += verdict["outcome"] == "semantic_ok"
             outcomes[(task.task_id, run_index)] = verdict["outcome"]
             runs += 1
             cost += result.usd_cost
             label = task.task_id if args.n == 1 else f"{task.task_id} run {run_index}"
             cache = (f" [cache: {result.cached_tokens:,} read, {result.cache_write_tokens:,} "
-                     f"written, ${result.usd_cost:.4f}]") if is_whole(case) else ""
+                     f"written, ${result.usd_cost:.4f}]")
             print(f"{label}: {verdict['outcome']:20s} | {verdict.get('detail', '')}{cache}")
             log_readable(result, verdict, args.output, meta, {"case_hashes": hashes})
+        if stopped:
+            break
 
+    if stopped:
+        print(f"stopped: the calls made have cost ${cost:.4f}, reaching --max-cost ${args.max_cost:g}; "
+              f"{len(cases) * args.n - runs} call(s) not made")
     sessions, results = load_results(args.output)
+    for s in sessions:
+        if s["session_id"] == meta["session_id"] and stopped:
+            s["stopped_at_max_cost"] = True
     if pairs_of(cases):
         relate_pairs(args.test_file, results)     # each pair row's pair_result
     save_results(args.output, rebuild_summaries(args.test_file, sessions, results), results)

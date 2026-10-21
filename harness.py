@@ -19,34 +19,33 @@ class TaskSpec:                 # everything that MAY go to the model
     task_id: str
     inputs: str                 # JSON: known state (+ optional status-read)
     intent: str                 # what the user wants achieved
-    output_contract: str = ""   # domain-specific required body shape + example (grounding)
-    shared_context: str = ""    # the session's opening turn, identical for many tasks (e.g. the
+    output_contract: str        # domain-specific required body shape + example (grounding)
+    shared_context: str         # the session's opening turn, identical for every task (the
                                 # whole Section Tally); sent first and marked for prompt caching
     shared_context_ttl: str = "5m"   # cache lifetime: "5m" or "1h"
 
-# The model's fixed reply to the session's opening turn, so a session call reads
+# The model's fixed reply to the session's opening turn, so a call reads
 # opening -> acknowledgement -> request. Byte-identical every call, like the opening.
 SESSION_ACK = "I have read the Section Tally. Send the registration request."
 
+# How build_messages() lays a call out; recorded in each results file's session summary.
+PROMPT_LAYOUT = ("system prompt | user: Section Tally + output instructions (cached) | "
+                 "assistant: fixed acknowledgement | user: known state + intent")
+
 def build_messages(task: TaskSpec) -> list:
-    """The chat messages for one task: the system prompt, then either one user turn, or a
-    session's opening turn, its fixed acknowledgement and the task's own turn."""
-    user = f"Known state (JSON):\n{task.inputs}\n\nIntent: {task.intent}"
-    if task.output_contract:
-        user += f"\n\n{task.output_contract}"
-    if not task.shared_context:
-        return [{"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user",   "content": user}]
-    # A session: the shared opening is its own first turn, byte-identical for every task, with
-    # a cache breakpoint after it; the acknowledgement and the request follow. The API keeps no
-    # state, so every call resends the opening; the provider caches it on the first call and
-    # later calls read it from the cache (Anthropic: write 1.25x, read ~0.05-0.1x).
+    """The chat messages for one task: the system prompt; the session's opening turn, which is
+    the shared context and the output instructions; its fixed acknowledgement; and the task's own
+    turn. The opening is byte-identical for every task, with a cache breakpoint after it, so the
+    instructions are cached with the tally rather than resent at full price. The API keeps no
+    state, so every call resends the opening; the provider caches it on the first call and later
+    calls read it from the cache (Anthropic: write 1.25x, read ~0.05-0.1x)."""
     cache = {"type": "ephemeral", **({"ttl": "1h"} if task.shared_context_ttl == "1h" else {})}
     return [{"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": [
-                {"type": "text", "text": task.shared_context, "cache_control": cache}]},
+                {"type": "text", "text": task.shared_context},
+                {"type": "text", "text": task.output_contract, "cache_control": cache}]},
             {"role": "assistant", "content": SESSION_ACK},
-            {"role": "user", "content": user}]
+            {"role": "user", "content": f"Known state (JSON):\n{task.inputs}\n\nIntent: {task.intent}"}]
 
 def _prompt_text(message: dict) -> str:
     """The task-specific prompt text of a message (the shared opening is logged separately)."""
@@ -170,12 +169,12 @@ class GenerationResult:
     provider: str | None = None
     generation_id: str | None = None
 
-def _context_label(task: TaskSpec) -> str:
-    """Describes a task's shared opening for the log (size, hash, cache lifetime), never its text."""
-    if not task.shared_context:
-        return ""
-    digest = hashlib.sha256(task.shared_context.encode("utf-8")).hexdigest()[:12]
-    return f"{len(task.shared_context):,} characters, sha256 {digest}, cache ttl {task.shared_context_ttl}"
+def context_label(task: TaskSpec) -> str:
+    """Describes a task's cached opening (the shared context and the output instructions) for the
+    log: sizes, one hash over both, cache lifetime; never the text."""
+    digest = hashlib.sha256((task.shared_context + task.output_contract).encode("utf-8")).hexdigest()[:12]
+    return (f"{len(task.shared_context):,} + {len(task.output_contract):,} characters (tally + instructions), "
+            f"sha256 {digest}, cache ttl {task.shared_context_ttl}")
 
 def generate(backend: OpenRouterBackend, model: str, task: TaskSpec, run_index: int = 0) -> GenerationResult:
     """Sends one task to a model. A failed call comes back with ok=False and the error; it never raises."""
@@ -186,7 +185,7 @@ def generate(backend: OpenRouterBackend, model: str, task: TaskSpec, run_index: 
         rc = backend.call(model, messages)
     except Exception as e:
         return GenerationResult(task.task_id, model, prompt_sent, "", 0, 0, 0.0, 0.0,
-                                run_index, False, str(e), ts, shared_context=_context_label(task))
+                                run_index, False, str(e), ts, shared_context=context_label(task))
     return GenerationResult(
         task_id=task.task_id, model=model,
         prompt_sent=prompt_sent, raw_output=rc.content,
@@ -194,7 +193,7 @@ def generate(backend: OpenRouterBackend, model: str, task: TaskSpec, run_index: 
         latency_ms=rc.latency_ms, usd_cost=rc.usd_cost,
         run_index=run_index, ok=True, error=None, ts=ts,
         cached_tokens=rc.cached_tokens, cache_write_tokens=rc.cache_write_tokens,
-        shared_context=_context_label(task),
+        shared_context=context_label(task),
         reasoning_tokens=rc.reasoning_tokens, first_token_ms=rc.first_token_ms,
         finish_reason=rc.finish_reason, native_finish_reason=rc.native_finish_reason,
         served_model=rc.served_model, provider=rc.provider, generation_id=rc.generation_id)

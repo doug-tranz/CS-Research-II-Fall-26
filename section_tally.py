@@ -13,14 +13,9 @@ HOW TO RUN:
     python section_tally.py check
         converts every section and validates the result against the input schema
 
-FROM CODE (run_semantic_eval.py uses these when it loads a case):
-    course_schedule(["CS04114", "CS06205"])   every section of these courses
-                                              ("schedule_from_tally": {"named_courses": true})
-    full_schedule()                           every section in the tally
-                                              ("schedule_from_tally": {"whole": true})
-
-Cancelled sections are left out unless a function says otherwise; where they are kept they
-carry "cancelled": true, and registering for one is a consistency error.
+FROM CODE (run_semantic_eval.py uses this when it loads a case):
+    full_schedule()     every section in the tally, cancelled ones included and flagged
+                        ("cancelled": true; registering for one is a consistency error)
 """
 
 import argparse
@@ -157,17 +152,6 @@ def _schedule(rows: list) -> dict:
     code = codes.pop() if codes else ""
     return {"term": term_name(code) if code else "", "term_code": code,
             "sections": [to_section(row) for row in rows]}
-
-
-def course_schedule(courses, path: Path = TALLY_CSV) -> dict:
-    """Every section of these courses, in export order, cancelled ones left out. A course
-    with no section this term is skipped: a requirement may list courses not offered."""
-    wanted = set(courses)
-    rows = [row for row in read_tally(str(path))
-            if row["Subj"] + row["Course#"] in wanted and row["Cancelled"] != "true"]
-    if not rows:
-        raise ValueError(f"none of {sorted(wanted)} has a section in the tally")
-    return _schedule(rows)
 
 
 def full_schedule(path: Path = TALLY_CSV) -> dict:
