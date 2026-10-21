@@ -1,0 +1,63 @@
+{
+  "student": {
+    "student_id": "S-TYLER-DEMO",
+    "degree": "Bachelor of Science",
+    "major": "Computer Science",
+    "program_id": "O701",
+    "catalog_year": "Fall 2026"
+  },
+  "transcript": {
+    "completed_courses": [],
+    "transfer_courses": [],
+    "courses_in_progress": []
+  },
+  "program_requirements": [],
+  "schedule": {
+    "term": "Fall 2026",
+    "sections": [
+      {
+        "crn": "44001",
+        "course_id": "CS08300",
+        "section": "01",
+        "title": "Applied Security",
+        "credit_hours": 3,
+        "seats_total": 30,
+        "seats_taken": 5,
+        "campus": "Glassboro",
+        "modality": "in-person",
+        "meetings": [
+          {
+            "days": [
+              "Wednesday"
+            ],
+            "start_time": "10:00 AM",
+            "end_time": "11:15 AM",
+            "type": "Lecture"
+          }
+        ]
+      },
+      {
+        "crn": "44002",
+        "course_id": "CS08300",
+        "section": "02",
+        "title": "Applied Security",
+        "credit_hours": 3,
+        "seats_total": 30,
+        "seats_taken": 5,
+        "campus": "Glassboro",
+        "modality": "in-person",
+        "meetings": [
+          {
+            "days": [
+              "Wednesday"
+            ],
+            "start_time": "12:00 PM",
+            "end_time": "1:15 PM",
+            "type": "Lecture"
+          }
+        ]
+      }
+    ]
+  },
+  "prompt": "I have a non-negotiable lab on Wednesday from 10:30 AM to 11:30 AM. Enroll me in CS08300 only in a section whose meeting does not overlap any part of that lab."
+}

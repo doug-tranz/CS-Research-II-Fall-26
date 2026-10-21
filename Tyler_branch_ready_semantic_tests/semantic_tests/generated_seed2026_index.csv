@@ -1,0 +1,41 @@
+case_id,scenario_id,family,variation,expected_crns,wrong_crns,review_status
+DYN-0001,campus-001,campus,Glassboro-only,92932,74633,candidate_needs_human_review
+DYN-0002,campus-001,campus,Camden-only,74633,92932,candidate_needs_human_review
+DYN-0003,modality-002,modality,online required,92171,60166,candidate_needs_human_review
+DYN-0004,modality-002,modality,in-person required,60166,92171,candidate_needs_human_review
+DYN-0005,meeting_days-003,meeting_days,Mon/Wed,89468,80593,candidate_needs_human_review
+DYN-0006,meeting_days-003,meeting_days,Tue/Thu,80593,89468,candidate_needs_human_review
+DYN-0007,time_preference-004,time_preference,morning only,84664,65001,candidate_needs_human_review
+DYN-0008,time_preference-004,time_preference,afternoon only,65001,84664,candidate_needs_human_review
+DYN-0009,negation-005,negation,exclude 79144,97842,79144,candidate_needs_human_review
+DYN-0010,negation-005,negation,exclude 97842,79144,97842,candidate_needs_human_review
+DYN-0011,grade_threshold-006,grade_threshold,D below C-,65943,96336,candidate_needs_human_review
+DYN-0012,grade_threshold-006,grade_threshold,B meets C-,96336,65943,candidate_needs_human_review
+DYN-0013,requirement_priority-007,requirement_priority,online mandatory,92180,87522,candidate_needs_human_review
+DYN-0014,requirement_priority-007,requirement_priority,morning mandatory,87522,92180,candidate_needs_human_review
+DYN-0015,compound_intent-008,compound_intent,online AND afternoon,63203,61663;66722;69333,candidate_needs_human_review
+DYN-0016,compound_intent-008,compound_intent,in-person AND morning,69333,61663;63203;66722,candidate_needs_human_review
+DYN-0017,earned_credit_arithmetic-009,earned_credit_arithmetic,6 earned credits,80160,92892,candidate_needs_human_review
+DYN-0018,earned_credit_arithmetic-009,earned_credit_arithmetic,9 earned credits,92892,80160,candidate_needs_human_review
+DYN-0019,in_progress-010,in_progress,not currently taking,77631,99142,candidate_needs_human_review
+DYN-0020,in_progress-010,in_progress,currently taking,99142,77631,candidate_needs_human_review
+DYN-0021,campus-011,campus,Glassboro-only,77046,93506,candidate_needs_human_review
+DYN-0022,campus-011,campus,Camden-only,93506,77046,candidate_needs_human_review
+DYN-0023,modality-012,modality,online required,62203,66447,candidate_needs_human_review
+DYN-0024,modality-012,modality,in-person required,66447,62203,candidate_needs_human_review
+DYN-0025,meeting_days-013,meeting_days,Mon/Wed,87903,77463,candidate_needs_human_review
+DYN-0026,meeting_days-013,meeting_days,Tue/Thu,77463,87903,candidate_needs_human_review
+DYN-0027,time_preference-014,time_preference,morning only,86955,66040,candidate_needs_human_review
+DYN-0028,time_preference-014,time_preference,afternoon only,66040,86955,candidate_needs_human_review
+DYN-0029,negation-015,negation,exclude 76242,95812,76242,candidate_needs_human_review
+DYN-0030,negation-015,negation,exclude 95812,76242,95812,candidate_needs_human_review
+DYN-0031,grade_threshold-016,grade_threshold,D below C-,98211,68838,candidate_needs_human_review
+DYN-0032,grade_threshold-016,grade_threshold,B meets C-,68838,98211,candidate_needs_human_review
+DYN-0033,requirement_priority-017,requirement_priority,online mandatory,99199,65533,candidate_needs_human_review
+DYN-0034,requirement_priority-017,requirement_priority,morning mandatory,65533,99199,candidate_needs_human_review
+DYN-0035,compound_intent-018,compound_intent,online AND afternoon,69734,64812;80054;84641,candidate_needs_human_review
+DYN-0036,compound_intent-018,compound_intent,in-person AND morning,64812,69734;80054;84641,candidate_needs_human_review
+DYN-0037,earned_credit_arithmetic-019,earned_credit_arithmetic,6 earned credits,79901,92608,candidate_needs_human_review
+DYN-0038,earned_credit_arithmetic-019,earned_credit_arithmetic,9 earned credits,92608,79901,candidate_needs_human_review
+DYN-0039,in_progress-020,in_progress,not currently taking,73565,99204,candidate_needs_human_review
+DYN-0040,in_progress-020,in_progress,currently taking,99204,73565,candidate_needs_human_review

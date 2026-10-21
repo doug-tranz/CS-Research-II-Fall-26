@@ -1,0 +1,32 @@
+{
+  "seed": 2026,
+  "pairs_per_family": 2,
+  "families": [
+    "campus",
+    "modality",
+    "meeting_days",
+    "time_preference",
+    "negation",
+    "grade_threshold",
+    "requirement_priority",
+    "compound_intent",
+    "earned_credit_arithmetic",
+    "in_progress"
+  ],
+  "total_cases": 40,
+  "cases_by_family": {
+    "campus": 4,
+    "modality": 4,
+    "meeting_days": 4,
+    "time_preference": 4,
+    "negation": 4,
+    "grade_threshold": 4,
+    "requirement_priority": 4,
+    "compound_intent": 4,
+    "earned_credit_arithmetic": 4,
+    "in_progress": 4
+  },
+  "jsonl_sha256": "8a2df80249c4dae85d60137b5f62af60ae200d2881be8ac31b44cdc4ada05f7a",
+  "ground_truth_review": "candidate_needs_human_review",
+  "note": "All generated records are synthetic; case.input alone is sent to the model."
+}

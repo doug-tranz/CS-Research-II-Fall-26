@@ -1,0 +1,13 @@
+case_id,family,variation,reasoning_dimension,acceptable_crns,wrong_but_consistent_crns,review_status
+RC-001,capacity_fallback,Glassboro full,conditional_capacity,41002,41003,candidate_needs_human_review
+RC-002,capacity_fallback,Glassboro has one seat,conditional_capacity,41001,41002;41003,candidate_needs_human_review
+RC-003,transfer_credit_sum,6 qualifying earned credits,cross_source_credit_arithmetic,42001,42002,candidate_needs_human_review
+RC-004,transfer_credit_sum,9 qualifying earned credits,cross_source_credit_arithmetic,42002,42001,candidate_needs_human_review
+RC-005,in_progress_dedup,Algorithms currently in progress,in_progress_transcript_logic,43002,43001,candidate_needs_human_review
+RC-006,in_progress_dedup,Algorithms not in progress,in_progress_transcript_logic,43001,43002,candidate_needs_human_review
+RC-007,time_interval_overlap,lab overlaps early section,interval_overlap_reasoning,44002,44001,candidate_needs_human_review
+RC-008,time_interval_overlap,lab overlaps noon section,interval_overlap_reasoning,44001,44002,candidate_needs_human_review
+RC-009,boolean_alternatives,online afternoon OR Tuesday in-person morning,boolean_and_or,45002;45003,45001;45004;45005,candidate_needs_human_review
+RC-010,boolean_alternatives,online morning OR Tuesday in-person afternoon,boolean_and_or,45001;45004,45002;45003;45005,candidate_needs_human_review
+RC-011,semester_credit_target,target 12 credits,course_load_arithmetic,46001,46002,candidate_needs_human_review
+RC-012,semester_credit_target,target 13 credits,course_load_arithmetic,46002,46001,candidate_needs_human_review

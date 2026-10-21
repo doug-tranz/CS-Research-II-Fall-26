@@ -1,0 +1,16 @@
+{
+  "total_cases": 20,
+  "families": 10,
+  "categories": {
+    "campus_preference": 2,
+    "modality_preference": 2,
+    "meeting_days": 2,
+    "time_preference": 2,
+    "negation": 2,
+    "transcript_grade_requirement": 2,
+    "degree_progress": 2,
+    "requirement_priority": 2,
+    "compound_intent": 2,
+    "transcript_credit_status": 2
+  }
+}
