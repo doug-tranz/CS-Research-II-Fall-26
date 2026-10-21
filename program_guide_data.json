@@ -1,0 +1,128 @@
+      "PHYS00300",
+      "PHYS00325",
+      "PHYS00340",
+      "CHEML6100",
+      "CHEML6101",
+      "CHEM09250",
+      "CHEML7200"
+    ],
+    "credit_hours": 4,
+    "minimum_grade": "D-",
+    "title": "Authorized Lab Science",
+    "notes": "Choose one authorized 4-credit lab science from the complete approved list on page 4: ASTR11240 Observational Astronomy; ASTR11230 Introductory Astronomy; BIOL01104 Introduction to Evolution & Scientific Inquiry; BIOL01106 Introduction to Genetics; BIOL01203 Introduction to Cell Biology; BIOL10210 Human Anatomy and Physiology I; BIOL10212 Human Anatomy and Physiology II; BINF07310 Introduction to Bioinformatics; MCB01101 Foundations in Biology for Biomedical Sciences I; PHYS00220 Introductory Mechanics; PHYS00221 Intro. Thermodynamics, Fluids, Waves, & Optics; PHYS00222 Introductory Electricity and Magnetism; PHYS00300 Modern Physics; PHYS00325 Electric Circuits; PHYS00340 Optics and Light; CHEML6100 Chemistry I; CHEML6101 Chemistry II; CHEM09250 Quantitative Analysis; CHEML7200 Organic Chemistry I. Course IDs normalized by removing spaces; CHEM L6100/L6101/L7200 normalized to CHEML6100/CHEML6101/CHEML7200 for this draft and should be checked against the team's course-ID conventions."
+  },
+  {
+    "req_id": "NONPROG-TECH-WRITING",
+    "category": "Non-Program / Writing Intensive",
+    "rule": "all_of",
+    "course_options": [
+      "WA01302"
+    ],
+    "credit_hours": 3,
+    "minimum_grade": "D-",
+    "title": "Technical Writing",
+    "notes": "Required for the major according to the guide."
+  },
+  {
+    "req_id": "ROWAN-COML-COMP1",
+    "category": "Rowan Core - Communicative Literacy",
+    "rule": "all_of",
+    "course_options": [
+      "COMP01111"
+    ],
+    "credit_hours": 3,
+    "minimum_grade": "D-",
+    "title": "College Composition I",
+    "notes": "Part of the three-course Communicative Literacy requirement."
+  },
+  {
+    "req_id": "ROWAN-COML-COMP2",
+    "category": "Rowan Core - Communicative Literacy",
+    "rule": "all_of",
+    "course_options": [
+      "COMP01112"
+    ],
+    "credit_hours": 3,
+    "minimum_grade": "D-",
+    "title": "College Composition II",
+    "notes": "Part of the three-course Communicative Literacy requirement."
+  },
+  {
+    "req_id": "ROWAN-COML-SPEECH",
+    "category": "Rowan Core - Communicative Literacy",
+    "rule": "all_of",
+    "course_options": [
+      "CMS04205"
+    ],
+    "credit_hours": 3,
+    "minimum_grade": "D-",
+    "title": "Public Speaking",
+    "notes": "The guide says CMS04205 is required and CMS04206 does not substitute."
+  },
+  {
+    "req_id": "ROWAN-EXPERIENCE-SEMINAR",
+    "category": "Rowan Experience",
+    "rule": "all_of",
+    "course_options": [
+      "CS00100"
+    ],
+    "credit_hours": 1,
+    "minimum_grade": "D-",
+    "title": "Computer Science Learning Community",
+    "notes": "Required for incoming students and transfers according to the guide."
+  },
+  {
+    "req_id": "CS-RESTRICTED-ELECTIVES",
+    "category": "Major - Restricted Electives",
+    "rule": "credits_from",
+    "course_options": [
+      "CS01303",
+      "CS01395",
+      "CS01400",
+      "CS02370",
+      "CS02421",
+      "CS02435",
+      "CS02440",
+      "CS02480",
+      "CS02485",
+      "CS03351",
+      "CS03353",
+      "CS03440",
+      "CYBR01470",
+      "CS04305",
+      "CS04323",
+      "CS04350",
+      "CS04372",
+      "CS04376",
+      "CS04380",
+      "CS04391",
+      "CS04394",
+      "CS04401",
+      "CS04444",
+      "CS04471",
+      "CS06310",
+      "CS06390",
+      "CS06412",
+      "CS06420",
+      "CS06447",
+      "CS07310",
+      "CS07350",
+      "CS07422",
+      "CS07450",
+      "CS07455",
+      "CS07459",
+      "CS07460",
+      "CS08360",
+      "CS08380",
+      "CS08390",
+      "CS09410",
+      "CS09415",
+      "CS09416",
+      "CYBR03427",
+      "CS99300",
+      "CS99310",
+      "CS99490",
+      "DS02395"
+    ],
+    "credit_hours": 12,
+    "minimum_grade": "D-",

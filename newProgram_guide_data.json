@@ -1,0 +1,119 @@
+  [{
+    "req_id": "NONPROG-TECH-WRITING",
+    "category": "Non-Program / Writing Intensive",
+    "rule": "all_of",
+    "course_options": [
+      "WA01302"
+    ],
+    "credit_hours": 3,
+    "minimum_grade": "D-",
+    "title": "Technical Writing",
+    "notes": "Required for the major according to the guide. The guide says this requirement was introduced in Fall 2022; students who joined the program and completed INTR01266 before Fall 2022 may follow previous requirements and have WA01302 waived."
+  },
+  {
+    "req_id": "ROWAN-COML-COMP1",
+    "category": "Rowan Core - Communicative Literacy",
+    "rule": "all_of",
+    "course_options": [
+      "COMP01111"
+    ],
+    "credit_hours": 3,
+    "minimum_grade": "D-",
+    "title": "College Composition I",
+    "notes": "Part of the three-course Communicative Literacy requirement."
+  },
+  {
+    "req_id": "ROWAN-COML-COMP2",
+    "category": "Rowan Core - Communicative Literacy",
+    "rule": "all_of",
+    "course_options": [
+      "COMP01112"
+    ],
+    "credit_hours": 3,
+    "minimum_grade": "D-",
+    "title": "College Composition II",
+    "notes": "Part of the three-course Communicative Literacy requirement."
+  },
+  {
+    "req_id": "ROWAN-COML-SPEECH",
+    "category": "Rowan Core - Communicative Literacy",
+    "rule": "all_of",
+    "course_options": [
+      "CMS04205"
+    ],
+    "credit_hours": 3,
+    "minimum_grade": "D-",
+    "title": "Public Speaking",
+    "notes": "CMS04205 Public Speaking is required; the guide states it is a prerequisite for one or more major courses but does not name those courses. CMS04206 Digital Presentations is not a substitute. Do not invent specific dependent-course links from this guide alone. The guide requires all six Rowan Core literacies, at least 3 credits per literacy. Artistic and Global literacy recommendations are left unspecified in this guide; choose eligible courses with an advisor/Section Tally. A course may satisfy more than one Core/Experience attribute."
+  },
+  {
+    "req_id": "ROWAN-EXPERIENCE-SEMINAR",
+    "category": "Rowan Experience",
+    "rule": "all_of",
+    "course_options": [
+      "CS00100"
+    ],
+    "credit_hours": 1,
+    "minimum_grade": "D-",
+    "title": "Computer Science Learning Community",
+    "notes": "Required for incoming students and transfers according to the guide. The guide also requires Writing Intensive (WA01302) and a Broad-Based Literature attribute; it does not name a specific literature course. All three Rowan Experience attributes must be satisfied."
+  },
+  {
+    "req_id": "CS-RESTRICTED-ELECTIVES",
+    "category": "Major - Restricted Electives",
+    "rule": "credits_from",
+    "course_options": [
+      "CS01303",
+      "CS01395",
+      "CS01400",
+      "CS02370",
+      "CS02421",
+      "CS02435",
+      "CS02440",
+      "CS02480",
+      "CS02485",
+      "CS03351",
+      "CS03353",
+      "CS03440",
+      "CYBR01470",
+      "CS04305",
+      "CS04323",
+      "CS04350",
+      "CS04372",
+      "CS04376",
+      "CS04380",
+      "CS04391",
+      "CS04394",
+      "CS04401",
+      "CS04444",
+      "CS04471",
+      "CS06310",
+      "CS06390",
+      "CS06412",
+      "CS06420",
+      "CS06447",
+      "CS07310",
+      "CS07350",
+      "CS07422",
+      "CS07450",
+      "CS07455",
+      "CS07459",
+      "CS07460",
+      "CS08360",
+      "CS08380",
+      "CS08390",
+      "CS09410",
+      "CS09415",
+      "CS09416",
+      "CYBR03427",
+      "CS99300",
+      "CS99310",
+      "CS99490",
+      "DS02395"
+    ],
+    "credit_hours": 12,
+    "minimum_grade": "D-",
+    "title": "Computer Science Restricted Electives",
+    "notes": "Choose 12 credits from the approved list. Only 3 credits of CS99300 may apply; CS01395 may be repeated with different topics; CS01400 requires mentor/course-advisor approval; CS99300 and CS99310 require instructor permission; DS02395 is 1–3 credits. The guide does not provide a complete structured prerequisite graph; consult official catalog descriptions before enforcing course-to-course prerequisites."
+  }
+]
