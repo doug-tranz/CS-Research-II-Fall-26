@@ -1,4 +1,5 @@
-# harness.py — core harness: generation through OpenRouter, prompt caching. Domain-agnostic.
+# harness.py — core harness: generation through OpenRouter (or a local Ollama for dev testing),
+# prompt caching. Domain-agnostic.
 # Domain testbeds (e.g. registration.py) plug in for evaluation.
 import os, time, json, hashlib, requests
 from dataclasses import dataclass
@@ -141,6 +142,49 @@ class OpenRouterBackend:        # One key, many models (§4.2).
             first_token_ms=first, finish_reason=info.get("finish_reason"),
             native_finish_reason=info.get("native_finish_reason"),
             served_model=info.get("model"), provider=info.get("provider"), generation_id=info.get("id"),
+        )
+
+class OllamaBackend:            # Local and free: for testing the pipeline, not for reported results.
+    """A model served by a local Ollama (native /api/chat). Dev use only: a quantized local model
+    is not the same model as the cloud one, so its scores are not previews of cloud scores.
+
+    Ollama cuts a prompt longer than num_ctx without an error, so num_ctx is always sent, and a
+    call whose prompt filled the whole window fails instead of being scored on a cut-off prompt.
+    The whole-tally session (~400k tokens) cannot fit any local window: use --named-courses."""
+    URL = "http://localhost:11434/api/chat"
+
+    def __init__(self, num_ctx: int = 65536, max_tokens: int | None = None, timeout: int = 1800,
+                 url: str | None = None):
+        self.url = url or os.environ.get("OLLAMA_URL", self.URL)
+        self.num_ctx, self.timeout = num_ctx, timeout
+        options = {"temperature": 0, "num_ctx": num_ctx}
+        if max_tokens is not None:
+            options["num_predict"] = max_tokens
+        self.settings = {"backend": "ollama", "stream": False, "options": options}
+
+    def call(self, model, messages) -> RawCall:
+        # Ollama wants plain-text content; a session turn is a list of parts (with cache_control).
+        flat = [{"role": m["role"], "content": m["content"] if isinstance(m["content"], str)
+                 else "".join(part.get("text", "") for part in m["content"])} for m in messages]
+        t0 = time.perf_counter()
+        r = requests.post(self.url, json={"model": model, "messages": flat, "stream": False,
+                                          "options": self.settings["options"]}, timeout=self.timeout)
+        latency_ms = (time.perf_counter() - t0) * 1000
+        if r.status_code != 200:
+            raise RuntimeError(f"Ollama {r.status_code}: {r.text[:300]}")
+        d = r.json()
+        prompt_tokens = d.get("prompt_eval_count", 0) or 0
+        if prompt_tokens >= self.num_ctx:
+            raise RuntimeError(f"prompt filled the whole context ({prompt_tokens} >= num_ctx {self.num_ctx}); "
+                               "Ollama cut it, so the answer is not scored. Raise --num-ctx or use a smaller case")
+        return RawCall(
+            content=(d.get("message") or {}).get("content") or "",
+            prompt_tokens=prompt_tokens,
+            completion_tokens=d.get("eval_count", 0) or 0,
+            latency_ms=latency_ms,
+            finish_reason=d.get("done_reason"),        # "stop" or "length", as OpenRouter names them
+            native_finish_reason=d.get("done_reason"),
+            served_model=d.get("model"), provider="ollama (local)",
         )
 
 # ── Generation result (one log row) ──

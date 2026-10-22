@@ -50,10 +50,9 @@ OpenRouter lets the harness call many LLMs (Claude, GPT, Llama, …) with one AP
 ```bash
 git clone https://github.com/doug-tranz/CS-Research-II-Fall-26.git
 cd CS-Research-II-Fall-26
-git checkout ben-test-branch
 ```
 
-Already cloned? Just `git checkout ben-test-branch` and `git pull`.
+Already cloned? Just `git checkout main` and `git pull`. (Older instructions said `ben-test-branch`; that branch is far behind `main` and does not have the current pipeline.)
 
 ### 2. Set up Python (once)
 
@@ -224,6 +223,21 @@ python didcomm_schema.py               # 34 example messages, no model, no cost
 python run_semantic_eval.py --check    # every case and its answer key, no model, no cost
 python section_tally.py check          # every tally section converts and fits the input schema
 ```
+
+### Local dev runs (Ollama, free)
+
+For testing the pipeline (parsing, the scorer, prompt changes) without spending OpenRouter credit, run a local model through [Ollama](https://ollama.com):
+
+```bash
+ollama pull llama3.1:8b
+python run_semantic_eval.py --backend ollama --named-courses --model llama3.1:8b --task-ids pair-transfer-philosophy-ba-a
+```
+
+- **Dev only, never reported.** A quantized local model is not the same model as the cloud one, so local scores are not previews of cloud scores.
+- **`--named-courses` is required.** The whole-tally session (~400k tokens) fits no local context window.
+- **`--num-ctx`** (default 65536) is the context window sent with every call. Named-courses prompts run about 28k–71k tokens (median ~42k), so the default fits most cases. A prompt that fills the whole window would be cut silently by Ollama, so that call fails (`generation_failed`, "prompt filled the whole context") instead of being scored.
+- **VRAM.** On a 12 GB card, a 64k window with an 8B model needs a quantized KV cache. Set these environment variables for the Ollama server, then restart it: `OLLAMA_FLASH_ATTENTION=1` and `OLLAMA_KV_CACHE_TYPE=q8_0`.
+- `OLLAMA_URL` overrides the endpoint (default `http://localhost:11434/api/chat`). Cost is logged as 0; the backend is recorded in each session's `generation_settings`.
 
 ### Change the model
 

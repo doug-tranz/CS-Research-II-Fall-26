@@ -47,7 +47,7 @@ import re
 import sys
 from dataclasses import asdict
 from pathlib import Path
-from harness import TaskSpec, OpenRouterBackend, generate, parse_didcomm, _context_label as shared_context_info
+from harness import TaskSpec, OpenRouterBackend, OllamaBackend, generate, parse_didcomm, _context_label as shared_context_info
 import registration as reg
 import section_tally
 import fabricate
@@ -1486,6 +1486,11 @@ def main():
     parser.add_argument("--max-tokens", type=int, help="cap on output tokens per call (default: the provider's)")
     parser.add_argument("--effort", choices=["minimal", "low", "medium", "high", "xhigh"],
                         help="reasoning effort sent to the model (default: the model's own; recorded either way)")
+    parser.add_argument("--backend", choices=["openrouter", "ollama"], default="openrouter",
+                        help="openrouter (default; for results) or ollama (a local model, free; for testing the "
+                             "pipeline only, needs --named-courses)")
+    parser.add_argument("--num-ctx", type=int, default=65536,
+                        help="ollama only: context window in tokens (a longer prompt fails instead of being cut)")
     parser.add_argument("--compare", nargs=2, metavar=("A", "B"),
                         help="compare two results files on the cases and runs both have (McNemar's test); "
                              "no model call")
@@ -1506,7 +1511,15 @@ def main():
     if not args.model:
         parser.error("--model is required unless --check is given")
 
-    backend = OpenRouterBackend(max_tokens=args.max_tokens, effort=args.effort)
+    if args.backend == "ollama":
+        if not args.named_courses:
+            parser.error("--backend ollama needs --named-courses: the whole-tally session (~400k tokens) "
+                         "does not fit a local model's context")
+        if args.effort:
+            parser.error("--effort is an OpenRouter setting; leave it out with --backend ollama")
+        backend = OllamaBackend(num_ctx=args.num_ctx, max_tokens=args.max_tokens)
+    else:
+        backend = OpenRouterBackend(max_tokens=args.max_tokens, effort=args.effort)
     for case in cases:                       # every case is sound before anything is spent
         problems = validate_case(case)
         if problems:
