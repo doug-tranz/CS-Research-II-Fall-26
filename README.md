@@ -33,7 +33,14 @@ git clone https://github.com/doug-tranz/CS-Research-II-Fall-26.git
 cd CS-Research-II-Fall-26
 ```
 
-Already cloned? Just `git checkout main` and `git pull`. (Older instructions said `ben-test-branch`; that branch is far behind `main` and does not have the current pipeline.)
+Or, for this specific branch:
+
+```bash
+git clone -b ollama-dev-backend https://github.com/doug-tranz/CS-Research-II-Fall-26.git
+cd CS-Research-II-Fall-26
+```
+
+Already cloned? Run `git fetch`, then `git checkout ollama-dev-backend` (or `git checkout main`), then `git pull`.
 
 ### 2. Set up Python (once)
 
