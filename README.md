@@ -237,6 +237,8 @@ python run_semantic_eval.py --backend ollama --named-courses --model llama3.1:8b
 - **`--named-courses` is required.** The whole-tally session (~400k tokens) fits no local context window.
 - **`--num-ctx`** (default 65536) is the context window sent with every call. Named-courses prompts run about 28k–71k tokens (median ~42k), so the default fits most cases. A prompt that fills the whole window would be cut silently by Ollama, so that call fails (`generation_failed`, "prompt filled the whole context") instead of being scored.
 - **VRAM.** On a 12 GB card, a 64k window with an 8B model needs a quantized KV cache. Set these environment variables for the Ollama server, then restart it: `OLLAMA_FLASH_ATTENTION=1` and `OLLAMA_KV_CACHE_TYPE=q8_0`.
+- `--verbose` prints the model's answer as it is generated. Answers are streamed, so Ctrl+C stops a run between pieces.
+- **Always pass `--max-tokens`** (e.g. 2000) locally: without a cap a small model can keep writing until the context is full.
 - `OLLAMA_URL` overrides the endpoint (default `http://localhost:11434/api/chat`). Cost is logged as 0; the backend is recorded in each session's `generation_settings`.
 
 ### Change the model

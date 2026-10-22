@@ -154,34 +154,59 @@ class OllamaBackend:            # Local and free: for testing the pipeline, not 
     URL = "http://localhost:11434/api/chat"
 
     def __init__(self, num_ctx: int = 65536, max_tokens: int | None = None, timeout: int = 1800,
-                 url: str | None = None):
+                 url: str | None = None, verbose: bool = False):
         self.url = url or os.environ.get("OLLAMA_URL", self.URL)
-        self.num_ctx, self.timeout = num_ctx, timeout
+        self.num_ctx, self.timeout, self.verbose = num_ctx, timeout, verbose
         options = {"temperature": 0, "num_ctx": num_ctx}
         if max_tokens is not None:
             options["num_predict"] = max_tokens
-        self.settings = {"backend": "ollama", "stream": False, "options": options}
+        self.settings = {"backend": "ollama", "stream": True, "options": options}
 
     def call(self, model, messages) -> RawCall:
         # Ollama wants plain-text content; a session turn is a list of parts (with cache_control).
         flat = [{"role": m["role"], "content": m["content"] if isinstance(m["content"], str)
                  else "".join(part.get("text", "") for part in m["content"])} for m in messages]
+        # Streamed: one JSON object per line, each with a piece of the answer; the last one
+        # ("done": true) carries the token counts and why generation stopped. Streaming also
+        # lets Ctrl+C stop a run between pieces, and with verbose the answer prints as it comes.
         t0 = time.perf_counter()
-        r = requests.post(self.url, json={"model": model, "messages": flat, "stream": False,
-                                          "options": self.settings["options"]}, timeout=self.timeout)
-        latency_ms = (time.perf_counter() - t0) * 1000
+        r = requests.post(self.url, json={"model": model, "messages": flat, "stream": True,
+                                          "options": self.settings["options"]},
+                          timeout=self.timeout, stream=True)   # timeout = longest wait between pieces
         if r.status_code != 200:
             raise RuntimeError(f"Ollama {r.status_code}: {r.text[:300]}")
-        d = r.json()
+        text, first, d = [], None, {}
+        for line in r.iter_lines(decode_unicode=True):
+            if not line:
+                continue
+            chunk = json.loads(line)
+            if "error" in chunk:
+                raise RuntimeError(f"Ollama error mid-stream: {chunk['error']}")
+            piece = (chunk.get("message") or {}).get("content") or ""
+            if piece:
+                if first is None:
+                    first = (time.perf_counter() - t0) * 1000
+                text.append(piece)
+                if self.verbose:
+                    print(piece, end="", flush=True)
+            if chunk.get("done"):
+                d = chunk
+                break
+        if self.verbose:
+            print()                                   # end the streamed answer's line
+        if not d:
+            raise RuntimeError("Ollama's stream ended before the answer was finished")
+        latency_ms = (time.perf_counter() - t0) * 1000
         prompt_tokens = d.get("prompt_eval_count", 0) or 0
         if prompt_tokens >= self.num_ctx:
             raise RuntimeError(f"prompt filled the whole context ({prompt_tokens} >= num_ctx {self.num_ctx}); "
                                "Ollama cut it, so the answer is not scored. Raise --num-ctx or use a smaller case")
         return RawCall(
-            content=(d.get("message") or {}).get("content") or "",
+            content="".join(text),
             prompt_tokens=prompt_tokens,
             completion_tokens=d.get("eval_count", 0) or 0,
             latency_ms=latency_ms,
+            first_token_ms=first,
             finish_reason=d.get("done_reason"),        # "stop" or "length", as OpenRouter names them
             native_finish_reason=d.get("done_reason"),
             served_model=d.get("model"), provider="ollama (local)",

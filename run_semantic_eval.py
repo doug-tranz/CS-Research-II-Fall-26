@@ -1491,6 +1491,8 @@ def main():
                              "pipeline only, needs --named-courses)")
     parser.add_argument("--num-ctx", type=int, default=65536,
                         help="ollama only: context window in tokens (a longer prompt fails instead of being cut)")
+    parser.add_argument("--verbose", action="store_true",
+                        help="ollama only: print the model's answer as it is generated")
     parser.add_argument("--compare", nargs=2, metavar=("A", "B"),
                         help="compare two results files on the cases and runs both have (McNemar's test); "
                              "no model call")
@@ -1517,7 +1519,7 @@ def main():
                          "does not fit a local model's context")
         if args.effort:
             parser.error("--effort is an OpenRouter setting; leave it out with --backend ollama")
-        backend = OllamaBackend(num_ctx=args.num_ctx, max_tokens=args.max_tokens)
+        backend = OllamaBackend(num_ctx=args.num_ctx, max_tokens=args.max_tokens, verbose=args.verbose)
     else:
         backend = OpenRouterBackend(max_tokens=args.max_tokens, effort=args.effort)
     for case in cases:                       # every case is sound before anything is spent
@@ -1631,6 +1633,8 @@ def run_cases(cases: list, backend, args, session: TallySession | None = None) -
         hashes = case_hashes(raw_cases.get(case["case_id"], case))
 
         for run_index in range(args.n):
+            if getattr(backend, "verbose", False):
+                print(f"--- {task.task_id} run {run_index}: the model's answer as it streams ---")
             result = generate(backend, args.model, task, run_index=run_index)
             if result.ok:
                 verdict = evaluate_case(case, result.raw_output)
