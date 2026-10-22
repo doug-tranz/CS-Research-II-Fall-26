@@ -3,7 +3,7 @@ section_tally.py
 -----------------
 The "portion of the school's class registration" in the pipeline. Rowan's
 Section Tally export has one CSV row per section; this reads that export as a
-whole and turns its rows into input-format sections (README.md, "The input
+whole and turns its rows into input-format sections (docs/input-format.md, "The input
 format"), so a case carries real sections instead of invented ones.
 
 The data is ONE file, TALLY_CSV (section_tally_fall2026.csv, next to this
@@ -13,7 +13,7 @@ HOW TO RUN:
     python section_tally.py check
         converts every section and validates the result against the input schema
 
-FROM CODE (run_semantic_eval.py uses these when it loads a case):
+FROM CODE (cases.py uses these when it loads a case):
     course_schedule(["CS04114", "CS06205"])   every section of these courses
                                               ("schedule_from_tally": {"named_courses": true})
     full_schedule()                           every section in the tally
@@ -180,7 +180,8 @@ def check(path: Path = TALLY_CSV) -> int:
     """Converts every section, including cancelled ones, and validates each subject's sections
     as an input object's schedule. Returns the number of subjects with problems (a missing
     or empty export counts as a failure)."""
-    import registration as reg
+    from checker import seed_db
+    from input_format import validate_input
     template = {"student": {"student_id": "S000", "degree": "x", "major": "x", "program_id": "x",
                             "catalog_year": "Fall 2026"},
                 "transcript": {"completed_courses": [], "transfer_courses": [], "courses_in_progress": []},
@@ -198,8 +199,8 @@ def check(path: Path = TALLY_CSV) -> int:
     for subject in subjects:
         try:
             schedule = _schedule([row for row in rows if row["Subj"] == subject])
-            problems = reg.validate_input({**template, "schedule": schedule})
-            reg.seed_db({**template, "schedule": schedule})
+            problems = validate_input({**template, "schedule": schedule})
+            seed_db({**template, "schedule": schedule})
         except Exception as e:                    # report every subject, then fail
             problems = [str(e)]
         sections += len(schedule["sections"]) if not problems else 0

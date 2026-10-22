@@ -1,6 +1,6 @@
 # harness.py — core harness: generation through OpenRouter (or a local Ollama for dev testing),
 # prompt caching. Domain-agnostic.
-# Domain testbeds (e.g. registration.py) plug in for evaluation.
+# Domain modules (render.py builds tasks, scoring.py grades answers) plug in around it.
 import os, time, json, hashlib, requests
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -13,7 +13,7 @@ SYSTEM_PROMPT = (
     'The message must have the shape {"type": <string>, "id": <string>, "body": { ... }}.'
 )
 
-# ── Task ── (the answer key never comes here: it stays in the case file, see run_semantic_eval.py)
+# ── Task ── (the answer key never comes here: it stays in the case file, see cases.py)
 @dataclass(frozen=True)
 class TaskSpec:                 # everything that MAY go to the model
     """Everything that may go to the model for one task; the answer key never does."""
@@ -24,10 +24,7 @@ class TaskSpec:                 # everything that MAY go to the model
     shared_context: str = ""    # the session's opening turn, identical for many tasks (e.g. the
                                 # whole Section Tally); sent first and marked for prompt caching
     shared_context_ttl: str = "5m"   # cache lifetime: "5m" or "1h"
-
-# The model's fixed reply to the session's opening turn, so a session call reads
-# opening -> acknowledgement -> request. Byte-identical every call, like the opening.
-SESSION_ACK = "I have read the Section Tally. Send the registration request."
+    shared_context_ack: str = ""     # the model's fixed reply to the opening (the domain's text)
 
 def build_messages(task: TaskSpec) -> list:
     """The chat messages for one task: the system prompt, then either one user turn, or a
@@ -46,7 +43,7 @@ def build_messages(task: TaskSpec) -> list:
     return [{"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": [
                 {"type": "text", "text": task.shared_context, "cache_control": cache}]},
-            {"role": "assistant", "content": SESSION_ACK},
+            {"role": "assistant", "content": task.shared_context_ack},
             {"role": "user", "content": user}]
 
 def _prompt_text(message: dict) -> str:
@@ -239,7 +236,7 @@ class GenerationResult:
     provider: str | None = None
     generation_id: str | None = None
 
-def _context_label(task: TaskSpec) -> str:
+def context_label(task: TaskSpec) -> str:
     """Describes a task's shared opening for the log (size, hash, cache lifetime), never its text."""
     if not task.shared_context:
         return ""
@@ -255,7 +252,7 @@ def generate(backend: OpenRouterBackend, model: str, task: TaskSpec, run_index: 
         rc = backend.call(model, messages)
     except Exception as e:
         return GenerationResult(task.task_id, model, prompt_sent, "", 0, 0, 0.0, 0.0,
-                                run_index, False, str(e), ts, shared_context=_context_label(task))
+                                run_index, False, str(e), ts, shared_context=context_label(task))
     return GenerationResult(
         task_id=task.task_id, model=model,
         prompt_sent=prompt_sent, raw_output=rc.content,
@@ -263,7 +260,7 @@ def generate(backend: OpenRouterBackend, model: str, task: TaskSpec, run_index: 
         latency_ms=rc.latency_ms, usd_cost=rc.usd_cost,
         run_index=run_index, ok=True, error=None, ts=ts,
         cached_tokens=rc.cached_tokens, cache_write_tokens=rc.cache_write_tokens,
-        shared_context=_context_label(task),
+        shared_context=context_label(task),
         reasoning_tokens=rc.reasoning_tokens, first_token_ms=rc.first_token_ms,
         finish_reason=rc.finish_reason, native_finish_reason=rc.native_finish_reason,
         served_model=rc.served_model, provider=rc.provider, generation_id=rc.generation_id)
@@ -278,3 +275,5 @@ def parse_didcomm(raw: str):
     if not isinstance(msg, dict) or not isinstance(msg.get("body"), dict):
         return None, "missing or invalid 'body'"
     return msg["body"], ""
+
+_context_label = context_label          # the old private name, for older imports

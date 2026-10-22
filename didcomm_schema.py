@@ -1,9 +1,9 @@
 """
 didcomm_schema.py
 ------------------
-Tiers 1-2 for the registration CART message (README.md).
+Tiers 1-2 for the registration CART message (docs/message-format.md).
 Kept in its OWN file per team convention (new work = new file);
-registration.evaluate() calls it.
+checker.evaluate() calls it.
 
 The rules live in registration_message.schema.json (JSON Schema 2020-12),
 not in this file. This module only loads that schema and maps a failure

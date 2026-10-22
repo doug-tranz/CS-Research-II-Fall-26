@@ -27,7 +27,7 @@ course equivalents) comes from the program.
 The fabricator picks real courses that satisfy each requirement in `complete`, gives each a
 grade at or above every minimum it must meet (the requirement's, and any prerequisite that
 needs it), orders them so prerequisites come first, fills the terms from the catalog year to
-`through`, and then runs registration.audit() to confirm that every requirement in
+`through`, and then runs audit.audit() to confirm that every requirement in
 `complete` is met and every one in `keep_unmet` is not. Rowan Core / Rowan Experience
 attribute requirements are met with courses whose designations a program guide states
 (transcript rows carry the attribute). Deterministic for a given seed. Last, `edits` change
@@ -40,7 +40,7 @@ import random
 from functools import lru_cache
 from pathlib import Path
 
-import registration as reg
+import audit
 import section_tally
 
 PROGRAMS_FILE = Path(__file__).with_name("degree_requirements.json")
@@ -147,7 +147,7 @@ class _Builder:
         self.data, self.fab, self.prog = data, fab, prog
         self.rng = random.Random(fab.get("seed", 0))
         self.reqs = {r["req_id"]: r for r in data["program_requirements"]}
-        self.canon = reg._canonical(data)
+        self.canon = audit.canonical(data)
         self.avoid = {self.canon(c) for c in fab.get("avoid", [])}
         self.fixed = [dict(r) for r in fab.get("rows", [])]
         self.transfers = [{**r, "credit_hours": r.get("credit_hours", self.credits(r["course_id"]))}
@@ -170,8 +170,8 @@ class _Builder:
         return {"completed_courses": rows, "transfer_courses": self.transfers, "courses_in_progress": self.in_progress}
 
     def audit(self):
-        """registration.audit() of the transcript so far."""
-        return reg.audit({**self.data, "transcript": self.transcript()})["requirements"]
+        """audit.audit() of the transcript so far."""
+        return audit.audit({**self.data, "transcript": self.transcript()})["requirements"]
 
     def used(self):
         """Every course already on the transcript (in progress included), as canonical ids."""
@@ -201,7 +201,7 @@ class _Builder:
     def _range_courses(self, requirement):
         """Offered courses that match the requirement's course_ranges."""
         ranges = requirement.get("course_ranges", [])
-        return [c for c in _offered() if any(reg.in_range(c, cr, self.canon) for cr in ranges)]
+        return [c for c in _offered() if any(audit.in_range(c, cr, self.canon) for cr in ranges)]
 
     def next_course(self, requirement, status):
         """The next course to add toward a requirement and the attributes its row carries,
@@ -267,14 +267,14 @@ class _Builder:
         course = self.canon(pick["course_id"])
         floors += [p["minimum_grade"] for p in self.data.get("prerequisites", [])
                    if course in {self.canon(c) for c in p["requires"]}]
-        return max(floors, key=lambda g: reg.GRADE_ORDER.index(g) * -1)
+        return max(floors, key=lambda g: audit.GRADE_ORDER.index(g) * -1)
 
     def grades(self):
         """A seeded grade for each pick, at or above its minimum."""
         out = {}
         for i, p in enumerate(self.picks):
             floor = self.min_grade(p)
-            allowed = [g for g in GRADES if reg.meets_minimum(g, floor)] or ["A"]
+            allowed = [g for g in GRADES if audit.meets_minimum(g, floor)] or ["A"]
             weights = [GRADE_WEIGHTS[GRADES.index(g)] for g in allowed]
             out[i] = self.rng.choices(allowed, weights)[0]
         return out
@@ -332,7 +332,7 @@ def fabricate(data: dict, fab: dict, prog: dict) -> dict:
     b = _Builder(data, fab, prog)
     requirements = data["program_requirements"]
     for req_id in _expand(fab.get("complete", []), requirements):
-        if not reg.waived(data, b.reqs[req_id]):
+        if not audit.waived(data, b.reqs[req_id]):
             b.satisfy(req_id)
     grades, terms = b.grades(), b.terms()
 
@@ -369,7 +369,7 @@ def fabricate(data: dict, fab: dict, prog: dict) -> dict:
                   "transfer_courses": [titled(r, ("institution", "course_id", "grade")) for r in b.transfers],
                   "courses_in_progress": [titled(r, ("term", "course_id", "campus", "level")) for r in b.in_progress]}
 
-    status = reg.audit({**data, "transcript": transcript})["requirements"]
+    status = audit.audit({**data, "transcript": transcript})["requirements"]
     unmet = [i for i in _expand(fab.get("complete", []), requirements) if not status[i]["satisfied"]]
     met = [i for i in _expand(fab.get("keep_unmet", []), requirements) if status[i]["satisfied"]]
     if unmet or met:

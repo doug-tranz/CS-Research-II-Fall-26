@@ -4,7 +4,7 @@ generate_pairs.py
 Writes counterfactual PAIRS of test cases into paired_cases.json: two cases that are the same
 but for one detail, the prompt or the fabricated transcript, chosen so that the detail flips
 the answer. A model that ignores the detail gets at most one of the two right, so a pair passes
-only when both variants are semantic_ok (run_semantic_eval.pair_summary()).
+only when both variants are semantic_ok (pairs.pair_summary()).
 
 The idea follows the BIRD-style pairs on the Tyler branch (SEM-001..020, RC-001..012), rebuilt
 on this pipeline: real Fall 2026 sections from the Section Tally, real degree programs, rules
@@ -52,11 +52,15 @@ from functools import lru_cache
 from itertools import combinations
 from pathlib import Path
 
+import audit
+import checker
 import fabricate
-import registration as reg
-import run_semantic_eval as rse
 import section_tally
+from cases import expected_message, resolve_case
+from checker import CONSISTENT
 from harness import parse_didcomm
+from input_format import minutes
+from scoring import check_rules
 
 PAIR_FILE = Path("paired_cases.json")
 ONE = {"count": {"min": 1, "max": 1}}
@@ -164,7 +168,6 @@ def same_label(prog, r):
     return [x["req_id"] for x in prog["program_requirements"] if x["category"].split(" (")[0] == base]
 
 
-COUNTS_TOWARD = reg.counts_toward
 
 
 class Case:
@@ -173,30 +176,25 @@ class Case:
     def __init__(self, case):
         """Builds the case against the whole tally and seeds its checker database once."""
         self.raw = case
-        self.case = rse.resolve_case({**case, "schedule_from_tally": {"whole": True}})
+        self.case = resolve_case({**case, "schedule_from_tally": {"whole": True}})
         self.data = self.case["input"]
-        self.conn = reg.seed_db(self.data)
+        self.conn = checker.seed_db(self.data)
         self._counts = {}
 
     def counts_toward(self, course):
-        """registration.counts_toward() for this case, cached per course. Calls the original
-        function, since score() swaps reg.counts_toward for this one while it runs."""
+        """audit.counts_toward() for this case, cached per course."""
         if course not in self._counts:
-            self._counts[course] = COUNTS_TOWARD(self.data, course)
+            self._counts[course] = audit.counts_toward(self.data, course)
         return self._counts[course]
 
     def score(self, cart, rules):
         """Tiers 1-4 for a cart under `rules`, as (outcome, detail)."""
-        raw = rse.expected_message(self.case, [s["crn"] if isinstance(s, dict) else s for s in cart])
-        base = reg.evaluate(self.conn, raw)
-        if base["outcome"] != "consistent__semantic_TBD":
+        raw = expected_message(self.case, [s["crn"] if isinstance(s, dict) else s for s in cart])
+        base = checker.evaluate(self.conn, raw)
+        if base["outcome"] != CONSISTENT:
             return base["outcome"], base["detail"]
-        original = COUNTS_TOWARD
-        rse.reg.counts_toward = lambda data, course, attrs=(): self.counts_toward(course)
-        try:
-            verdict = rse.check_rules(parse_didcomm(raw)[0], {**self.case, "ground_truth": {"rules": rules}})
-        finally:
-            rse.reg.counts_toward = original
+        verdict = check_rules(parse_didcomm(raw)[0], {**self.case, "ground_truth": {"rules": rules}},
+                              counts_toward=lambda data, course, attrs=(): self.counts_toward(course))
         return verdict["outcome"], verdict["detail"]
 
 
@@ -300,8 +298,8 @@ def summarize(acc, rej, size):
 def candidate_courses(c, req_id):
     """Offered courses that would move this requirement forward for this student."""
     r = next(x for x in c.data["program_requirements"] if x["req_id"] == req_id)
-    canon = reg._canonical(c.data)
-    courses = [cid for cid in by_course() if reg._matches(r, canon(cid), reg.catalog_attributes(c.data, cid), canon)]
+    canon = audit.canonical(c.data)
+    courses = [cid for cid in by_course() if audit.matches(r, canon(cid), audit.catalog_attributes(c.data, cid), canon)]
     return [cid for cid in courses if req_id in c.counts_toward(cid)]
 
 
@@ -518,7 +516,7 @@ def f_transfer(key, prog, rng, sid):
             continue
         canon = lambda cid: cid
         other = [cid for cid in gened if _fixed_credits(cid) == _fixed_credits(t)
-                 and not reg._matches(r1, cid, (), canon)]
+                 and not audit.matches(r1, cid, (), canon)]
         if not other:
             continue
         t2 = rng.choice(other)
@@ -537,7 +535,7 @@ def f_transfer(key, prog, rng, sid):
             if not all(built):
                 continue
             (case_a, ca), (case_b, cb) = built
-            status_a, status_b = reg.audit(ca.data)["requirements"], reg.audit(cb.data)["requirements"]
+            status_a, status_b = audit.audit(ca.data)["requirements"], audit.audit(cb.data)["requirements"]
             if not status_a[r1["req_id"]]["satisfied"] or status_b[r1["req_id"]]["satisfied"]:
                 continue
             courses = sorted(set(candidate_courses(cb, r1["req_id"])) | set(candidate_courses(ca, r2["req_id"])))
@@ -565,7 +563,7 @@ def busy_block(section):
     m = section["meetings"][0] if section["meetings"] else {}
     if "start_time" not in m:
         return None
-    start, end = reg.minutes(m["start_time"]) + 30, reg.minutes(m["end_time"]) + 30
+    start, end = minutes(m["start_time"]) + 30, minutes(m["end_time"]) + 30
     return {"days": m["days"], "start_time": clock(start), "end_time": clock(end)}
 
 
@@ -576,7 +574,7 @@ def f_busy_block(key, prog, rng, sid):
     for rx, x in pool[:4]:
         fab = plan_transcript(prog, [rx], [x], rng.randrange(10 ** 6))
         built = build(key, prog, fab, "", sid)
-        if not built or reg.missing_prerequisites(built[1].data, x):
+        if not built or audit.missing_prerequisites(built[1].data, x):
             continue
         case, c = built
         timed = [s for s in open_secs(x) if busy_block(s)]
@@ -768,7 +766,7 @@ def f_grade_threshold(key, prog, rng, sid):
 
 def f_withdrawal(key, prog, rng, sid):
     """'Register me for <X> if I haven't earned credit for it yet; if I have, <Y> instead.' W vs B."""
-    return _grade_pair("withdrawal", key, prog, rng, sid, lambda m: ("W", "B" if reg.meets_minimum("B", m) else "A"),
+    return _grade_pair("withdrawal", key, prog, rng, sid, lambda m: ("W", "B" if audit.meets_minimum("B", m) else "A"),
                        lambda x, y: (f"Register me for {named(x, prog)} if I haven't earned credit for it yet. "
                                      f"If I have, register me for {named(y, prog)} instead."),
                        lambda x, lo, hi: f"grade in {x}: {lo} vs {hi}")

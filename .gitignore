@@ -13,3 +13,7 @@ __pycache__/
 # os / editor
 .DS_Store
 *.swp
+
+# run bookkeeping (results.py)
+*.lock
+*.tmp
