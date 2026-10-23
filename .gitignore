@@ -13,3 +13,9 @@ __pycache__/
 # os / editor
 .DS_Store
 *.swp
+
+# a results file being saved (results.save_results writes here, then swaps it in)
+*.tmp
+
+# browser-automation screenshots
+.playwright-mcp/

@@ -9,7 +9,7 @@ valid DIDComm" to "does it do what the student asked".
 This README covers running the code, the message schema, the input format, the test cases
 and results so far, and the full project design.
 
-Contents: [What's here](#whats-here) · [Setup](#setup) · [Run](#run) ·
+Contents: [What's here](#whats-here) · [Setup](#setup) · [Run](#run) · [Local runs](#local-runs-lm-studio) ·
 [Read the results](#read-the-results) · [Troubleshooting](#troubleshooting) ·
 [The cart message](#the-cart-message-didcomm-schema) · [The input format](#the-input-format) ·
 [Correctness model](#correctness-model) · [Results so far](#results-so-far) ·
@@ -18,21 +18,65 @@ Contents: [What's here](#whats-here) · [Setup](#setup) · [Run](#run) ·
 
 ## What's here
 
+```
+run_semantic_eval.py     the evaluation (python run_semantic_eval.py --help)
+generate_pairs.py        writes the test cases (python generate_pairs.py --help)
+pipeline/                all the code, one job per file (below)
+data/                    paired_cases.json, degree_requirements.json, section_tally_fall2026.csv
+schemas/                 registration_input.schema.json, registration_message.schema.json
+results/                 new runs (results/semantic_eval_results.json by default)
+results/past_runs/       earlier results: Claude Sonnet 5.5 on 3 pairs, one file per tally version
+tests/                   python -m unittest discover tests (no model, no network, ~7 s)
+```
+
+**`pipeline/`, the run** (`cli.py` is the command line; it calls the rest):
+
 | File | Role |
 |---|---|
-| `harness.py` | Core, domain-agnostic: the OpenRouter backend, `generate()`, prompt caching for an opening shared by many cases (`TaskSpec.shared_context`), DIDComm envelope parsing. |
-| `registration_input.schema.json` | The input format rules, as JSON Schema: student, transcript, program requirements, schedule, prompt, and the optional Rowan program-guide fields. See [The input format](#the-input-format). |
-| `registration_message.schema.json` | The message rules, as JSON Schema (draft 2020-12). Source of truth for the cart message. |
-| `didcomm_schema.py` | `validate_message()`: Tiers 1–2 against the message schema. `OUTPUT_CONTRACT`: the prompt text that tells a model the format. |
-| `registration.py` | Registration domain testbed: SQLite schema, `evaluate()` (Tiers 1–2 from `didcomm_schema`, then Tier 3 consistency over the whole cart). Also the input format: `validate_input()`, `audit()` (degree audit), `missing_prerequisites()`, and `seed_db()`. |
-| `run_semantic_eval.py` | The pipeline. Runs a session (`TallySession`): the whole Section Tally as the opening turn, cached, then each case as its own request (as JSON, CSV or plain text); scores each answer on all four tiers. `check_rules()` (Tier 4) and `evaluate_case()` live here. See [The session](#the-session). |
-| `degree_requirements.json` (50) | Degree requirements for 50 Rowan programs, parsed from their Academic Program Guides: requirements, program guide, course attributes, graduation rules, and guide-stated prerequisites. A case names its program instead of writing these out. See [Degree programs and fabricated transcripts](#degree-programs-and-fabricated-transcripts). |
+| `cli.py` | The command line behind `run_semantic_eval.py`: options, backend setup, the run loop (generate, score, log). See [Run](#run). |
+| `cases.py` | Loads a case file and builds each case's full input object; the answer-key format (`RULES`); `expected_message()` (a cart as a correct answer would write it); `validate_case()`. |
+| `render.py` | Everything the model sees: the session's opening (the Section Tally in five versions, `TALLY_FIELDS`, `--subjects`) and each case's own turn (JSON, CSV or plain text); `to_task()`. |
+| `session.py` | `TallySession`: one cached opening per run, one call per case, the run's totals. See [The session](#the-session). |
+| `dashboard.py`, `dashboard.html` | A live dashboard of a run in the browser: progress and time left, accuracy, electricity, projected OpenRouter cost, outcomes by family, seconds and watts per call, the latest calls. See [Watch a run](#watch-a-run-the-dashboard). |
+| `batch.py` | `--session-per-pair`: the cases split into one session per pair (`pair_groups()`), `--pairs N` (`spread_pairs()`), and the batch's grand totals (`--batch-report`). |
+| `harness.py` | Core, domain-agnostic: `TaskSpec`, the chat layout for prompt caching (`build_messages()`), `generate()`, the log row (`GenerationResult`), DIDComm envelope parsing. |
+| `backends.py` | The model backends: `OpenRouterBackend` (cloud, paid) and `LMStudioBackend` (a local model, metered in watts). See [Local runs](#local-runs-lm-studio). |
+| `pricing.py` | Cost from OpenRouter's public prices (no key): the estimate printed before a run, the go/no-go for a paid run, and the projected OpenRouter cost of a local run. |
+| `energy.py` | `PowerMeter`: samples the GPU's power draw with `nvidia-smi` during a local call; energy in Wh and USD. |
+| `paths.py` | Where `data/`, `schemas/` and `results/` are, anchored on the repository, so commands work from any directory. |
+
+**`pipeline/`, grading:**
+
+| File | Role |
+|---|---|
+| `scoring.py` | All four tiers for one answer (`evaluate_case()`): Tiers 1–3 from `checker.py`, then Tier 4 (`check_rules()`, one function per rule), `error_type`, and the verdict's layout. |
+| `checker.py` | Tiers 1–3: the in-memory SQLite registrar (`seed_db()`), the consistency invariants (`consistency_checks()`) and `evaluate()`. |
+| `didcomm_schema.py` | `validate_message()`: Tiers 1–2 against `schemas/registration_message.schema.json`. `OUTPUT_CONTRACT`: the prompt text that tells a model the format. |
+| `degree_audit.py` | The degree audit: `audit()`, `counts_toward()`, `missing_prerequisites()`, grades and course equivalents. |
+| `input_format.py` | `validate_input()`: the input-format rules a JSON Schema cannot say; `minutes()`. |
+| `pairs.py` | Counterfactual pairs: `check_pairs()`, paired accuracy (`pair_stats()`), each row's `pair_result`. |
+| `results.py` | The results file: rows, session summaries (cloud and local costs), atomic saves. |
+| `reports.py` | The no-model commands: `--pair-report`, `--compare`, `--rescore`. |
+| `selfcheck.py` | `--check`: every answer key and pair, graded by the scorer, no model. |
+| `stats.py` | Wilson intervals and McNemar's test. |
+
+**`pipeline/`, building the cases:**
+
+| File | Role |
+|---|---|
+| `section_tally.py` | Reads Rowan's Section Tally export and turns its rows into input-format sections (`full_schedule()`, every section, converted once per run). `python -m pipeline.section_tally check` validates every section. See [Sections from the Section Tally](#sections-from-the-section-tally). |
 | `fabricate.py` | Builds a case's input from its program and fabricates its transcript from a short spec (which requirements are complete, a seed, trap rows); checks the result with the degree audit. |
 | `generate_pairs.py` | Writes the test cases: counterfactual pairs (200 pairs, 400 cases), two cases that differ in one detail of the prompt or transcript, which flips the answer. Builds each case, fabricates its transcript and scores every candidate answer to write the answer key. See [Counterfactual pairs](#counterfactual-pairs-paired_casesjson). |
-| `paired_cases.json` (400) | The test cases (the runner's default case file): each names its program, fabricates its transcript, and carries an answer key and its pair. Its sections are the whole Section Tally, sent once per session in the cached opening. |
-| `section_tally.py` | Reads Rowan's Section Tally export and turns its rows into input-format sections (`full_schedule()`, every section). See [Sections from the Section Tally](#sections-from-the-section-tally). |
-| `section_tally_fall2026.csv` | The Fall 2026 Section Tally export, as downloaded (renamed). The pipeline reads this one file. |
-| `pairs_sonnet_*.json` | Results of Claude Sonnet 5.5 on 3 pairs under each of the four tally versions. New runs go to `semantic_eval_results.json` unless `--output` names another file. |
+
+**`data/` and `schemas/`:**
+
+| File | Role |
+|---|---|
+| `data/paired_cases.json` (400) | The test cases (the default `--test-file`): each names its program, fabricates its transcript, and carries an answer key and its pair. Its sections are the whole Section Tally, sent once per session in the cached opening. |
+| `data/degree_requirements.json` (50) | Degree requirements for 50 Rowan programs, parsed from their Academic Program Guides: requirements, program guide, course attributes, graduation rules, and guide-stated prerequisites. A case names its program instead of writing these out. See [Degree programs and fabricated transcripts](#degree-programs-and-fabricated-transcripts). |
+| `data/section_tally_fall2026.csv` | The Fall 2026 Section Tally export, as downloaded (renamed). The pipeline reads this one file. |
+| `schemas/registration_input.schema.json` | The input format rules, as JSON Schema: student, transcript, program requirements, schedule, prompt, and the optional Rowan program-guide fields. See [The input format](#the-input-format). |
+| `schemas/registration_message.schema.json` | The message rules, as JSON Schema (draft 2020-12). Source of truth for the cart message. |
 
 Earlier work is in git history, not in the working tree. The 250 single (unpaired) cases and
 their generator (`input_format_cases.json`, `generate_cases.py`) were removed on 10/20; the last
@@ -122,26 +166,41 @@ All commands are run from the repo root with `(venv)` active.
 ```bash
 python run_semantic_eval.py --model anthropic/claude-sonnet-5.5 --max-cost 5
 python run_semantic_eval.py --model anthropic/claude-sonnet-5.5 --task-ids pair-transfer-philosophy-ba-a pair-transfer-philosophy-ba-b -n 3
+python run_semantic_eval.py --model anthropic/claude-sonnet-5.5 --estimate-only    # price it, spend nothing
 python run_semantic_eval.py --check                                              # no model, no cost
 ```
+
+A paid run prints its estimated cost first, then starts only when `--max-cost` covers the
+estimate, when you type `y` at `Continue? [y/N]`, or with `--yes`. A script that can't be
+asked and gives neither `--max-cost` nor `--yes` does not start, so nothing is spent by mistake.
 
 | Option | Meaning | Default |
 |---|---|---|
 | `--model` | One model ID (required unless `--check`) | |
-| `--test-file` | Which case file to run | `paired_cases.json` |
+| `--test-file` | Which case file to run | `data/paired_cases.json` |
 | `--task-ids` | Run only these cases (give both halves of a pair) | all cases in the file |
 | `-n` | Samples per case (3 or more to compare sessions) | `1` |
 | `--tally` | Which version of the Section Tally opens the session: `raw`, `trimmed`, `compact`, `raw-open`, `trimmed-open` (see below) | `trimmed` |
 | `--effort` | Reasoning effort sent to the model: `minimal`, `low`, `medium`, `high`, `xhigh` | the model's default |
 | `--max-tokens` | Cap on output tokens per call, thinking included; far above the ~500-1,000 a call uses, so it only stops a runaway answer | `16000` |
 | `--max-cost` | USD. The run prints its estimated cost first and does not start above this; it also stops once the calls made have cost this much | no limit |
+| `--yes` | Start a paid run without asking (otherwise it asks, unless `--max-cost` is set) | off |
+| `--estimate-only` | Print the run's estimated OpenRouter cost and exit. No model call | off |
+| `--backend` | `openrouter` (cloud, paid) or `lmstudio` (a local model on this machine, see [Local runs](#local-runs-lm-studio)) | `openrouter` |
+| `--dashboard` | Open a live dashboard of the run in the browser (see [Watch a run](#watch-a-run-the-dashboard)) | off |
+| `--resume` | With `--session-per-pair`: continue the last batch in `--output`, skipping pairs already done | off |
+| `--pairs N` | Run N pairs (2N cases), the families taking turns, instead of `--task-ids` | |
+| `--session-per-pair` | Each pair in its own session, its opening only that pair's subjects; ends with the batch's totals. See [Local runs](#local-runs-lm-studio) | off |
+| `--batch-report` | Print the grand totals of every `--session-per-pair` batch in `--output`, and exit. No model call | off |
+| `--subjects` | **Dev runs only.** Keep only these subjects' sections in the opening (`CS MATH`), or `auto` for the subjects the chosen cases need. The opening then fits a local model and costs a fraction; results are not comparable with whole-tally runs, and the summary records `tally_subjects` | the whole tally |
 | `--cache-ttl` | How long the session's cached opening lives between calls, `5m` or `1h` (use `1h` when calls may be more than 5 minutes apart) | `5m` |
 | `--rendering` | How a case's own state is shown to the model: `json`, `csv` or `nl` (plain text) | `json` |
-| `--output` | Results file (runs are appended; name a new file for a fresh run) | `semantic_eval_results.json` |
+| `--output` | Results file (runs are appended; name a new file for a fresh run) | `results/semantic_eval_results.json` |
 | `--check` | Score each case's own answer key and every pair, and exit. No model call | off |
 | `--pair-report` | Print paired accuracy per session from `--output`, and exit. No model call | off |
 | `--rescore` | Re-grade the saved answers in `--output` with the current scorer and rewrite their verdicts. No model call | off |
 | `--compare A B` | McNemar's test between two results files, per case and per pair. No model call | |
+| `--lmstudio-url`, `--price-as`, `--kwh-price`, `--watts`, `--extra-watts` | Local runs only; see [Local runs](#local-runs-lm-studio) | |
 
 Every sample is appended to the results file, and the run prints paired accuracy at the end
 (see [Counterfactual pairs](#counterfactual-pairs-paired_casesjson)).
@@ -150,7 +209,7 @@ Every sample is appended to the results file, and the run prints paired accuracy
 
 Every run is one session:
 
-1. **Start the session** (`TallySession` in `run_semantic_eval.py`): read the whole Section
+1. **Start the session** (`TallySession` in `session.py`): read the whole Section
    Tally once and build the opening turn in the chosen `--tally` version: a short key to the
    columns, then every section, 5,129 rows, as CSV.
 2. **Estimate the cost.** From OpenRouter's current prices for the model, the run prints an
@@ -222,10 +281,122 @@ models with a context window below about 400k tokens (e.g. Claude Haiku 4.5, 200
 ### The validators alone
 
 ```bash
-python didcomm_schema.py               # 34 example messages, no model, no cost
 python run_semantic_eval.py --check    # every case and its answer key, no model, no cost
-python section_tally.py check          # every tally section converts and fits the input schema
+python -m pipeline.section_tally check # every tally section converts and fits the input schema
+python -m unittest discover tests      # 34 example messages (Tiers 1-2), the local backend, energy, cost projection
 ```
+
+### Local runs (LM Studio)
+
+Try a model on this machine before spending money on it. A local run costs nothing on
+OpenRouter. It records what it did cost, the electricity the GPU drew, and what the same calls
+**would** have cost on OpenRouter, priced from OpenRouter's public list (no key is used, so no
+funds are touched). This is phase 1 of the design (§4.2): develop and debug locally, then pay
+for cloud runs.
+
+**Setup (once).**
+1. Install [LM Studio](https://lmstudio.ai) and download a model (in the app, or
+   `lms get qwen/qwen3-4b`). With 8 GB of VRAM, a 4B–8B model at 4-bit quantization fits.
+2. Load it with a long enough context and start the server:
+   ```bash
+   lms load qwen/qwen3-4b --context-length 32768
+   lms server start                      # or: LM Studio > Developer > Start Server
+   ```
+3. An NVIDIA GPU is measured with `nvidia-smi` (it ships with the driver). Without one, pass
+   `--watts` with the machine's draw under load.
+
+**Run one pair.**
+```bash
+python run_semantic_eval.py --backend lmstudio --model qwen/qwen3-4b --subjects auto \
+    --price-as anthropic/claude-sonnet-5.5 --task-ids pair-modality-marketing-bs-a pair-modality-marketing-bs-b
+```
+
+The whole Section Tally (~370k–460k tokens) does not fit a local context window, so a local run
+needs `--subjects`. `auto` keeps the subjects the chosen cases can be answered from (their
+candidate courses and every answer-key section). Before the run, the pipeline checks that the
+server is up and has the model. If LM Studio reports the loaded context length, a call that
+fills it is failed rather than scored, because a local server may silently cut a prompt that
+does not fit.
+
+**Run many cases: one session per pair.** The subjects of 200 cases (48 of them) still make a
+~250k-token opening, so `--session-per-pair` runs each pair as its own session whose opening
+holds only that pair's subjects: a median of ~22k tokens per call, 55k at most. `--pairs N`
+picks N pairs with the ten families taking turns (`--pairs 100` is 10 pairs of each family,
+200 cases).
+```bash
+python run_semantic_eval.py --backend lmstudio --model qwen/qwen3-4b --price-as anthropic/claude-sonnet-5.5 \
+    --tally compact --pairs 100 --session-per-pair --kwh-price 0.20 --output results/local_qwen3-4b.json
+python run_semantic_eval.py --batch-report --output results/local_qwen3-4b.json     # the totals again, later
+```
+It prints the batch's grand totals at the end, like this (from a run against a stand-in server):
+```
+=== batch totals
+batch-20261023T035838Z (stub-model via lmstudio): 3 sessions, 6 calls
+  semantic_ok: 0/6
+  paired accuracy: 0/3 pairs (0%, 95% CI 0.00-0.56)
+  billed by OpenRouter: $0.0000
+  electricity: 0.000 Wh = 0.0000 kWh, $0.0000 at $0.2/kWh
+  projected on OpenRouter as anthropic/claude-sonnet-5.5: $0.2513 as sent (each pair with its own small opening, written to the cache once)
+  the same cases in one whole-tally session on OpenRouter: about $1.41 (estimate; the real experiment)
+```
+Every session of a batch carries the same `batch` block in its summary (`id`, `sessions`,
+`price_as`, `whole_tally_estimate_usd`), and its session id ends in its number (`-001`, `-002`, ...).
+"As sent" prices what the local run really sent, 100 small openings each written to the cache
+once. "One whole-tally session" is what the experiment itself would cost on OpenRouter, the
+tally written once and read from the cache after that. With a 32k context, about a quarter of
+the pairs do not fit; load the model with more (`--context-length 65536`) if your VRAM allows.
+`--session-per-pair` works on OpenRouter too, with one go/no-go for the whole batch's estimate.
+
+| Option | Meaning | Default |
+|---|---|---|
+| `--lmstudio-url` | LM Studio's server | `http://localhost:1234` (or `$LMSTUDIO_URL`) |
+| `--price-as` | The OpenRouter model whose prices the projected cost uses | `--model` |
+| `--kwh-price` | Electricity, USD per kWh. Use the rate on your bill | `0.20` |
+| `--watts` | A fixed power draw instead of measuring the GPU | measured |
+| `--extra-watts` | Added to the measured GPU draw for the rest of the machine (CPU, memory, fans; often 50–150 W under load) | `0` |
+
+**What it prints.** Before the run: the projected OpenRouter cost of the run as made and, with
+`--subjects`, of the same cases with the whole tally (the real experiment). Per call, for example:
+`[local: 21,000 in, 300 out, 0.8512 Wh at 182 W, $0.000170; OpenRouter ~$0.0546]`. At the end:
+the session's electricity and projected total.
+
+**What it records.** Each row: `energy_wh`, `avg_watts`, `energy_usd` and
+`projected_openrouter_usd` (`usd_cost` stays 0). The session summary: `backend`,
+`tally_subjects`, `power` (`source`, `idle_watts`, `extra_watts`), `price_as`,
+`kwh_price_usd`, `context_length`, `projected_estimate_usd`,
+`projected_whole_tally_estimate_usd`, and `local_cost`: energy in Wh and USD, average watts,
+energy per call and per correct answer, and `projected_openrouter` (total, per call, per
+correct answer).
+
+**How far to trust the projection.** It uses the local model's token counts. It is close when
+`--price-as` is the same model on OpenRouter, e.g. a local Llama 3.1 8B priced as
+`meta-llama/llama-3.1-8b-instruct`. Pricing a different model, e.g. a local Qwen as Claude,
+uses the wrong tokenizer and the local model's answer lengths: treat it as an order of
+magnitude. The local server reports one prompt-token count, so the cached part (the opening)
+and the uncached part (the case) are split in proportion to their characters. The first call
+writes the cache and later ones read it, as on OpenRouter, and a model with no cache price pays
+full input price every call. Local results are for development; they do not replace the cloud
+runs in reported findings.
+
+### Watch a run (the dashboard)
+
+```bash
+python run_semantic_eval.py ... --dashboard                                      # with a run
+python -m pipeline.dashboard --output C:/Users/Khalil/csr2_runs/llama_200.json    # any results file, any time
+```
+
+Opens `http://localhost:8765`, a page served from this computer only, which rereads the results
+file every 5 seconds. A menu picks the run: a batch, or a single session. It shows:
+- progress with the time left;
+- correct answers and pairs passed (with a 95% interval);
+- electricity in Wh and USD, the projected OpenRouter cost as sent, and the whole-tally estimate;
+- outcomes by pair family, as a stacked bar per family (or as a table);
+- seconds per call (a rising line can mean the GPU is running hot) and watts per call;
+- the latest 20 calls.
+
+It follows the system's light or dark theme and makes no model call. LM Studio's own
+**Developer** tab shows the model's side live (each request and the answer streaming in), and
+Task Manager > Performance > GPU shows load, memory and temperature.
 
 ### Change the model
 
@@ -249,7 +420,11 @@ the first call of a session adds the cache write):
 
 **Watch the cost.** Cost ≈ cache write + price per call × number of calls, per model and tally
 version. Use `--max-cost`, and try new models on a couple of `--task-ids` first. Avoid very
-expensive models unless the group agrees.
+expensive models unless the group agrees. `--estimate-only` prints the estimate without
+calling anything. To debug prompts or try an open model, run it locally first
+([Local runs](#local-runs-lm-studio)): free, and it projects the OpenRouter cost. A model with
+no cache price on OpenRouter pays the full input price for the opening on every call, and the
+estimate assumes so.
 
 ## Read the results
 
@@ -259,7 +434,7 @@ a total:
 ```
 pair-transfer-philosophy-ba-b: semantic_ok          | satisfies every rule
 
-5/6 semantic_ok on anthropic/claude-sonnet-5.5. Cost $1.4941. Full results in pairs_sonnet_trimmed.json (session trimmed-20261019T225009Z)
+5/6 semantic_ok on anthropic/claude-sonnet-5.5. Cost $1.4941. Full results in results/past_runs/pairs_sonnet_trimmed.json (session trimmed-20261019T225009Z)
 Paired accuracy: 2/3 pairs with both variants semantic_ok (67%)
 ```
 
@@ -272,7 +447,7 @@ Paired accuracy: 2/3 pairs with both variants semantic_ok (67%)
 | `semantic_ok` | 4 | Correct |
 | `GENERATION FAILED` / `generation_failed` | | The call itself failed; the error message says why |
 
-Where the full results go: `run_semantic_eval.py` → `semantic_eval_results.json` (or
+Where the full results go: `run_semantic_eval.py` → `results/semantic_eval_results.json` (or
 `--output`), one indented JSON object, `{"sessions": [...], "results": [...]}`. Each run of the
 script is one session. What every call of a session shares is written once, in its summary;
 each result row keeps only what is its own and names its `session_id`. Nothing is stored twice,
@@ -302,7 +477,8 @@ except `deviation_score` (per row, and averaged in the summary).
   the shared opening) and `per_case_marginal_usd_est` (one more case once the cache is warm).
   These two are estimates: OpenRouter reports one cost per call, so the marginal cost is the
   median cost of cache-reading calls, and setup is what the writing call cost above that.
-  Also `per_correct_answer_usd` and `per_passed_pair_usd`. `--rescore` makes no model call
+  Also `per_correct_answer_usd` and `per_passed_pair_usd`. A local session also has
+  `local_cost` (electricity and the projected OpenRouter cost). `--rescore` makes no model call
   and costs nothing.
 
 **`results[]`, one row per call:**
@@ -318,7 +494,9 @@ except `deviation_score` (per row, and averaged in the summary).
   cut off, `refusal`); `served_model`, `provider` and `generation_id` (OpenRouter's id, for its
   dashboard); `prompt_tokens`, `cached_tokens`, `cache_write_tokens`, `completion_tokens`,
   `reasoning_tokens` (thinking, part of completion), `first_token_ms` (time to the first streamed
-  token, thinking or answer), `latency_ms`, `usd_cost`.
+  token, thinking or answer), `latency_ms`, `usd_cost`. A local run adds `energy_wh`,
+  `avg_watts`, `energy_usd` and `projected_openrouter_usd`
+  ([Local runs](#local-runs-lm-studio)); cloud rows never carry them.
 - **Grading:** `verdict`, with `error_type` on a failure. For a pair case, also `pair_result`:
   `pair_id`, `twin_id`, `same_answer_as_twin`, `pair_passed`, and an `explanation` naming the
   twin's outcome.
@@ -342,7 +520,7 @@ runs McNemar's exact test on the case runs both files have, per case and per pai
 how often only A or only B was right, and p. With one sample per case and a handful of cases,
 expect p near 1: run `-n 3` or more on more cases before claiming a difference.
 
-**The four `pairs_sonnet_*.json` sessions** ran before the instructions moved into the cached
+**The four `results/past_runs/pairs_sonnet_*.json` sessions** ran before the instructions moved into the cached
 opening: their calls sent the instructions at the end of each case's own turn (same words). Their
 summaries say so in `prompt_layout`.
 
@@ -359,6 +537,11 @@ session's fields.
 | `OpenRouter 400 ... not a valid model ID` | Typo in the model ID. Copy it from openrouter.ai/models |
 | `ModuleNotFoundError: No module named 'requests'` or `'jsonschema'` | venv isn't active, or `pip install -r requirements.txt` hasn't been run since `jsonschema` was added (Setup step 2) |
 | Blank `raw:` with `syntactic_error` | The model refused the request (seen with Fable 5.1). Not a formatting problem; we don't log refusals separately yet |
+| `LM Studio is not reachable` | Start the server: LM Studio > Developer > Start Server, or `lms server start` |
+| `LM Studio has no model ...` | The id must match `lms ls` exactly; download it in LM Studio or with `lms get <model>` |
+| `cannot read GPU power` | No NVIDIA GPU or driver: pass `--watts <the machine's draw under load>` |
+| `the call filled the model's context window` | Reload the model with a longer context (`lms load <model> --context-length 32768`), or narrow `--subjects` |
+| `not started: a paid run needs --max-cost <USD> or --yes` | The run could not ask you to confirm: add a budget (`--max-cost 5`) or `--yes` |
 
 ## The cart message (DIDComm schema)
 
@@ -505,7 +688,7 @@ the design asks (§10).
 | A meeting with `start_time` but no `end_time`, or an unknown meeting field | `schema_error` |
 | Extra body field | `schema_error` |
 
-`python didcomm_schema.py` runs these and more; all 34 give the expected outcome.
+`tests/test_message_schema.py` runs these and more; all 34 give the expected outcome.
 
 ## The input format
 
@@ -528,19 +711,19 @@ One input object describes one registration situation, and all of it is sent to 
 | `program_guide` | no | The Rowan Academic Program Guide the requirements come from. See "Fields for Rowan program guides". |
 | `course_attributes` | no | Rowan Core and Rowan Experience designations by course id. Same section. |
 
-`registration_input.schema.json` holds the field rules (types, the course id pattern, allowed
+`schemas/registration_input.schema.json` holds the field rules (types, the course id pattern, allowed
 grades, `Season YYYY` terms, `h:mm AM/PM` times, no unknown fields).
-`registration.validate_input()` adds the rules a schema cannot express: every `crn` and
+`input_format.validate_input()` adds the rules a schema cannot express: every `crn` and
 `req_id` is unique, `seats_taken` is at most `seats_total`, and a meeting ends after it
 starts. Because unknown fields are rejected, an answer key placed inside the input is caught.
 
 How one input object is used:
 
-- **Prompt.** `run_semantic_eval.to_task()` sends everything except `prompt` as the known
+- **Prompt.** `render.to_task()` sends everything except `prompt` as the known
   state, and `prompt` as the intent. The answer key is never included.
-- **Database.** `registration.seed_db()` builds the checker's database from the same object,
+- **Database.** `checker.seed_db()` builds the checker's database from the same object,
   so the model and the checker see the same situation.
-- **Scoring.** `run_semantic_eval.evaluate_case()` runs all four tiers.
+- **Scoring.** `scoring.evaluate_case()` runs all four tiers.
 
 A test case wraps one input object with an id, its candidate courses and an answer key:
 
@@ -553,8 +736,8 @@ A test case wraps one input object with an id, its candidate courses and an answ
 }
 ```
 
-`run_semantic_eval.load_test_cases()` builds the full input object when it loads a case
-(`resolve_case()`): the program from `degree_requirements.json`, the fabricated transcript, and
+`cases.load_test_cases()` builds the full input object when it loads a case
+(`resolve_case()`): the program from `data/degree_requirements.json`, the fabricated transcript, and
 the whole Section Tally as `schedule` (5,129 sections, cancelled ones flagged). The checker's
 database holds every section; the case's own turn carries only the term, because the sections
 are the session's opening (see "The session"). A case never writes out a schedule. Its
@@ -564,10 +747,10 @@ generator and the chance baseline use them.
 ### Sections from the Section Tally
 
 The schedule can come from Rowan's real Section Tally (Fall 2026, 5,129 sections, 138
-subjects) instead of invented sections. The data is one file, `section_tally_fall2026.csv`:
+subjects) instead of invented sections. The data is one file, `data/section_tally_fall2026.csv`:
 the export as downloaded, renamed, read whole on each run (about 20 ms). Every case gets
 all of them (`section_tally.full_schedule()`). All 5,129 sections convert and
-validate (`python section_tally.py check`, which fails if the export is missing or empty).
+validate (`python -m pipeline.section_tally check`, which fails if the export is missing or empty).
 To use a newer export, save it under the same name and rerun `python run_semantic_eval.py
 --check`: answer keys depend on seat counts and times, so a refresh can change them.
 
@@ -614,11 +797,11 @@ Open points:
 | Spec open item | What the code does |
 |---|---|
 | 1. Section id | Each section object in the message names its section by `crn`. The prompt tells the model so. |
-| 2. Meeting times | Two sections conflict when they share a day and their time ranges overlap (`meetings` table in `registration.py`). |
+| 2. Meeting times | Two sections conflict when they share a day and their time ranges overlap (`meetings` table in `checker.py`). |
 | 3. One section or several per message | Several: the spec assumed one enroll message per section, but the 10/1 meeting settled on a cart, so one message registers every section. |
 | 4. Prerequisites | New optional `prerequisites` list. Treated as a **consistency** rule (Tier 3): registering for a course whose prerequisite is unmet is a `consistency_error`. A course still in progress does not satisfy a prerequisite. |
 | 5. `TA` and `minimum_grade` | Accepted transfer credit (`TA`) meets every minimum grade. `F` and `W` meet none. |
-| 6. Other requirement types | New optional fields, all read by `registration.audit()`. See the next table. |
+| 6. Other requirement types | New optional fields, all read by `degree_audit.audit()`. See the next table. |
 | 7. Graduation-wide rules | New optional `graduation_rules`: `total_credits`, `minimum_gpa`, `residency_credits`. The audit derives earned credits, institutional credits and GPA from the transcript; none is stored. A repeated course counts once, by its best attempt. |
 | 8. Other input renderings | `--rendering csv` shows the same state as CSV tables, and `--rendering nl` as plain-text sentences. JSON stays the stored form. |
 | 9. Test-case wrapper | A `rules` answer key (see the Correctness model): what any correct cart must satisfy, with `examples` of carts that must pass and fail. A cart is a list of crns; the key never repeats a section's details: `expected_message()` copies them in from the schedule. (Listed exact-cart keys, `acceptable_crns` / `acceptable_carts`, were removed on 10/18; no generated case used them.) |
@@ -656,7 +839,7 @@ requirements and Free Electives. These fields let an input carry one:
 | `waived_if` | requirement | `{nj_associate_degree: true}` and/or `{transfer_credits_at_entry: 24}`: met with no course when the student's entry matches either. |
 | `major_gpa`, `minimum_grade` | `graduation_rules` | GPA over courses that satisfy `major` requirements (2.5 for the business majors), and the university's D- floor. |
 
-`registration.audit()` applies waivers, reports `missing` for the closest group of a
+`degree_audit.audit()` applies waivers, reports `missing` for the closest group of a
 `one_of_groups` rule and `cap_remaining` for credit caps, and computes `major_gpa`.
 `counts_toward()` skips a course whose credit cap is used up. Known limitation:
 `counts_toward()` does not simulate `exclusive`, so a course that an earlier exclusive
@@ -666,7 +849,7 @@ not change an answer.
 What the checker does and does not read:
 
 - **Tier 3 reads** the schedule and the prerequisites (against the transcript).
-- **The audit is not part of scoring.** `registration.audit()` and `counts_toward()` report
+- **The audit is not part of scoring.** `degree_audit.audit()` and `counts_toward()` report
   which requirements are met and which courses would move one forward. They are for case
   authors and for checking an answer key. Tier 4 still compares the cart to the answer key,
   so whether a course "counts toward the degree" is decided by the author, with the audit
@@ -706,7 +889,7 @@ from the catalog year to `through` (default Spring 2026), and the case's own `ro
 kept as written. Rowan Core / Experience attribute requirements are met with courses some guide
 designates. It then runs the degree audit and stops with an error unless every `complete`
 requirement is met and every `keep_unmet` one is not. The same seed always gives the same
-transcript. `run_semantic_eval.resolve_case()` calls it, so validation, the checker and the
+transcript. `cases.resolve_case()` calls it, so validation, the checker and the
 prompt all see the full input object.
 
 Caveats: requirements and attribute designations are only what the guides state, so a course a
@@ -727,12 +910,12 @@ so a pair cannot make a section full. It flips what the student asked for (the p
 they have taken (the fabricated transcript).
 
 ```bash
-python generate_pairs.py                                    # adds pairs until paired_cases.json holds 200
+python generate_pairs.py                                    # adds pairs until data/paired_cases.json holds 200
 python generate_pairs.py --total 250                        # grow it; pairs already there are kept
 python generate_pairs.py --annotate                         # only rewrite each pair's `difference` field
-python run_semantic_eval.py --test-file paired_cases.json --check
-python run_semantic_eval.py --model anthropic/claude-opus-5.5 --test-file paired_cases.json --output pair_results.json
-python run_semantic_eval.py --test-file paired_cases.json --output pair_results.json --pair-report
+python run_semantic_eval.py --check
+python run_semantic_eval.py --model anthropic/claude-opus-5.5 --output results/pair_results.json
+python run_semantic_eval.py --output results/pair_results.json --pair-report
 ```
 
 | Family | What changes between a and b | Reasoning it needs | Tyler-branch analogue |
@@ -916,8 +1099,8 @@ Four tiers, stopping at the first failure:
 
 ## Results so far
 
-**Current runs:** `pairs_sonnet_raw.json`, `pairs_sonnet_trimmed.json`, `pairs_sonnet_raw-open.json`
-and `pairs_sonnet_trimmed-open.json` hold Claude Sonnet 5.5 at medium effort on the same 3 random
+**Current runs** (`results/past_runs/`): `pairs_sonnet_raw.json`, `pairs_sonnet_trimmed.json`,
+`pairs_sonnet_raw-open.json`, `pairs_sonnet_trimmed-open.json` and `pairs_sonnet_compact.json` hold Claude Sonnet 5.5 at medium effort on the same 3 random
 pairs under each tally version (one sample per case); each file's session summary has the totals.
 
 **Earlier runs** (below) are of hand-built cases that no longer exist, before the 10/15 rebuild on
@@ -976,12 +1159,12 @@ The design's own open questions are in [§13](#13-open-questions--for-the-group)
 ## Provisional (will change; isolated to one spot each)
 
 - DIDComm envelope shape → `harness.parse_didcomm()`
-- Time-conflict logic (interval overlap) → `registration.consistency_checks()`
-- Input-format open items: prerequisites as a consistency rule, `TA` meeting any minimum, best-attempt GPA → `registration.py` (`missing_prerequisites()`, `meets_minimum()`, `audit()`)
-- Tier 4 by rules → `run_semantic_eval.check_rules()` (`RULES`)
-- The columns of the tally in the cached opening → `run_semantic_eval.TALLY_FIELDS`, `COMPACT_FIELDS`, `OPEN_FIELDS`
-- In-memory SQLite → `registration.make_db()`
-- Cart message type URI (`example.org` placeholder) → `registration_message.schema.json`
+- Time-conflict logic (interval overlap) → `checker.consistency_checks()`
+- Input-format open items: prerequisites as a consistency rule, `TA` meeting any minimum, best-attempt GPA → `degree_audit.py` (`missing_prerequisites()`, `meets_minimum()`, `audit()`)
+- Tier 4 by rules → `scoring.check_rules()` (`RULE_CHECKS`; the vocabulary is `cases.RULES`)
+- The columns of the tally in the cached opening → `render.TALLY_FIELDS`, `COMPACT_FIELDS`, `OPEN_FIELDS`
+- In-memory SQLite → `checker.make_db()`
+- Cart message type URI (`example.org` placeholder) → `schemas/registration_message.schema.json`
 
 ## Design
 
@@ -1194,6 +1377,7 @@ backends × models × domains × tasks × samples
 
 | Version | Date | Changes |
 |---|---|---|
+| 3.6 | 2026-10-22 | The pipeline split into single-purpose modules (`cases`, `render`, `session`, `backends`, `pricing`, `energy`, `scoring`, `checker`, `degree_audit`, `input_format`, `pairs`, `results`, `reports`, `selfcheck`, `stats`); `run_semantic_eval.py` is the command line. Tier 4 is one function per rule (`scoring.RULE_CHECKS`); `generate_pairs.py` passes its cached `counts_toward` to `check_rules()` instead of swapping `registration.counts_toward`. Prompts, verdicts, `--check`, rescored results and generated pairs are unchanged (compared before and after). New: `--backend lmstudio` for local runs, with GPU energy from `nvidia-smi` (`energy.py`) and the projected OpenRouter cost of every call (`--price-as`, `--kwh-price`, `--watts`, `--extra-watts`); `--subjects` (dev runs, a smaller opening; Aneesh's subject-limited tally); `--estimate-only`; a paid run starts only with `--max-cost`, a typed `y` or `--yes` (Ben's confirmation); the results file is saved atomically (Ben's fix). Faster: the Section Tally is converted once per run and validated once, and the checker looks up prerequisites only for courses that have them (`--check` 10 min → 1 min). Estimates no longer assume caching for a model with no cache price. `tests/`. Then the folders: the code in `pipeline/` (a package; `run_semantic_eval.py` and `generate_pairs.py` at the root are its two commands), `data/`, `schemas/`, `results/` (past runs in `results/past_runs/`), all paths in `pipeline/paths.py`; `registration.py` (old-name re-exports) removed; `--session-per-pair`, `--pairs N` and `--batch-report` (`pipeline/batch.py`): 200 cases on a local model in one command, with grand totals; `didcomm_schema.py`'s self-test moved to `tests/test_message_schema.py`; `section_tally.py check` is `python -m pipeline.section_tally check`. |
 | 3.5 | 2026-10-21 | `code_version` removed from session summaries (and from the five Sonnet results files), with the git lookup that built it. `--max-cost` reads each provider's prices, including long-prompt rates (Claude Haiku 5.5 costs five times as much from 100k prompt tokens). `pairs_sonnet_compact.json`: Sonnet 5.5, medium effort, on the same 3 pairs with the `compact` tally. |
 | 3.4 | 2026-10-21 | Cost cuts that leave the semantic checks as they are: a `compact` tally version (`trimmed` without meeting rooms and types and the waitlist column, 21% smaller); the output instructions move into the cached opening (`prompt_layout` in the summary); `--max-tokens` defaults to 16000; `--max-cost` prints an estimate, refuses to start above it and stops a run that reaches it; batch pricing documented. `--named-courses` removed with `named_courses()` and `section_tally.course_schedule()`: every run is a session over the whole tally, and cases carry `candidate_courses` instead of `schedule_from_tally`. Removed: conversion of old-format results files and the verdict fields only older files had. |
 | 3.3 | 2026-10-20 | The pipeline runs on the pairs only: `input_format_cases.json` (250 single cases) and `generate_cases.py` removed; the helpers the pair generator needs (building and scoring a case, transcripts, course and requirement names, difficulty) moved into `generate_pairs.py` unchanged (regenerated pairs match the stored ones). `paired_cases.json` is the default `--test-file`; the single-case error types (`retake`, `passed`, `fallback`) removed. |

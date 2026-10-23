@@ -6,16 +6,18 @@ Section Tally export has one CSV row per section; this reads that export as a
 whole and turns its rows into input-format sections (README.md, "The input
 format"), so a case carries real sections instead of invented ones.
 
-The data is ONE file, TALLY_CSV (section_tally_fall2026.csv, next to this
-script): the export exactly as downloaded, renamed.
+The data is ONE file, TALLY_CSV (data/section_tally_fall2026.csv): the export
+exactly as downloaded, renamed.
 
 HOW TO RUN:
-    python section_tally.py check
+    python -m pipeline.section_tally check
         converts every section and validates the result against the input schema
 
-FROM CODE (run_semantic_eval.py uses this when it loads a case):
+FROM CODE (cases.py uses this when it loads a case; render.py for the session's opening):
     full_schedule()     every section in the tally, cancelled ones included and flagged
                         ("cancelled": true; registering for one is a consistency error)
+    read_tally()        the export's rows as read, for the raw openings
+    subject_of()        a course id's subject ('CS04114' -> 'CS'), for --subjects
 """
 
 import argparse
@@ -25,7 +27,7 @@ import sys
 from functools import lru_cache
 from pathlib import Path
 
-TALLY_CSV = Path(__file__).with_name("section_tally_fall2026.csv")
+from .paths import TALLY_CSV
 
 DAYS = {"M": "Monday", "T": "Tuesday", "W": "Wednesday", "R": "Thursday",
         "F": "Friday", "S": "Saturday", "U": "Sunday"}
@@ -154,17 +156,28 @@ def _schedule(rows: list) -> dict:
             "sections": [to_section(row) for row in rows]}
 
 
+@lru_cache(maxsize=None)
 def full_schedule(path: Path = TALLY_CSV) -> dict:
     """Every section in the export, cancelled ones included (flagged), as one `schedule`.
-    This is the checker's view in a session, where the model reads the whole tally."""
+    This is the checker's view in a session, where the model reads the whole tally.
+
+    Converted once per run and shared by every case (the same object each call), so treat it
+    as READ-ONLY: copy a section before changing it. Sharing the object also lets
+    input_format.validate_input() validate the 5,129 sections only once."""
     return _schedule(list(read_tally(str(path))))
+
+
+def subject_of(course_id: str) -> str:
+    """'CS04114' -> 'CS': a course id is its subject followed by a 5-digit number."""
+    return course_id[:-5]
 
 
 def check(path: Path = TALLY_CSV) -> int:
     """Converts every section, including cancelled ones, and validates each subject's sections
     as an input object's schedule. Returns the number of subjects with problems (a missing
     or empty export counts as a failure)."""
-    import registration as reg
+    from .checker import seed_db
+    from .input_format import validate_input
     template = {"student": {"student_id": "S000", "degree": "x", "major": "x", "program_id": "x",
                             "catalog_year": "Fall 2026"},
                 "transcript": {"completed_courses": [], "transfer_courses": [], "courses_in_progress": []},
@@ -182,8 +195,8 @@ def check(path: Path = TALLY_CSV) -> int:
     for subject in subjects:
         try:
             schedule = _schedule([row for row in rows if row["Subj"] == subject])
-            problems = reg.validate_input({**template, "schedule": schedule})
-            reg.seed_db({**template, "schedule": schedule})
+            problems = validate_input({**template, "schedule": schedule})
+            seed_db({**template, "schedule": schedule})
         except Exception as e:                    # report every subject, then fail
             problems = [str(e)]
         sections += len(schedule["sections"]) if not problems else 0

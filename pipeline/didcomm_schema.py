@@ -2,8 +2,7 @@
 didcomm_schema.py
 ------------------
 Tiers 1-2 for the registration CART message (README.md).
-Kept in its OWN file per team convention (new work = new file);
-registration.evaluate() calls it.
+checker.evaluate() calls it.
 
 The rules live in registration_message.schema.json (JSON Schema 2020-12),
 not in this file. This module only loads that schema and maps a failure
@@ -15,20 +14,21 @@ to the right tier:
                       -> schema's $defs/register (type URI + body shape)
 
 USAGE:
-    from didcomm_schema import validate_message, OUTPUT_CONTRACT
+    from pipeline.didcomm_schema import validate_message, OUTPUT_CONTRACT
     verdict = validate_message(raw_output)
     if verdict["outcome"] == "schema_ok":
         body = verdict["body"]      # {"student_id": ..., "sections": [...]}
 
 Requires: pip install jsonschema  (listed in requirements.txt)
+Tests: tests/test_message_schema.py (34 messages, one per way of failing, plus some that pass).
 """
 
 import json
-from pathlib import Path
 from jsonschema import Draft202012Validator
 
-SCHEMA_PATH = Path(__file__).with_name("registration_message.schema.json")
-SCHEMA = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
+from .paths import MESSAGE_SCHEMA
+
+SCHEMA = json.loads(MESSAGE_SCHEMA.read_text(encoding="utf-8"))
 MESSAGE_TYPE = SCHEMA["$defs"]["register"]["properties"]["type"]["const"]
 
 Draft202012Validator.check_schema(SCHEMA)
@@ -162,78 +162,3 @@ def validate_message(raw: str) -> dict:
 
     return {"outcome": "schema_ok", "detail": "valid register message",
             "errors": [], "body": message["body"], "tier1_checks": tier1, "tier2_checks": tier2}
-
-
-if __name__ == "__main__":
-    # Smoke test: one message per way of failing, plus a few that pass.
-    def entry(crn, **changes):
-        """A complete section entry; a change of None removes that field."""
-        item = {"crn": crn, "course_id": "CS04114", "section": "1", "credit_hours": 3,
-                "seats_total": 30, "seats_taken": 20, "campus": "Glassboro", "modality": "in-person",
-                "meetings": [{"days": ["Monday", "Wednesday"], "start_time": "09:30 AM",
-                              "end_time": "10:45 AM", "type": "Class", "location": "Robinson Hall 207"}]}
-        item.update(changes)
-        return {k: v for k, v in item.items() if v is not None}
-
-    good = {"id": "a1", "type": MESSAGE_TYPE,
-            "body": {"student_id": "S001", "term_code": "202640",
-                     "sections": [entry("41836"), entry("41909")]}}
-
-    def variant(**changes):
-        return {**good, **changes}
-
-    def body(**changes):
-        return variant(body={**good["body"], **changes})
-
-    cases = [
-        ("valid cart", json.dumps(good), "schema_ok"),
-        ("waitlist, no meetings, bare meeting", json.dumps(body(sections=[
-            entry("45510", meetings=[]), entry("41909", waitlist=True, seats_taken=30),
-            entry("41910", meetings=[{"days": ["Friday"]}])])), "schema_ok"),
-        ("contract example", json.dumps(_EXAMPLE), "schema_ok"),
-        ("valid, with optional headers", json.dumps(variant(
-            typ="application/didcomm-plain+json", **{"from": "did:example:alice"},
-            to=["did:example:registrar"], created_time=1791331200)), "schema_ok"),
-        ("prose around the JSON", "Here is the message:\n" + json.dumps(good), "syntactic_error"),
-        ("code fence", "```json\n" + json.dumps(good) + "\n```", "syntactic_error"),
-        ("JSON array, not an object", json.dumps([good]), "syntactic_error"),
-        ("no id", json.dumps({k: v for k, v in good.items() if k != "id"}), "syntactic_error"),
-        ("body is a string", json.dumps(variant(body="S001 41836")), "syntactic_error"),
-        ("type is not a message type URI", json.dumps(variant(type="registration/enroll")), "syntactic_error"),
-        ("from is not a DID", json.dumps(variant(**{"from": "alice"})), "syntactic_error"),
-        ("created_time is an ISO string", json.dumps(variant(created_time="2026-10-07T00:00:00Z")), "syntactic_error"),
-        ("a different protocol's type", json.dumps(variant(type="https://didcomm.org/basicmessage/2.0/message")), "schema_error"),
-        ("old single-section body", json.dumps(variant(body={"student_id": "S001", "section_id": "41836"})), "schema_error"),
-        ("sections as bare strings", json.dumps(body(sections=["41836", "41909"])), "schema_error"),
-        ("no term_code", json.dumps(variant(body={"student_id": "S001", "sections": [entry("41836")]})), "schema_error"),
-        ("term_code as a number", json.dumps(body(term_code=202640)), "schema_error"),
-        ("empty cart", json.dumps(body(sections=[])), "schema_error"),
-        ("same crn twice", json.dumps(body(sections=[entry("41836"), entry("41836", waitlist=True)])), "schema_error"),
-        ("crn only (the earlier entry)", json.dumps(body(sections=[{"crn": "41836"}])), "schema_error"),
-        ("section entry without crn", json.dumps(body(sections=[entry(None, section_id="41836")])), "schema_error"),
-        ("section entry without meetings", json.dumps(body(sections=[entry("41836", meetings=None)])), "schema_error"),
-        ("section entry without credit_hours", json.dumps(body(sections=[entry("41836", credit_hours=None)])), "schema_error"),
-        ("unknown field in a section", json.dumps(body(sections=[entry("41836", grade_mode="P/F")])), "schema_error"),
-        ("credit_hours as a string", json.dumps(body(sections=[entry("45510", credit_hours="3")])), "schema_error"),
-        ("seats_taken as a string", json.dumps(body(sections=[entry("45510", seats_taken="20")])), "schema_error"),
-        ("course_id with a space", json.dumps(body(sections=[entry("45510", course_id="CS 04114")])), "schema_error"),
-        ("unknown modality", json.dumps(body(sections=[entry("45510", modality="remote")])), "schema_error"),
-        ("day abbreviated", json.dumps(body(sections=[entry("45510", meetings=[{"days": ["MW"]}])])), "schema_error"),
-        ("24-hour time", json.dumps(body(sections=[entry("45510", meetings=[
-            {"days": ["Monday"], "start_time": "13:00", "end_time": "14:15"}])])), "schema_error"),
-        ("start_time without end_time", json.dumps(body(sections=[entry("45510", meetings=[
-            {"days": ["Monday"], "start_time": "1:00 PM"}])])), "schema_error"),
-        ("unknown meeting field", json.dumps(body(sections=[entry("45510", meetings=[
-            {"days": ["Monday"], "room": "101"}])])), "schema_error"),
-        ("waitlist as a string", json.dumps(body(sections=[entry("41909", waitlist="yes")])), "schema_error"),
-        ("extra body field", json.dumps(body(total_credits=6)), "schema_error"),
-    ]
-
-    failed = 0
-    for name, raw, expected in cases:
-        verdict = validate_message(raw)
-        mark = "ok  " if verdict["outcome"] == expected else "FAIL"
-        failed += verdict["outcome"] != expected
-        print(f"{mark} {name:30s} {verdict['outcome']:16s} | {'; '.join(verdict['errors'])}")
-    print(f"\n{len(cases) - failed}/{len(cases)} as expected.")
-    raise SystemExit(1 if failed else 0)
