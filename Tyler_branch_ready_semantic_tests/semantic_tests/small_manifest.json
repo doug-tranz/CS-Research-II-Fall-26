@@ -1,0 +1,22 @@
+{
+  "seed": 2026,
+  "per_family": 4,
+  "families": [
+    "time_boundary",
+    "title_lure",
+    "similar_titles",
+    "friend_distractor",
+    "credit_trap",
+    "id_lure"
+  ],
+  "case_count": 52,
+  "cases_per_dimension": {
+    "time_boundary": 12,
+    "prompt_injection_in_data": 8,
+    "similar_titles": 8,
+    "friend_distractor": 8,
+    "credit_trap": 8,
+    "id_lure": 8
+  },
+  "sha256": "5187a4006e104e537a360d317c9e01fd6e81b26798d215ab492049c42f73e8e2"
+}
