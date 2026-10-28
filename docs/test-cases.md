@@ -33,6 +33,7 @@ python run_semantic_eval.py --test-file paired_cases.json --output pair_results.
 | `days` | Prompt: Mondays/Wednesdays vs Tuesdays/Thursdays, in person | Meeting-day constraint | SEM weekday |
 | `grade_threshold` | Transcript: the grade is one step below the requirement's minimum (a) or at it (b) | Minimum passing grade | SEM grade_threshold |
 | `withdrawal` | Transcript: `W` (a) or `B` (b) | A W earns no credit | SEM withdrawal_credit |
+| `late_meeting` | Prompt: "nothing that ends after `<hour>`" (a) or "No `<day>` classes" (b), on a course where one section's first meeting ends in time but a later meeting runs past the hour | Read every meeting of a section, not only the first | none (new) |
 
 **200 pairs (400 cases).** Families take turns adding one pair each, so they stay even: 21 each
 for `full_fallback`, `in_progress`, `transfer`, `busy_block`, `credit_limit`, `modality` and
@@ -42,6 +43,8 @@ out first. The generator goes through every program once, then goes round again 
 later-round pair's id ends in `#<round>` (`transfer/philosophy-ba#3`, case
 `pair-transfer-philosophy-ba-3-a`). A pair with the same rules and change as one already in that
 program is skipped. Most families use 20 or more programs; `transfer` uses 8 and `nested_groups` 8.
+
+**`late_meeting` (27 pairs, 54 cases).** Added after the 200 pairs above: `python generate_pairs.py --families late_meeting --total 227`. Each pair is strong (no single section is right in both variants). The cutoff is a whole hour, noon to 8 PM, that one section's first meeting meets and a later meeting does not; it exists because `busy_block` only builds its overlap from a section's first meeting, so nothing else tests later meetings. Of the Fall 2026 sections with set times, 1,242 have two or more meetings.
 
 There is no campus family: all but 30 of the 5,129 sections are Glassboro, online or
 off-campus. `nested_groups` has little variety: the only `one_of_groups` requirement with open
