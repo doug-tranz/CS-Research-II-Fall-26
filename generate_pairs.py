@@ -27,6 +27,8 @@ real, so a pair cannot make a section full; it flips what the student asked or h
   grade_threshold the transcript: a grade below the minimum (a) or   minimum passing grade
                   at it (b)
   withdrawal      the transcript: a W (a) or a B (b)                 a W earns no credit
+  late_meeting    "nothing ends after <hour>" (a) or "no <day>        read every meeting of a section,
+                  classes" (b); a later meeting runs past the hour   not only the first
 
 Not built: campus (all but 30 of 5,129 sections are in Glassboro, online or off-campus).
 
@@ -600,6 +602,55 @@ def f_busy_block(key, prog, rng, sid):
     return None
 
 
+def f_late_meeting(key, prog, rng, sid):
+    """'Register me for <X>. I have to be done by 4 PM, so nothing that ends after 4 PM.' vs '... No <day> classes.'
+    A section whose FIRST meeting ends in time but whose LATER meeting runs past the cutoff breaks the first
+    request without looking like it. A model that reads only a section's first meeting picks it in (a);
+    in (b) that section is a right answer. The cutoff is a whole hour (noon to 8 PM) that a section's
+    first meeting meets and a later one does not. Strong pairs only: no single section answers both."""
+    ends = lambda s: [minutes(m["end_time"]) for m in s["meetings"] if "end_time" in m]
+    days_of = lambda s: {d for m in s["meetings"] for d in m["days"]}
+    pool = [(r, c) for r, c in major_pool(prog) if len(open_secs(c)) >= 2]
+    rng.shuffle(pool)
+    for rx, x in pool[:12]:
+        secs = open_secs(x)
+        if any(not ends(s) for s in secs):              # an untimed section would pass both requests
+            continue
+        cutoffs = [h * 60 for h in range(12, 21)
+                   if any(len(ends(s)) >= 2 and ends(s)[0] <= h * 60 < max(ends(s)[1:]) for s in secs)]
+        if not cutoffs:
+            continue
+        fab = plan_transcript(prog, [rx], [x], rng.randrange(10 ** 6))
+        built = build(key, prog, fab, "", sid)
+        if not built or audit.missing_prerequisites(built[1].data, x):
+            continue
+        case, c = built
+        rng.shuffle(cutoffs)
+        for limit in cutoffs:
+            hidden = [s for s in secs if len(ends(s)) >= 2 and ends(s)[0] <= limit < max(ends(s)[1:])]
+            for day in sorted({d for s in secs for d in days_of(s)}, key=DAYS.index):
+                in_a = {s["crn"] for s in secs if max(ends(s)) <= limit}
+                in_b = {s["crn"] for s in secs if day not in days_of(s)}
+                if not in_a or not in_b or in_a & in_b or not (in_b & {s["crn"] for s in hidden}):
+                    continue
+                t = clock(limit)
+                text_a = f"I have to be done by {t}, so nothing that ends after {t}."
+                text_b = f"No {day} classes."
+                case_a = reprompt(case, f"Register me for {named(x, prog)}. {text_a}")
+                case_b = reprompt(case, f"Register me for {named(x, prog)}. {text_b}")
+                cands = by_course()[x]
+                got = pair("late_meeting", key,
+                           (case_a, c, {**ONE, "must_include_courses": [x], "ends_by": t}, cands, 1,
+                            f"Every meeting must end by {t}, and section(s) {', '.join(sorted(s['crn'] for s in hidden))} "
+                            f"of {x} look fine from the first meeting but have a later meeting that ends after {t}."),
+                           (case_b, c, {**ONE, "must_include_courses": [x], "no_days": [day]}, cands, 1,
+                            f"Only sections of {x} with no {day} meeting are correct, including sections with a late later meeting."),
+                           f"constraint: nothing ends after {t} vs no {day} classes", [rx], [x], rng)
+                if got and shared_answer(got[0], got[1], c, c) is None:
+                    return got
+    return None
+
+
 def completers(held, groups):
     """Courses that would finish a one_of_groups requirement given the courses held."""
     return sorted({c for g in groups for c in g if c not in held and set(g) <= held | {c}})
@@ -773,7 +824,8 @@ def f_withdrawal(key, prog, rng, sid):
 
 
 FAMILIES = {f.__name__[2:]: f for f in (f_full_fallback, f_in_progress, f_transfer, f_busy_block, f_nested_groups,
-                                         f_credit_limit, f_modality, f_days, f_grade_threshold, f_withdrawal)}
+                                         f_credit_limit, f_modality, f_days, f_grade_threshold, f_withdrawal,
+                                         f_late_meeting)}
 
 
 # ── ground_truth.pair.difference: what differs between a pair's two cases, in words ──

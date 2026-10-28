@@ -51176,5 +51176,5955 @@
         "prompt_words": 28
       }
     }
+  },
+  {
+    "case_id": "pair-late_meeting-psychological-science-bs-a",
+    "input": {
+      "program": "psychological-science-bs",
+      "student": {
+        "student_id": "S8004",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 113550,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-PHIL",
+            "NONPROG-BIOL",
+            "PSY-INTRO",
+            "PSY-PROF-DEV"
+          ],
+          "rows": [],
+          "avoid": [
+            "PSY01301"
+          ],
+          "keep_unmet": [
+            "PSY-RESEARCH"
+          ]
+        }
+      },
+      "prompt": "Register me for Psychology of Scientific Thinking (PSY01301). I have to be done by 7:00 PM, so nothing that ends after 7:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "PSY01301"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "PSY01301"
+        ],
+        "ends_by": "7:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "40141"
+          ],
+          [
+            "40300"
+          ],
+          [
+            "40301"
+          ]
+        ],
+        "invalid": [
+          [
+            "44846"
+          ],
+          [
+            "40299"
+          ],
+          [
+            "40142"
+          ],
+          [
+            "44453"
+          ],
+          [
+            "40144"
+          ],
+          [
+            "46145"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 7:00 PM, and section(s) 40142, 44846 of PSY01301 look fine from the first meeting but have a later meeting that ends after 7:00 PM. 3 correct sections: 40300, 40301, 40141; full sections (no waitlist allowed): 40144, 40299, 44453, 46145; 2 section(s) break a rule of the request. Its twin's answers 44846 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "PSY-RESEARCH"
+      ],
+      "pair": {
+        "id": "late_meeting/psychological-science-bs",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 7:00 PM vs no Thursday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'",
+          "twin_case": "prompt says 'No Thursday classes'",
+          "twin_id": "pair-late_meeting-psychological-science-bs-b",
+          "answer_here": "a section of Psychology of Scientific Thinking (PSY01301)",
+          "answer_in_twin": "a section of Psychology of Scientific Thinking (PSY01301), with nothing on Thursdays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'. In the twin (pair-late_meeting-psychological-science-bs-b): prompt says 'No Thursday classes'. So the answer here is a section of Psychology of Scientific Thinking (PSY01301), while in the twin it is a section of Psychology of Scientific Thinking (PSY01301), with nothing on Thursdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 9,
+        "correct_answers": 3,
+        "chance": 0.3333,
+        "rules": 3,
+        "prompt_words": 23
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-psychological-science-bs-b",
+    "input": {
+      "program": "psychological-science-bs",
+      "student": {
+        "student_id": "S8004",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 113550,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-PHIL",
+            "NONPROG-BIOL",
+            "PSY-INTRO",
+            "PSY-PROF-DEV"
+          ],
+          "rows": [],
+          "avoid": [
+            "PSY01301"
+          ],
+          "keep_unmet": [
+            "PSY-RESEARCH"
+          ]
+        }
+      },
+      "prompt": "Register me for Psychology of Scientific Thinking (PSY01301). No Thursday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "PSY01301"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "PSY01301"
+        ],
+        "no_days": [
+          "Thursday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "44846"
+          ]
+        ],
+        "invalid": [
+          [
+            "40141"
+          ],
+          [
+            "40300"
+          ],
+          [
+            "40301"
+          ],
+          [
+            "40299"
+          ],
+          [
+            "44453"
+          ],
+          [
+            "40144"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of PSY01301 with no Thursday meeting are correct, including sections with a late later meeting. 1 correct section: 44846; full sections (no waitlist allowed): 40144, 40299, 44453, 46145; 4 section(s) break a rule of the request. Its twin's answers 40300, 40301, 40141 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "PSY-RESEARCH"
+      ],
+      "pair": {
+        "id": "late_meeting/psychological-science-bs",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 7:00 PM vs no Thursday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Thursday classes'",
+          "twin_case": "prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'",
+          "twin_id": "pair-late_meeting-psychological-science-bs-a",
+          "answer_here": "a section of Psychology of Scientific Thinking (PSY01301), with nothing on Thursdays",
+          "answer_in_twin": "a section of Psychology of Scientific Thinking (PSY01301)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Thursday classes'. In the twin (pair-late_meeting-psychological-science-bs-a): prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'. So the answer here is a section of Psychology of Scientific Thinking (PSY01301), with nothing on Thursdays, while in the twin it is a section of Psychology of Scientific Thinking (PSY01301)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 9,
+        "correct_answers": 1,
+        "chance": 0.1111,
+        "rules": 3,
+        "prompt_words": 11
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-nutrition-bs-a",
+    "input": {
+      "program": "nutrition-bs",
+      "student": {
+        "student_id": "S8008",
+        "catalog_year": "Fall 2023",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 755590,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG",
+            "NONPROG-BIOL",
+            "NUT-MAJOR"
+          ],
+          "rows": [],
+          "avoid": [
+            "HES00343"
+          ],
+          "keep_unmet": [
+            "NUT-EXERCISE"
+          ]
+        }
+      },
+      "prompt": "Register me for Kinesiology (HES00343). I have to be done by 7:00 PM, so nothing that ends after 7:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "HES00343"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "HES00343"
+        ],
+        "ends_by": "7:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "43014"
+          ]
+        ],
+        "invalid": [
+          [
+            "43012"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 7:00 PM, and section(s) 43012 of HES00343 look fine from the first meeting but have a later meeting that ends after 7:00 PM. 1 correct section: 43014; 1 section(s) break a rule of the request. Its twin's answers 43012 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "NUT-EXERCISE"
+      ],
+      "pair": {
+        "id": "late_meeting/nutrition-bs",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 7:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'",
+          "twin_case": "prompt says 'No Tuesday classes'",
+          "twin_id": "pair-late_meeting-nutrition-bs-b",
+          "answer_here": "a section of Kinesiology (HES00343)",
+          "answer_in_twin": "a section of Kinesiology (HES00343), with nothing on Tuesdays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'. In the twin (pair-late_meeting-nutrition-bs-b): prompt says 'No Tuesday classes'. So the answer here is a section of Kinesiology (HES00343), while in the twin it is a section of Kinesiology (HES00343), with nothing on Tuesdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 2,
+        "correct_answers": 1,
+        "chance": 0.5,
+        "rules": 3,
+        "prompt_words": 20
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-nutrition-bs-b",
+    "input": {
+      "program": "nutrition-bs",
+      "student": {
+        "student_id": "S8008",
+        "catalog_year": "Fall 2023",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 755590,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG",
+            "NONPROG-BIOL",
+            "NUT-MAJOR"
+          ],
+          "rows": [],
+          "avoid": [
+            "HES00343"
+          ],
+          "keep_unmet": [
+            "NUT-EXERCISE"
+          ]
+        }
+      },
+      "prompt": "Register me for Kinesiology (HES00343). No Tuesday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "HES00343"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "HES00343"
+        ],
+        "no_days": [
+          "Tuesday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "43012"
+          ]
+        ],
+        "invalid": [
+          [
+            "43014"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of HES00343 with no Tuesday meeting are correct, including sections with a late later meeting. 1 correct section: 43012; 1 section(s) break a rule of the request. Its twin's answers 43014 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "NUT-EXERCISE"
+      ],
+      "pair": {
+        "id": "late_meeting/nutrition-bs",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 7:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Tuesday classes'",
+          "twin_case": "prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'",
+          "twin_id": "pair-late_meeting-nutrition-bs-a",
+          "answer_here": "a section of Kinesiology (HES00343), with nothing on Tuesdays",
+          "answer_in_twin": "a section of Kinesiology (HES00343)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Tuesday classes'. In the twin (pair-late_meeting-nutrition-bs-a): prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'. So the answer here is a section of Kinesiology (HES00343), with nothing on Tuesdays, while in the twin it is a section of Kinesiology (HES00343)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 2,
+        "correct_answers": 1,
+        "chance": 0.5,
+        "rules": 3,
+        "prompt_words": 8
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-psychology-ba-a",
+    "input": {
+      "program": "psychology-ba",
+      "student": {
+        "student_id": "S8009",
+        "catalog_year": "Fall 2023",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 861111,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-PHIL",
+            "NONPROG-BIOL",
+            "PSY-FOUNDATIONAL",
+            "PSY-FUNDAMENTAL-DEV",
+            "PSY-FUNDAMENTAL-SOCIAL",
+            "PSY-FUNDAMENTAL-DISORDERS"
+          ],
+          "rows": [],
+          "avoid": [
+            "PSY02310"
+          ],
+          "keep_unmet": [
+            "PSY-FUNDAMENTAL-COGNITION"
+          ]
+        }
+      },
+      "prompt": "Register me for Learning and Behaviorism (PSY02310). I have to be done by 7:00 PM, so nothing that ends after 7:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "PSY02310"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "PSY02310"
+        ],
+        "ends_by": "7:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "40273"
+          ]
+        ],
+        "invalid": [
+          [
+            "40275"
+          ],
+          [
+            "40276"
+          ],
+          [
+            "40101"
+          ],
+          [
+            "40102"
+          ],
+          [
+            "40105"
+          ],
+          [
+            "40108"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 7:00 PM, and section(s) 40276 of PSY02310 look fine from the first meeting but have a later meeting that ends after 7:00 PM. 1 correct section: 40273; full sections (no waitlist allowed): 40101, 40102, 40105, 40108, 40277; 2 section(s) break a rule of the request. Its twin's answers 40275, 40276 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "PSY-FUNDAMENTAL-COGNITION"
+      ],
+      "pair": {
+        "id": "late_meeting/psychology-ba",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 7:00 PM vs no Wednesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'",
+          "twin_case": "prompt says 'No Wednesday classes'",
+          "twin_id": "pair-late_meeting-psychology-ba-b",
+          "answer_here": "a section of Learning and Behaviorism (PSY02310)",
+          "answer_in_twin": "a section of Learning and Behaviorism (PSY02310), with nothing on Wednesdays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'. In the twin (pair-late_meeting-psychology-ba-b): prompt says 'No Wednesday classes'. So the answer here is a section of Learning and Behaviorism (PSY02310), while in the twin it is a section of Learning and Behaviorism (PSY02310), with nothing on Wednesdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 8,
+        "correct_answers": 1,
+        "chance": 0.125,
+        "rules": 3,
+        "prompt_words": 22
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-psychology-ba-b",
+    "input": {
+      "program": "psychology-ba",
+      "student": {
+        "student_id": "S8009",
+        "catalog_year": "Fall 2023",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 861111,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-PHIL",
+            "NONPROG-BIOL",
+            "PSY-FOUNDATIONAL",
+            "PSY-FUNDAMENTAL-DEV",
+            "PSY-FUNDAMENTAL-SOCIAL",
+            "PSY-FUNDAMENTAL-DISORDERS"
+          ],
+          "rows": [],
+          "avoid": [
+            "PSY02310"
+          ],
+          "keep_unmet": [
+            "PSY-FUNDAMENTAL-COGNITION"
+          ]
+        }
+      },
+      "prompt": "Register me for Learning and Behaviorism (PSY02310). No Wednesday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "PSY02310"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "PSY02310"
+        ],
+        "no_days": [
+          "Wednesday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "40275"
+          ],
+          [
+            "40276"
+          ]
+        ],
+        "invalid": [
+          [
+            "40273"
+          ],
+          [
+            "40101"
+          ],
+          [
+            "40102"
+          ],
+          [
+            "40105"
+          ],
+          [
+            "40108"
+          ],
+          [
+            "40277"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of PSY02310 with no Wednesday meeting are correct, including sections with a late later meeting. 2 correct sections: 40275, 40276; full sections (no waitlist allowed): 40101, 40102, 40105, 40108, 40277; 1 section(s) break a rule of the request. Its twin's answers 40273 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "PSY-FUNDAMENTAL-COGNITION"
+      ],
+      "pair": {
+        "id": "late_meeting/psychology-ba",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 7:00 PM vs no Wednesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Wednesday classes'",
+          "twin_case": "prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'",
+          "twin_id": "pair-late_meeting-psychology-ba-a",
+          "answer_here": "a section of Learning and Behaviorism (PSY02310), with nothing on Wednesdays",
+          "answer_in_twin": "a section of Learning and Behaviorism (PSY02310)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Wednesday classes'. In the twin (pair-late_meeting-psychology-ba-a): prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'. So the answer here is a section of Learning and Behaviorism (PSY02310), with nothing on Wednesdays, while in the twin it is a section of Learning and Behaviorism (PSY02310)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 8,
+        "correct_answers": 2,
+        "chance": 0.25,
+        "rules": 3,
+        "prompt_words": 10
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-molecular-cellular-biology-bs-a",
+    "input": {
+      "program": "molecular-cellular-biology-bs",
+      "student": {
+        "student_id": "S8010",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 11833,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-PHYS1",
+            "NONPROG-PHYS2",
+            "NONPROG-CHEM",
+            "NONPROG-MATH",
+            "NONPROG-PHIL"
+          ],
+          "rows": [],
+          "avoid": [
+            "CHEM06101"
+          ],
+          "keep_unmet": [
+            "MCB-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Chemistry II (CHEM06101). I have to be done by 8:00 PM, so nothing that ends after 8:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "CHEM06101"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "CHEM06101"
+        ],
+        "ends_by": "8:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "43550"
+          ],
+          [
+            "43552"
+          ]
+        ],
+        "invalid": [
+          [
+            "43548"
+          ],
+          [
+            "43544"
+          ],
+          [
+            "43545"
+          ],
+          [
+            "43546"
+          ],
+          [
+            "43547"
+          ],
+          [
+            "43549"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 8:00 PM, and section(s) 43548 of CHEM06101 look fine from the first meeting but have a later meeting that ends after 8:00 PM. 2 correct sections: 43550, 43552; full sections (no waitlist allowed): 43544, 43545, 43546, 43547, 43549, 45953, 45954; 1 section(s) break a rule of the request. Its twin's answers 43548 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "MCB-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "late_meeting/molecular-cellular-biology-bs",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_case": "prompt says 'No Tuesday classes'",
+          "twin_id": "pair-late_meeting-molecular-cellular-biology-bs-b",
+          "answer_here": "a section of Chemistry II (CHEM06101)",
+          "answer_in_twin": "a section of Chemistry II (CHEM06101), with nothing on Tuesdays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. In the twin (pair-late_meeting-molecular-cellular-biology-bs-b): prompt says 'No Tuesday classes'. So the answer here is a section of Chemistry II (CHEM06101), while in the twin it is a section of Chemistry II (CHEM06101), with nothing on Tuesdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 10,
+        "correct_answers": 2,
+        "chance": 0.2,
+        "rules": 3,
+        "prompt_words": 21
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-molecular-cellular-biology-bs-b",
+    "input": {
+      "program": "molecular-cellular-biology-bs",
+      "student": {
+        "student_id": "S8010",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 11833,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-PHYS1",
+            "NONPROG-PHYS2",
+            "NONPROG-CHEM",
+            "NONPROG-MATH",
+            "NONPROG-PHIL"
+          ],
+          "rows": [],
+          "avoid": [
+            "CHEM06101"
+          ],
+          "keep_unmet": [
+            "MCB-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Chemistry II (CHEM06101). No Tuesday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "CHEM06101"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "CHEM06101"
+        ],
+        "no_days": [
+          "Tuesday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "43548"
+          ]
+        ],
+        "invalid": [
+          [
+            "43550"
+          ],
+          [
+            "43552"
+          ],
+          [
+            "43544"
+          ],
+          [
+            "43545"
+          ],
+          [
+            "43546"
+          ],
+          [
+            "43547"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of CHEM06101 with no Tuesday meeting are correct, including sections with a late later meeting. 1 correct section: 43548; full sections (no waitlist allowed): 43544, 43545, 43546, 43547, 43549, 45953, 45954; 2 section(s) break a rule of the request. Its twin's answers 43550, 43552 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "MCB-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "late_meeting/molecular-cellular-biology-bs",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Tuesday classes'",
+          "twin_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_id": "pair-late_meeting-molecular-cellular-biology-bs-a",
+          "answer_here": "a section of Chemistry II (CHEM06101), with nothing on Tuesdays",
+          "answer_in_twin": "a section of Chemistry II (CHEM06101)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Tuesday classes'. In the twin (pair-late_meeting-molecular-cellular-biology-bs-a): prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. So the answer here is a section of Chemistry II (CHEM06101), with nothing on Tuesdays, while in the twin it is a section of Chemistry II (CHEM06101)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 10,
+        "correct_answers": 1,
+        "chance": 0.1,
+        "rules": 3,
+        "prompt_words": 9
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-chemistry-bs-a",
+    "input": {
+      "program": "chemistry-bs",
+      "student": {
+        "student_id": "S8014",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 779671,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG"
+          ],
+          "rows": [],
+          "avoid": [
+            "CHEM06101"
+          ],
+          "keep_unmet": [
+            "CHEM-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Chemistry II (CHEM06101). I have to be done by 8:00 PM, so nothing that ends after 8:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "CHEM06101"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "CHEM06101"
+        ],
+        "ends_by": "8:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "43550"
+          ],
+          [
+            "43552"
+          ]
+        ],
+        "invalid": [
+          [
+            "43548"
+          ],
+          [
+            "43544"
+          ],
+          [
+            "43545"
+          ],
+          [
+            "43546"
+          ],
+          [
+            "43547"
+          ],
+          [
+            "43549"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 8:00 PM, and section(s) 43548 of CHEM06101 look fine from the first meeting but have a later meeting that ends after 8:00 PM. 2 correct sections: 43550, 43552; full sections (no waitlist allowed): 43544, 43545, 43546, 43547, 43549, 45953, 45954; 1 section(s) break a rule of the request. Its twin's answers 43548 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "CHEM-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "late_meeting/chemistry-bs",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_case": "prompt says 'No Tuesday classes'",
+          "twin_id": "pair-late_meeting-chemistry-bs-b",
+          "answer_here": "a section of Chemistry II (CHEM06101)",
+          "answer_in_twin": "a section of Chemistry II (CHEM06101), with nothing on Tuesdays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. In the twin (pair-late_meeting-chemistry-bs-b): prompt says 'No Tuesday classes'. So the answer here is a section of Chemistry II (CHEM06101), while in the twin it is a section of Chemistry II (CHEM06101), with nothing on Tuesdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 10,
+        "correct_answers": 2,
+        "chance": 0.2,
+        "rules": 3,
+        "prompt_words": 21
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-chemistry-bs-b",
+    "input": {
+      "program": "chemistry-bs",
+      "student": {
+        "student_id": "S8014",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 779671,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG"
+          ],
+          "rows": [],
+          "avoid": [
+            "CHEM06101"
+          ],
+          "keep_unmet": [
+            "CHEM-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Chemistry II (CHEM06101). No Tuesday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "CHEM06101"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "CHEM06101"
+        ],
+        "no_days": [
+          "Tuesday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "43548"
+          ]
+        ],
+        "invalid": [
+          [
+            "43550"
+          ],
+          [
+            "43552"
+          ],
+          [
+            "43544"
+          ],
+          [
+            "43545"
+          ],
+          [
+            "43546"
+          ],
+          [
+            "43547"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of CHEM06101 with no Tuesday meeting are correct, including sections with a late later meeting. 1 correct section: 43548; full sections (no waitlist allowed): 43544, 43545, 43546, 43547, 43549, 45953, 45954; 2 section(s) break a rule of the request. Its twin's answers 43550, 43552 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "CHEM-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "late_meeting/chemistry-bs",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Tuesday classes'",
+          "twin_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_id": "pair-late_meeting-chemistry-bs-a",
+          "answer_here": "a section of Chemistry II (CHEM06101), with nothing on Tuesdays",
+          "answer_in_twin": "a section of Chemistry II (CHEM06101)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Tuesday classes'. In the twin (pair-late_meeting-chemistry-bs-a): prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. So the answer here is a section of Chemistry II (CHEM06101), with nothing on Tuesdays, while in the twin it is a section of Chemistry II (CHEM06101)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 10,
+        "correct_answers": 1,
+        "chance": 0.1,
+        "rules": 3,
+        "prompt_words": 9
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-anthropology-ba-a",
+    "input": {
+      "program": "anthropology-ba",
+      "student": {
+        "student_id": "S8017",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 651789,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-GEOG",
+            "NONPROG-ETHICS"
+          ],
+          "rows": [],
+          "avoid": [
+            "ANTH02203"
+          ],
+          "keep_unmet": [
+            "ANTH-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Introduction to Archaeology (ANTH02203). I have to be done by 8:00 PM, so nothing that ends after 8:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "ANTH02203"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "ANTH02203"
+        ],
+        "ends_by": "8:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "42693"
+          ]
+        ],
+        "invalid": [
+          [
+            "42694"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 8:00 PM, and section(s) 42694 of ANTH02203 look fine from the first meeting but have a later meeting that ends after 8:00 PM. 1 correct section: 42693; 1 section(s) break a rule of the request. Its twin's answers 42694 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "ANTH-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "late_meeting/anthropology-ba",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Thursday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_case": "prompt says 'No Thursday classes'",
+          "twin_id": "pair-late_meeting-anthropology-ba-b",
+          "answer_here": "a section of Introduction to Archaeology (ANTH02203)",
+          "answer_in_twin": "a section of Introduction to Archaeology (ANTH02203), with nothing on Thursdays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. In the twin (pair-late_meeting-anthropology-ba-b): prompt says 'No Thursday classes'. So the answer here is a section of Introduction to Archaeology (ANTH02203), while in the twin it is a section of Introduction to Archaeology (ANTH02203), with nothing on Thursdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 2,
+        "correct_answers": 1,
+        "chance": 0.5,
+        "rules": 3,
+        "prompt_words": 22
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-anthropology-ba-b",
+    "input": {
+      "program": "anthropology-ba",
+      "student": {
+        "student_id": "S8017",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 651789,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-GEOG",
+            "NONPROG-ETHICS"
+          ],
+          "rows": [],
+          "avoid": [
+            "ANTH02203"
+          ],
+          "keep_unmet": [
+            "ANTH-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Introduction to Archaeology (ANTH02203). No Thursday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "ANTH02203"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "ANTH02203"
+        ],
+        "no_days": [
+          "Thursday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "42694"
+          ]
+        ],
+        "invalid": [
+          [
+            "42693"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of ANTH02203 with no Thursday meeting are correct, including sections with a late later meeting. 1 correct section: 42694; 1 section(s) break a rule of the request. Its twin's answers 42693 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "ANTH-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "late_meeting/anthropology-ba",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Thursday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Thursday classes'",
+          "twin_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_id": "pair-late_meeting-anthropology-ba-a",
+          "answer_here": "a section of Introduction to Archaeology (ANTH02203), with nothing on Thursdays",
+          "answer_in_twin": "a section of Introduction to Archaeology (ANTH02203)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Thursday classes'. In the twin (pair-late_meeting-anthropology-ba-a): prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. So the answer here is a section of Introduction to Archaeology (ANTH02203), with nothing on Thursdays, while in the twin it is a section of Introduction to Archaeology (ANTH02203)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 2,
+        "correct_answers": 1,
+        "chance": 0.5,
+        "rules": 3,
+        "prompt_words": 10
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-exercise-science-bs-a",
+    "input": {
+      "program": "exercise-science-bs",
+      "student": {
+        "student_id": "S8020",
+        "catalog_year": "Fall 2023",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 6719,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG",
+            "NONPROG-HUML",
+            "HES-FOUNDATIONAL"
+          ],
+          "rows": [],
+          "avoid": [
+            "ATR00347"
+          ],
+          "keep_unmet": [
+            "HES-UPPER"
+          ]
+        }
+      },
+      "prompt": "Register me for Applied Biomechanics (ATR00347). I have to be done by 7:00 PM, so nothing that ends after 7:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "ATR00347"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "ATR00347"
+        ],
+        "ends_by": "7:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "42943"
+          ]
+        ],
+        "invalid": [
+          [
+            "42941"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 7:00 PM, and section(s) 42941 of ATR00347 look fine from the first meeting but have a later meeting that ends after 7:00 PM. 1 correct section: 42943; 1 section(s) break a rule of the request. Its twin's answers 42941 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "HES-UPPER"
+      ],
+      "pair": {
+        "id": "late_meeting/exercise-science-bs",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 7:00 PM vs no Monday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'",
+          "twin_case": "prompt says 'No Monday classes'",
+          "twin_id": "pair-late_meeting-exercise-science-bs-b",
+          "answer_here": "a section of Applied Biomechanics (ATR00347)",
+          "answer_in_twin": "a section of Applied Biomechanics (ATR00347), with nothing on Mondays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'. In the twin (pair-late_meeting-exercise-science-bs-b): prompt says 'No Monday classes'. So the answer here is a section of Applied Biomechanics (ATR00347), while in the twin it is a section of Applied Biomechanics (ATR00347), with nothing on Mondays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 2,
+        "correct_answers": 1,
+        "chance": 0.5,
+        "rules": 3,
+        "prompt_words": 21
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-exercise-science-bs-b",
+    "input": {
+      "program": "exercise-science-bs",
+      "student": {
+        "student_id": "S8020",
+        "catalog_year": "Fall 2023",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 6719,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG",
+            "NONPROG-HUML",
+            "HES-FOUNDATIONAL"
+          ],
+          "rows": [],
+          "avoid": [
+            "ATR00347"
+          ],
+          "keep_unmet": [
+            "HES-UPPER"
+          ]
+        }
+      },
+      "prompt": "Register me for Applied Biomechanics (ATR00347). No Monday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "ATR00347"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "ATR00347"
+        ],
+        "no_days": [
+          "Monday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "42941"
+          ]
+        ],
+        "invalid": [
+          [
+            "42943"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of ATR00347 with no Monday meeting are correct, including sections with a late later meeting. 1 correct section: 42941; 1 section(s) break a rule of the request. Its twin's answers 42943 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "HES-UPPER"
+      ],
+      "pair": {
+        "id": "late_meeting/exercise-science-bs",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 7:00 PM vs no Monday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Monday classes'",
+          "twin_case": "prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'",
+          "twin_id": "pair-late_meeting-exercise-science-bs-a",
+          "answer_here": "a section of Applied Biomechanics (ATR00347), with nothing on Mondays",
+          "answer_in_twin": "a section of Applied Biomechanics (ATR00347)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Monday classes'. In the twin (pair-late_meeting-exercise-science-bs-a): prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'. So the answer here is a section of Applied Biomechanics (ATR00347), with nothing on Mondays, while in the twin it is a section of Applied Biomechanics (ATR00347)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 2,
+        "correct_answers": 1,
+        "chance": 0.5,
+        "rules": 3,
+        "prompt_words": 9
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-sports-communication-media-ba-a",
+    "input": {
+      "program": "sports-communication-media-ba",
+      "student": {
+        "student_id": "S8022",
+        "catalog_year": "Fall 2025",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 759488,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS"
+          ],
+          "rows": [],
+          "avoid": [
+            "RTF03275"
+          ],
+          "keep_unmet": [
+            "SPRT-CORE"
+          ]
+        }
+      },
+      "prompt": "Register me for Intro to Media Aesthetics (RTF03275). I have to be done by 8:00 PM, so nothing that ends after 8:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "RTF03275"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "RTF03275"
+        ],
+        "ends_by": "8:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "41808"
+          ],
+          [
+            "41809"
+          ]
+        ],
+        "invalid": [
+          [
+            "41810"
+          ],
+          [
+            "41781"
+          ],
+          [
+            "41791"
+          ],
+          [
+            "41798"
+          ],
+          [
+            "41800"
+          ],
+          [
+            "41804"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 8:00 PM, and section(s) 41810 of RTF03275 look fine from the first meeting but have a later meeting that ends after 8:00 PM. 2 correct sections: 41808, 41809; full sections (no waitlist allowed): 41781, 41791, 41798, 41800, 41804, 41807; 1 section(s) break a rule of the request. Its twin's answers 41810 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "SPRT-CORE"
+      ],
+      "pair": {
+        "id": "late_meeting/sports-communication-media-ba",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Monday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_case": "prompt says 'No Monday classes'",
+          "twin_id": "pair-late_meeting-sports-communication-media-ba-b",
+          "answer_here": "a section of Intro to Media Aesthetics (RTF03275)",
+          "answer_in_twin": "a section of Intro to Media Aesthetics (RTF03275), with nothing on Mondays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. In the twin (pair-late_meeting-sports-communication-media-ba-b): prompt says 'No Monday classes'. So the answer here is a section of Intro to Media Aesthetics (RTF03275), while in the twin it is a section of Intro to Media Aesthetics (RTF03275), with nothing on Mondays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 9,
+        "correct_answers": 2,
+        "chance": 0.2222,
+        "rules": 3,
+        "prompt_words": 23
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-sports-communication-media-ba-b",
+    "input": {
+      "program": "sports-communication-media-ba",
+      "student": {
+        "student_id": "S8022",
+        "catalog_year": "Fall 2025",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 759488,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS"
+          ],
+          "rows": [],
+          "avoid": [
+            "RTF03275"
+          ],
+          "keep_unmet": [
+            "SPRT-CORE"
+          ]
+        }
+      },
+      "prompt": "Register me for Intro to Media Aesthetics (RTF03275). No Monday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "RTF03275"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "RTF03275"
+        ],
+        "no_days": [
+          "Monday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "41810"
+          ]
+        ],
+        "invalid": [
+          [
+            "41808"
+          ],
+          [
+            "41809"
+          ],
+          [
+            "41781"
+          ],
+          [
+            "41791"
+          ],
+          [
+            "41798"
+          ],
+          [
+            "41800"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of RTF03275 with no Monday meeting are correct, including sections with a late later meeting. 1 correct section: 41810; full sections (no waitlist allowed): 41781, 41791, 41798, 41800, 41804, 41807; 2 section(s) break a rule of the request. Its twin's answers 41808, 41809 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "SPRT-CORE"
+      ],
+      "pair": {
+        "id": "late_meeting/sports-communication-media-ba",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Monday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Monday classes'",
+          "twin_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_id": "pair-late_meeting-sports-communication-media-ba-a",
+          "answer_here": "a section of Intro to Media Aesthetics (RTF03275), with nothing on Mondays",
+          "answer_in_twin": "a section of Intro to Media Aesthetics (RTF03275)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Monday classes'. In the twin (pair-late_meeting-sports-communication-media-ba-a): prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. So the answer here is a section of Intro to Media Aesthetics (RTF03275), with nothing on Mondays, while in the twin it is a section of Intro to Media Aesthetics (RTF03275)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 9,
+        "correct_answers": 1,
+        "chance": 0.1111,
+        "rules": 3,
+        "prompt_words": 11
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-biochemistry-bs-a",
+    "input": {
+      "program": "biochemistry-bs",
+      "student": {
+        "student_id": "S8028",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 948200,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-BIOL1",
+            "NONPROG-BIOL2",
+            "NONPROG-CORE",
+            "NONPROG-MATH3"
+          ],
+          "rows": [],
+          "avoid": [
+            "CHEM06101"
+          ],
+          "keep_unmet": [
+            "BCHM-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Chemistry II (CHEM06101). I have to be done by 8:00 PM, so nothing that ends after 8:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "CHEM06101"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "CHEM06101"
+        ],
+        "ends_by": "8:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "43550"
+          ],
+          [
+            "43552"
+          ]
+        ],
+        "invalid": [
+          [
+            "43548"
+          ],
+          [
+            "43544"
+          ],
+          [
+            "43545"
+          ],
+          [
+            "43546"
+          ],
+          [
+            "43547"
+          ],
+          [
+            "43549"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 8:00 PM, and section(s) 43548 of CHEM06101 look fine from the first meeting but have a later meeting that ends after 8:00 PM. 2 correct sections: 43550, 43552; full sections (no waitlist allowed): 43544, 43545, 43546, 43547, 43549, 45953, 45954; 1 section(s) break a rule of the request. Its twin's answers 43548 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "BCHM-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "late_meeting/biochemistry-bs",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_case": "prompt says 'No Tuesday classes'",
+          "twin_id": "pair-late_meeting-biochemistry-bs-b",
+          "answer_here": "a section of Chemistry II (CHEM06101)",
+          "answer_in_twin": "a section of Chemistry II (CHEM06101), with nothing on Tuesdays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. In the twin (pair-late_meeting-biochemistry-bs-b): prompt says 'No Tuesday classes'. So the answer here is a section of Chemistry II (CHEM06101), while in the twin it is a section of Chemistry II (CHEM06101), with nothing on Tuesdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 10,
+        "correct_answers": 2,
+        "chance": 0.2,
+        "rules": 3,
+        "prompt_words": 21
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-biochemistry-bs-b",
+    "input": {
+      "program": "biochemistry-bs",
+      "student": {
+        "student_id": "S8028",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 948200,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-BIOL1",
+            "NONPROG-BIOL2",
+            "NONPROG-CORE",
+            "NONPROG-MATH3"
+          ],
+          "rows": [],
+          "avoid": [
+            "CHEM06101"
+          ],
+          "keep_unmet": [
+            "BCHM-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Chemistry II (CHEM06101). No Tuesday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "CHEM06101"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "CHEM06101"
+        ],
+        "no_days": [
+          "Tuesday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "43548"
+          ]
+        ],
+        "invalid": [
+          [
+            "43550"
+          ],
+          [
+            "43552"
+          ],
+          [
+            "43544"
+          ],
+          [
+            "43545"
+          ],
+          [
+            "43546"
+          ],
+          [
+            "43547"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of CHEM06101 with no Tuesday meeting are correct, including sections with a late later meeting. 1 correct section: 43548; full sections (no waitlist allowed): 43544, 43545, 43546, 43547, 43549, 45953, 45954; 2 section(s) break a rule of the request. Its twin's answers 43550, 43552 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "BCHM-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "late_meeting/biochemistry-bs",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Tuesday classes'",
+          "twin_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_id": "pair-late_meeting-biochemistry-bs-a",
+          "answer_here": "a section of Chemistry II (CHEM06101), with nothing on Tuesdays",
+          "answer_in_twin": "a section of Chemistry II (CHEM06101)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Tuesday classes'. In the twin (pair-late_meeting-biochemistry-bs-a): prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. So the answer here is a section of Chemistry II (CHEM06101), with nothing on Tuesdays, while in the twin it is a section of Chemistry II (CHEM06101)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 10,
+        "correct_answers": 1,
+        "chance": 0.1,
+        "rules": 3,
+        "prompt_words": 9
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-writing-arts-ba-a",
+    "input": {
+      "program": "writing-arts-ba",
+      "student": {
+        "student_id": "S8030",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 691897,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "WA-INTRO",
+            "WA-INTRO-READING",
+            "WA-INTRO-CREATIVE",
+            "WA-INTERMEDIATE",
+            "WA-ADVANCED",
+            "WA-LANGUAGE"
+          ],
+          "rows": [],
+          "avoid": [
+            "RTF03275"
+          ],
+          "keep_unmet": [
+            "WA-CONCENTRATION"
+          ]
+        }
+      },
+      "prompt": "Register me for Applied Media Aesthetics: Sight, Sound and Story (RTF03275). I have to be done by 8:00 PM, so nothing that ends after 8:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "RTF03275"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "RTF03275"
+        ],
+        "ends_by": "8:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "41808"
+          ],
+          [
+            "41809"
+          ]
+        ],
+        "invalid": [
+          [
+            "41810"
+          ],
+          [
+            "41781"
+          ],
+          [
+            "41791"
+          ],
+          [
+            "41798"
+          ],
+          [
+            "41800"
+          ],
+          [
+            "41804"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 8:00 PM, and section(s) 41810 of RTF03275 look fine from the first meeting but have a later meeting that ends after 8:00 PM. 2 correct sections: 41808, 41809; full sections (no waitlist allowed): 41781, 41791, 41798, 41800, 41804, 41807; 1 section(s) break a rule of the request. Its twin's answers 41810 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "WA-CONCENTRATION"
+      ],
+      "pair": {
+        "id": "late_meeting/writing-arts-ba",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Monday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_case": "prompt says 'No Monday classes'",
+          "twin_id": "pair-late_meeting-writing-arts-ba-b",
+          "answer_here": "a section of Applied Media Aesthetics: Sight, Sound and Story (RTF03275)",
+          "answer_in_twin": "a section of Applied Media Aesthetics: Sight, Sound and Story (RTF03275), with nothing on Mondays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. In the twin (pair-late_meeting-writing-arts-ba-b): prompt says 'No Monday classes'. So the answer here is a section of Applied Media Aesthetics: Sight, Sound and Story (RTF03275), while in the twin it is a section of Applied Media Aesthetics: Sight, Sound and Story (RTF03275), with nothing on Mondays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 9,
+        "correct_answers": 2,
+        "chance": 0.2222,
+        "rules": 3,
+        "prompt_words": 26
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-writing-arts-ba-b",
+    "input": {
+      "program": "writing-arts-ba",
+      "student": {
+        "student_id": "S8030",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 691897,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "WA-INTRO",
+            "WA-INTRO-READING",
+            "WA-INTRO-CREATIVE",
+            "WA-INTERMEDIATE",
+            "WA-ADVANCED",
+            "WA-LANGUAGE"
+          ],
+          "rows": [],
+          "avoid": [
+            "RTF03275"
+          ],
+          "keep_unmet": [
+            "WA-CONCENTRATION"
+          ]
+        }
+      },
+      "prompt": "Register me for Applied Media Aesthetics: Sight, Sound and Story (RTF03275). No Monday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "RTF03275"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "RTF03275"
+        ],
+        "no_days": [
+          "Monday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "41810"
+          ]
+        ],
+        "invalid": [
+          [
+            "41808"
+          ],
+          [
+            "41809"
+          ],
+          [
+            "41781"
+          ],
+          [
+            "41791"
+          ],
+          [
+            "41798"
+          ],
+          [
+            "41800"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of RTF03275 with no Monday meeting are correct, including sections with a late later meeting. 1 correct section: 41810; full sections (no waitlist allowed): 41781, 41791, 41798, 41800, 41804, 41807; 2 section(s) break a rule of the request. Its twin's answers 41808, 41809 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "WA-CONCENTRATION"
+      ],
+      "pair": {
+        "id": "late_meeting/writing-arts-ba",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Monday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Monday classes'",
+          "twin_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_id": "pair-late_meeting-writing-arts-ba-a",
+          "answer_here": "a section of Applied Media Aesthetics: Sight, Sound and Story (RTF03275), with nothing on Mondays",
+          "answer_in_twin": "a section of Applied Media Aesthetics: Sight, Sound and Story (RTF03275)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Monday classes'. In the twin (pair-late_meeting-writing-arts-ba-a): prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. So the answer here is a section of Applied Media Aesthetics: Sight, Sound and Story (RTF03275), with nothing on Mondays, while in the twin it is a section of Applied Media Aesthetics: Sight, Sound and Story (RTF03275)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 9,
+        "correct_answers": 1,
+        "chance": 0.1111,
+        "rules": 3,
+        "prompt_words": 14
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-electrical-computer-engineering-bs-a",
+    "input": {
+      "program": "electrical-computer-engineering-bs",
+      "student": {
+        "student_id": "S8033",
+        "catalog_year": "Fall 2022",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 102801,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-BUSINESS",
+            "NONPROG",
+            "ECE-FIRST-YEAR",
+            "ECE-SECOND-YEAR",
+            "ECE-SECOND-YEAR-CALC",
+            "ECE-SECOND-YEAR-CORE",
+            "ECE-SCIENCE",
+            "ECE-JUNIOR-CLINIC",
+            "ECE-SIGNALS",
+            "ECE-THIRD-YEAR",
+            "ECE-SENIOR-CLINIC"
+          ],
+          "rows": [],
+          "avoid": [
+            "ECE09414"
+          ],
+          "keep_unmet": [
+            "ECE-FOURTH-YEAR"
+          ]
+        }
+      },
+      "prompt": "Register me for Vlsi Design (ECE09414). I have to be done by 5:00 PM, so nothing that ends after 5:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "ECE09414"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "ECE09414"
+        ],
+        "ends_by": "5:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "43400"
+          ]
+        ],
+        "invalid": [
+          [
+            "43399"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 5:00 PM, and section(s) 43399 of ECE09414 look fine from the first meeting but have a later meeting that ends after 5:00 PM. 1 correct section: 43400; 1 section(s) break a rule of the request. Its twin's answers 43399 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "ECE-FOURTH-YEAR"
+      ],
+      "pair": {
+        "id": "late_meeting/electrical-computer-engineering-bs",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 5:00 PM vs no Friday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 5:00 PM, so nothing that ends after 5:00 PM'",
+          "twin_case": "prompt says 'No Friday classes'",
+          "twin_id": "pair-late_meeting-electrical-computer-engineering-bs-b",
+          "answer_here": "a section of Vlsi Design (ECE09414)",
+          "answer_in_twin": "a section of Vlsi Design (ECE09414), with nothing on Fridays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 5:00 PM, so nothing that ends after 5:00 PM'. In the twin (pair-late_meeting-electrical-computer-engineering-bs-b): prompt says 'No Friday classes'. So the answer here is a section of Vlsi Design (ECE09414), while in the twin it is a section of Vlsi Design (ECE09414), with nothing on Fridays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 2,
+        "correct_answers": 1,
+        "chance": 0.5,
+        "rules": 3,
+        "prompt_words": 21
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-electrical-computer-engineering-bs-b",
+    "input": {
+      "program": "electrical-computer-engineering-bs",
+      "student": {
+        "student_id": "S8033",
+        "catalog_year": "Fall 2022",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 102801,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-BUSINESS",
+            "NONPROG",
+            "ECE-FIRST-YEAR",
+            "ECE-SECOND-YEAR",
+            "ECE-SECOND-YEAR-CALC",
+            "ECE-SECOND-YEAR-CORE",
+            "ECE-SCIENCE",
+            "ECE-JUNIOR-CLINIC",
+            "ECE-SIGNALS",
+            "ECE-THIRD-YEAR",
+            "ECE-SENIOR-CLINIC"
+          ],
+          "rows": [],
+          "avoid": [
+            "ECE09414"
+          ],
+          "keep_unmet": [
+            "ECE-FOURTH-YEAR"
+          ]
+        }
+      },
+      "prompt": "Register me for Vlsi Design (ECE09414). No Friday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "ECE09414"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "ECE09414"
+        ],
+        "no_days": [
+          "Friday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "43399"
+          ]
+        ],
+        "invalid": [
+          [
+            "43400"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of ECE09414 with no Friday meeting are correct, including sections with a late later meeting. 1 correct section: 43399; 1 section(s) break a rule of the request. Its twin's answers 43400 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "ECE-FOURTH-YEAR"
+      ],
+      "pair": {
+        "id": "late_meeting/electrical-computer-engineering-bs",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 5:00 PM vs no Friday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Friday classes'",
+          "twin_case": "prompt says 'I have to be done by 5:00 PM, so nothing that ends after 5:00 PM'",
+          "twin_id": "pair-late_meeting-electrical-computer-engineering-bs-a",
+          "answer_here": "a section of Vlsi Design (ECE09414), with nothing on Fridays",
+          "answer_in_twin": "a section of Vlsi Design (ECE09414)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Friday classes'. In the twin (pair-late_meeting-electrical-computer-engineering-bs-a): prompt says 'I have to be done by 5:00 PM, so nothing that ends after 5:00 PM'. So the answer here is a section of Vlsi Design (ECE09414), with nothing on Fridays, while in the twin it is a section of Vlsi Design (ECE09414)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 2,
+        "correct_answers": 1,
+        "chance": 0.5,
+        "rules": 3,
+        "prompt_words": 9
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-africana-studies-ba-a",
+    "input": {
+      "program": "africana-studies-ba",
+      "student": {
+        "student_id": "S8034",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 454548,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-EXPERIENTIAL",
+            "AFST-FOUNDATIONAL",
+            "AFST-AFRICA-HISTORY",
+            "AFST-CAPSTONE"
+          ],
+          "rows": [],
+          "avoid": [
+            "AFST11350"
+          ],
+          "keep_unmet": [
+            "AFST-ELECTIVES"
+          ]
+        }
+      },
+      "prompt": "Register me for Topics: Tangled Politics and Natural Hair (AFST11350). I have to be done by 5:00 PM, so nothing that ends after 5:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "AFST11350"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "AFST11350"
+        ],
+        "ends_by": "5:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "45795"
+          ]
+        ],
+        "invalid": [
+          [
+            "42420"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 5:00 PM, and section(s) 42420 of AFST11350 look fine from the first meeting but have a later meeting that ends after 5:00 PM. 1 correct section: 45795; 1 section(s) break a rule of the request. Its twin's answers 42420 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "AFST-ELECTIVES"
+      ],
+      "pair": {
+        "id": "late_meeting/africana-studies-ba",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 5:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 5:00 PM, so nothing that ends after 5:00 PM'",
+          "twin_case": "prompt says 'No Tuesday classes'",
+          "twin_id": "pair-late_meeting-africana-studies-ba-b",
+          "answer_here": "a section of Topics: Tangled Politics and Natural Hair (AFST11350)",
+          "answer_in_twin": "a section of Topics: Tangled Politics and Natural Hair (AFST11350), with nothing on Tuesdays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 5:00 PM, so nothing that ends after 5:00 PM'. In the twin (pair-late_meeting-africana-studies-ba-b): prompt says 'No Tuesday classes'. So the answer here is a section of Topics: Tangled Politics and Natural Hair (AFST11350), while in the twin it is a section of Topics: Tangled Politics and Natural Hair (AFST11350), with nothing on Tuesdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 2,
+        "correct_answers": 1,
+        "chance": 0.5,
+        "rules": 3,
+        "prompt_words": 25
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-africana-studies-ba-b",
+    "input": {
+      "program": "africana-studies-ba",
+      "student": {
+        "student_id": "S8034",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 454548,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-EXPERIENTIAL",
+            "AFST-FOUNDATIONAL",
+            "AFST-AFRICA-HISTORY",
+            "AFST-CAPSTONE"
+          ],
+          "rows": [],
+          "avoid": [
+            "AFST11350"
+          ],
+          "keep_unmet": [
+            "AFST-ELECTIVES"
+          ]
+        }
+      },
+      "prompt": "Register me for Topics: Tangled Politics and Natural Hair (AFST11350). No Tuesday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "AFST11350"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "AFST11350"
+        ],
+        "no_days": [
+          "Tuesday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "42420"
+          ]
+        ],
+        "invalid": [
+          [
+            "45795"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of AFST11350 with no Tuesday meeting are correct, including sections with a late later meeting. 1 correct section: 42420; 1 section(s) break a rule of the request. Its twin's answers 45795 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "AFST-ELECTIVES"
+      ],
+      "pair": {
+        "id": "late_meeting/africana-studies-ba",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 5:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Tuesday classes'",
+          "twin_case": "prompt says 'I have to be done by 5:00 PM, so nothing that ends after 5:00 PM'",
+          "twin_id": "pair-late_meeting-africana-studies-ba-a",
+          "answer_here": "a section of Topics: Tangled Politics and Natural Hair (AFST11350), with nothing on Tuesdays",
+          "answer_in_twin": "a section of Topics: Tangled Politics and Natural Hair (AFST11350)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Tuesday classes'. In the twin (pair-late_meeting-africana-studies-ba-a): prompt says 'I have to be done by 5:00 PM, so nothing that ends after 5:00 PM'. So the answer here is a section of Topics: Tangled Politics and Natural Hair (AFST11350), with nothing on Tuesdays, while in the twin it is a section of Topics: Tangled Politics and Natural Hair (AFST11350)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 2,
+        "correct_answers": 1,
+        "chance": 0.5,
+        "rules": 3,
+        "prompt_words": 13
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-radio-television-film-ba-a",
+    "input": {
+      "program": "radio-television-film-ba",
+      "student": {
+        "student_id": "S8035",
+        "catalog_year": "Fall 2025",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 399364,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS"
+          ],
+          "rows": [],
+          "avoid": [
+            "RTF03275"
+          ],
+          "keep_unmet": [
+            "RTF-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Applied Media Aesthetics (RTF03275). I have to be done by 8:00 PM, so nothing that ends after 8:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "RTF03275"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "RTF03275"
+        ],
+        "ends_by": "8:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "41808"
+          ],
+          [
+            "41809"
+          ]
+        ],
+        "invalid": [
+          [
+            "41810"
+          ],
+          [
+            "41781"
+          ],
+          [
+            "41791"
+          ],
+          [
+            "41798"
+          ],
+          [
+            "41800"
+          ],
+          [
+            "41804"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 8:00 PM, and section(s) 41810 of RTF03275 look fine from the first meeting but have a later meeting that ends after 8:00 PM. 2 correct sections: 41808, 41809; full sections (no waitlist allowed): 41781, 41791, 41798, 41800, 41804, 41807; 1 section(s) break a rule of the request. Its twin's answers 41810 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "RTF-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "late_meeting/radio-television-film-ba",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Monday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_case": "prompt says 'No Monday classes'",
+          "twin_id": "pair-late_meeting-radio-television-film-ba-b",
+          "answer_here": "a section of Applied Media Aesthetics (RTF03275)",
+          "answer_in_twin": "a section of Applied Media Aesthetics (RTF03275), with nothing on Mondays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. In the twin (pair-late_meeting-radio-television-film-ba-b): prompt says 'No Monday classes'. So the answer here is a section of Applied Media Aesthetics (RTF03275), while in the twin it is a section of Applied Media Aesthetics (RTF03275), with nothing on Mondays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 9,
+        "correct_answers": 2,
+        "chance": 0.2222,
+        "rules": 3,
+        "prompt_words": 22
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-radio-television-film-ba-b",
+    "input": {
+      "program": "radio-television-film-ba",
+      "student": {
+        "student_id": "S8035",
+        "catalog_year": "Fall 2025",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 399364,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS"
+          ],
+          "rows": [],
+          "avoid": [
+            "RTF03275"
+          ],
+          "keep_unmet": [
+            "RTF-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Applied Media Aesthetics (RTF03275). No Monday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "RTF03275"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "RTF03275"
+        ],
+        "no_days": [
+          "Monday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "41810"
+          ]
+        ],
+        "invalid": [
+          [
+            "41808"
+          ],
+          [
+            "41809"
+          ],
+          [
+            "41781"
+          ],
+          [
+            "41791"
+          ],
+          [
+            "41798"
+          ],
+          [
+            "41800"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of RTF03275 with no Monday meeting are correct, including sections with a late later meeting. 1 correct section: 41810; full sections (no waitlist allowed): 41781, 41791, 41798, 41800, 41804, 41807; 2 section(s) break a rule of the request. Its twin's answers 41808, 41809 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "RTF-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "late_meeting/radio-television-film-ba",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Monday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Monday classes'",
+          "twin_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_id": "pair-late_meeting-radio-television-film-ba-a",
+          "answer_here": "a section of Applied Media Aesthetics (RTF03275), with nothing on Mondays",
+          "answer_in_twin": "a section of Applied Media Aesthetics (RTF03275)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Monday classes'. In the twin (pair-late_meeting-radio-television-film-ba-a): prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. So the answer here is a section of Applied Media Aesthetics (RTF03275), with nothing on Mondays, while in the twin it is a section of Applied Media Aesthetics (RTF03275)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 9,
+        "correct_answers": 1,
+        "chance": 0.1111,
+        "rules": 3,
+        "prompt_words": 10
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-bioinformatics-bs-a",
+    "input": {
+      "program": "bioinformatics-bs",
+      "student": {
+        "student_id": "S8039",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 13310,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-PHIL",
+            "NONPROG-PHYS1",
+            "NONPROG-PHYS2",
+            "NONPROG-CHEM",
+            "NONPROG-MATH"
+          ],
+          "rows": [],
+          "avoid": [
+            "CHEM06101"
+          ],
+          "keep_unmet": [
+            "BINF-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Chemistry II (CHEM06101). I have to be done by 8:00 PM, so nothing that ends after 8:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "CHEM06101"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "CHEM06101"
+        ],
+        "ends_by": "8:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "43550"
+          ],
+          [
+            "43552"
+          ]
+        ],
+        "invalid": [
+          [
+            "43548"
+          ],
+          [
+            "43544"
+          ],
+          [
+            "43545"
+          ],
+          [
+            "43546"
+          ],
+          [
+            "43547"
+          ],
+          [
+            "43549"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 8:00 PM, and section(s) 43548 of CHEM06101 look fine from the first meeting but have a later meeting that ends after 8:00 PM. 2 correct sections: 43550, 43552; full sections (no waitlist allowed): 43544, 43545, 43546, 43547, 43549, 45953, 45954; 1 section(s) break a rule of the request. Its twin's answers 43548 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "BINF-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "late_meeting/bioinformatics-bs",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_case": "prompt says 'No Tuesday classes'",
+          "twin_id": "pair-late_meeting-bioinformatics-bs-b",
+          "answer_here": "a section of Chemistry II (CHEM06101)",
+          "answer_in_twin": "a section of Chemistry II (CHEM06101), with nothing on Tuesdays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. In the twin (pair-late_meeting-bioinformatics-bs-b): prompt says 'No Tuesday classes'. So the answer here is a section of Chemistry II (CHEM06101), while in the twin it is a section of Chemistry II (CHEM06101), with nothing on Tuesdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 10,
+        "correct_answers": 2,
+        "chance": 0.2,
+        "rules": 3,
+        "prompt_words": 21
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-bioinformatics-bs-b",
+    "input": {
+      "program": "bioinformatics-bs",
+      "student": {
+        "student_id": "S8039",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 13310,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-PHIL",
+            "NONPROG-PHYS1",
+            "NONPROG-PHYS2",
+            "NONPROG-CHEM",
+            "NONPROG-MATH"
+          ],
+          "rows": [],
+          "avoid": [
+            "CHEM06101"
+          ],
+          "keep_unmet": [
+            "BINF-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Chemistry II (CHEM06101). No Tuesday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "CHEM06101"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "CHEM06101"
+        ],
+        "no_days": [
+          "Tuesday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "43548"
+          ]
+        ],
+        "invalid": [
+          [
+            "43550"
+          ],
+          [
+            "43552"
+          ],
+          [
+            "43544"
+          ],
+          [
+            "43545"
+          ],
+          [
+            "43546"
+          ],
+          [
+            "43547"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of CHEM06101 with no Tuesday meeting are correct, including sections with a late later meeting. 1 correct section: 43548; full sections (no waitlist allowed): 43544, 43545, 43546, 43547, 43549, 45953, 45954; 2 section(s) break a rule of the request. Its twin's answers 43550, 43552 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "BINF-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "late_meeting/bioinformatics-bs",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Tuesday classes'",
+          "twin_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_id": "pair-late_meeting-bioinformatics-bs-a",
+          "answer_here": "a section of Chemistry II (CHEM06101), with nothing on Tuesdays",
+          "answer_in_twin": "a section of Chemistry II (CHEM06101)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Tuesday classes'. In the twin (pair-late_meeting-bioinformatics-bs-a): prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. So the answer here is a section of Chemistry II (CHEM06101), with nothing on Tuesdays, while in the twin it is a section of Chemistry II (CHEM06101)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 10,
+        "correct_answers": 1,
+        "chance": 0.1,
+        "rules": 3,
+        "prompt_words": 9
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-philosophy-ba-a",
+    "input": {
+      "program": "philosophy-ba",
+      "student": {
+        "student_id": "S8041",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 742250,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-EXPERIENTIAL",
+            "PHIL-FOUNDATIONAL"
+          ],
+          "rows": [],
+          "avoid": [
+            "PHIL09110"
+          ],
+          "keep_unmet": [
+            "PHIL-LOGIC"
+          ]
+        }
+      },
+      "prompt": "Register me for Logic of Everyday Reasoning (PHIL09110). I have to be done by 7:00 PM, so nothing that ends after 7:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "PHIL09110"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "PHIL09110"
+        ],
+        "ends_by": "7:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "40946"
+          ]
+        ],
+        "invalid": [
+          [
+            "40948"
+          ],
+          [
+            "40949"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 7:00 PM, and section(s) 40948 of PHIL09110 look fine from the first meeting but have a later meeting that ends after 7:00 PM. 1 correct section: 40946; full sections (no waitlist allowed): 40949; 1 section(s) break a rule of the request. Its twin's answers 40948 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "PHIL-LOGIC"
+      ],
+      "pair": {
+        "id": "late_meeting/philosophy-ba",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 7:00 PM vs no Thursday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'",
+          "twin_case": "prompt says 'No Thursday classes'",
+          "twin_id": "pair-late_meeting-philosophy-ba-b",
+          "answer_here": "a section of Logic of Everyday Reasoning (PHIL09110)",
+          "answer_in_twin": "a section of Logic of Everyday Reasoning (PHIL09110), with nothing on Thursdays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'. In the twin (pair-late_meeting-philosophy-ba-b): prompt says 'No Thursday classes'. So the answer here is a section of Logic of Everyday Reasoning (PHIL09110), while in the twin it is a section of Logic of Everyday Reasoning (PHIL09110), with nothing on Thursdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 3,
+        "correct_answers": 1,
+        "chance": 0.3333,
+        "rules": 3,
+        "prompt_words": 23
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-philosophy-ba-b",
+    "input": {
+      "program": "philosophy-ba",
+      "student": {
+        "student_id": "S8041",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 742250,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-EXPERIENTIAL",
+            "PHIL-FOUNDATIONAL"
+          ],
+          "rows": [],
+          "avoid": [
+            "PHIL09110"
+          ],
+          "keep_unmet": [
+            "PHIL-LOGIC"
+          ]
+        }
+      },
+      "prompt": "Register me for Logic of Everyday Reasoning (PHIL09110). No Thursday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "PHIL09110"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "PHIL09110"
+        ],
+        "no_days": [
+          "Thursday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "40948"
+          ]
+        ],
+        "invalid": [
+          [
+            "40946"
+          ],
+          [
+            "40949"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of PHIL09110 with no Thursday meeting are correct, including sections with a late later meeting. 1 correct section: 40948; full sections (no waitlist allowed): 40949; 1 section(s) break a rule of the request. Its twin's answers 40946 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "PHIL-LOGIC"
+      ],
+      "pair": {
+        "id": "late_meeting/philosophy-ba",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 7:00 PM vs no Thursday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Thursday classes'",
+          "twin_case": "prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'",
+          "twin_id": "pair-late_meeting-philosophy-ba-a",
+          "answer_here": "a section of Logic of Everyday Reasoning (PHIL09110), with nothing on Thursdays",
+          "answer_in_twin": "a section of Logic of Everyday Reasoning (PHIL09110)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Thursday classes'. In the twin (pair-late_meeting-philosophy-ba-a): prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'. So the answer here is a section of Logic of Everyday Reasoning (PHIL09110), with nothing on Thursdays, while in the twin it is a section of Logic of Everyday Reasoning (PHIL09110)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 3,
+        "correct_answers": 1,
+        "chance": 0.3333,
+        "rules": 3,
+        "prompt_words": 11
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-management-bs-a",
+    "input": {
+      "program": "management-bs",
+      "student": {
+        "student_id": "S8043",
+        "catalog_year": "Fall 2022",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 764386,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-ECON-MACRO",
+            "NONPROG-ECON-MICRO",
+            "NONPROG-MATH",
+            "NONPROG-STAT",
+            "NONPROG-CAREER",
+            "NONPROG-CS",
+            "BUS-FOUNDATION",
+            "MGT-REQUIRED",
+            "MGT-ANALYTICS",
+            "MGT-QUALITATIVE",
+            "MGT-SUSTAINABILITY"
+          ],
+          "rows": [],
+          "avoid": [
+            "MKT09376"
+          ],
+          "keep_unmet": [
+            "MGT-ADDITIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Consumer Behavior (MKT09376). I have to be done by 8:00 PM, so nothing that ends after 8:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "MKT09376"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "MKT09376"
+        ],
+        "ends_by": "8:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "41608"
+          ]
+        ],
+        "invalid": [
+          [
+            "46070"
+          ],
+          [
+            "41609"
+          ],
+          [
+            "46044"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 8:00 PM, and section(s) 46070 of MKT09376 look fine from the first meeting but have a later meeting that ends after 8:00 PM. 1 correct section: 41608; full sections (no waitlist allowed): 41609, 46044; 1 section(s) break a rule of the request. Its twin's answers 46070 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "MGT-ADDITIONAL"
+      ],
+      "pair": {
+        "id": "late_meeting/management-bs",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_case": "prompt says 'No Tuesday classes'",
+          "twin_id": "pair-late_meeting-management-bs-b",
+          "answer_here": "a section of Consumer Behavior (MKT09376)",
+          "answer_in_twin": "a section of Consumer Behavior (MKT09376), with nothing on Tuesdays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. In the twin (pair-late_meeting-management-bs-b): prompt says 'No Tuesday classes'. So the answer here is a section of Consumer Behavior (MKT09376), while in the twin it is a section of Consumer Behavior (MKT09376), with nothing on Tuesdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 4,
+        "correct_answers": 1,
+        "chance": 0.25,
+        "rules": 3,
+        "prompt_words": 21
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-management-bs-b",
+    "input": {
+      "program": "management-bs",
+      "student": {
+        "student_id": "S8043",
+        "catalog_year": "Fall 2022",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 764386,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-ECON-MACRO",
+            "NONPROG-ECON-MICRO",
+            "NONPROG-MATH",
+            "NONPROG-STAT",
+            "NONPROG-CAREER",
+            "NONPROG-CS",
+            "BUS-FOUNDATION",
+            "MGT-REQUIRED",
+            "MGT-ANALYTICS",
+            "MGT-QUALITATIVE",
+            "MGT-SUSTAINABILITY"
+          ],
+          "rows": [],
+          "avoid": [
+            "MKT09376"
+          ],
+          "keep_unmet": [
+            "MGT-ADDITIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Consumer Behavior (MKT09376). No Tuesday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "MKT09376"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "MKT09376"
+        ],
+        "no_days": [
+          "Tuesday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "46070"
+          ]
+        ],
+        "invalid": [
+          [
+            "41608"
+          ],
+          [
+            "41609"
+          ],
+          [
+            "46044"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of MKT09376 with no Tuesday meeting are correct, including sections with a late later meeting. 1 correct section: 46070; full sections (no waitlist allowed): 41609, 46044; 1 section(s) break a rule of the request. Its twin's answers 41608 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "MGT-ADDITIONAL"
+      ],
+      "pair": {
+        "id": "late_meeting/management-bs",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Tuesday classes'",
+          "twin_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_id": "pair-late_meeting-management-bs-a",
+          "answer_here": "a section of Consumer Behavior (MKT09376), with nothing on Tuesdays",
+          "answer_in_twin": "a section of Consumer Behavior (MKT09376)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Tuesday classes'. In the twin (pair-late_meeting-management-bs-a): prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. So the answer here is a section of Consumer Behavior (MKT09376), with nothing on Tuesdays, while in the twin it is a section of Consumer Behavior (MKT09376)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 4,
+        "correct_answers": 1,
+        "chance": 0.25,
+        "rules": 3,
+        "prompt_words": 9
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-marketing-bs-a",
+    "input": {
+      "program": "marketing-bs",
+      "student": {
+        "student_id": "S8046",
+        "catalog_year": "Fall 2023",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 55680,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-ECON-MACRO",
+            "NONPROG-ECON-MICRO",
+            "NONPROG-MATH",
+            "NONPROG-STAT",
+            "NONPROG-CAREER",
+            "BUS-FOUNDATION"
+          ],
+          "rows": [],
+          "avoid": [
+            "MKT09384"
+          ],
+          "keep_unmet": [
+            "MKT-REQUIRED"
+          ]
+        }
+      },
+      "prompt": "Register me for Marketing Research Methods (MKT09384). I have to be done by 8:00 PM, so nothing that ends after 8:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "MKT09384"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "MKT09384"
+        ],
+        "ends_by": "8:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "41638"
+          ]
+        ],
+        "invalid": [
+          [
+            "41641"
+          ],
+          [
+            "41637"
+          ],
+          [
+            "41639"
+          ],
+          [
+            "46437"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 8:00 PM, and section(s) 41641 of MKT09384 look fine from the first meeting but have a later meeting that ends after 8:00 PM. 1 correct section: 41638; full sections (no waitlist allowed): 41637, 41639, 46437; 1 section(s) break a rule of the request. Its twin's answers 41641 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "MKT-REQUIRED"
+      ],
+      "pair": {
+        "id": "late_meeting/marketing-bs",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_case": "prompt says 'No Tuesday classes'",
+          "twin_id": "pair-late_meeting-marketing-bs-b",
+          "answer_here": "a section of Marketing Research Methods (MKT09384)",
+          "answer_in_twin": "a section of Marketing Research Methods (MKT09384), with nothing on Tuesdays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. In the twin (pair-late_meeting-marketing-bs-b): prompt says 'No Tuesday classes'. So the answer here is a section of Marketing Research Methods (MKT09384), while in the twin it is a section of Marketing Research Methods (MKT09384), with nothing on Tuesdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 5,
+        "correct_answers": 1,
+        "chance": 0.2,
+        "rules": 3,
+        "prompt_words": 22
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-marketing-bs-b",
+    "input": {
+      "program": "marketing-bs",
+      "student": {
+        "student_id": "S8046",
+        "catalog_year": "Fall 2023",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 55680,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-ECON-MACRO",
+            "NONPROG-ECON-MICRO",
+            "NONPROG-MATH",
+            "NONPROG-STAT",
+            "NONPROG-CAREER",
+            "BUS-FOUNDATION"
+          ],
+          "rows": [],
+          "avoid": [
+            "MKT09384"
+          ],
+          "keep_unmet": [
+            "MKT-REQUIRED"
+          ]
+        }
+      },
+      "prompt": "Register me for Marketing Research Methods (MKT09384). No Tuesday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "MKT09384"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "MKT09384"
+        ],
+        "no_days": [
+          "Tuesday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "41641"
+          ]
+        ],
+        "invalid": [
+          [
+            "41638"
+          ],
+          [
+            "41637"
+          ],
+          [
+            "41639"
+          ],
+          [
+            "46437"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of MKT09384 with no Tuesday meeting are correct, including sections with a late later meeting. 1 correct section: 41641; full sections (no waitlist allowed): 41637, 41639, 46437; 1 section(s) break a rule of the request. Its twin's answers 41638 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "MKT-REQUIRED"
+      ],
+      "pair": {
+        "id": "late_meeting/marketing-bs",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Tuesday classes'",
+          "twin_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_id": "pair-late_meeting-marketing-bs-a",
+          "answer_here": "a section of Marketing Research Methods (MKT09384), with nothing on Tuesdays",
+          "answer_in_twin": "a section of Marketing Research Methods (MKT09384)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Tuesday classes'. In the twin (pair-late_meeting-marketing-bs-a): prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. So the answer here is a section of Marketing Research Methods (MKT09384), with nothing on Tuesdays, while in the twin it is a section of Marketing Research Methods (MKT09384)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 5,
+        "correct_answers": 1,
+        "chance": 0.2,
+        "rules": 3,
+        "prompt_words": 10
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-supply-chain-logistics-bs-a",
+    "input": {
+      "program": "supply-chain-logistics-bs",
+      "student": {
+        "student_id": "S8047",
+        "catalog_year": "Fall 2023",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 223788,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-ECON-MACRO",
+            "NONPROG-ECON-MICRO",
+            "NONPROG-MATH",
+            "NONPROG-STAT",
+            "NONPROG-CAREER",
+            "BUS-FOUNDATION",
+            "SCL-REQUIRED"
+          ],
+          "rows": [],
+          "avoid": [
+            "MKT09384"
+          ],
+          "keep_unmet": [
+            "SCL-ELECTIVES"
+          ]
+        }
+      },
+      "prompt": "Register me for Marketing Research Methods (MKT09384). I have to be done by 8:00 PM, so nothing that ends after 8:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "MKT09384"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "MKT09384"
+        ],
+        "ends_by": "8:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "41638"
+          ]
+        ],
+        "invalid": [
+          [
+            "41641"
+          ],
+          [
+            "41637"
+          ],
+          [
+            "41639"
+          ],
+          [
+            "46437"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 8:00 PM, and section(s) 41641 of MKT09384 look fine from the first meeting but have a later meeting that ends after 8:00 PM. 1 correct section: 41638; full sections (no waitlist allowed): 41637, 41639, 46437; 1 section(s) break a rule of the request. Its twin's answers 41641 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "SCL-ELECTIVES"
+      ],
+      "pair": {
+        "id": "late_meeting/supply-chain-logistics-bs",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_case": "prompt says 'No Tuesday classes'",
+          "twin_id": "pair-late_meeting-supply-chain-logistics-bs-b",
+          "answer_here": "a section of Marketing Research Methods (MKT09384)",
+          "answer_in_twin": "a section of Marketing Research Methods (MKT09384), with nothing on Tuesdays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. In the twin (pair-late_meeting-supply-chain-logistics-bs-b): prompt says 'No Tuesday classes'. So the answer here is a section of Marketing Research Methods (MKT09384), while in the twin it is a section of Marketing Research Methods (MKT09384), with nothing on Tuesdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 5,
+        "correct_answers": 1,
+        "chance": 0.2,
+        "rules": 3,
+        "prompt_words": 22
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-supply-chain-logistics-bs-b",
+    "input": {
+      "program": "supply-chain-logistics-bs",
+      "student": {
+        "student_id": "S8047",
+        "catalog_year": "Fall 2023",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 223788,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-ECON-MACRO",
+            "NONPROG-ECON-MICRO",
+            "NONPROG-MATH",
+            "NONPROG-STAT",
+            "NONPROG-CAREER",
+            "BUS-FOUNDATION",
+            "SCL-REQUIRED"
+          ],
+          "rows": [],
+          "avoid": [
+            "MKT09384"
+          ],
+          "keep_unmet": [
+            "SCL-ELECTIVES"
+          ]
+        }
+      },
+      "prompt": "Register me for Marketing Research Methods (MKT09384). No Tuesday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "MKT09384"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "MKT09384"
+        ],
+        "no_days": [
+          "Tuesday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "41641"
+          ]
+        ],
+        "invalid": [
+          [
+            "41638"
+          ],
+          [
+            "41637"
+          ],
+          [
+            "41639"
+          ],
+          [
+            "46437"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of MKT09384 with no Tuesday meeting are correct, including sections with a late later meeting. 1 correct section: 41641; full sections (no waitlist allowed): 41637, 41639, 46437; 1 section(s) break a rule of the request. Its twin's answers 41638 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "SCL-ELECTIVES"
+      ],
+      "pair": {
+        "id": "late_meeting/supply-chain-logistics-bs",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Tuesday classes'",
+          "twin_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_id": "pair-late_meeting-supply-chain-logistics-bs-a",
+          "answer_here": "a section of Marketing Research Methods (MKT09384), with nothing on Tuesdays",
+          "answer_in_twin": "a section of Marketing Research Methods (MKT09384)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Tuesday classes'. In the twin (pair-late_meeting-supply-chain-logistics-bs-a): prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. So the answer here is a section of Marketing Research Methods (MKT09384), with nothing on Tuesdays, while in the twin it is a section of Marketing Research Methods (MKT09384)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 5,
+        "correct_answers": 1,
+        "chance": 0.2,
+        "rules": 3,
+        "prompt_words": 10
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-translational-biomedical-sciences-bs-a",
+    "input": {
+      "program": "translational-biomedical-sciences-bs",
+      "student": {
+        "student_id": "S8048",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 571163,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-PHIL",
+            "NONPROG-PHYS1",
+            "NONPROG-PHYS2",
+            "NONPROG-CHEM",
+            "NONPROG-MATH"
+          ],
+          "rows": [],
+          "avoid": [
+            "CHEM06101"
+          ],
+          "keep_unmet": [
+            "TBS-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Chemistry II (CHEM06101). I have to be done by 8:00 PM, so nothing that ends after 8:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "CHEM06101"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "CHEM06101"
+        ],
+        "ends_by": "8:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "43550"
+          ],
+          [
+            "43552"
+          ]
+        ],
+        "invalid": [
+          [
+            "43548"
+          ],
+          [
+            "43544"
+          ],
+          [
+            "43545"
+          ],
+          [
+            "43546"
+          ],
+          [
+            "43547"
+          ],
+          [
+            "43549"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 8:00 PM, and section(s) 43548 of CHEM06101 look fine from the first meeting but have a later meeting that ends after 8:00 PM. 2 correct sections: 43550, 43552; full sections (no waitlist allowed): 43544, 43545, 43546, 43547, 43549, 45953, 45954; 1 section(s) break a rule of the request. Its twin's answers 43548 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "TBS-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "late_meeting/translational-biomedical-sciences-bs",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_case": "prompt says 'No Tuesday classes'",
+          "twin_id": "pair-late_meeting-translational-biomedical-sciences-bs-b",
+          "answer_here": "a section of Chemistry II (CHEM06101)",
+          "answer_in_twin": "a section of Chemistry II (CHEM06101), with nothing on Tuesdays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. In the twin (pair-late_meeting-translational-biomedical-sciences-bs-b): prompt says 'No Tuesday classes'. So the answer here is a section of Chemistry II (CHEM06101), while in the twin it is a section of Chemistry II (CHEM06101), with nothing on Tuesdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 10,
+        "correct_answers": 2,
+        "chance": 0.2,
+        "rules": 3,
+        "prompt_words": 21
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-translational-biomedical-sciences-bs-b",
+    "input": {
+      "program": "translational-biomedical-sciences-bs",
+      "student": {
+        "student_id": "S8048",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 571163,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-PHIL",
+            "NONPROG-PHYS1",
+            "NONPROG-PHYS2",
+            "NONPROG-CHEM",
+            "NONPROG-MATH"
+          ],
+          "rows": [],
+          "avoid": [
+            "CHEM06101"
+          ],
+          "keep_unmet": [
+            "TBS-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Chemistry II (CHEM06101). No Tuesday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "CHEM06101"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "CHEM06101"
+        ],
+        "no_days": [
+          "Tuesday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "43548"
+          ]
+        ],
+        "invalid": [
+          [
+            "43550"
+          ],
+          [
+            "43552"
+          ],
+          [
+            "43544"
+          ],
+          [
+            "43545"
+          ],
+          [
+            "43546"
+          ],
+          [
+            "43547"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of CHEM06101 with no Tuesday meeting are correct, including sections with a late later meeting. 1 correct section: 43548; full sections (no waitlist allowed): 43544, 43545, 43546, 43547, 43549, 45953, 45954; 2 section(s) break a rule of the request. Its twin's answers 43550, 43552 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "TBS-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "late_meeting/translational-biomedical-sciences-bs",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Tuesday classes'",
+          "twin_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_id": "pair-late_meeting-translational-biomedical-sciences-bs-a",
+          "answer_here": "a section of Chemistry II (CHEM06101), with nothing on Tuesdays",
+          "answer_in_twin": "a section of Chemistry II (CHEM06101)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Tuesday classes'. In the twin (pair-late_meeting-translational-biomedical-sciences-bs-a): prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. So the answer here is a section of Chemistry II (CHEM06101), with nothing on Tuesdays, while in the twin it is a section of Chemistry II (CHEM06101)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 10,
+        "correct_answers": 1,
+        "chance": 0.1,
+        "rules": 3,
+        "prompt_words": 9
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-environmental-sustainability-studies-ba-a",
+    "input": {
+      "program": "environmental-sustainability-studies-ba",
+      "student": {
+        "student_id": "S8050",
+        "catalog_year": "Fall 2025",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 70262,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS"
+          ],
+          "rows": [],
+          "avoid": [
+            "ENST94101"
+          ],
+          "keep_unmet": [
+            "ESS-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Planet in Peril:env Sci 21CENT (ENST94101). I have to be done by 8:00 PM, so nothing that ends after 8:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "ENST94101"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "ENST94101"
+        ],
+        "ends_by": "8:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "44093"
+          ]
+        ],
+        "invalid": [
+          [
+            "46112"
+          ],
+          [
+            "44086"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 8:00 PM, and section(s) 46112 of ENST94101 look fine from the first meeting but have a later meeting that ends after 8:00 PM. 1 correct section: 44093; full sections (no waitlist allowed): 44086; 1 section(s) break a rule of the request. Its twin's answers 46112 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "ESS-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "late_meeting/environmental-sustainability-studies-ba",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_case": "prompt says 'No Tuesday classes'",
+          "twin_id": "pair-late_meeting-environmental-sustainability-studies-ba-b",
+          "answer_here": "a section of Planet in Peril:env Sci 21CENT (ENST94101)",
+          "answer_in_twin": "a section of Planet in Peril:env Sci 21CENT (ENST94101), with nothing on Tuesdays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. In the twin (pair-late_meeting-environmental-sustainability-studies-ba-b): prompt says 'No Tuesday classes'. So the answer here is a section of Planet in Peril:env Sci 21CENT (ENST94101), while in the twin it is a section of Planet in Peril:env Sci 21CENT (ENST94101), with nothing on Tuesdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 3,
+        "correct_answers": 1,
+        "chance": 0.3333,
+        "rules": 3,
+        "prompt_words": 24
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-environmental-sustainability-studies-ba-b",
+    "input": {
+      "program": "environmental-sustainability-studies-ba",
+      "student": {
+        "student_id": "S8050",
+        "catalog_year": "Fall 2025",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 70262,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS"
+          ],
+          "rows": [],
+          "avoid": [
+            "ENST94101"
+          ],
+          "keep_unmet": [
+            "ESS-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Planet in Peril:env Sci 21CENT (ENST94101). No Tuesday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "ENST94101"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "ENST94101"
+        ],
+        "no_days": [
+          "Tuesday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "46112"
+          ]
+        ],
+        "invalid": [
+          [
+            "44093"
+          ],
+          [
+            "44086"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of ENST94101 with no Tuesday meeting are correct, including sections with a late later meeting. 1 correct section: 46112; full sections (no waitlist allowed): 44086; 1 section(s) break a rule of the request. Its twin's answers 44093 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "ESS-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "late_meeting/environmental-sustainability-studies-ba",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Tuesday classes'",
+          "twin_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_id": "pair-late_meeting-environmental-sustainability-studies-ba-a",
+          "answer_here": "a section of Planet in Peril:env Sci 21CENT (ENST94101), with nothing on Tuesdays",
+          "answer_in_twin": "a section of Planet in Peril:env Sci 21CENT (ENST94101)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Tuesday classes'. In the twin (pair-late_meeting-environmental-sustainability-studies-ba-a): prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. So the answer here is a section of Planet in Peril:env Sci 21CENT (ENST94101), with nothing on Tuesdays, while in the twin it is a section of Planet in Peril:env Sci 21CENT (ENST94101)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 3,
+        "correct_answers": 1,
+        "chance": 0.3333,
+        "rules": 3,
+        "prompt_words": 12
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-psychological-science-bs-2-a",
+    "input": {
+      "program": "psychological-science-bs",
+      "student": {
+        "student_id": "S8054",
+        "catalog_year": "Fall 2023",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 453259,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-PHIL",
+            "NONPROG-BIOL",
+            "PSY-INTRO",
+            "PSY-PROF-DEV",
+            "PSY-RESEARCH",
+            "PSY-CORE-DEV",
+            "PSY-CORE-SOCIAL",
+            "PSY-CORE-DISORDERS"
+          ],
+          "rows": [],
+          "avoid": [
+            "PSY02310"
+          ],
+          "keep_unmet": [
+            "PSY-CORE-COGNITION"
+          ]
+        }
+      },
+      "prompt": "Register me for Learning and Behaviorism (PSY02310). I have to be done by 7:00 PM, so nothing that ends after 7:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "PSY02310"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "PSY02310"
+        ],
+        "ends_by": "7:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "40273"
+          ]
+        ],
+        "invalid": [
+          [
+            "40275"
+          ],
+          [
+            "40276"
+          ],
+          [
+            "40101"
+          ],
+          [
+            "40102"
+          ],
+          [
+            "40105"
+          ],
+          [
+            "40108"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 7:00 PM, and section(s) 40276 of PSY02310 look fine from the first meeting but have a later meeting that ends after 7:00 PM. 1 correct section: 40273; full sections (no waitlist allowed): 40101, 40102, 40105, 40108, 40277; 2 section(s) break a rule of the request. Its twin's answers 40275, 40276 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "PSY-CORE-COGNITION"
+      ],
+      "pair": {
+        "id": "late_meeting/psychological-science-bs#2",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 7:00 PM vs no Wednesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'",
+          "twin_case": "prompt says 'No Wednesday classes'",
+          "twin_id": "pair-late_meeting-psychological-science-bs-2-b",
+          "answer_here": "a section of Learning and Behaviorism (PSY02310)",
+          "answer_in_twin": "a section of Learning and Behaviorism (PSY02310), with nothing on Wednesdays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'. In the twin (pair-late_meeting-psychological-science-bs-2-b): prompt says 'No Wednesday classes'. So the answer here is a section of Learning and Behaviorism (PSY02310), while in the twin it is a section of Learning and Behaviorism (PSY02310), with nothing on Wednesdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 8,
+        "correct_answers": 1,
+        "chance": 0.125,
+        "rules": 3,
+        "prompt_words": 22
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-psychological-science-bs-2-b",
+    "input": {
+      "program": "psychological-science-bs",
+      "student": {
+        "student_id": "S8054",
+        "catalog_year": "Fall 2023",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 453259,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-PHIL",
+            "NONPROG-BIOL",
+            "PSY-INTRO",
+            "PSY-PROF-DEV",
+            "PSY-RESEARCH",
+            "PSY-CORE-DEV",
+            "PSY-CORE-SOCIAL",
+            "PSY-CORE-DISORDERS"
+          ],
+          "rows": [],
+          "avoid": [
+            "PSY02310"
+          ],
+          "keep_unmet": [
+            "PSY-CORE-COGNITION"
+          ]
+        }
+      },
+      "prompt": "Register me for Learning and Behaviorism (PSY02310). No Wednesday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "PSY02310"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "PSY02310"
+        ],
+        "no_days": [
+          "Wednesday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "40275"
+          ],
+          [
+            "40276"
+          ]
+        ],
+        "invalid": [
+          [
+            "40273"
+          ],
+          [
+            "40101"
+          ],
+          [
+            "40102"
+          ],
+          [
+            "40105"
+          ],
+          [
+            "40108"
+          ],
+          [
+            "40277"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of PSY02310 with no Wednesday meeting are correct, including sections with a late later meeting. 2 correct sections: 40275, 40276; full sections (no waitlist allowed): 40101, 40102, 40105, 40108, 40277; 1 section(s) break a rule of the request. Its twin's answers 40273 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "PSY-CORE-COGNITION"
+      ],
+      "pair": {
+        "id": "late_meeting/psychological-science-bs#2",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 7:00 PM vs no Wednesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Wednesday classes'",
+          "twin_case": "prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'",
+          "twin_id": "pair-late_meeting-psychological-science-bs-2-a",
+          "answer_here": "a section of Learning and Behaviorism (PSY02310), with nothing on Wednesdays",
+          "answer_in_twin": "a section of Learning and Behaviorism (PSY02310)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Wednesday classes'. In the twin (pair-late_meeting-psychological-science-bs-2-a): prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'. So the answer here is a section of Learning and Behaviorism (PSY02310), with nothing on Wednesdays, while in the twin it is a section of Learning and Behaviorism (PSY02310)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 8,
+        "correct_answers": 2,
+        "chance": 0.25,
+        "rules": 3,
+        "prompt_words": 10
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-sports-communication-media-ba-2-a",
+    "input": {
+      "program": "sports-communication-media-ba",
+      "student": {
+        "student_id": "S8072",
+        "catalog_year": "Fall 2025",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 232098,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS"
+          ],
+          "rows": [],
+          "avoid": [
+            "SPRT09401"
+          ],
+          "keep_unmet": [
+            "SPRT-CORE"
+          ]
+        }
+      },
+      "prompt": "Register me for Senior Seminar Sports Cam (SPRT09401). I have to be done by 7:00 PM, so nothing that ends after 7:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "SPRT09401"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "SPRT09401"
+        ],
+        "ends_by": "7:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "43988"
+          ]
+        ],
+        "invalid": [
+          [
+            "46488"
+          ],
+          [
+            "44384"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 7:00 PM, and section(s) 46488 of SPRT09401 look fine from the first meeting but have a later meeting that ends after 7:00 PM. 1 correct section: 43988; full sections (no waitlist allowed): 44384; 1 section(s) break a rule of the request. Its twin's answers 46488 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "SPRT-CORE"
+      ],
+      "pair": {
+        "id": "late_meeting/sports-communication-media-ba#2",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 7:00 PM vs no Friday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'",
+          "twin_case": "prompt says 'No Friday classes'",
+          "twin_id": "pair-late_meeting-sports-communication-media-ba-2-b",
+          "answer_here": "a section of Senior Seminar Sports Cam (SPRT09401)",
+          "answer_in_twin": "a section of Senior Seminar Sports Cam (SPRT09401), with nothing on Fridays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'. In the twin (pair-late_meeting-sports-communication-media-ba-2-b): prompt says 'No Friday classes'. So the answer here is a section of Senior Seminar Sports Cam (SPRT09401), while in the twin it is a section of Senior Seminar Sports Cam (SPRT09401), with nothing on Fridays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 3,
+        "correct_answers": 1,
+        "chance": 0.3333,
+        "rules": 3,
+        "prompt_words": 23
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-sports-communication-media-ba-2-b",
+    "input": {
+      "program": "sports-communication-media-ba",
+      "student": {
+        "student_id": "S8072",
+        "catalog_year": "Fall 2025",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 232098,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS"
+          ],
+          "rows": [],
+          "avoid": [
+            "SPRT09401"
+          ],
+          "keep_unmet": [
+            "SPRT-CORE"
+          ]
+        }
+      },
+      "prompt": "Register me for Senior Seminar Sports Cam (SPRT09401). No Friday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "SPRT09401"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "SPRT09401"
+        ],
+        "no_days": [
+          "Friday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "46488"
+          ]
+        ],
+        "invalid": [
+          [
+            "43988"
+          ],
+          [
+            "44384"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of SPRT09401 with no Friday meeting are correct, including sections with a late later meeting. 1 correct section: 46488; full sections (no waitlist allowed): 44384; 1 section(s) break a rule of the request. Its twin's answers 43988 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "SPRT-CORE"
+      ],
+      "pair": {
+        "id": "late_meeting/sports-communication-media-ba#2",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 7:00 PM vs no Friday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Friday classes'",
+          "twin_case": "prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'",
+          "twin_id": "pair-late_meeting-sports-communication-media-ba-2-a",
+          "answer_here": "a section of Senior Seminar Sports Cam (SPRT09401), with nothing on Fridays",
+          "answer_in_twin": "a section of Senior Seminar Sports Cam (SPRT09401)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Friday classes'. In the twin (pair-late_meeting-sports-communication-media-ba-2-a): prompt says 'I have to be done by 7:00 PM, so nothing that ends after 7:00 PM'. So the answer here is a section of Senior Seminar Sports Cam (SPRT09401), with nothing on Fridays, while in the twin it is a section of Senior Seminar Sports Cam (SPRT09401)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 3,
+        "correct_answers": 1,
+        "chance": 0.3333,
+        "rules": 3,
+        "prompt_words": 11
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-africana-studies-ba-2-a",
+    "input": {
+      "program": "africana-studies-ba",
+      "student": {
+        "student_id": "S8084",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 612633,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-EXPERIENTIAL",
+            "AFST-FOUNDATIONAL",
+            "AFST-AFRICA-HISTORY",
+            "AFST-CAPSTONE"
+          ],
+          "rows": [],
+          "avoid": [
+            "AFST11350"
+          ],
+          "keep_unmet": [
+            "AFST-ELECTIVES"
+          ]
+        }
+      },
+      "prompt": "Register me for Topics: Tangled Politics and Natural Hair (AFST11350). I have to be done by 6:00 PM, so nothing that ends after 6:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "AFST11350"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "AFST11350"
+        ],
+        "ends_by": "6:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "45795"
+          ]
+        ],
+        "invalid": [
+          [
+            "42420"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 6:00 PM, and section(s) 42420 of AFST11350 look fine from the first meeting but have a later meeting that ends after 6:00 PM. 1 correct section: 45795; 1 section(s) break a rule of the request. Its twin's answers 42420 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "AFST-ELECTIVES"
+      ],
+      "pair": {
+        "id": "late_meeting/africana-studies-ba#2",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 6:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 6:00 PM, so nothing that ends after 6:00 PM'",
+          "twin_case": "prompt says 'No Tuesday classes'",
+          "twin_id": "pair-late_meeting-africana-studies-ba-2-b",
+          "answer_here": "a section of Topics: Tangled Politics and Natural Hair (AFST11350)",
+          "answer_in_twin": "a section of Topics: Tangled Politics and Natural Hair (AFST11350), with nothing on Tuesdays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 6:00 PM, so nothing that ends after 6:00 PM'. In the twin (pair-late_meeting-africana-studies-ba-2-b): prompt says 'No Tuesday classes'. So the answer here is a section of Topics: Tangled Politics and Natural Hair (AFST11350), while in the twin it is a section of Topics: Tangled Politics and Natural Hair (AFST11350), with nothing on Tuesdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 2,
+        "correct_answers": 1,
+        "chance": 0.5,
+        "rules": 3,
+        "prompt_words": 25
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-africana-studies-ba-2-b",
+    "input": {
+      "program": "africana-studies-ba",
+      "student": {
+        "student_id": "S8084",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 612633,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-EXPERIENTIAL",
+            "AFST-FOUNDATIONAL",
+            "AFST-AFRICA-HISTORY",
+            "AFST-CAPSTONE"
+          ],
+          "rows": [],
+          "avoid": [
+            "AFST11350"
+          ],
+          "keep_unmet": [
+            "AFST-ELECTIVES"
+          ]
+        }
+      },
+      "prompt": "Register me for Topics: Tangled Politics and Natural Hair (AFST11350). No Tuesday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "AFST11350"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "AFST11350"
+        ],
+        "no_days": [
+          "Tuesday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "42420"
+          ]
+        ],
+        "invalid": [
+          [
+            "45795"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of AFST11350 with no Tuesday meeting are correct, including sections with a late later meeting. 1 correct section: 42420; 1 section(s) break a rule of the request. Its twin's answers 45795 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "AFST-ELECTIVES"
+      ],
+      "pair": {
+        "id": "late_meeting/africana-studies-ba#2",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 6:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Tuesday classes'",
+          "twin_case": "prompt says 'I have to be done by 6:00 PM, so nothing that ends after 6:00 PM'",
+          "twin_id": "pair-late_meeting-africana-studies-ba-2-a",
+          "answer_here": "a section of Topics: Tangled Politics and Natural Hair (AFST11350), with nothing on Tuesdays",
+          "answer_in_twin": "a section of Topics: Tangled Politics and Natural Hair (AFST11350)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Tuesday classes'. In the twin (pair-late_meeting-africana-studies-ba-2-a): prompt says 'I have to be done by 6:00 PM, so nothing that ends after 6:00 PM'. So the answer here is a section of Topics: Tangled Politics and Natural Hair (AFST11350), with nothing on Tuesdays, while in the twin it is a section of Topics: Tangled Politics and Natural Hair (AFST11350)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 2,
+        "correct_answers": 1,
+        "chance": 0.5,
+        "rules": 3,
+        "prompt_words": 13
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-marketing-bs-2-a",
+    "input": {
+      "program": "marketing-bs",
+      "student": {
+        "student_id": "S8096",
+        "catalog_year": "Fall 2023",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 413503,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-ECON-MACRO",
+            "NONPROG-ECON-MICRO",
+            "NONPROG-MATH",
+            "NONPROG-STAT",
+            "NONPROG-CAREER",
+            "BUS-FOUNDATION"
+          ],
+          "rows": [],
+          "avoid": [
+            "MKT09376"
+          ],
+          "keep_unmet": [
+            "MKT-REQUIRED"
+          ]
+        }
+      },
+      "prompt": "Register me for Consumer Behavior (MKT09376). I have to be done by 8:00 PM, so nothing that ends after 8:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "MKT09376"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "MKT09376"
+        ],
+        "ends_by": "8:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "41608"
+          ]
+        ],
+        "invalid": [
+          [
+            "46070"
+          ],
+          [
+            "41609"
+          ],
+          [
+            "46044"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 8:00 PM, and section(s) 46070 of MKT09376 look fine from the first meeting but have a later meeting that ends after 8:00 PM. 1 correct section: 41608; full sections (no waitlist allowed): 41609, 46044; 1 section(s) break a rule of the request. Its twin's answers 46070 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "MKT-REQUIRED"
+      ],
+      "pair": {
+        "id": "late_meeting/marketing-bs#2",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_case": "prompt says 'No Tuesday classes'",
+          "twin_id": "pair-late_meeting-marketing-bs-2-b",
+          "answer_here": "a section of Consumer Behavior (MKT09376)",
+          "answer_in_twin": "a section of Consumer Behavior (MKT09376), with nothing on Tuesdays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. In the twin (pair-late_meeting-marketing-bs-2-b): prompt says 'No Tuesday classes'. So the answer here is a section of Consumer Behavior (MKT09376), while in the twin it is a section of Consumer Behavior (MKT09376), with nothing on Tuesdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 4,
+        "correct_answers": 1,
+        "chance": 0.25,
+        "rules": 3,
+        "prompt_words": 21
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-marketing-bs-2-b",
+    "input": {
+      "program": "marketing-bs",
+      "student": {
+        "student_id": "S8096",
+        "catalog_year": "Fall 2023",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 413503,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-ECON-MACRO",
+            "NONPROG-ECON-MICRO",
+            "NONPROG-MATH",
+            "NONPROG-STAT",
+            "NONPROG-CAREER",
+            "BUS-FOUNDATION"
+          ],
+          "rows": [],
+          "avoid": [
+            "MKT09376"
+          ],
+          "keep_unmet": [
+            "MKT-REQUIRED"
+          ]
+        }
+      },
+      "prompt": "Register me for Consumer Behavior (MKT09376). No Tuesday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "MKT09376"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "MKT09376"
+        ],
+        "no_days": [
+          "Tuesday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "46070"
+          ]
+        ],
+        "invalid": [
+          [
+            "41608"
+          ],
+          [
+            "41609"
+          ],
+          [
+            "46044"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of MKT09376 with no Tuesday meeting are correct, including sections with a late later meeting. 1 correct section: 46070; full sections (no waitlist allowed): 41609, 46044; 1 section(s) break a rule of the request. Its twin's answers 41608 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "MKT-REQUIRED"
+      ],
+      "pair": {
+        "id": "late_meeting/marketing-bs#2",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Tuesday classes'",
+          "twin_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_id": "pair-late_meeting-marketing-bs-2-a",
+          "answer_here": "a section of Consumer Behavior (MKT09376), with nothing on Tuesdays",
+          "answer_in_twin": "a section of Consumer Behavior (MKT09376)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Tuesday classes'. In the twin (pair-late_meeting-marketing-bs-2-a): prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. So the answer here is a section of Consumer Behavior (MKT09376), with nothing on Tuesdays, while in the twin it is a section of Consumer Behavior (MKT09376)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 4,
+        "correct_answers": 1,
+        "chance": 0.25,
+        "rules": 3,
+        "prompt_words": 9
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-management-bs-3-a",
+    "input": {
+      "program": "management-bs",
+      "student": {
+        "student_id": "S8143",
+        "catalog_year": "Fall 2023",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 46425,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-ECON-MACRO",
+            "NONPROG-ECON-MICRO",
+            "NONPROG-MATH",
+            "NONPROG-STAT",
+            "NONPROG-CAREER",
+            "NONPROG-CS",
+            "BUS-FOUNDATION",
+            "MGT-REQUIRED"
+          ],
+          "rows": [],
+          "avoid": [
+            "MKT09384"
+          ],
+          "keep_unmet": [
+            "MGT-ANALYTICS"
+          ]
+        }
+      },
+      "prompt": "Register me for Research Methods in Marketing (MKT09384). I have to be done by 8:00 PM, so nothing that ends after 8:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "MKT09384"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "MKT09384"
+        ],
+        "ends_by": "8:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "41638"
+          ]
+        ],
+        "invalid": [
+          [
+            "41641"
+          ],
+          [
+            "41637"
+          ],
+          [
+            "41639"
+          ],
+          [
+            "46437"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 8:00 PM, and section(s) 41641 of MKT09384 look fine from the first meeting but have a later meeting that ends after 8:00 PM. 1 correct section: 41638; full sections (no waitlist allowed): 41637, 41639, 46437; 1 section(s) break a rule of the request. Its twin's answers 41641 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "MGT-ANALYTICS"
+      ],
+      "pair": {
+        "id": "late_meeting/management-bs#3",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_case": "prompt says 'No Tuesday classes'",
+          "twin_id": "pair-late_meeting-management-bs-3-b",
+          "answer_here": "a section of Research Methods in Marketing (MKT09384)",
+          "answer_in_twin": "a section of Research Methods in Marketing (MKT09384), with nothing on Tuesdays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. In the twin (pair-late_meeting-management-bs-3-b): prompt says 'No Tuesday classes'. So the answer here is a section of Research Methods in Marketing (MKT09384), while in the twin it is a section of Research Methods in Marketing (MKT09384), with nothing on Tuesdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 5,
+        "correct_answers": 1,
+        "chance": 0.2,
+        "rules": 3,
+        "prompt_words": 23
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-management-bs-3-b",
+    "input": {
+      "program": "management-bs",
+      "student": {
+        "student_id": "S8143",
+        "catalog_year": "Fall 2023",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 46425,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-ECON-MACRO",
+            "NONPROG-ECON-MICRO",
+            "NONPROG-MATH",
+            "NONPROG-STAT",
+            "NONPROG-CAREER",
+            "NONPROG-CS",
+            "BUS-FOUNDATION",
+            "MGT-REQUIRED"
+          ],
+          "rows": [],
+          "avoid": [
+            "MKT09384"
+          ],
+          "keep_unmet": [
+            "MGT-ANALYTICS"
+          ]
+        }
+      },
+      "prompt": "Register me for Research Methods in Marketing (MKT09384). No Tuesday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "MKT09384"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "MKT09384"
+        ],
+        "no_days": [
+          "Tuesday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "41641"
+          ]
+        ],
+        "invalid": [
+          [
+            "41638"
+          ],
+          [
+            "41637"
+          ],
+          [
+            "41639"
+          ],
+          [
+            "46437"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of MKT09384 with no Tuesday meeting are correct, including sections with a late later meeting. 1 correct section: 41641; full sections (no waitlist allowed): 41637, 41639, 46437; 1 section(s) break a rule of the request. Its twin's answers 41638 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "MGT-ANALYTICS"
+      ],
+      "pair": {
+        "id": "late_meeting/management-bs#3",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 8:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Tuesday classes'",
+          "twin_case": "prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'",
+          "twin_id": "pair-late_meeting-management-bs-3-a",
+          "answer_here": "a section of Research Methods in Marketing (MKT09384), with nothing on Tuesdays",
+          "answer_in_twin": "a section of Research Methods in Marketing (MKT09384)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Tuesday classes'. In the twin (pair-late_meeting-management-bs-3-a): prompt says 'I have to be done by 8:00 PM, so nothing that ends after 8:00 PM'. So the answer here is a section of Research Methods in Marketing (MKT09384), with nothing on Tuesdays, while in the twin it is a section of Research Methods in Marketing (MKT09384)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 5,
+        "correct_answers": 1,
+        "chance": 0.2,
+        "rules": 3,
+        "prompt_words": 11
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-electrical-computer-engineering-bs-4-a",
+    "input": {
+      "program": "electrical-computer-engineering-bs",
+      "student": {
+        "student_id": "S8183",
+        "catalog_year": "Fall 2022",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 643024,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-BUSINESS",
+            "NONPROG",
+            "ECE-FIRST-YEAR",
+            "ECE-SECOND-YEAR",
+            "ECE-SECOND-YEAR-CALC",
+            "ECE-SECOND-YEAR-CORE",
+            "ECE-SCIENCE",
+            "ECE-JUNIOR-CLINIC",
+            "ECE-SIGNALS",
+            "ECE-THIRD-YEAR",
+            "ECE-SENIOR-CLINIC"
+          ],
+          "rows": [],
+          "avoid": [
+            "ECE09414"
+          ],
+          "keep_unmet": [
+            "ECE-FOURTH-YEAR"
+          ]
+        }
+      },
+      "prompt": "Register me for Vlsi Design (ECE09414). I have to be done by 6:00 PM, so nothing that ends after 6:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "ECE09414"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "ECE09414"
+        ],
+        "ends_by": "6:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "43400"
+          ]
+        ],
+        "invalid": [
+          [
+            "43399"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 6:00 PM, and section(s) 43399 of ECE09414 look fine from the first meeting but have a later meeting that ends after 6:00 PM. 1 correct section: 43400; 1 section(s) break a rule of the request. Its twin's answers 43399 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "ECE-FOURTH-YEAR"
+      ],
+      "pair": {
+        "id": "late_meeting/electrical-computer-engineering-bs#4",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 6:00 PM vs no Friday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 6:00 PM, so nothing that ends after 6:00 PM'",
+          "twin_case": "prompt says 'No Friday classes'",
+          "twin_id": "pair-late_meeting-electrical-computer-engineering-bs-4-b",
+          "answer_here": "a section of Vlsi Design (ECE09414)",
+          "answer_in_twin": "a section of Vlsi Design (ECE09414), with nothing on Fridays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 6:00 PM, so nothing that ends after 6:00 PM'. In the twin (pair-late_meeting-electrical-computer-engineering-bs-4-b): prompt says 'No Friday classes'. So the answer here is a section of Vlsi Design (ECE09414), while in the twin it is a section of Vlsi Design (ECE09414), with nothing on Fridays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 2,
+        "correct_answers": 1,
+        "chance": 0.5,
+        "rules": 3,
+        "prompt_words": 21
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-electrical-computer-engineering-bs-4-b",
+    "input": {
+      "program": "electrical-computer-engineering-bs",
+      "student": {
+        "student_id": "S8183",
+        "catalog_year": "Fall 2022",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 643024,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-BUSINESS",
+            "NONPROG",
+            "ECE-FIRST-YEAR",
+            "ECE-SECOND-YEAR",
+            "ECE-SECOND-YEAR-CALC",
+            "ECE-SECOND-YEAR-CORE",
+            "ECE-SCIENCE",
+            "ECE-JUNIOR-CLINIC",
+            "ECE-SIGNALS",
+            "ECE-THIRD-YEAR",
+            "ECE-SENIOR-CLINIC"
+          ],
+          "rows": [],
+          "avoid": [
+            "ECE09414"
+          ],
+          "keep_unmet": [
+            "ECE-FOURTH-YEAR"
+          ]
+        }
+      },
+      "prompt": "Register me for Vlsi Design (ECE09414). No Friday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "ECE09414"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "ECE09414"
+        ],
+        "no_days": [
+          "Friday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "43399"
+          ]
+        ],
+        "invalid": [
+          [
+            "43400"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of ECE09414 with no Friday meeting are correct, including sections with a late later meeting. 1 correct section: 43399; 1 section(s) break a rule of the request. Its twin's answers 43400 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "ECE-FOURTH-YEAR"
+      ],
+      "pair": {
+        "id": "late_meeting/electrical-computer-engineering-bs#4",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 6:00 PM vs no Friday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Friday classes'",
+          "twin_case": "prompt says 'I have to be done by 6:00 PM, so nothing that ends after 6:00 PM'",
+          "twin_id": "pair-late_meeting-electrical-computer-engineering-bs-4-a",
+          "answer_here": "a section of Vlsi Design (ECE09414), with nothing on Fridays",
+          "answer_in_twin": "a section of Vlsi Design (ECE09414)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Friday classes'. In the twin (pair-late_meeting-electrical-computer-engineering-bs-4-a): prompt says 'I have to be done by 6:00 PM, so nothing that ends after 6:00 PM'. So the answer here is a section of Vlsi Design (ECE09414), with nothing on Fridays, while in the twin it is a section of Vlsi Design (ECE09414)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 2,
+        "correct_answers": 1,
+        "chance": 0.5,
+        "rules": 3,
+        "prompt_words": 9
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-environmental-sustainability-studies-ba-4-a",
+    "input": {
+      "program": "environmental-sustainability-studies-ba",
+      "student": {
+        "student_id": "S8200",
+        "catalog_year": "Fall 2025",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 186805,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS"
+          ],
+          "rows": [],
+          "avoid": [
+            "PLAN31280"
+          ],
+          "keep_unmet": [
+            "ESS-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Foundations of Planning & Environmental Design (PLAN31280). I have to be done by 3:00 PM, so nothing that ends after 3:00 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "PLAN31280"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "PLAN31280"
+        ],
+        "ends_by": "3:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "44236"
+          ]
+        ],
+        "invalid": [
+          [
+            "44237"
+          ],
+          [
+            "44238"
+          ]
+        ]
+      },
+      "implicit_relationship": "Every meeting must end by 3:00 PM, and section(s) 44237 of PLAN31280 look fine from the first meeting but have a later meeting that ends after 3:00 PM. 1 correct section: 44236; full sections (no waitlist allowed): 44238; 1 section(s) break a rule of the request. Its twin's answers 44237 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "ESS-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "late_meeting/environmental-sustainability-studies-ba#4",
+        "variant": "a",
+        "changed": "constraint: nothing ends after 3:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'I have to be done by 3:00 PM, so nothing that ends after 3:00 PM'",
+          "twin_case": "prompt says 'No Tuesday classes'",
+          "twin_id": "pair-late_meeting-environmental-sustainability-studies-ba-4-b",
+          "answer_here": "a section of Foundations of Planning & Environmental Design (PLAN31280)",
+          "answer_in_twin": "a section of Foundations of Planning & Environmental Design (PLAN31280), with nothing on Tuesdays",
+          "summary": "Only the prompt differs. Here: prompt says 'I have to be done by 3:00 PM, so nothing that ends after 3:00 PM'. In the twin (pair-late_meeting-environmental-sustainability-studies-ba-4-b): prompt says 'No Tuesday classes'. So the answer here is a section of Foundations of Planning & Environmental Design (PLAN31280), while in the twin it is a section of Foundations of Planning & Environmental Design (PLAN31280), with nothing on Tuesdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 3,
+        "correct_answers": 1,
+        "chance": 0.3333,
+        "rules": 3,
+        "prompt_words": 25
+      }
+    }
+  },
+  {
+    "case_id": "pair-late_meeting-environmental-sustainability-studies-ba-4-b",
+    "input": {
+      "program": "environmental-sustainability-studies-ba",
+      "student": {
+        "student_id": "S8200",
+        "catalog_year": "Fall 2025",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 186805,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS"
+          ],
+          "rows": [],
+          "avoid": [
+            "PLAN31280"
+          ],
+          "keep_unmet": [
+            "ESS-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Foundations of Planning & Environmental Design (PLAN31280). No Tuesday classes."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "PLAN31280"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "must_include_courses": [
+          "PLAN31280"
+        ],
+        "no_days": [
+          "Tuesday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "44237"
+          ]
+        ],
+        "invalid": [
+          [
+            "44236"
+          ],
+          [
+            "44238"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only sections of PLAN31280 with no Tuesday meeting are correct, including sections with a late later meeting. 1 correct section: 44237; full sections (no waitlist allowed): 44238; 1 section(s) break a rule of the request. Its twin's answers 44236 are wrong here.",
+      "case_type": "late_meeting",
+      "targets": [
+        "ESS-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "late_meeting/environmental-sustainability-studies-ba#4",
+        "variant": "b",
+        "changed": "constraint: nothing ends after 3:00 PM vs no Tuesday classes",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'No Tuesday classes'",
+          "twin_case": "prompt says 'I have to be done by 3:00 PM, so nothing that ends after 3:00 PM'",
+          "twin_id": "pair-late_meeting-environmental-sustainability-studies-ba-4-a",
+          "answer_here": "a section of Foundations of Planning & Environmental Design (PLAN31280), with nothing on Tuesdays",
+          "answer_in_twin": "a section of Foundations of Planning & Environmental Design (PLAN31280)",
+          "summary": "Only the prompt differs. Here: prompt says 'No Tuesday classes'. In the twin (pair-late_meeting-environmental-sustainability-studies-ba-4-a): prompt says 'I have to be done by 3:00 PM, so nothing that ends after 3:00 PM'. So the answer here is a section of Foundations of Planning & Environmental Design (PLAN31280), with nothing on Tuesdays, while in the twin it is a section of Foundations of Planning & Environmental Design (PLAN31280)."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 1,
+        "candidate_answers": 3,
+        "correct_answers": 1,
+        "chance": 0.3333,
+        "rules": 3,
+        "prompt_words": 13
+      }
+    }
   }
 ]
