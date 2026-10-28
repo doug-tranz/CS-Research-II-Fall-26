@@ -1,0 +1,5608 @@
+[
+  {
+    "student": {
+      "student_id": "S200",
+      "degree": "Bachelor of Science",
+      "major": "Computer Science",
+      "program_id": "O701",
+      "catalog_year": "Fall 2022",
+      "registered_crns": []
+    },
+    "transcript": {
+      "completed_courses": [
+        {
+          "term": "Fall 2022",
+          "course_id": "MATH01130",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Calculus I",
+          "grade": "A-",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2022",
+          "course_id": "PSYC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Psychology",
+          "grade": "A-",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2022",
+          "course_id": "ART02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "B+",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2022",
+          "course_id": "CS04113",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "INTRO OBJ-ORIENT PRGRMMNG",
+          "grade": "B+",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2022",
+          "course_id": "HIST01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "World History",
+          "grade": "B+",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2023",
+          "course_id": "CS04222",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "DATA STRUCT/ALGORIM",
+          "grade": "W",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2023",
+          "course_id": "COMM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Public Speaking",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2023",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2023",
+          "course_id": "STAT02260",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Statistics",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2023",
+          "course_id": "PHYS00220",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "INTRODUCTORY MECHANICS",
+          "grade": "B+",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "CS04222",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "DATA STRUCT/ALGORIM",
+          "grade": "B",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "ECON01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Principles of Economics",
+          "grade": "A",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "SOC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Sociology",
+          "grade": "B-",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "ENGL02200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Literature",
+          "grade": "C+",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "PHIL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Ethics",
+          "grade": "C+",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "CHEM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Chemistry I",
+          "grade": "B+",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "SPAN01101",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Elementary Spanish I",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "BIOL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Biology for Science Majors",
+          "grade": "B+",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "MATH02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Discrete Mathematics",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "MUS01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Music Appreciation",
+          "grade": "C+",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "COMP01112",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition II",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "CS04114",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "OBJ-ORIENT PRGRM/DATA ABSTR",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "PHYS00221",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Electricity and Magnetism",
+          "grade": "W",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "CS05000",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Software Engineering",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "PHYS00221",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Electricity and Magnetism",
+          "grade": "A",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "MATH01131",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Calculus II",
+          "grade": "A",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "CS01395",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Special Topics in Computing",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "CS01303",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Scientific Computing",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "CS05100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Operating Systems",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "CS03351",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Computer Organization",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "CS02435",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Web Application Development",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "MATH03000",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Applied Mathematics",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "CS02480",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Database Systems",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "CS05200",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Computer Networks",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "CS06000",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Senior Capstone I",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "CS07450",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Advanced Algorithms",
+          "grade": "B+",
+          "credit_hours": 3
+        }
+      ],
+      "transfer_courses": [],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "CS06001",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Senior Capstone II",
+          "credit_hours": 3
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 110,
+      "gpa": 3.53
+    },
+    "tags": [
+      "has_withdrawal",
+      "retook_and_passed",
+      "senior_standing"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S201",
+      "degree": "Bachelor of Arts",
+      "major": "Art Education",
+      "program_id": "1000",
+      "catalog_year": "Fall 2022",
+      "registered_crns": []
+    },
+    "transcript": {
+      "completed_courses": [
+        {
+          "term": "Fall 2022",
+          "course_id": "ART02105",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Color and Design 1: 2-D",
+          "grade": "F",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2022",
+          "course_id": "ART02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "F",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2022",
+          "course_id": "COMM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Public Speaking",
+          "grade": "C+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2022",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "W",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "ART02105",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Color and Design 1: 2-D",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "ART02240",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Intro to Sculpture: 3-D",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "ART02200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Expressive Drawing",
+          "grade": "W",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "ART02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "B+",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "ARHS03103",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Art History Survey 1",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "SOC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Sociology",
+          "grade": "B",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "ENGL02200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Literature",
+          "grade": "C+",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "ART02200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Expressive Drawing",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "SPAN01101",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Elementary Spanish I",
+          "grade": "C",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "SPED08130",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Disability as Diversity",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "ARHS03104",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Art History Survey 2",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "PHIL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Ethics",
+          "grade": "B",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "MUS01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Music Appreciation",
+          "grade": "C+",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "ART02220",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Painting",
+          "grade": "C",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "ECON01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Principles of Economics",
+          "grade": "A",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "BIOL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Biology for Science Majors",
+          "grade": "D",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "STAT02260",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Statistics",
+          "grade": "D",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "CHEM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Chemistry I",
+          "grade": "A",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "FNDS21150",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "History of American Education",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "ART09200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Theory & Analysis of Art Education",
+          "grade": "D",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "PSY09209",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Child and Adolescent Development",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "COMP01112",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition II",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "SMED33220",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Educational Technology",
+          "grade": "B",
+          "credit_hours": 1
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "ART09301",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Digital Media & Techniques",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "READ30319",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Teaching Reading/Writing in the Content Area",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "SMED01282",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Intro to Instruction & Assessment in the Art Classroom",
+          "grade": "A-",
+          "credit_hours": 3
+        }
+      ],
+      "transfer_courses": [
+        {
+          "institution": "Fictional State University",
+          "course_id": "HIST01100",
+          "title": "World History",
+          "grade": "TA",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "institution": "Sample Community College",
+          "course_id": "PSYC01100",
+          "title": "General Psychology",
+          "grade": "TA",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        }
+      ],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "ART09201",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Community Art Education for Elementary through Middle Grades",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "SMED31350",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Teaching & Learning A: Elementary Art Methods",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "SECD03330",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Clinical Experience in Teaching and Learning A: Art",
+          "credit_hours": 1
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "ART09202",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Community Art Education for Secondary Grades",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "SMED31360",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Teaching & Learning B: Secondary Art Methods",
+          "credit_hours": 3
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 87,
+      "gpa": 2.87
+    },
+    "tags": [
+      "has_withdrawal",
+      "has_failure",
+      "retook_and_passed",
+      "has_transfer"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S202",
+      "degree": "Bachelor of Science",
+      "major": "Mathematics",
+      "program_id": "O702",
+      "catalog_year": "Fall 2022",
+      "registered_crns": [],
+      "minor": "Psychology"
+    },
+    "transcript": {
+      "completed_courses": [
+        {
+          "term": "Fall 2022",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2022",
+          "course_id": "MATH01130",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Calculus I",
+          "grade": "B-",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2022",
+          "course_id": "PSYC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Psychology",
+          "grade": "A",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2022",
+          "course_id": "HIST01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "World History",
+          "grade": "B",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2023",
+          "course_id": "MATH03150",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Discrete Mathematics",
+          "grade": "W",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2023",
+          "course_id": "MATH01131",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Calculus II",
+          "grade": "A-",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2023",
+          "course_id": "ART02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "B",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Spring 2023",
+          "course_id": "BIOL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Biology for Science Majors",
+          "grade": "A-",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "PHYS00220",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "INTRODUCTORY MECHANICS",
+          "grade": "F",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "MATH03150",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Discrete Mathematics",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "ENGL02200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Literature",
+          "grade": "B+",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "STAT02260",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Statistics",
+          "grade": "W",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "SOC01100",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Introduction to Sociology",
+          "grade": "B",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "PHYS00220",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "INTRODUCTORY MECHANICS",
+          "grade": "F",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "MATH01205",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Technological Tools for Discovering Mathematics",
+          "grade": "B",
+          "credit_hours": 2
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "ECON01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Principles of Economics",
+          "grade": "B+",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "MUS01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Music Appreciation",
+          "grade": "B-",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "STAT02260",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Statistics",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "PHYS00220",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "INTRODUCTORY MECHANICS",
+          "grade": "C",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "PHIL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Ethics",
+          "grade": "B-",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "MATH01230",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Calculus III",
+          "grade": "B-",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "CHEM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Chemistry I",
+          "grade": "A",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "COMP01112",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition II",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "MATH01210",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Linear Algebra",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "PHYS00221",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Electricity and Magnetism",
+          "grade": "C",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "SPAN01101",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Elementary Spanish I",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "MATH01231",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Ordinary Differential Equations",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "MATH01330",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Real Analysis I",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "MATH01340",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Modern Algebra I",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "MATH01352",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Theory of Numbers",
+          "grade": "B",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "MATH01310",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Geometry",
+          "grade": "W",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "MATH01332",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Numerical Analysis",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "MATH01331",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Real Analysis II",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "MATH01310",
+          "campus": "Online",
+          "level": "UG",
+          "title": "College Geometry",
+          "grade": "B",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "MATH01341",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Modern Algebra II",
+          "grade": "C+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "MATH01386",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Partial Differential Equations",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "MATH01354",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Topology",
+          "grade": "B",
+          "credit_hours": 3
+        }
+      ],
+      "transfer_courses": [
+        {
+          "institution": "Fictional State University",
+          "course_id": "COMM01100",
+          "title": "Public Speaking",
+          "grade": "TA",
+          "credit_hours": 3
+        }
+      ],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "MATH03400",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Applications of Mathematics",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "MATH01430",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Complex Analysis",
+          "credit_hours": 3
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 105,
+      "gpa": 3.24
+    },
+    "tags": [
+      "has_withdrawal",
+      "has_failure",
+      "retook_and_passed",
+      "has_transfer",
+      "senior_standing"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S203",
+      "degree": "Bachelor of Arts",
+      "major": "Psychology",
+      "program_id": "O705",
+      "catalog_year": "Fall 2022",
+      "registered_crns": []
+    },
+    "transcript": {
+      "completed_courses": [
+        {
+          "term": "Fall 2022",
+          "course_id": "COMP01111",
+          "campus": "Online",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2022",
+          "course_id": "ART02100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "C",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2022",
+          "course_id": "PSY01107",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Essentials of Psychology",
+          "grade": "B+",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2022",
+          "course_id": "HIST01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "World History",
+          "grade": "C+",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2022",
+          "course_id": "COMM01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Public Speaking",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2023",
+          "course_id": "PSY01199",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Navigating Psychology",
+          "grade": "A",
+          "credit_hours": 1
+        },
+        {
+          "term": "Spring 2023",
+          "course_id": "CHEM01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "General Chemistry I",
+          "grade": "C",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2023",
+          "course_id": "SOC01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Introduction to Sociology",
+          "grade": "C",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Spring 2023",
+          "course_id": "PSY01301",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Psychology of Scientific Thinking",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "PSY09209",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Child and Adolescent Development",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "PSY07301",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Statistics in Psychology",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "PSY05206",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Social Psychology",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "ECON01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Principles of Economics",
+          "grade": "B+",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "PSY01230",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Psychology of Personality",
+          "grade": "W",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "MUS01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Music Appreciation",
+          "grade": "A",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "ENGL02200",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Introduction to Literature",
+          "grade": "B+",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "SPAN01101",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Elementary Spanish I",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "BIOL01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Biology for Science Majors",
+          "grade": "C+",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "PSY01230",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Psychology of Personality",
+          "grade": "W",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "PSY07303",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Research Methods in Psychology",
+          "grade": "A",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "PHIL01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Introduction to Ethics",
+          "grade": "B+",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "PSY10315",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Physiological Psychology",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "STAT02260",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Statistics",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "PSY01230",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Psychology of Personality",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "COMP01112",
+          "campus": "Online",
+          "level": "UG",
+          "title": "College Composition II",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "PSY01326",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Perception",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "PSY01327",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Cognitive Psychology",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "PSY02310",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Learning and Behaviorism",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "PSY02300",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Psychology as a Profession and Practice",
+          "grade": "C+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "PSY05320",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Intro to Sport and Exercise Psychology",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "PSY01329",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Health Psychology",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "PSY08310",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Industrial/Organizational Psychology",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "PSY01336",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Positive Psychology",
+          "grade": "B+",
+          "credit_hours": 3
+        }
+      ],
+      "transfer_courses": [],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "PSY01305",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Psychology and Law",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "PSY10425",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Hormones, Brain, and Behavior",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "PSY01423",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Seminar in Psychology",
+          "credit_hours": 3
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 94,
+      "gpa": 3.15
+    },
+    "tags": [
+      "has_withdrawal",
+      "retook_and_passed",
+      "senior_standing"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S204",
+      "degree": "Bachelor of Science",
+      "major": "Exercise Science",
+      "program_id": "0849",
+      "catalog_year": "Fall 2022",
+      "registered_crns": []
+    },
+    "transcript": {
+      "completed_courses": [
+        {
+          "term": "Fall 2022",
+          "course_id": "HES00105",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Foundations of Exercise Science",
+          "grade": "B",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2022",
+          "course_id": "COMM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Public Speaking",
+          "grade": "C+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2022",
+          "course_id": "BIOL10210",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Anatomy and Physiology I",
+          "grade": "B+",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2022",
+          "course_id": "HES00116",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Safety, First Aid and Basic Understanding of Athletic Injuries",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2023",
+          "course_id": "HIST01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "World History",
+          "grade": "B+",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2023",
+          "course_id": "ART02100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "A",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Spring 2023",
+          "course_id": "PSYC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Psychology",
+          "grade": "A",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Spring 2023",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "W",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2023",
+          "course_id": "CHEM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Chemistry I",
+          "grade": "B+",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "PHIL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Ethics",
+          "grade": "A",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "NUT00200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Basic Nutrition",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "MUS01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Music Appreciation",
+          "grade": "B",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "ECON01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Principles of Economics",
+          "grade": "B-",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "SOC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Sociology",
+          "grade": "C",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "COMP01112",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition II",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "HES00201",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Essentials of Strength Training",
+          "grade": "B",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "BIOL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Biology for Science Majors",
+          "grade": "B",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "SPAN01101",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Elementary Spanish I",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "STAT02260",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Statistics",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "BIOL10212",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Anatomy and Physiology II",
+          "grade": "B",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "HES00243",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Motor Control and Learning",
+          "grade": "C+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "HES00349",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Exercise Physiology for Health Care Professionals",
+          "grade": "B+",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "HES00302",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Research Methods in Exercise Science",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "ENGL02200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Literature",
+          "grade": "B",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "HES00346",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Biomechanics",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "HPW00350",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Health Behavior Theory and Counseling",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "HES00401",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Exercise Prescription",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "NUT00415",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Nutrition for Fitness",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "HES00360",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Advanced Exercise Physiology",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "HES00348",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Human Disease and Epidemiology in HES",
+          "grade": "C",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "HES00412",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Exercise for Special Populations",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "HES00402",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "EKG Interpretation & Basic Pharmacology in HES",
+          "grade": "W",
+          "credit_hours": 3
+        }
+      ],
+      "transfer_courses": [],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "HES00402",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "EKG Interpretation & Basic Pharmacology in HES",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "ATR00347",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Applied Biomechanics",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "HES00413",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Senior Seminar in Exercise Science",
+          "credit_hours": 3
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 98,
+      "gpa": 3.17
+    },
+    "tags": [
+      "has_withdrawal",
+      "retook_and_passed",
+      "unresolved_w_or_f",
+      "senior_standing"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S205",
+      "degree": "Bachelor of Science",
+      "major": "Mathematics",
+      "program_id": "O702",
+      "catalog_year": "Fall 2023",
+      "registered_crns": []
+    },
+    "transcript": {
+      "completed_courses": [
+        {
+          "term": "Fall 2023",
+          "course_id": "MATH01130",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Calculus I",
+          "grade": "F",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "PSYC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Psychology",
+          "grade": "A",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "MATH03150",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Discrete Mathematics",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "F",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "ART02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "D-",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "MATH01130",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Calculus I",
+          "grade": "C+",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "B",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "COMM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Public Speaking",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "HIST01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "World History",
+          "grade": "C",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "MATH01131",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Calculus II",
+          "grade": "A-",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "PHYS00220",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "INTRODUCTORY MECHANICS",
+          "grade": "A",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "BIOL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Biology for Science Majors",
+          "grade": "C",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "MATH01205",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Technological Tools for Discovering Mathematics",
+          "grade": "A-",
+          "credit_hours": 2
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "COMP01112",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition II",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "CHEM01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "General Chemistry I",
+          "grade": "B",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "MUS01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Music Appreciation",
+          "grade": "B+",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "MATH01230",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Calculus III",
+          "grade": "B+",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "MATH01210",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Linear Algebra",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "PHIL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Ethics",
+          "grade": "B+",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "PHYS00221",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Electricity and Magnetism",
+          "grade": "C",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "STAT02260",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Statistics",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "SPAN01101",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Elementary Spanish I",
+          "grade": "B",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "ECON01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Principles of Economics",
+          "grade": "B+",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "SOC01100",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Introduction to Sociology",
+          "grade": "C",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "ENGL02200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Literature",
+          "grade": "B",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "MATH01231",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Ordinary Differential Equations",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "MATH01330",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Real Analysis I",
+          "grade": "C+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "MATH01340",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Modern Algebra I",
+          "grade": "B+",
+          "credit_hours": 3
+        }
+      ],
+      "transfer_courses": [],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "MATH01352",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Theory of Numbers",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "MATH01310",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Geometry",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "MATH01332",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Numerical Analysis",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "MATH01331",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Real Analysis II",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "MATH01341",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Modern Algebra II",
+          "credit_hours": 3
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 84,
+      "gpa": 2.97
+    },
+    "tags": [
+      "has_failure",
+      "retook_and_passed"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S206",
+      "degree": "Bachelor of Science",
+      "major": "Music Industry",
+      "program_id": "O706",
+      "catalog_year": "Fall 2023",
+      "registered_crns": [],
+      "minor": "Entrepreneurship"
+    },
+    "transcript": {
+      "completed_courses": [
+        {
+          "term": "Fall 2023",
+          "course_id": "STAT02260",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Statistics",
+          "grade": "W",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "ART02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "B+",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "MUS40111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Business of Music I",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "MUS40121",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Audio Recording I",
+          "grade": "C",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "MUS04118",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Music Fundamentals",
+          "grade": "W",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "W",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "PSYC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Psychology",
+          "grade": "D+",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "HIST01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "World History",
+          "grade": "D-",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "COMM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Public Speaking",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "MUS40113",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Business of Music II",
+          "grade": "B",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "B",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "PHIL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Ethics",
+          "grade": "A",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "SPAN01101",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Elementary Spanish I",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "MUS40122",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Computer Technology and Music I",
+          "grade": "B",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "ECON01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Principles of Economics",
+          "grade": "A-",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "ENGL02200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Literature",
+          "grade": "F",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "MUS04190",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Composition and Theory for Media I",
+          "grade": "F",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "MUS04118",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Music Fundamentals",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "STAT02260",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Statistics",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "COMP01112",
+          "campus": "Online",
+          "level": "UG",
+          "title": "College Composition II",
+          "grade": "C",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "MUS40201",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "History of Popular Music",
+          "grade": "B",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "MUS97102",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Piano I for Non-Majors",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "SOC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Sociology",
+          "grade": "B-",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "ENGL02200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Literature",
+          "grade": "C",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "MKT09200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Principles of Marketing",
+          "grade": "B",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "BIOL01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Biology for Science Majors",
+          "grade": "B",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "MUS04190",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Composition and Theory for Media I",
+          "grade": "C+",
+          "credit_hours": 3
+        }
+      ],
+      "transfer_courses": [],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "CHEM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Chemistry I",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "MUS40202",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Music Performance",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "MUS40223",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Survey of Record Production",
+          "credit_hours": 1
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "ENT06240",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Entrepreneurship and Innovation",
+          "credit_hours": 3
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 67,
+      "gpa": 2.96
+    },
+    "tags": [
+      "has_withdrawal",
+      "has_failure",
+      "retook_and_passed"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S207",
+      "degree": "Bachelor of Science",
+      "major": "Computer Science",
+      "program_id": "O701",
+      "catalog_year": "Fall 2023",
+      "registered_crns": []
+    },
+    "transcript": {
+      "completed_courses": [
+        {
+          "term": "Fall 2023",
+          "course_id": "ART02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "A",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "MATH01130",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Calculus I",
+          "grade": "C",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "PSYC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Psychology",
+          "grade": "C+",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "PHYS00220",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "INTRODUCTORY MECHANICS",
+          "grade": "B-",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "COMM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Public Speaking",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "HIST01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "World History",
+          "grade": "B+",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "CS04113",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "INTRO OBJ-ORIENT PRGRMMNG",
+          "grade": "B+",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "ECON01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Principles of Economics",
+          "grade": "C+",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "PHYS00221",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Electricity and Magnetism",
+          "grade": "D-",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "MATH02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Discrete Mathematics",
+          "grade": "D-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "SOC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Sociology",
+          "grade": "A-",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "PHIL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Ethics",
+          "grade": "F",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "SPAN01101",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Elementary Spanish I",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "BIOL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Biology for Science Majors",
+          "grade": "W",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "COMP01112",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition II",
+          "grade": "B",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "BIOL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Biology for Science Majors",
+          "grade": "B+",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "ENGL02200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Literature",
+          "grade": "C+",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "STAT02260",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Statistics",
+          "grade": "C+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "MUS01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Music Appreciation",
+          "grade": "B+",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "CS04114",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "OBJ-ORIENT PRGRM/DATA ABSTR",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "CHEM01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "General Chemistry I",
+          "grade": "B+",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "MATH01131",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Calculus II",
+          "grade": "B-",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "PHIL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Ethics",
+          "grade": "C+",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "CS04222",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "DATA STRUCT/ALGORIM",
+          "grade": "B+",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "CS01303",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Scientific Computing",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "MATH03000",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Applied Mathematics",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "CS02435",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Web Application Development",
+          "grade": "B",
+          "credit_hours": 3
+        }
+      ],
+      "transfer_courses": [],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "CS05100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Operating Systems",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "CS02480",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Database Systems",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "CS05000",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Software Engineering",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "CS01395",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Special Topics in Computing",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "CS03351",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Computer Organization",
+          "credit_hours": 3
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 86,
+      "gpa": 2.89
+    },
+    "tags": [
+      "has_withdrawal",
+      "has_failure",
+      "retook_and_passed"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S208",
+      "degree": "Bachelor of Arts",
+      "major": "Psychology",
+      "program_id": "O705",
+      "catalog_year": "Fall 2023",
+      "registered_crns": []
+    },
+    "transcript": {
+      "completed_courses": [
+        {
+          "term": "Fall 2023",
+          "course_id": "PSY01107",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Essentials of Psychology",
+          "grade": "B+",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "PSY01199",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Navigating Psychology",
+          "grade": "A",
+          "credit_hours": 1
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "PSY01301",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Psychology of Scientific Thinking",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "PSY09209",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Child and Adolescent Development",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "COMM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Public Speaking",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "ART02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "B",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "STAT02260",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Statistics",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "ENGL02200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Literature",
+          "grade": "A-",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "HIST01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "World History",
+          "grade": "A",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "COMP01111",
+          "campus": "Online",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "PSY07301",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Statistics in Psychology",
+          "grade": "F",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "PSY05206",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Social Psychology",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "CHEM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Chemistry I",
+          "grade": "A-",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "PHIL01100",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Introduction to Ethics",
+          "grade": "A-",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "SPAN01101",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Elementary Spanish I",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "COMP01112",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition II",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "BIOL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Biology for Science Majors",
+          "grade": "B",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "PSY01230",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Psychology of Personality",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "PSY07303",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Research Methods in Psychology",
+          "grade": "A",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "MUS01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Music Appreciation",
+          "grade": "A",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "PSY10315",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Physiological Psychology",
+          "grade": "W",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "SOC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Sociology",
+          "grade": "B",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        }
+      ],
+      "transfer_courses": [],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "ECON01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Principles of Economics",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "PSY07301",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Statistics in Psychology",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "PSY10315",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Physiological Psychology",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "PSY01326",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Perception",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "PSY01327",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Cognitive Psychology",
+          "credit_hours": 3
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 61,
+      "gpa": 3.55
+    },
+    "tags": [
+      "has_withdrawal",
+      "has_failure",
+      "unresolved_w_or_f"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S209",
+      "degree": "Bachelor of Arts",
+      "major": "Art Education",
+      "program_id": "1000",
+      "catalog_year": "Fall 2023",
+      "registered_crns": []
+    },
+    "transcript": {
+      "completed_courses": [
+        {
+          "term": "Fall 2023",
+          "course_id": "PSYC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Psychology",
+          "grade": "D+",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "ART02105",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Color and Design 1: 2-D",
+          "grade": "C",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "C+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2023",
+          "course_id": "ART02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "W",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "COMM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Public Speaking",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "ART02240",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Intro to Sculpture: 3-D",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2024",
+          "course_id": "ART02200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Expressive Drawing",
+          "grade": "F",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "ART02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "C",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "ART02200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Expressive Drawing",
+          "grade": "C-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "ARHS03103",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Art History Survey 1",
+          "grade": "C-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "SPED08130",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Disability as Diversity",
+          "grade": "W",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "BIOL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Biology for Science Majors",
+          "grade": "B-",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "ENGL02200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Literature",
+          "grade": "B",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "COMP01112",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition II",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "CHEM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Chemistry I",
+          "grade": "D",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "SOC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Sociology",
+          "grade": "B-",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "SPAN01101",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Elementary Spanish I",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "ECON01100",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Principles of Economics",
+          "grade": "C",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "ARHS03104",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Art History Survey 2",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "ART02220",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Painting",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "FNDS21150",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "History of American Education",
+          "grade": "C",
+          "credit_hours": 3
+        }
+      ],
+      "transfer_courses": [
+        {
+          "institution": "Sample Community College",
+          "course_id": "STAT02260",
+          "title": "Statistics",
+          "grade": "TA",
+          "credit_hours": 3
+        },
+        {
+          "institution": "Sample Community College",
+          "course_id": "HIST01100",
+          "title": "World History",
+          "grade": "TA",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        }
+      ],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "MUS01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Music Appreciation",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "PHIL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Ethics",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "SPED08130",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Disability as Diversity",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "ART09200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Theory & Analysis of Art Education",
+          "credit_hours": 3
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 62,
+      "gpa": 2.24
+    },
+    "tags": [
+      "has_withdrawal",
+      "has_failure",
+      "retook_and_passed",
+      "unresolved_w_or_f",
+      "has_transfer"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S210",
+      "degree": "Bachelor of Science",
+      "major": "Exercise Science",
+      "program_id": "0849",
+      "catalog_year": "Fall 2024",
+      "registered_crns": []
+    },
+    "transcript": {
+      "completed_courses": [
+        {
+          "term": "Fall 2024",
+          "course_id": "HES00105",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Foundations of Exercise Science",
+          "grade": "W",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "C",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "HIST01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "World History",
+          "grade": "A-",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "PSYC01100",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "General Psychology",
+          "grade": "W",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "BIOL10210",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Anatomy and Physiology I",
+          "grade": "B+",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "HES00105",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Foundations of Exercise Science",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "PSYC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Psychology",
+          "grade": "C",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "HES00116",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Safety, First Aid and Basic Understanding of Athletic Injuries",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "ENGL02200",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Introduction to Literature",
+          "grade": "C-",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "SOC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Sociology",
+          "grade": "A-",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "STAT02260",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Statistics",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "NUT00200",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Basic Nutrition",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "ART02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "B",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "BIOL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Biology for Science Majors",
+          "grade": "A-",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "HES00201",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Essentials of Strength Training",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "BIOL10212",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Anatomy and Physiology II",
+          "grade": "A-",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "COMP01112",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition II",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "ECON01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Principles of Economics",
+          "grade": "B",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "SPAN01101",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Elementary Spanish I",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "MUS01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Music Appreciation",
+          "grade": "A",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        }
+      ],
+      "transfer_courses": [
+        {
+          "institution": "Sample Community College",
+          "course_id": "COMM01100",
+          "title": "Public Speaking",
+          "grade": "TA",
+          "credit_hours": 3
+        }
+      ],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "CHEM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Chemistry I",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "HES00243",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Motor Control and Learning",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "HES00349",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Exercise Physiology for Health Care Professionals",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "HES00302",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Research Methods in Exercise Science",
+          "credit_hours": 3
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 60,
+      "gpa": 3.3
+    },
+    "tags": [
+      "has_withdrawal",
+      "retook_and_passed",
+      "has_transfer"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S211",
+      "degree": "Bachelor of Arts",
+      "major": "Psychology",
+      "program_id": "O705",
+      "catalog_year": "Fall 2024",
+      "registered_crns": []
+    },
+    "transcript": {
+      "completed_courses": [
+        {
+          "term": "Fall 2024",
+          "course_id": "PSY01107",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Essentials of Psychology",
+          "grade": "A",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "PSY01199",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Navigating Psychology",
+          "grade": "B",
+          "credit_hours": 1
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "PSY01301",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Psychology of Scientific Thinking",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "PSY09209",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Child and Adolescent Development",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "HIST01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "World History",
+          "grade": "C",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "ART02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "W",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "SOC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Sociology",
+          "grade": "C+",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "ART02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "A-",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "SPAN01101",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Elementary Spanish I",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "ECON01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Principles of Economics",
+          "grade": "B",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "BIOL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Biology for Science Majors",
+          "grade": "W",
+          "credit_hours": 4
+        }
+      ],
+      "transfer_courses": [
+        {
+          "institution": "Fictional State University",
+          "course_id": "COMM01100",
+          "title": "Public Speaking",
+          "grade": "TA",
+          "credit_hours": 3
+        }
+      ],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "MUS01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Music Appreciation",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "STAT02260",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Statistics",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "PSY07301",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Statistics in Psychology",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "PSY05206",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Social Psychology",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "PSY01230",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Psychology of Personality",
+          "credit_hours": 3
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 31,
+      "gpa": 3.28
+    },
+    "tags": [
+      "has_withdrawal",
+      "retook_and_passed",
+      "unresolved_w_or_f",
+      "has_transfer"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S212",
+      "degree": "Bachelor of Science",
+      "major": "Computer Science",
+      "program_id": "O701",
+      "catalog_year": "Fall 2024",
+      "registered_crns": []
+    },
+    "transcript": {
+      "completed_courses": [
+        {
+          "term": "Fall 2024",
+          "course_id": "COMM01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Public Speaking",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "HIST01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "World History",
+          "grade": "C+",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "ART02100",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "C",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "PSYC01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "General Psychology",
+          "grade": "C-",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "PHYS00220",
+          "campus": "Online",
+          "level": "UG",
+          "title": "INTRODUCTORY MECHANICS",
+          "grade": "F",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "CS04113",
+          "campus": "Online",
+          "level": "UG",
+          "title": "INTRO OBJ-ORIENT PRGRMMNG",
+          "grade": "F",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "COMP01111",
+          "campus": "Online",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "C",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "SPAN01101",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Elementary Spanish I",
+          "grade": "C+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "PHYS00220",
+          "campus": "Online",
+          "level": "UG",
+          "title": "INTRODUCTORY MECHANICS",
+          "grade": "W",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "ECON01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Principles of Economics",
+          "grade": "B",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "CS04113",
+          "campus": "Online",
+          "level": "UG",
+          "title": "INTRO OBJ-ORIENT PRGRMMNG",
+          "grade": "A",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "PHYS00220",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "INTRODUCTORY MECHANICS",
+          "grade": "B",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "MATH01131",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Calculus II",
+          "grade": "F",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "MATH02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Discrete Mathematics",
+          "grade": "W",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "BIOL01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Biology for Science Majors",
+          "grade": "W",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "CS04114",
+          "campus": "Online",
+          "level": "UG",
+          "title": "OBJ-ORIENT PRGRM/DATA ABSTR",
+          "grade": "C-",
+          "credit_hours": 3
+        }
+      ],
+      "transfer_courses": [
+        {
+          "institution": "Fictional State University",
+          "course_id": "MATH01130",
+          "title": "Calculus I",
+          "grade": "TA",
+          "credit_hours": 4
+        },
+        {
+          "institution": "Fictional State University",
+          "course_id": "STAT02260",
+          "title": "Statistics",
+          "grade": "TA",
+          "credit_hours": 3
+        }
+      ],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "PHYS00221",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Electricity and Magnetism",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "MATH01131",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Calculus II",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "CS04222",
+          "campus": "Online",
+          "level": "UG",
+          "title": "DATA STRUCT/ALGORIM",
+          "credit_hours": 4
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 39,
+      "gpa": 2.25
+    },
+    "tags": [
+      "has_withdrawal",
+      "has_failure",
+      "retook_and_passed",
+      "unresolved_w_or_f",
+      "has_transfer"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S213",
+      "degree": "Bachelor of Science",
+      "major": "Mathematics",
+      "program_id": "O702",
+      "catalog_year": "Fall 2024",
+      "registered_crns": []
+    },
+    "transcript": {
+      "completed_courses": [
+        {
+          "term": "Fall 2024",
+          "course_id": "PSYC01100",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "General Psychology",
+          "grade": "D",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "ART02100",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "A",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "MATH01130",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Calculus I",
+          "grade": "B",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "COMP01111",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "C-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "HIST01100",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "World History",
+          "grade": "B",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "MATH03150",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Discrete Mathematics",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "MATH01131",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Calculus II",
+          "grade": "B-",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "CHEM01100",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "General Chemistry I",
+          "grade": "B-",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "COMM01100",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Public Speaking",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "PHIL01100",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Introduction to Ethics",
+          "grade": "W",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "PHYS00220",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "INTRODUCTORY MECHANICS",
+          "grade": "A",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "ENGL02200",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Introduction to Literature",
+          "grade": "B",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        }
+      ],
+      "transfer_courses": [],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "MATH01205",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Technological Tools for Discovering Mathematics",
+          "credit_hours": 2
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "SOC01100",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Introduction to Sociology",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "BIOL01100",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Biology for Science Majors",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "MUS01100",
+          "campus": "Camden",
+          "level": "UG",
+          "title": "Music Appreciation",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 37,
+      "gpa": 2.89
+    },
+    "tags": [
+      "has_withdrawal",
+      "unresolved_w_or_f"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S214",
+      "degree": "Bachelor of Science",
+      "major": "Music Industry",
+      "program_id": "O706",
+      "catalog_year": "Fall 2024",
+      "registered_crns": []
+    },
+    "transcript": {
+      "completed_courses": [
+        {
+          "term": "Fall 2024",
+          "course_id": "PSYC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Psychology",
+          "grade": "A-",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "MUS40111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Business of Music I",
+          "grade": "B",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "ART02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "B+",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "B",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2024",
+          "course_id": "HIST01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "World History",
+          "grade": "B-",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "MUS40121",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Audio Recording I",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "MUS04118",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Music Fundamentals",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "COMM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Public Speaking",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2025",
+          "course_id": "PHIL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Ethics",
+          "grade": "B",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "BIOL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Biology for Science Majors",
+          "grade": "C",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "MUS40113",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Business of Music II",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "MUS40122",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Computer Technology and Music I",
+          "grade": "B",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "CHEM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Chemistry I",
+          "grade": "A",
+          "credit_hours": 4
+        }
+      ],
+      "transfer_courses": [],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "ECON01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Principles of Economics",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "COMP01112",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition II",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "SOC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Sociology",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "MUS04190",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Composition and Theory for Media I",
+          "credit_hours": 3
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 41,
+      "gpa": 3.18
+    },
+    "tags": []
+  },
+  {
+    "student": {
+      "student_id": "S215",
+      "degree": "Bachelor of Science",
+      "major": "Music Industry",
+      "program_id": "O706",
+      "catalog_year": "Fall 2025",
+      "registered_crns": []
+    },
+    "transcript": {
+      "completed_courses": [
+        {
+          "term": "Fall 2025",
+          "course_id": "MUS40111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Business of Music I",
+          "grade": "W",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "ART02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "B",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "HIST01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "World History",
+          "grade": "D-",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "COMM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Public Speaking",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "MUS40121",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Audio Recording I",
+          "grade": "C",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "PSYC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Psychology",
+          "grade": "B-",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "MUS04118",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Music Fundamentals",
+          "grade": "F",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "MUS40111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Business of Music I",
+          "grade": "B",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "PHIL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Ethics",
+          "grade": "D+",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        }
+      ],
+      "transfer_courses": [],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "MUS04118",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Music Fundamentals",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "COMP01112",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition II",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "ENGL02200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Literature",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "CHEM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Chemistry I",
+          "credit_hours": 4
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 24,
+      "gpa": 2.16
+    },
+    "tags": [
+      "has_withdrawal",
+      "has_failure",
+      "retook_and_passed",
+      "unresolved_w_or_f"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S216",
+      "degree": "Bachelor of Arts",
+      "major": "Art Education",
+      "program_id": "1000",
+      "catalog_year": "Fall 2025",
+      "registered_crns": []
+    },
+    "transcript": {
+      "completed_courses": [
+        {
+          "term": "Fall 2025",
+          "course_id": "ART02100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "W",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "COMM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Public Speaking",
+          "grade": "C+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "ART02105",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Color and Design 1: 2-D",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "ART02240",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Intro to Sculpture: 3-D",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "ART02200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Expressive Drawing",
+          "grade": "A",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "PSYC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Psychology",
+          "grade": "A-",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "ART02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "B+",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "BIOL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Biology for Science Majors",
+          "grade": "B+",
+          "credit_hours": 4
+        }
+      ],
+      "transfer_courses": [
+        {
+          "institution": "Example County College",
+          "course_id": "HIST01100",
+          "title": "World History",
+          "grade": "TA",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        }
+      ],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "ENGL02200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Literature",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "PHIL01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Ethics",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "MUS01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Music Appreciation",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "SPAN01101",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Elementary Spanish I",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "ECON01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Principles of Economics",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 28,
+      "gpa": 3.49
+    },
+    "tags": [
+      "has_withdrawal",
+      "retook_and_passed",
+      "has_transfer"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S217",
+      "degree": "Bachelor of Science",
+      "major": "Exercise Science",
+      "program_id": "0849",
+      "catalog_year": "Fall 2025",
+      "registered_crns": []
+    },
+    "transcript": {
+      "completed_courses": [
+        {
+          "term": "Fall 2025",
+          "course_id": "HIST01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "World History",
+          "grade": "F",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "HES00105",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Foundations of Exercise Science",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "ART02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "C-",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "COMM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Public Speaking",
+          "grade": "D-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "BIOL10210",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Anatomy and Physiology I",
+          "grade": "F",
+          "credit_hours": 4
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "HIST01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "World History",
+          "grade": "B-",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "PSYC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Psychology",
+          "grade": "B+",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        }
+      ],
+      "transfer_courses": [],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "HES00116",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Safety, First Aid and Basic Understanding of Athletic Injuries",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "BIOL10210",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Anatomy and Physiology I",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "COMP01112",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition II",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "ENGL02200",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Introduction to Literature",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 18,
+      "gpa": 1.88
+    },
+    "tags": [
+      "has_failure",
+      "retook_and_passed",
+      "unresolved_w_or_f",
+      "gpa_below_2"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S218",
+      "degree": "Bachelor of Arts",
+      "major": "Psychology",
+      "program_id": "O705",
+      "catalog_year": "Fall 2025",
+      "registered_crns": []
+    },
+    "transcript": {
+      "completed_courses": [
+        {
+          "term": "Fall 2025",
+          "course_id": "COMM01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Public Speaking",
+          "grade": "D",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "HIST01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "World History",
+          "grade": "C",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "B-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "PSY01107",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Essentials of Psychology",
+          "grade": "D-",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "PSY01199",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Navigating Psychology",
+          "grade": "F",
+          "credit_hours": 1
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "ART02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "D+",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        }
+      ],
+      "transfer_courses": [],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "PSY01301",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Psychology of Scientific Thinking",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "PSY01199",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Navigating Psychology",
+          "credit_hours": 1
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "PSY09209",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Child and Adolescent Development",
+          "credit_hours": 3
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 15,
+      "gpa": 1.44
+    },
+    "tags": [
+      "has_failure",
+      "unresolved_w_or_f",
+      "gpa_below_2"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S219",
+      "degree": "Bachelor of Science",
+      "major": "Music Industry",
+      "program_id": "O706",
+      "catalog_year": "Fall 2025",
+      "registered_crns": [],
+      "minor": "Philosophy"
+    },
+    "transcript": {
+      "completed_courses": [
+        {
+          "term": "Fall 2025",
+          "course_id": "HIST01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "World History",
+          "grade": "C+",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "MUS40111",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Business of Music I",
+          "grade": "C",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "MUS40121",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Audio Recording I",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2025",
+          "course_id": "COMP01111",
+          "campus": "Online",
+          "level": "UG",
+          "title": "College Composition I",
+          "grade": "B+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "COMM01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Public Speaking",
+          "grade": "C+",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "ART02100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Drawing I",
+          "grade": "W",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "MUS04118",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Music Fundamentals",
+          "grade": "A-",
+          "credit_hours": 3
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "PSYC01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "General Psychology",
+          "grade": "C+",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Spring 2026",
+          "course_id": "SPAN01101",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Elementary Spanish I",
+          "grade": "B-",
+          "credit_hours": 3
+        }
+      ],
+      "transfer_courses": [],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "ART02100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Drawing I",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "MUS40113",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Business of Music II",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "MUS40122",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Computer Technology and Music I",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "MUS04190",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Composition and Theory for Media I",
+          "credit_hours": 3
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 24,
+      "gpa": 2.79
+    },
+    "tags": [
+      "has_withdrawal",
+      "unresolved_w_or_f"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S220",
+      "degree": "Bachelor of Science",
+      "major": "Computer Science",
+      "program_id": "O701",
+      "catalog_year": "Fall 2026",
+      "registered_crns": []
+    },
+    "transcript": {
+      "completed_courses": [],
+      "transfer_courses": [],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "PHYS00220",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "INTRODUCTORY MECHANICS",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "ART02100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Drawing I",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "CS04113",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "INTRO OBJ-ORIENT PRGRMMNG",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "PSYC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Psychology",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 0,
+      "gpa": null
+    },
+    "tags": [
+      "first_semester"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S221",
+      "degree": "Bachelor of Arts",
+      "major": "Art Education",
+      "program_id": "1000",
+      "catalog_year": "Fall 2026",
+      "registered_crns": []
+    },
+    "transcript": {
+      "completed_courses": [],
+      "transfer_courses": [],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "PSYC01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "General Psychology",
+          "credit_hours": 3,
+          "attributes": [
+            "SOCL"
+          ]
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "ART02105",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Color and Design 1: 2-D",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "ART02240",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Intro to Sculpture: 3-D",
+          "credit_hours": 3
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 0,
+      "gpa": null
+    },
+    "tags": [
+      "first_semester"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S222",
+      "degree": "Bachelor of Science",
+      "major": "Mathematics",
+      "program_id": "O702",
+      "catalog_year": "Fall 2026",
+      "registered_crns": []
+    },
+    "transcript": {
+      "completed_courses": [],
+      "transfer_courses": [
+        {
+          "institution": "Example County College",
+          "course_id": "COMP01111",
+          "title": "College Composition I",
+          "grade": "TA",
+          "credit_hours": 3
+        }
+      ],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "ART02100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Drawing I",
+          "credit_hours": 3,
+          "attributes": [
+            "ARTL"
+          ]
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "HIST01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "World History",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "MATH01130",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Calculus I",
+          "credit_hours": 4
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "COMM01100",
+          "campus": "Online",
+          "level": "UG",
+          "title": "Public Speaking",
+          "credit_hours": 3
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 3,
+      "gpa": null
+    },
+    "tags": [
+      "has_transfer",
+      "first_semester"
+    ]
+  },
+  {
+    "student": {
+      "student_id": "S223",
+      "degree": "Bachelor of Science",
+      "major": "Exercise Science",
+      "program_id": "0849",
+      "catalog_year": "Fall 2026",
+      "registered_crns": []
+    },
+    "transcript": {
+      "completed_courses": [],
+      "transfer_courses": [
+        {
+          "institution": "Sample Community College",
+          "course_id": "COMM01100",
+          "title": "Public Speaking",
+          "grade": "TA",
+          "credit_hours": 3
+        }
+      ],
+      "courses_in_progress": [
+        {
+          "term": "Fall 2026",
+          "course_id": "HIST01100",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "World History",
+          "credit_hours": 3,
+          "attributes": [
+            "HUML"
+          ]
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "HES00105",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Foundations of Exercise Science",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "COMP01111",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "College Composition I",
+          "credit_hours": 3
+        },
+        {
+          "term": "Fall 2026",
+          "course_id": "BIOL10210",
+          "campus": "Glassboro",
+          "level": "UG",
+          "title": "Anatomy and Physiology I",
+          "credit_hours": 4
+        }
+      ]
+    },
+    "summary": {
+      "earned_credits": 3,
+      "gpa": null
+    },
+    "tags": [
+      "has_transfer",
+      "first_semester"
+    ]
+  }
+]
