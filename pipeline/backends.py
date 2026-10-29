@@ -12,10 +12,12 @@ A backend has `name` (recorded in the session summary), `settings` (exactly what
 sends besides the model and messages), `paid` (whether a run spends money), and
 call(model, messages) -> RawCall.
 """
+import hashlib
 import json
 import os
 import time
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
+from pathlib import Path
 
 import requests
 
@@ -47,14 +49,20 @@ class RawCall:
 # file's session summary, so a run can be repeated exactly. temperature 0 is sent, but models that
 # reject sampling parameters (e.g. Claude Sonnet 5.5) have it dropped by OpenRouter, so the
 # summary says what was sent, not what each provider applied.
-def generation_settings(max_tokens: int | None = None, effort: str | None = None) -> dict:
+def generation_settings(max_tokens: int | None = None, effort: str | None = None,
+                        provider: str | None = None) -> dict:
     """The request fields sent with every OpenRouter call: temperature, streaming, usage
-    reporting, and max_tokens / reasoning effort when given (else the provider's default)."""
+    reporting, and max_tokens / reasoning effort when given (else the provider's default).
+    provider: one OpenRouter endpoint tag (e.g. "anthropic", "deepinfra/fp8", "openai"); every
+    call goes to that endpoint only, with no fallback, so a run never mixes providers, their
+    quantizations or their prices, and the cache stays with one provider."""
     settings = {"temperature": 0, "stream": True, "usage": {"include": True}}
     if max_tokens is not None:
         settings["max_tokens"] = max_tokens
     if effort is not None:
         settings["reasoning"] = {"effort": effort}
+    if provider is not None:
+        settings["provider"] = {"only": [provider], "allow_fallbacks": False}
     return settings
 
 
@@ -70,6 +78,14 @@ def _sse_chunks(response):
         yield json.loads(data)
 
 
+class _Refused(RuntimeError):
+    """A stream that ended in an error before its first token; `code` is the error's status."""
+
+    def __init__(self, message: str, code):
+        super().__init__(message)
+        self.code = code
+
+
 class _StreamReader:
     """Collects one streamed chat completion: the answer text, the time to the first token,
     the usage block and the stop reason. Shared by both backends (same OpenAI-style stream)."""
@@ -83,7 +99,10 @@ class _StreamReader:
         """Reads the stream to its end; the call's latency is the time to that end."""
         for chunk in _sse_chunks(response):
             if "error" in chunk:
-                raise RuntimeError(f"{self.server} error mid-stream: {chunk['error']}")
+                message = f"{self.server} error mid-stream: {chunk['error']}"
+                if not "".join(self.text) and self.first is None:     # refused before any token
+                    raise _Refused(message, (chunk["error"] or {}).get("code"))
+                raise RuntimeError(message)
             for key in ("id", "model", "provider"):
                 self.info.setdefault(key, chunk.get(key))
             for choice in chunk.get("choices") or []:
@@ -100,22 +119,84 @@ class _StreamReader:
 
     def raw_call(self, **extra) -> RawCall:
         """The collected stream as a RawCall; `extra` sets fields the stream does not carry."""
-        usage = self.usage
-        cache = usage.get("prompt_tokens_details") or {}
         fields = dict(
-            content="".join(self.text),
-            prompt_tokens=usage.get("prompt_tokens", 0),
-            completion_tokens=usage.get("completion_tokens", 0),
-            latency_ms=self.latency_ms,
-            usd_cost=usage.get("cost", 0.0),
-            cached_tokens=cache.get("cached_tokens", 0) or 0,
-            cache_write_tokens=cache.get("cache_write_tokens", 0) or 0,
-            reasoning_tokens=(usage.get("completion_tokens_details") or {}).get("reasoning_tokens", 0) or 0,
+            content="".join(self.text), latency_ms=self.latency_ms, **usage_fields(self.usage),
             first_token_ms=self.first, finish_reason=self.info.get("finish_reason"),
             native_finish_reason=self.info.get("native_finish_reason"),
             served_model=self.info.get("model"), provider=self.info.get("provider"),
             generation_id=self.info.get("id"))
         return RawCall(**{**fields, **extra})
+
+
+class PendingBatches:
+    """--batch-api's record of paid-for work not yet in the results file: the first (live) call's
+    answer and each batch's id, saved as they happen, in a file beside --output. It belongs to
+    one session's exact calls (model, settings, every message, in order), so running the same
+    command again finds it and collects what was paid for; run_cases() deletes it once every row
+    is in the results file. A file left by different calls stops the run rather than overwrite
+    it, since that would lose batches already paid for. path None: nothing is recorded."""
+
+    def __init__(self, path: str | None, model: str, settings: dict, calls: list):
+        self.path = Path(path) if path else None
+        digest = hashlib.sha256(json.dumps([model, settings], sort_keys=True).encode("utf-8"))
+        for messages in calls:
+            digest.update(json.dumps(messages, sort_keys=True).encode("utf-8"))
+        self.key = digest.hexdigest()
+        self.state = {"key": self.key, "model": model, "first": None, "batches": []}
+        if self.path and self.path.exists():
+            found = json.loads(self.path.read_text(encoding="utf-8"))
+            if found.get("key") != self.key:
+                raise RuntimeError(
+                    f"{self.path} holds batches of a different run ({found.get('model')}, batches "
+                    f"{', '.join(found.get('batches') or []) or 'none yet'}), already paid for. Run that "
+                    f"command again to collect them, or delete the file to give them up.")
+            self.state = found
+            print(f"{self.path.name}: collecting what an earlier run of this command paid for")
+
+    def first(self):
+        """The first call's answer from an earlier run, or None."""
+        return RawCall(**self.state["first"]) if self.state.get("first") else None
+
+    def batch_id(self, k: int):
+        """The id of batch k from an earlier run, or None."""
+        return self.state["batches"][k] if k < len(self.state["batches"]) else None
+
+    def save_first(self, call: RawCall) -> None:
+        self.state["first"] = asdict(call)
+        self._save()
+
+    def save_batch(self, k: int, batch_id: str) -> None:
+        self.state["batches"][k:k + 1] = [batch_id]
+        self._save()
+
+    def _save(self) -> None:
+        if self.path:
+            self.path.write_text(json.dumps(self.state, indent=1), encoding="utf-8")
+
+
+def batch_chunks(calls: list, max_bytes: int) -> list:
+    """`calls` (chat messages) split in order into runs whose JSON stays under max_bytes: a
+    session's 400 calls with the compact tally are ~246 MB, over OpenRouter's 200 MB per batch."""
+    chunks, size = [], max_bytes
+    for messages in calls:
+        n = len(json.dumps(messages).encode("utf-8"))
+        if size + n > max_bytes:
+            chunks.append([])
+            size = 0
+        chunks[-1].append(messages)
+        size += n
+    return chunks
+
+
+def usage_fields(usage: dict) -> dict:
+    """The RawCall fields an OpenAI-style usage block gives: tokens, cache use, thinking, cost."""
+    cache = usage.get("prompt_tokens_details") or {}
+    return dict(prompt_tokens=usage.get("prompt_tokens", 0),
+                completion_tokens=usage.get("completion_tokens", 0),
+                usd_cost=usage.get("cost", 0.0) or 0.0,
+                cached_tokens=cache.get("cached_tokens", 0) or 0,
+                cache_write_tokens=cache.get("cache_write_tokens", 0) or 0,
+                reasoning_tokens=(usage.get("completion_tokens_details") or {}).get("reasoning_tokens", 0) or 0)
 
 
 # ── OpenRouter: cloud, paid ──
@@ -125,27 +206,160 @@ class OpenRouterBackend:        # One key, many models (§4.2).
     how many input tokens were read from or written to the prompt cache, thinking tokens, time
     to the first token, why generation stopped, and which provider served the call."""
     URL = "https://openrouter.ai/api/v1/chat/completions"
+    BATCH_URL = "https://openrouter.ai/api/v1/batches"
+    BATCH_POLL_SECONDS = 60             # OpenRouter: polling once a minute is enough
+    BATCH_FINAL = ("completed", "failed", "expired", "cancelled")
+    BATCH_MAX_BYTES = 150_000_000       # OpenRouter takes up to 200 MB per batch; each call resends the tally
+    # A live call refused before its first token is tried again after each wait: 429 (rate
+    # limit), 502/503 (no provider available right now). A refusal can come as the HTTP status or
+    # as an error in the stream: openai/flex answers 200, then "Flex processing is temporarily
+    # unavailable" (502) mid-stream when it has no capacity.
+    RETRY_STATUS = (429, 502, 503)
+    RETRY_SECONDS = (15, 30, 60, 120, 240)
     name, paid = "openrouter", True
 
-    def __init__(self, api_key: str | None = None, max_tokens: int | None = None, effort: str | None = None):
+    def __init__(self, api_key: str | None = None, max_tokens: int | None = None, effort: str | None = None,
+                 provider: str | None = None, batch_api: bool = False):
+        """provider: pin every call to this endpoint tag (generation_settings()). batch_api: run
+        a session through OpenRouter's Batch API at about half price (prefetch())."""
         self.api_key = api_key or os.environ.get("OPENROUTER_API_KEY", "")
         if not self.api_key:
             raise RuntimeError("OpenRouter needs an API key: set OPENROUTER_API_KEY")
-        self.settings = generation_settings(max_tokens, effort)
+        self.settings = generation_settings(max_tokens, effort, provider)
+        self.batch_api = batch_api
+        self.batch_info = []            # after prefetch(): each batch's id, provider, status, counts
+        self._ready = []                # prefetched (messages, RawCall or error), in call order
+
+    def prefetch(self, model, calls: list, pending: str | None = None) -> None:
+        """--batch-api: makes a session's calls ahead of time, in order; call() then hands them
+        out one by one, so the run loop is the same as for live calls. The first call is made
+        live, which writes the opening to the provider's cache (OpenRouter: requests inside one
+        batch may run at once, so a batch cannot warm its own cache); the rest go in batches of at
+        most BATCH_MAX_BYTES, one after another, each waited for. Batch rows have no latency:
+        their time is queue time, not the model's.
+        calls: the chat messages of every call, in the order call() will be asked for them.
+        pending: a file that records the paid-for work as it happens (the first call's answer, each
+        batch's id), so a run stopped while waiting (a crash, Ctrl+C, a closed laptop) collects it
+        when the same command is run again instead of paying for it twice; see PendingBatches."""
+        if not self.batch_api or not calls:
+            return
+        state = PendingBatches(pending, model, self.settings, calls)
+        first = state.first()
+        if first is None:
+            try:
+                first = self._stream(model, calls[0])
+                state.save_first(first)
+            except Exception as e:      # handed out by call(), so generate() logs it as a failed call
+                first = e
+        self._ready = [(calls[0], first)]
+        for k, chunk in enumerate(batch_chunks(calls[1:], self.BATCH_MAX_BYTES)):
+            self._ready += list(zip(chunk, self._batch(model, chunk, state.batch_id(k),
+                                                       lambda batch_id, k=k: state.save_batch(k, batch_id))))
+
+    def _batch(self, model, calls: list, batch_id: str | None = None, submitted=None) -> list:
+        """Submits `calls` as one batch, waits for it, and returns one RawCall (or the error, as
+        an Exception) per call, in order. Adds the batch to batch_info. batch_id: a batch of these
+        calls already submitted (and paid for), to wait for instead of submitting again.
+        submitted: called with the new batch's id once OpenRouter has accepted it."""
+        headers = {"Authorization": f"Bearer {self.api_key}"}
+        if batch_id is not None:
+            print(f"batch {batch_id}: submitted by an earlier run of this command; collecting it")
+            return self._wait(model, calls, {"id": batch_id, "status": "in_progress"}, headers)
+        body = {k: v for k, v in self.settings.items() if k not in ("stream", "provider")}
+        submit = {"endpoint": "/v1/chat/completions", "model": model,
+                  "requests": [{"custom_id": f"call-{i:04d}", "body": {"messages": m, **body}}
+                               for i, m in enumerate(calls)]}
+        if "provider" in self.settings:
+            submit["provider"] = self.settings["provider"]
+        r = requests.post(self.BATCH_URL, headers=headers, json=submit, timeout=600)
+        if r.status_code not in (200, 202):
+            d = r.json() if r.content else {}
+            raise RuntimeError(f"OpenRouter batch not accepted ({r.status_code}): {d.get('error', r.text)}")
+        batch = r.json()
+        if submitted:
+            submitted(batch["id"])
+        print(f"batch {batch['id']} submitted: {len(calls)} calls (results stay on OpenRouter for 30 days; "
+              f"if this run stops, run the same command again to collect them)")
+        return self._wait(model, calls, batch, headers)
+
+    def _wait(self, model, calls: list, batch: dict, headers: dict) -> list:
+        """Polls a submitted batch until it is final; returns _batch()'s list."""
+        while batch.get("status") not in self.BATCH_FINAL or (batch["status"] == "completed"
+                                                                and batch.get("results") is None):
+            time.sleep(self.BATCH_POLL_SECONDS)
+            try:
+                r = requests.get(f"{self.BATCH_URL}/{batch['id']}", headers=headers, timeout=120)
+            except requests.RequestException as e:          # money is spent: keep waiting
+                print(f"batch {batch['id']}: could not poll ({type(e).__name__}); trying again")
+                continue
+            if r.status_code in (404, 410):
+                raise RuntimeError(f"batch {batch['id']}: {r.status_code} {r.text}")
+            if r.status_code != 200:                        # 429 and 5xx clear by waiting
+                continue
+            batch = r.json()
+            counts = batch.get("request_counts") or {}
+            print(f"batch {batch['id']}: {batch.get('status')}, "
+                  f"{counts.get('completed', 0) + counts.get('failed', 0)}/{len(calls)} done")
+        self.batch_info.append({"id": batch["id"], "provider": batch.get("provider"), "status": batch["status"],
+                                "request_counts": batch.get("request_counts")})
+        if batch["status"] != "completed":
+            why = (batch.get("error") or {}).get("message", "")
+            return [RuntimeError(f"batch {batch['id']} {batch['status']}: {why}")] * len(calls)
+        found = {e.get("custom_id"): e for e in batch.get("results") or []}
+        return [self._batch_result(found.get(f"call-{i:04d}"), batch) for i in range(len(calls))]
+
+    @staticmethod
+    def _batch_result(entry: dict | None, batch: dict):
+        """One batch result as a RawCall, or an Exception when that request failed."""
+        if entry is None:
+            return RuntimeError(f"batch {batch['id']} returned no result for this call")
+        if entry.get("error"):
+            return RuntimeError(f"batch request failed: {entry['error'].get('message', entry['error'])}")
+        body = (entry.get("response") or {}).get("body") or {}
+        choice = (body.get("choices") or [{}])[0]
+        return RawCall(content=(choice.get("message") or {}).get("content") or "", latency_ms=None,
+                       **usage_fields(body.get("usage") or {}),
+                       finish_reason=choice.get("finish_reason"),
+                       native_finish_reason=choice.get("native_finish_reason"),
+                       served_model=body.get("model"), provider=body.get("provider") or batch.get("provider"),
+                       generation_id=body.get("id"))
 
     def call(self, model, messages) -> RawCall:
+        if not self.batch_api:
+            return self._stream(model, messages)
+        if not self._ready:
+            raise RuntimeError("--batch-api: no prefetched result left for this call")
+        sent, result = self._ready.pop(0)
+        if sent != messages:
+            raise RuntimeError("--batch-api: calls asked for out of the order they were prefetched in")
+        if isinstance(result, Exception):
+            raise result
+        return result
+
+    def _stream(self, model, messages) -> RawCall:
         # Streamed, so the first token's arrival can be timed; usage (cost, cache, thinking
-        # tokens) comes in the last chunk because usage.include is set.
-        t0 = time.perf_counter()
-        with requests.post(self.URL, headers={"Authorization": f"Bearer {self.api_key}"},
-                           json={"model": model, "messages": messages, **self.settings},
-                           timeout=600, stream=True) as r:   # a session's first call writes a ~400k-token opening
-            if r.status_code != 200:
-                d = r.json() if r.content else {}
-                raise RuntimeError(f"OpenRouter {r.status_code}: {d.get('error', r.text)}")
-            stream = _StreamReader(t0, "OpenRouter")
-            stream.read(r)
-        return stream.raw_call()
+        # tokens) comes in the last chunk because usage.include is set. The latency is the
+        # attempt that answered, not the waits before it.
+        for wait in (*self.RETRY_SECONDS, None):
+            t0 = time.perf_counter()
+            with requests.post(self.URL, headers={"Authorization": f"Bearer {self.api_key}"},
+                               json={"model": model, "messages": messages, **self.settings},
+                               timeout=600, stream=True) as r:   # a session's first call writes a ~400k-token opening
+                status = r.status_code
+                if status == 200:
+                    stream = _StreamReader(t0, "OpenRouter")
+                    try:
+                        stream.read(r)
+                        return stream.raw_call()
+                    except _Refused as e:      # e.g. "Flex processing is temporarily unavailable" (502)
+                        status, error = e.code, str(e)
+                else:
+                    d = r.json() if r.content else {}
+                    error = f"OpenRouter {status}: {d.get('error', r.text)}"
+            if status not in self.RETRY_STATUS or wait is None:
+                raise RuntimeError(error)
+            print(f"  {error}; trying again in {wait}s")
+            time.sleep(wait)
 
 
 # ── LM Studio: local, free to run, measured in watts ──

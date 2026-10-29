@@ -226,15 +226,6 @@ class EndToEndTests(unittest.TestCase):
             self.assertTrue(s["tally_subjects"])
             self.assertEqual(len(s["cases"]), 2)
         self.assertIsNotNone(sessions[0]["batch"]["whole_tally_estimate_usd"])
-        # the dashboard's numbers for the same file
-        from pipeline import dashboard
-        from pipeline.cases import read_cases
-        types = {c["case_id"]: c["ground_truth"]["case_type"] for c in read_cases()}
-        snap = dashboard.snapshot(str(out), str(dashboard.CASES), None, types)
-        self.assertEqual((snap["calls_done"], snap["planned_calls"], snap["calls_left"]), (4, 4, 0))
-        self.assertEqual(sum(sum(f.values()) for f in snap["families"].values()), 4)
-        self.assertEqual(snap["run"]["kind"], "batch")
-        self.assertIsNotNone(snap["totals"]["energy_wh"])
         for text in (printed.getvalue(), report.getvalue()):
             self.assertIn("2 sessions, 4 calls", text)
             self.assertIn("electricity:", text)

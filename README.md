@@ -37,7 +37,6 @@ tests/                   python -m unittest discover tests (no model, no network
 | `cases.py` | Loads a case file and builds each case's full input object; the answer-key format (`RULES`); `expected_message()` (a cart as a correct answer would write it); `validate_case()`. |
 | `render.py` | Everything the model sees: the session's opening (the Section Tally in five versions, `TALLY_FIELDS`, `--subjects`) and each case's own turn (JSON, CSV or plain text); `to_task()`. |
 | `session.py` | `TallySession`: one cached opening per run, one call per case, the run's totals. See [The session](#the-session). |
-| `dashboard.py`, `dashboard.html` | A live dashboard of a run in the browser: progress and time left, accuracy, electricity, projected OpenRouter cost, outcomes by family, seconds and watts per call, the latest calls. See [Watch a run](#watch-a-run-the-dashboard). |
 | `batch.py` | `--session-per-pair`: the cases split into one session per pair (`pair_groups()`), `--pairs N` (`spread_pairs()`), and the batch's grand totals (`--batch-report`). |
 | `harness.py` | Core, domain-agnostic: `TaskSpec`, the chat layout for prompt caching (`build_messages()`), `generate()`, the log row (`GenerationResult`), DIDComm envelope parsing. |
 | `backends.py` | The model backends: `OpenRouterBackend` (cloud, paid) and `LMStudioBackend` (a local model, metered in watts). See [Local runs](#local-runs-lm-studio). |
@@ -181,19 +180,22 @@ asked and gives neither `--max-cost` nor `--yes` does not start, so nothing is s
 | `--task-ids` | Run only these cases (give both halves of a pair) | all cases in the file |
 | `-n` | Samples per case (3 or more to compare sessions) | `1` |
 | `--tally` | Which version of the Section Tally opens the session: `raw`, `trimmed`, `compact`, `raw-open`, `trimmed-open` (see below) | `trimmed` |
-| `--effort` | Reasoning effort sent to the model: `minimal`, `low`, `medium`, `high`, `xhigh` | the model's default |
+| `--effort` | Reasoning effort sent to the model: `minimal`, `low`, `medium`, `high`, `xhigh`. Several (`--effort low high medium`): one session each, back to back, estimated and approved together, so a session can read the cache the one before it wrote. See [Several efforts in one command](#several-efforts-in-one-command) | the model's default |
 | `--max-tokens` | Cap on output tokens per call, thinking included; far above the ~500-1,000 a call uses, so it only stops a runaway answer | `16000` |
 | `--max-cost` | USD. The run prints its estimated cost first and does not start above this; it also stops once the calls made have cost this much | no limit |
 | `--yes` | Start a paid run without asking (otherwise it asks, unless `--max-cost` is set) | off |
 | `--estimate-only` | Print the run's estimated OpenRouter cost and exit. No model call | off |
+| `--measured-from FILE` | Estimate (and check `--max-cost` against) what a test run of this model in `FILE` actually cost: its setup (first call) and median per-call cost at this effort, or at another effort when `FILE` has none of this one. Scaled to this run's endpoint price (flex is half) and `--batch-api`. Without it, the estimate guesses tokens from Claude's counts and runs 2-3x high for other models | off |
 | `--backend` | `openrouter` (cloud, paid) or `lmstudio` (a local model on this machine, see [Local runs](#local-runs-lm-studio)) | `openrouter` |
-| `--dashboard` | Open a live dashboard of the run in the browser (see [Watch a run](#watch-a-run-the-dashboard)) | off |
-| `--resume` | With `--session-per-pair`: continue the last batch in `--output`, skipping pairs already done | off |
+| `--resume` | With several `--effort`: skip the efforts `--output` already has a whole session of. With `--session-per-pair`: continue the last batch in `--output`, skipping pairs already done | off |
+| `--reuse-from FILE` | Answers `FILE` already has for exactly these calls (same model, effort, provider, tally, rendering and prompt; the case unchanged) count as this run's first samples, and only the missing samples are called. See [The -n 3 check without paying twice](#the--n-3-check-without-paying-twice) | off |
 | `--pairs N` | Run N pairs (2N cases), the families taking turns, instead of `--task-ids` | |
 | `--session-per-pair` | Each pair in its own session, its opening only that pair's subjects; ends with the batch's totals. See [Local runs](#local-runs-lm-studio) | off |
 | `--batch-report` | Print the grand totals of every `--session-per-pair` batch in `--output`, and exit. No model call | off |
 | `--subjects` | **Dev runs only.** Keep only these subjects' sections in the opening (`CS MATH`), or `auto` for the subjects the chosen cases need. The opening then fits a local model and costs a fraction; results are not comparable with whole-tally runs, and the summary records `tally_subjects` | the whole tally |
 | `--cache-ttl` | How long the session's cached opening lives between calls, `5m` or `1h` (use `1h` when calls may be more than 5 minutes apart) | `5m` |
+| `--provider` | Send every call to one OpenRouter endpoint, no fallback, by its tag (`anthropic`, `openai`, `google-vertex/global`, `deepinfra/fp8`; a wrong tag lists the model's tags). The estimate then uses that endpoint's prices. See [Choosing a provider](#choosing-a-provider) | any (OpenRouter picks) |
+| `--batch-api` | One live call writes the cache, then the session's other calls go through OpenRouter's Batch API at about half price. Sets `--cache-ttl 1h`. See [Batch pricing](#batch-pricing) | off |
 | `--rendering` | How a case's own state is shown to the model: `json`, `csv` or `nl` (plain text) | `json` |
 | `--output` | Results file (runs are appended; name a new file for a fresh run) | `results/semantic_eval_results.json` |
 | `--check` | Score each case's own answer key and every pair, and exit. No model call | off |
@@ -267,12 +269,85 @@ Opus 5.5; `compact` is about 15% less. Only providers that cache honor the marke
 through OpenRouter is confirmed on Claude. The first call can take minutes, so the OpenRouter
 request timeout is 10 minutes.
 
-**Batch pricing.** OpenRouter's `:batch` models (e.g. `anthropic/claude-sonnet-5.5:batch`) are
-half price, cache reads and writes included, and need no code change: pass the batch model as
-`--model`. Two cautions before a large batch run. Cache hits inside a batch are best-effort, and
-with this opening a miss costs about as much as 13 hits save, so batch pays only if about 93% of
-calls hit the cache: try a few calls first and read the summary's `tokens.cache_read_share`.
-And batch latency is queue time, so `latency` and `first_token_ms` say nothing about the model.
+#### Several efforts in one command
+
+Every session pays once to write the tally to the provider's cache (with `--batch-api`, the
+1-hour rate): Sonnet 5.5 $1.53, GPT-6.1 Terra $0.96, Haiku 5.5 $0.38, Gemini 4 Argon and DeepSeek
+v4.1 Flash about $0.07. A session that starts while the cache of the one before is still warm can
+read it instead. `--effort low high medium` runs one session per effort, back to back, approved
+once; `--resume` with the same command skips the efforts already finished in `--output`.
+OpenAI, Google and DeepSeek cache by the prompt alone, so the effort does not matter to them.
+Anthropic clears this cache when the thinking settings change, so for Claude only a session at
+the same effort can reuse it: put `medium` last and run the `-n 3` check (also medium) right after.
+The first call of each session shows whether it read the cache (`cached_tokens`). Estimates still
+assume a cache write per session.
+
+#### The -n 3 check without paying twice
+
+The `-n 3` check asks 10 pairs three times each at `medium`. The main `medium` run has already
+asked those cases once with the same calls, so `--reuse-from` counts that answer as the check's
+first sample and calls only the other two (40 calls instead of 60):
+
+```
+python run_semantic_eval.py --model openai/gpt-6.1-sol --provider openai/flex --tally compact --pairs 100 --effort low high medium --output results/sol.json --max-cost 45
+python run_semantic_eval.py --model openai/gpt-6.1-sol --provider openai/flex --tally compact --pairs 10 -n 3 --effort medium --reuse-from results/sol.json --output results/sol_check.json --max-cost 4
+```
+
+An answer is reused only from a session with the same model, effort, provider, tally, rendering
+and prompt, for a case unchanged since (its `case_hashes`), from a call that did not fail; a
+check with a different `--provider` or effort calls everything. Batch or live and the cache
+lifetime do not matter. A reused row keeps its answer, tokens and verdict, gets this session's
+id and its `run_index`, and records where it came from in `reused_from`. The summary's tokens
+and cost count only the calls made in this session (`reused_answers` says how many were reused),
+so adding up files does not count a call twice. The estimate leaves reused answers out.
+
+#### Choosing a provider
+
+OpenRouter serves most models from several endpoints at different prices, tiers (flex,
+standard, priority) and, for open-weight models, quantizations. Without `--provider` the
+estimate assumes the most expensive endpoint, and the run may be served by any of them. On
+2026-10-26 that meant GPT-6.1 Terra estimated at its priority price (2x standard), Gemini 4 Argon
+at its priority price (1.8x), and DeepSeek v4.1 Flash at an fp4 endpoint whose cache reads cost
+35x DeepInfra's fp8. `--provider TAG` sends every call to that one endpoint (`provider.only`, no
+fallback), so a run never mixes quantizations, its cache stays with one provider, and the estimate
+is that endpoint's price. The tags are in `https://openrouter.ai/api/v1/models/<model>/endpoints`.
+Prefer the model's own company (`anthropic`, `openai`) or a standard full-precision endpoint.
+
+**Flex endpoints** (`openai/flex`, `google-ai-studio/flex`) serve the same model at half the
+standard price, every call included, so they beat `--batch-api` where they exist: batch halves
+every call but the first, which writes the cache at full price (GPT-6.1 Sol: $1.92 a session).
+Flex calls are live, so latency is recorded and `--max-cost` can stop the run, but they are
+slower and lower priority: the latency is flex latency, not the standard endpoint's. A flex
+endpoint with no capacity answers 429; any call refused with 429, 502 or 503 (nothing billed) is
+tried again after 15, 30, 60, 120 and 240 seconds before it counts as a failed call. Anthropic
+and DeepInfra have no flex tier, so Claude keeps `--batch-api`. Leave `--batch-api` off with flex.
+
+#### Batch pricing
+
+OpenRouter's Batch API bills about half the live price. `--batch-api` makes one live call
+first, which writes the opening to the cache with a 1-hour lifetime (OpenRouter: requests inside a
+batch may run at once, so a batch cannot warm its own cache). It then submits the session's other
+calls as one batch, waits for it (polled once a minute; most batches finish in minutes, up to 24
+hours, Google Vertex up to 96), and scores the answers as usual. The `:batch` ids in OpenRouter's
+model list are price listings; give `--model` the model's own id. Cautions:
+
+- **Cache hits are best-effort in a batch**, and with this opening a miss costs about as much as
+  13 hits save. Run 1–2 pairs first and read the summary's `tokens.cache_read_share`.
+- **A submitted batch cannot be stopped by `--max-cost`**: the estimate is the only check.
+- **A stopped run is not paid for twice.** While a session waits on its batches, the first
+  call's answer and each batch's id are kept in `<output>.pending-batch.json`. If the run stops
+  (a crash, Ctrl+C, a closed laptop), run the same command again: it collects those batches
+  instead of submitting them again, and deletes the file once every row is saved. A file left by
+  a different command stops the run rather than lose what it paid for; delete it only to give
+  those batches up.
+- **No latency.** Batch rows have `latency_ms: null`, because their time is queue time. Measure
+  latency with a live run.
+- **Not every provider takes batches.** A pinned provider that does not is refused at submission
+  (nothing spent but the first live call).
+- **Large sessions are split into several batches.** OpenRouter takes up to 200 MB per batch,
+  and every call resends the tally (~0.62 MB with `compact`), so all 400 cases (~246 MB) would not
+  fit in one. The calls go in batches of at most 150 MB, one after another.
+- The session summary's `batch_api` lists each batch's id, provider, status and request counts.
 
 What is measured: the model must find the right few sections among 5,129, so a wrong answer
 can come from reading a very long input as well as from reasoning. The opening does not fit
@@ -378,25 +453,8 @@ writes the cache and later ones read it, as on OpenRouter, and a model with no c
 full input price every call. Local results are for development; they do not replace the cloud
 runs in reported findings.
 
-### Watch a run (the dashboard)
-
-```bash
-python run_semantic_eval.py ... --dashboard                                      # with a run
-python -m pipeline.dashboard --output C:/Users/Khalil/csr2_runs/llama_200.json    # any results file, any time
-```
-
-Opens `http://localhost:8765`, a page served from this computer only, which rereads the results
-file every 5 seconds. A menu picks the run: a batch, or a single session. It shows:
-- progress with the time left;
-- correct answers and pairs passed (with a 95% interval);
-- electricity in Wh and USD, the projected OpenRouter cost as sent, and the whole-tally estimate;
-- outcomes by pair family, as a stacked bar per family (or as a table);
-- seconds per call (a rising line can mean the GPU is running hot) and watts per call;
-- the latest 20 calls.
-
-It follows the system's light or dark theme and makes no model call. LM Studio's own
-**Developer** tab shows the model's side live (each request and the answer streaming in), and
-Task Manager > Performance > GPU shows load, memory and temperature.
+To watch a local run: LM Studio's **Developer** tab shows the model's side live (each request and
+the answer streaming in), and Task Manager > Performance > GPU shows load, memory and temperature.
 
 ### Change the model
 
@@ -476,7 +534,11 @@ except `deviation_score` (per row, and averaged in the summary).
 - **Cost:** `cost.total_usd`; `avg_per_call_usd`; `setup_usd_est` (the one-time cache write of
   the shared opening) and `per_case_marginal_usd_est` (one more case once the cache is warm).
   These two are estimates: OpenRouter reports one cost per call, so the marginal cost is the
-  median cost of cache-reading calls, and setup is what the writing call cost above that.
+  median cost of the later calls, and setup is what the session's first call (plus any later
+  call that wrote the opening to the cache again) cost above that. The first call counts even
+  when the provider reports no cache write (DeepSeek and Gemini bill it as plain input); a
+  session that started on a still-warm cache gets a setup near 0; one with a single successful
+  call gets `null`.
   Also `per_correct_answer_usd` and `per_passed_pair_usd`. A local session also has
   `local_cost` (electricity and the projected OpenRouter cost). `--rescore` makes no model call
   and costs nothing.
@@ -930,8 +992,26 @@ python run_semantic_eval.py --output results/pair_results.json --pair-report
 | `days` | Prompt: Mondays/Wednesdays vs Tuesdays/Thursdays, in person | Meeting-day constraint | SEM weekday |
 | `grade_threshold` | Transcript: the grade is one step below the requirement's minimum (a) or at it (b) | Minimum passing grade | SEM grade_threshold |
 | `withdrawal` | Transcript: `W` (a) or `B` (b) | A W earns no credit | SEM withdrawal_credit |
+| `time_of_day` | Prompt: "a morning class" (starts before noon) vs "an afternoon class" (noon to 5 PM) | T1 time-of-day words | reg-sem-001/002 |
+| `relative_time` | Prompt: the open section that starts earliest vs latest in the day | T2 relative time | reg-sem-005/006 |
+| `time_cutoff` | Prompt: "nothing that starts before *t*" vs "everything over by *t*" | T3 hard cutoffs | cart-006, sem_004 |
+| `chained_conflict` | Prompt: two courses; commitments that leave one section of the first, which then rules out sections of the second, vs ones that leave another | T5 one choice forces the next | cart-009 |
+| `boundary_time` | Prompt: "I'm only free from *x* to *y*", exactly one section's times vs another's | T6 a start or end on the boundary is inside | (new) |
+| `back_to_back` | Prompt: a commitment that starts the minute one section ends (and covers the other) vs one that ends the minute the other starts | T7 touching is not a conflict | (new) |
+| `multi_meeting` | Prompt: a commitment that overlaps only the second meeting (the lab) of one section vs another's | T8 check every meeting | (new) |
+| `noon` | Prompt: "I have to be done by noon" vs "I can't start until noon", on a course with a time in the 12 o'clock hour | T9 AM/PM and noon traps | (new) |
 
-**200 pairs (400 cases).** Families take turns adding one pair each, so they stay even: 21 each
+The last eight are the temporal checks T1-T9 (T4, partial overlap with a different start time,
+is `busy_block`). They are built only on courses whose sections each meet at one set time (no
+online sections without times, which would pass any time rule), except `multi_meeting`, which
+needs a lecture and a lab at different times. `starts_at_or_after` is the only rule they added.
+`chained_conflict` is rare in the real schedule (a course with two or three open sections whose
+remaining one clashes with some section of a second course): it stops at 3 pairs.
+
+**273 pairs (546 cases):** the first 200 below, then 73 temporal pairs (10 per family, 3 for
+`chained_conflict`), added with `python generate_pairs.py --total 273 --families time_of_day
+relative_time time_cutoff chained_conflict boundary_time back_to_back multi_meeting noon`.
+`--pairs N` still spreads a run over every family. **The first 200 pairs (400 cases):** families take turns adding one pair each, so they stay even: 21 each
 for `full_fallback`, `in_progress`, `transfer`, `busy_block`, `credit_limit`, `modality` and
 `days`, 20 each for `grade_threshold` and `withdrawal`, and 13 for `nested_groups`, which runs
 out first. The generator goes through every program once, then goes round again with a new seed
@@ -1047,7 +1127,7 @@ Four tiers, stopping at the first failure:
   | `count`, `credits` | have this many sections / this many total credits (`{"min", "max"}`) |
   | `courses_count_toward` | have only courses that move one of these unmet requirements forward (from the degree audit, so passed courses don't count unless repeatable) |
   | `no_days` | have no meeting on these days |
-  | `starts_before`, `ends_by` | have every meeting start before / end by this time |
+  | `starts_before`, `starts_at_or_after`, `ends_by` | have every meeting start before / start at or after / end by this time |
   | `modality_in` | use only these modalities |
   | `must_include_courses` | contain these courses |
   | `courses_in` | have only courses from this list |
@@ -1377,6 +1457,7 @@ backends × models × domains × tasks × samples
 
 | Version | Date | Changes |
 |---|---|---|
+| 3.7 | 2026-10-26 | `--provider TAG`: every call to one OpenRouter endpoint (`provider.only`, no fallback), and the estimate at that endpoint's prices instead of the most expensive one's. `--batch-api`: one live call writes the cache (1h), the session's other calls go through OpenRouter's Batch API at about half price; batch rows have `latency_ms: null` and the summary records `batch_api`. Corrected: the `:batch` ids are price listings, not models a live call can use. Estimates use the 1-hour cache-write price under `--cache-ttl 1h`. `tests/test_openrouter_routing.py`. `--batch-api` splits a session into batches of at most 150 MB (OpenRouter takes 200 MB; 400 cases are ~246 MB) and keeps `<output>.pending-batch.json`, so running a stopped command again collects its batches instead of paying twice. `--effort` takes several efforts (one session each, back to back, approved together); `--resume` skips those already finished. `--reuse-from FILE`: answers already made with exactly the same calls count as a run's first samples (the `-n 3` check after the main runs makes 40 calls instead of 60); the summary's tokens and cost count only the calls made, `reused_answers` the rest. Live OpenRouter calls refused with 429/502/503 are tried again (15 s to 4 min apart), for flex endpoints. Removed: the live dashboard (`dashboard.py`, `dashboard.html`, `--dashboard`). |
 | 3.6 | 2026-10-22 | The pipeline split into single-purpose modules (`cases`, `render`, `session`, `backends`, `pricing`, `energy`, `scoring`, `checker`, `degree_audit`, `input_format`, `pairs`, `results`, `reports`, `selfcheck`, `stats`); `run_semantic_eval.py` is the command line. Tier 4 is one function per rule (`scoring.RULE_CHECKS`); `generate_pairs.py` passes its cached `counts_toward` to `check_rules()` instead of swapping `registration.counts_toward`. Prompts, verdicts, `--check`, rescored results and generated pairs are unchanged (compared before and after). New: `--backend lmstudio` for local runs, with GPU energy from `nvidia-smi` (`energy.py`) and the projected OpenRouter cost of every call (`--price-as`, `--kwh-price`, `--watts`, `--extra-watts`); `--subjects` (dev runs, a smaller opening; Aneesh's subject-limited tally); `--estimate-only`; a paid run starts only with `--max-cost`, a typed `y` or `--yes` (Ben's confirmation); the results file is saved atomically (Ben's fix). Faster: the Section Tally is converted once per run and validated once, and the checker looks up prerequisites only for courses that have them (`--check` 10 min → 1 min). Estimates no longer assume caching for a model with no cache price. `tests/`. Then the folders: the code in `pipeline/` (a package; `run_semantic_eval.py` and `generate_pairs.py` at the root are its two commands), `data/`, `schemas/`, `results/` (past runs in `results/past_runs/`), all paths in `pipeline/paths.py`; `registration.py` (old-name re-exports) removed; `--session-per-pair`, `--pairs N` and `--batch-report` (`pipeline/batch.py`): 200 cases on a local model in one command, with grand totals; `didcomm_schema.py`'s self-test moved to `tests/test_message_schema.py`; `section_tally.py check` is `python -m pipeline.section_tally check`. |
 | 3.5 | 2026-10-21 | `code_version` removed from session summaries (and from the five Sonnet results files), with the git lookup that built it. `--max-cost` reads each provider's prices, including long-prompt rates (Claude Haiku 5.5 costs five times as much from 100k prompt tokens). `pairs_sonnet_compact.json`: Sonnet 5.5, medium effort, on the same 3 pairs with the `compact` tally. |
 | 3.4 | 2026-10-21 | Cost cuts that leave the semantic checks as they are: a `compact` tally version (`trimmed` without meeting rooms and types and the waitlist column, 21% smaller); the output instructions move into the cached opening (`prompt_layout` in the summary); `--max-tokens` defaults to 16000; `--max-cost` prints an estimate, refuses to start above it and stops a run that reaches it; batch pricing documented. `--named-courses` removed with `named_courses()` and `section_tally.course_schedule()`: every run is a session over the whole tally, and cases carry `candidate_courses` instead of `schedule_from_tally`. Removed: conversion of old-format results files and the verdict fields only older files had. |

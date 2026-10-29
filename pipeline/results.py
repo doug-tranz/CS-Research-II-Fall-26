@@ -122,11 +122,17 @@ def log_row(result, verdict: dict, path: str, meta: dict, extra: dict | None = N
     """Appends one result row to the results file, adding its session's summary (meta: the
     settings the run shares) the first time; totals are filled in when the run ends. extra:
     more row fields (the case's hashes, a local call's projected OpenRouter cost)."""
+    row = readable_row(asdict(result), verdict)
+    row.update(session_id=meta["session_id"], **(extra or {}))
+    append_row(path, row, meta)
+
+
+def append_row(path: str, row: dict, meta: dict) -> None:
+    """Appends a finished row (a new call's, or one --reuse-from copies) to the results file,
+    adding its session's summary (meta) the first time."""
     sessions, results = load_results(path)
     if not any(s["session_id"] == meta["session_id"] for s in sessions):
         sessions.append(dict(meta))
-    row = readable_row(asdict(result), verdict)
-    row.update(session_id=meta["session_id"], **(extra or {}))
     results.append(row)
     save_results(path, sessions, results)
 
@@ -142,14 +148,20 @@ def file_hash(path: str) -> str:
 def _cost_breakdown(rows: list, correct: int, passed_pairs: int | None) -> dict:
     """What the session cost, split into the one-time cache write of the shared opening and the
     marginal cost of one case, plus cost per correct answer and per passed pair. The split is an
-    estimate: OpenRouter reports one cost per call, so the marginal cost is the median cost of
-    the calls that only read the cache, and the setup cost is what the writing calls cost above it."""
+    estimate: OpenRouter reports one cost per call. The setup calls are the session's first call
+    (it pays for the opening, whether or not the provider reports a cache write: DeepSeek and
+    Gemini bill it as plain input) and any later call that wrote most of its prompt to the cache
+    again (the cache expired). The marginal cost is the median of the other calls, which may
+    write a little (OpenAI caches the part of a case that repeats); setup is what the setup
+    calls cost above it. A session that started on a warm cache gets a setup near 0."""
     ok = [r for r in rows if r.get("error") is None]
     cost = sum(r.get("usd_cost", 0) or 0 for r in rows)
-    reads = sorted(r["usd_cost"] for r in ok if not r.get("cache_write_tokens") and r.get("cached_tokens"))
-    marginal = reads[len(reads) // 2] if reads else None
-    writes = [r["usd_cost"] for r in ok if r.get("cache_write_tokens")]
-    setup = round(max(0.0, sum(writes) - len(writes) * marginal), 6) if writes and marginal is not None else None
+    rewrote = lambda r: (r.get("cache_write_tokens") or 0) * 2 >= (r.get("prompt_tokens") or 0) > 0
+    setups = ok[:1] + [r for r in ok[1:] if rewrote(r)]
+    others = sorted(r["usd_cost"] for r in ok[1:] if not rewrote(r))
+    marginal = others[len(others) // 2] if others else None
+    setup = (round(sum(max(0.0, r["usd_cost"] - marginal) for r in setups), 6)
+             if setups and marginal is not None else None)
     out = {"total_usd": round(cost, 6), "avg_per_call_usd": round(cost / len(rows), 6) if rows else None,
            "setup_usd_est": setup, "per_case_marginal_usd_est": round(marginal, 6) if marginal is not None else None,
            "per_correct_answer_usd": round(cost / correct, 6) if correct else None}
@@ -204,10 +216,11 @@ def summarize_session(meta: dict, rows: list, pairs: dict, cases: dict | None = 
             key = f"{r.get('served_model')} via {r.get('provider')}"
             served[key] = served.get(key, 0) + 1
     scored = [r["verdict"]["deviation_score"] for r in rows if "deviation_score" in r["verdict"]]
-    tokens = {k: sum(r.get(k, 0) or 0 for r in rows)
+    made = [r for r in rows if not r.get("reused_from")]      # tokens and cost: this session's own calls
+    tokens = {k: sum(r.get(k, 0) or 0 for r in made)
               for k in ("prompt_tokens", "cached_tokens", "cache_write_tokens", "completion_tokens")}
-    tokens["reasoning_tokens"] = (sum(r.get("reasoning_tokens") or 0 for r in rows)
-                                  if any("reasoning_tokens" in r for r in rows) else "not recorded")
+    tokens["reasoning_tokens"] = (sum(r.get("reasoning_tokens") or 0 for r in made)
+                                  if any("reasoning_tokens" in r for r in made) else "not recorded")
     ok = [r for r in rows if r.get("error") is None]
     correct = outcomes.get("semantic_ok", 0)
     truth = lambda r: cases.get(r["task_id"], {}).get("ground_truth") or {}
@@ -220,6 +233,7 @@ def summarize_session(meta: dict, rows: list, pairs: dict, cases: dict | None = 
             t[1] += 1
     chance = [truth(r)["difficulty"]["chance"] for r in ok if truth(r).get("difficulty")]
     first = [r["first_token_ms"] for r in ok if r.get("first_token_ms") is not None]
+    timed = [r["latency_ms"] for r in ok if r.get("latency_ms") is not None]     # batch rows have none
     # weak pairs: one answer is correct in both variants, so passing them shows less
     weak = {pid for pid in pairs if any((cases.get(cid, {}).get("ground_truth") or {}).get("pair", {}).get("has_shared_answer")
                                         for cid in pairs[pid].values())}
@@ -240,11 +254,15 @@ def summarize_session(meta: dict, rows: list, pairs: dict, cases: dict | None = 
         "served_by": served or "not recorded (calls made before 2026-10-19 streaming)",
         "tokens": {**tokens, "cache_read_share": f"{100 * tokens['cached_tokens'] / tokens['prompt_tokens']:.0f}%"
                    if tokens["prompt_tokens"] else None},
-        "cost": _cost_breakdown(rows, correct, stats.get("passed") if stats else None),
-        "latency": {"mean_total_ms": round(sum(r["latency_ms"] for r in ok) / len(ok)) if ok else None,
+        "cost": _cost_breakdown(made, correct, stats.get("passed") if stats else None),
+        "latency": {"mean_total_ms": round(sum(timed) / len(timed)) if timed else None,
                     "mean_first_token_ms": round(sum(first) / len(first)) if first else None},
     }
-    local = _local_breakdown(rows, correct, meta)
+    if len(made) < calls:
+        summary["reused_answers"] = (f"{calls - len(made)} of the {calls} answers were reused (--reuse-from) from "
+                                     f"calls made and paid for in another session; tokens and cost count only "
+                                     f"the {len(made)} made here")
+    local = _local_breakdown(made, correct, meta)
     if local:
         summary["local_cost"] = local
     if stats:
@@ -259,7 +277,7 @@ def summarize_session(meta: dict, rows: list, pairs: dict, cases: dict | None = 
 SUMMARY_TOTALS = ("started", "ended", "cases", "calls", "generation_failures", "outcomes", "semantic_ok",
                   "semantic_ok_by_case_type", "mean_chance_baseline", "mean_deviation_score", "error_types",
                   "finish_reasons", "served_by", "tokens", "cost", "latency", "local_cost", "paired_accuracy",
-                  "sampling_note")
+                  "sampling_note", "reused_answers")
 
 
 def rebuild_summaries(case_file: str, sessions: list, results: list) -> list:

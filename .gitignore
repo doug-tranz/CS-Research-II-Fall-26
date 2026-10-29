@@ -19,3 +19,6 @@ __pycache__/
 
 # browser-automation screenshots
 .playwright-mcp/
+
+# --batch-api's record of a run still waiting on its batches (deleted when the run finishes)
+*.pending-batch.json
