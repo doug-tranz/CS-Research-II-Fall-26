@@ -34,6 +34,9 @@ python run_semantic_eval.py --test-file paired_cases.json --output pair_results.
 | `grade_threshold` | Transcript: the grade is one step below the requirement's minimum (a) or at it (b) | Minimum passing grade | SEM grade_threshold |
 | `withdrawal` | Transcript: `W` (a) or `B` (b) | A W earns no credit | SEM withdrawal_credit |
 | `late_meeting` | Prompt: "nothing that ends after `<hour>`" (a) or "No `<day>` classes" (b), on a course where one section's first meeting ends in time but a later meeting runs past the hour | Read every meeting of a section, not only the first | none (new) |
+| `o1_shared_rule` | Prompt: two named courses, one rule for both: Mondays/Wednesdays in person (a) vs Tuesdays/Thursdays in person (b) | Answer completeness: one section of each course, the rule holding for both | none (new) |
+| `o2_stacked_rules` | Prompt: two named courses, the day rule above plus a time rule ("nothing ends after 5 PM" or "nothing starts at 5 PM or later"); the day rule flips | Answer completeness: both courses and both rules at once | none (new) |
+| `o3_busy_both` | Prompt: two named courses and a weekly work commitment that starts 30 minutes into one section's meeting (a) or another's (b) | Answer completeness: both courses, neither overlapping the commitment or each other | none (new) |
 
 **200 pairs (400 cases).** Families take turns adding one pair each, so they stay even: 21 each
 for `full_fallback`, `in_progress`, `transfer`, `busy_block`, `credit_limit`, `modality` and
@@ -45,6 +48,8 @@ later-round pair's id ends in `#<round>` (`transfer/philosophy-ba#3`, case
 program is skipped. Most families use 20 or more programs; `transfer` uses 8 and `nested_groups` 8.
 
 **`late_meeting` (27 pairs, 54 cases).** Added after the 200 pairs above: `python generate_pairs.py --families late_meeting --total 227`. Each pair is strong (no single section is right in both variants). The cutoff is a whole hour, noon to 8 PM, that one section's first meeting meets and a later meeting does not; it exists because `busy_block` only builds its overlap from a section's first meeting, so nothing else tests later meetings. Of the Fall 2026 sections with set times, 1,242 have two or more meetings.
+
+**Category O: `o1_shared_rule`, `o2_stacked_rules`, `o3_busy_both` (6 pairs, 12 cases).** Added after `late_meeting`: `python generate_pairs.py --families o1_shared_rule o2_stacked_rules o3_busy_both --total 233`. The task card for O (2.3o, "Task Creation") has no description. Doug Tranz said in Discord that O is "answer completeness" and that it tests combining other categories; this is one reading of that, not a confirmed definition. Each pair asks for two named courses under one or more rules; a complete answer is one section of each course with every rule holding at once and the two sections not overlapping. Each variant flips one rule, and neither variant's rules contain the other's, so a model that drops a course or ignores a rule fails one variant. All six pairs have a two-section answer, so no single section can pass both variants. Two pairs per family: the earlier pairs of the other families were not rebalanced.
 
 There is no campus family: all but 30 of the 5,129 sections are Glassboro, online or
 off-campus. `nested_groups` has little variety: the only `one_of_groups` requirement with open
