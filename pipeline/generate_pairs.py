@@ -27,6 +27,16 @@ real, so a pair cannot make a section full; it flips what the student asked or h
   grade_threshold the transcript: a grade below the minimum (a) or   minimum passing grade
                   at it (b)
   withdrawal      the transcript: a W (a) or a B (b)                 a W earns no credit
+  time_of_day     "a morning class" vs "an afternoon class"          T1 time-of-day words
+  relative_time   the open section starting earliest vs latest       T2 relative time
+  time_cutoff     "nothing before <t>" vs "over by <t>"              T3 hard cutoffs
+  chained_conflict a commitment leaves one section of A, which rules  T5 one choice forces the next
+                  out sections of B
+  boundary_time   free exactly during one section's times vs another's T6 boundary values (inclusive)
+  back_to_back    a commitment ending as one section starts vs as    T7 touching is not a conflict
+                  the other starts
+  multi_meeting   a commitment over one section's lab vs another's   T8 check every meeting
+  noon            "done by noon" vs "can't start until noon"         T9 AM/PM and noon traps
 
 Not built: campus (all but 30 of 5,129 sections are in Glassboro, online or off-campus).
 
@@ -59,7 +69,7 @@ from .cases import expected_message, resolve_case
 from .harness import parse_didcomm
 from .input_format import minutes
 from .paths import CASES
-from .scoring import check_rules
+from .scoring import _busy_overlap, check_rules
 
 PAIR_FILE = CASES
 ONE = {"count": {"min": 1, "max": 1}}
@@ -774,8 +784,203 @@ def f_withdrawal(key, prog, rng, sid):
                        lambda x, lo, hi: f"grade in {x}: {lo} vs {hi}")
 
 
+# ── temporal reasoning (T1-T9; T4, partial overlap, is busy_block) ──
+
+NOON = 12 * 60
+
+
+def one_time(s):
+    """(start, end) in minutes when every meeting of the section has those same set times, else
+    None (no meetings, no set times, or a lecture and a lab at different times)."""
+    times = {(m.get("start_time"), m.get("end_time")) for m in s["meetings"]}
+    if len(times) != 1 or None in next(iter(times)):
+        return None
+    start, end = times.pop()
+    return minutes(start), minutes(end)
+
+
+def days_of(s):
+    """Every day a section meets, in week order."""
+    return [d for d in DAYS if any(d in m["days"] for m in s["meetings"])]
+
+
+def hour_up(t):
+    """Minutes rounded up to the hour."""
+    return -(-t // 60) * 60
+
+
+def _time_pair(family, key, prog, rng, sid, options, needs=one_time):
+    """One named course whose sections all pass `needs`, under two prompts. options(open sections)
+    yields ((text, rules, why) for a, (text, rules, why) for b, changed); pair() keeps the first
+    whose answers really differ."""
+    pool = [(r, c) for r, c in major_pool(prog) if len(open_secs(c)) >= 2 and all(needs(s) for s in by_course()[c])]
+    rng.shuffle(pool)
+    for rx, x in pool[:6]:
+        tries = list(options(open_secs(x)))[:10]
+        if not tries:
+            continue
+        built = build(key, prog, plan_transcript(prog, [rx], [x], rng.randrange(10 ** 6)), "", sid)
+        if not built or audit.missing_prerequisites(built[1].data, x):
+            continue
+        case, c = built
+        for a, b, changed in tries:
+            got = pair(family, key, *[(reprompt(case, f"Register me for {named(x, prog)}. {text}"), c,
+                                       {**ONE, "must_include_courses": [x], **rules}, by_course()[x], 1, why)
+                                      for text, rules, why in (a, b)], changed, [rx], [x], rng)
+            if got:
+                return got
+    return None
+
+
+def work_text(b, both=False):
+    """'I work Mondays and Wednesdays from 9:00 AM to 10:00 AM, so the class can't overlap that.'"""
+    return (f"I work {plural_days(b['days'])} from {b['start_time']} to {b['end_time']}, so "
+            f"{'neither class' if both else 'the class'} can't overlap that.")
+
+
+def f_time_of_day(key, prog, rng, sid):
+    """T1 'I want a morning class.' vs 'I want an afternoon class.' (before noon; noon to 5 PM)."""
+    def options(secs):
+        starts = {one_time(s)[0] for s in by_course()[secs[0]["course_id"]]}
+        if NOON not in starts:          # a noon start is T9's trap, not this family's
+            yield (("I want a morning class.", {"starts_before": "12:00 PM"}, "A morning class starts before noon."),
+                   ("I want an afternoon class.", {"starts_at_or_after": "12:00 PM", "starts_before": "5:00 PM"},
+                    "An afternoon class starts between noon and 5 PM."), "time of day: morning vs afternoon")
+    return _time_pair("time_of_day", key, prog, rng, sid, options)
+
+
+def f_relative_time(key, prog, rng, sid):
+    """T2 'the open section that starts earliest in the day' vs '... latest in the day'."""
+    def options(secs):
+        starts = sorted({one_time(s)[0] for s in secs})
+        if len(starts) >= 2:
+            listed = ", ".join(clock(t) for t in starts)
+            yield (("I want the section with an open seat that starts earliest in the day.",
+                    {"starts_before": clock(starts[1])}, f"Open sections start at {listed}; the earliest is {clock(starts[0])}."),
+                   ("I want the section with an open seat that starts latest in the day.",
+                    {"starts_at_or_after": clock(starts[-1])}, f"Open sections start at {listed}; the latest is {clock(starts[-1])}."),
+                   "relative time: earliest vs latest")
+    return _time_pair("relative_time", key, prog, rng, sid, options)
+
+
+def f_time_cutoff(key, prog, rng, sid):
+    """T3 'Nothing that starts before <late>.' vs 'Everything has to be over by <early>.'"""
+    def options(secs):
+        times = [one_time(s) for s in secs]
+        late, done = clock(max(t[0] for t in times) // 60 * 60), clock(hour_up(min(t[1] for t in times)))
+        yield ((f"Nothing that starts before {late}.", {"starts_at_or_after": late},
+                f"Only a section starting at {late} or later is allowed."),
+               (f"Everything has to be over by {done}.", {"ends_by": done}, f"Only a section ending by {done} is allowed."),
+               f"cutoff: no start before {late} vs over by {done}")
+    return _time_pair("time_cutoff", key, prog, rng, sid, options)
+
+
+def f_boundary_time(key, prog, rng, sid):
+    """T6 'I'm only free from <s start> to <s end>.' vs the same for t: each window is exactly one
+    section's times, so the right section starts and ends exactly on the boundary."""
+    def options(secs):
+        windows = sorted({one_time(s) for s in secs})
+        for w1, w2 in combinations(windows, 2):
+            text = lambda w: f"I'm only free from {clock(w[0])} to {clock(w[1])}."
+            rules = lambda w: {"starts_at_or_after": clock(w[0]), "ends_by": clock(w[1])}
+            why = lambda w: (f"A section from {clock(w[0])} to {clock(w[1])} fits exactly: starting or ending on the "
+                             f"boundary is inside the window.")
+            yield (text(w1), rules(w1), why(w1)), (text(w2), rules(w2), why(w2)), \
+                f"free window: {clock(w1[0])}-{clock(w1[1])} vs {clock(w2[0])}-{clock(w2[1])}"
+    return _time_pair("boundary_time", key, prog, rng, sid, options)
+
+
+def f_back_to_back(key, prog, rng, sid):
+    """T7 a commitment that ends exactly when one section starts (no conflict) and covers the other."""
+    def options(secs):
+        for s, t in combinations(sorted(secs, key=one_time), 2):
+            (s0, s1), (t0, t1) = one_time(s), one_time(t)
+            shared = [d for d in days_of(s) if d in days_of(t)]
+            if not shared or s1 > t0 or s0 == t0:
+                continue
+            after = {"days": shared, "start_time": clock(s1), "end_time": clock(t1)}     # starts as s ends
+            before = {"days": shared, "start_time": clock(s0), "end_time": clock(t0)}    # ends as t starts
+            yield ((work_text(after), {"busy": [after]},
+                    f"The commitment starts at {clock(s1)}, the minute section {s['crn']} ends: back to back, not a conflict."),
+                   (work_text(before), {"busy": [before]},
+                    f"The commitment ends at {clock(t0)}, the minute section {t['crn']} starts: back to back, not a conflict."),
+                   f"commitment: {clock(s1)}-{clock(t1)} vs {clock(s0)}-{clock(t0)}")
+    return _time_pair("back_to_back", key, prog, rng, sid, options)
+
+
+def two_times(s):
+    """Has set times on every meeting, and meetings that start at different times (a lecture and a lab)."""
+    return s["meetings"] and all("start_time" in m for m in s["meetings"]) and len({m["start_time"] for m in s["meetings"]}) >= 2
+
+
+def f_multi_meeting(key, prog, rng, sid):
+    """T8 a commitment that overlaps only one section's second meeting (its lab), vs another's."""
+    def options(secs):
+        multi = [s for s in secs if two_times(s)]
+        for s, t in combinations(multi, 2):
+            bs, bt = busy_block({**s, "meetings": s["meetings"][-1:]}), busy_block({**t, "meetings": t["meetings"][-1:]})
+            if bs != bt:
+                yield ((work_text(bs), {"busy": [bs]}, f"The commitment overlaps only the last meeting of section {s['crn']}."),
+                       (work_text(bt), {"busy": [bt]}, f"The commitment overlaps only the last meeting of section {t['crn']}."),
+                       f"commitment over the second meeting of {s['crn']} vs {t['crn']}")
+    return _time_pair("multi_meeting", key, prog, rng, sid, options,
+                      needs=lambda s: two_times(s) or one_time(s))
+
+
+def f_noon(key, prog, rng, sid):
+    """T9 'I have to be done by noon.' vs 'I can't start until noon.', on a course with a time in
+    the 12 o'clock hour (11:00 AM-12:15 PM ends after noon; 12:30 PM is after it)."""
+    def options(secs):
+        times = [t for s in by_course()[secs[0]["course_id"]] for t in one_time(s)]
+        if any(NOON <= t < NOON + 60 for t in times):
+            yield (("I have to be done by noon.", {"ends_by": "12:00 PM"}, "Every meeting must end by 12:00 PM."),
+                   ("I can't start until noon.", {"starts_at_or_after": "12:00 PM"}, "Every meeting must start at 12:00 PM or later."),
+                   "noon: done by vs starting from")
+    return _time_pair("noon", key, prog, rng, sid, options)
+
+
+def f_chained_conflict(key, prog, rng, sid):
+    """T5 'Register me for <A> and <B>. I work ...': the commitments leave one section of A, and
+    that section's times rule out some sections of B, so the first choice forces the second."""
+    pool = [(r, c) for r, c in major_pool(prog, most=12) if len(open_secs(c)) >= 2 and all(one_time(s) for s in by_course()[c])]
+    rng.shuffle(pool)
+    # A has 2-3 open sections: a commitment over each but one leaves that one
+    for (ra, a), (rb, b) in [(p, q) for p in pool if len(open_secs(p[1])) <= 3 for q in pool if q[1] != p[1]][:30]:
+        targets = sorted({ra, rb})
+        built = build(key, prog, plan_transcript(prog, targets, [a, b], rng.randrange(10 ** 6)), "", sid)
+        if not built or audit.missing_prerequisites(built[1].data, a) or audit.missing_prerequisites(built[1].data, b):
+            continue
+        case, c = built
+        cands = (by_course()[a], by_course()[b])
+        rules = lambda blks: {"count": {"min": 2, "max": 2}, "must_include_courses": [a, b], "busy": blks}
+        variants = []                       # (the A section left, the commitments that leave it)
+        for keep in open_secs(a):
+            blks = [busy_block(s) for s in open_secs(a) if s is not keep]
+            acc, _ = judge(c, cands, rules(blks), 2)
+            free = {s["crn"] for s in open_secs(b) if not any(_busy_overlap(m, x) for m in s["meetings"] for x in blks)}
+            # chained: one A section is left, and it rules out some B section the commitments allow
+            if {x[0][0] for x in acc} == {keep["crn"]} and {x[0][1] for x in acc} < free:
+                variants.append((keep["crn"], blks))
+        if len(variants) < 2:
+            continue
+        (k1, b1), (k2, b2) = variants[:2]
+        work = lambda blks: "; ".join(f"{plural_days(x['days'])} {x['start_time']}-{x['end_time']}" for x in blks)
+        text = lambda blks: (f"Register me for {named(a, prog)} and {named(b, prog)}. I work {work(blks)}, so neither "
+                             f"class can overlap that.")
+        why = lambda k: (f"The commitments leave section {k} of {a}; its times then rule out the sections of {b} "
+                         f"that clash with it.")
+        got = pair("chained_conflict", key, (reprompt(case, text(b1)), c, rules(b1), cands, 2, why(k1)),
+                   (reprompt(case, text(b2)), c, rules(b2), cands, 2, why(k2)),
+                   f"commitments: {work(b1)} vs {work(b2)}", targets, [a, b], rng)
+        if got:
+            return got
+    return None
+
+
 FAMILIES = {f.__name__[2:]: f for f in (f_full_fallback, f_in_progress, f_transfer, f_busy_block, f_nested_groups,
-                                         f_credit_limit, f_modality, f_days, f_grade_threshold, f_withdrawal)}
+                                         f_credit_limit, f_modality, f_days, f_grade_threshold, f_withdrawal,
+                                         f_time_of_day, f_relative_time, f_time_cutoff, f_chained_conflict,
+                                         f_boundary_time, f_back_to_back, f_multi_meeting, f_noon)}
 
 
 # ── ground_truth.pair.difference: what differs between a pair's two cases, in words ──
@@ -827,6 +1032,12 @@ def answer_text(rules, prog):
     if "no_days" in rules:
         allowed = [d for d in DAYS if d not in rules["no_days"]]
         text += f", meeting only on {plural_days(allowed)}" if len(allowed) <= 3 else f", with nothing on {plural_days(rules['no_days'])}"
+    if "starts_at_or_after" in rules:
+        text += f", starting at {rules['starts_at_or_after']} or later"
+    if "starts_before" in rules:
+        text += f", starting before {rules['starts_before']}"
+    if "ends_by" in rules:
+        text += f", ending by {rules['ends_by']}"
     for b in rules.get("busy", []):
         text += f", not overlapping {plural_days(b['days'])} {b['start_time']}-{b['end_time']}"
     if "credits" in rules:

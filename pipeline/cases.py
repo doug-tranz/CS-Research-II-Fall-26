@@ -37,6 +37,7 @@ RULES = {
     "courses_count_toward": "req_ids: every section's course must move one of these unmet requirements forward",
     "no_days": "days no meeting may fall on, e.g. [\"Friday\"]",
     "starts_before": "every meeting starts before this time, e.g. \"5:00 PM\"",
+    "starts_at_or_after": "every meeting starts at this time or later",
     "ends_by": "every meeting ends by this time",
     "modality_in": "allowed modalities",
     "must_include_courses": "course ids the cart must contain",

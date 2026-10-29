@@ -245,6 +245,17 @@ def _check_starts_before(cart: _Cart, check) -> None:
           + f", but the request wants nothing starting at {when} or later.")
 
 
+def _check_starts_at_or_after(cart: _Cart, check) -> None:
+    """starts_at_or_after: every meeting starts at this time or later."""
+    when = cart.rules["starts_at_or_after"]
+    limit = minutes(when)
+    early = [(crn, m) for crn, m in cart.meetings if "start_time" in m and minutes(m["start_time"]) < limit]
+    check("starts_at_or_after", f"every meeting starts at {when} or later", cart.times,
+          f"{sorted({c for c, _ in early})} start before {when}" if early else None,
+          "; ".join(f"{_rule_meeting(crn, m)} starts at {m['start_time']}" for crn, m in early)
+          + f", but the request wants nothing starting before {when}.")
+
+
 def _check_ends_by(cart: _Cart, check) -> None:
     """ends_by: every meeting ends by this time."""
     when = cart.rules["ends_by"]
@@ -330,6 +341,7 @@ RULE_CHECKS = (
     ("courses_count_toward", _check_courses_count_toward),
     ("no_days", _check_no_days),
     ("starts_before", _check_starts_before),
+    ("starts_at_or_after", _check_starts_at_or_after),
     ("ends_by", _check_ends_by),
     ("modality_in", _check_modality_in),
     (None, _check_waitlist),
@@ -415,12 +427,17 @@ FAMILY_ERRORS = {"full_fallback": "fallback_not_applied", "in_progress": "in_pro
                  "transfer": "transfer_credit_ignored", "busy_block": "time_overlap_missed",
                  "nested_groups": "and_or_requirement_misread", "credit_limit": "credit_arithmetic",
                  "modality": "modality_ignored", "days": "meeting_days_ignored",
-                 "grade_threshold": "minimum_grade_misread", "withdrawal": "withdrawal_counted_as_credit"}
+                 "grade_threshold": "minimum_grade_misread", "withdrawal": "withdrawal_counted_as_credit",
+                 "time_of_day": "time_of_day_misread", "relative_time": "relative_time_misread",
+                 "time_cutoff": "time_limit_ignored", "chained_conflict": "chained_conflict_missed",
+                 "boundary_time": "time_boundary_misread", "back_to_back": "back_to_back_misread",
+                 "multi_meeting": "second_meeting_ignored", "noon": "noon_misread"}
 # Otherwise a semantic error is named by its first failed rule, a consistency error by its first
 # failed Tier 3 check, and a format error by its first failed Tier 1-2 check.
 RULE_ERRORS = {"student_id": "wrong_student", "term_code": "wrong_term", "count": "wrong_number_of_sections",
                "credits": "credit_arithmetic", "courses_count_toward": "requirement_mismatch",
                "no_days": "meeting_days_ignored", "starts_before": "time_limit_ignored",
+               "starts_at_or_after": "time_limit_ignored",
                "ends_by": "time_limit_ignored", "modality_in": "modality_ignored", "waitlist": "unrequested_waitlist",
                "must_include_courses": "named_course_missing", "courses_in": "wrong_course", "busy": "time_overlap_missed"}
 CHECK_ERRORS = {"term": "wrong_term", "exists": "nonexistent_section", "copied_fields": "section_details_miscopied",
