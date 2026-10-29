@@ -1,0 +1,2386 @@
+{
+  "sessions": [
+    {
+      "session_id": "compact-20261026T221828Z-low",
+      "backend": "openrouter",
+      "test_file": "data/paired_cases.json",
+      "test_file_sha256": "a1c8a6a87be38407",
+      "model": "google/gemini-4-argon",
+      "tally_variant": "compact",
+      "rendering": "json",
+      "generation_settings": {
+        "temperature": 0,
+        "stream": true,
+        "usage": {
+          "include": true
+        },
+        "max_tokens": 16000,
+        "reasoning": {
+          "effort": "low"
+        },
+        "provider": {
+          "only": [
+            "google-ai-studio/flex"
+          ],
+          "allow_fallbacks": false
+        }
+      },
+      "prompt_layout": "system prompt | user: Section Tally + output instructions (cached) | assistant: fixed acknowledgement | user: known state + intent",
+      "shared_context": "595,444 + 2,443 characters (tally + instructions), sha256 6070eeb37021, cache ttl 5m",
+      "output_contract": "Respond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"term_code\": <string>, \"sections\": [<section entry>, ...]}, with at least one section and no crn twice. Each section entry MUST have exactly these fields, copied from the offered section: \"crn\", \"course_id\", \"section\", \"seats_total\", \"seats_taken\", \"campus\", \"modality\", \"meetings\" (each meeting's \"days\", and its \"start_time\" and \"end_time\" when it has them; \"type\" and \"location\" may be copied too), plus \"credit_hours\": <number>, the credits the student takes (the section's credits, or a number in the range of a variable-credit section). An entry MAY also have \"waitlist\": true (ONLY to join the waitlist of a full section). Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"term_code\": \"201920\", \"sections\": [{\"crn\": \"90512\", \"course_id\": \"HIST01150\", \"section\": \"2\", \"credit_hours\": 3, \"seats_total\": 35, \"seats_taken\": 20, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"9:30 AM\", \"end_time\": \"10:45 AM\", \"type\": \"Class\", \"location\": \"Bunce Hall 101\"}]}, {\"crn\": \"90877\", \"course_id\": \"ART09900\", \"section\": \"1\", \"credit_hours\": 2, \"seats_total\": 5, \"seats_taken\": 1, \"campus\": \"Glassboro\", \"modality\": \"online\", \"meetings\": []}, {\"crn\": \"91004\", \"course_id\": \"BIOL01120\", \"section\": \"4\", \"credit_hours\": 4, \"seats_total\": 24, \"seats_taken\": 24, \"campus\": \"Camden\", \"modality\": \"hybrid\", \"meetings\": [{\"days\": [\"Monday\"], \"start_time\": \"1:00 PM\", \"end_time\": \"3:50 PM\"}], \"waitlist\": true}]}} Each \"crn\" MUST be the crn of an offered section, and every other copied field MUST equal that section's value. \"term_code\" MUST be the schedule's term_code, and \"student_id\" MUST be the student's student_id. The sections offered this term are listed in the Section Tally at the start of this conversation; only sections in it exist. Copy a section's fields from its row there: crn, course_id, section, seats_total, seats_taken, campus and modality as written, and meetings as a list with each meeting's days (full day names), start_time and end_time.",
+      "samples_per_case": 1,
+      "cache_ttl": "5m",
+      "cost_estimate_usd": 0.0794,
+      "max_cost_usd": 0.3,
+      "stopped_at_max_cost": true,
+      "started": "2026-10-26T22:18:28.674809+00:00",
+      "ended": "2026-10-26T22:18:28.674809+00:00",
+      "cases": [
+        "pair-full_fallback-music-industry-bs-a"
+      ],
+      "calls": 1,
+      "generation_failures": 0,
+      "outcomes": {
+        "semantic_ok": 1
+      },
+      "semantic_ok": {
+        "count": "1/1",
+        "rate": 1.0,
+        "ci95": [
+          0.207,
+          1.0
+        ]
+      },
+      "semantic_ok_by_case_type": {
+        "full_fallback": "1/1"
+      },
+      "mean_chance_baseline": 0.4,
+      "mean_deviation_score": 0.0,
+      "error_types": {},
+      "finish_reasons": {
+        "stop (STOP)": 1
+      },
+      "served_by": {
+        "google/gemini-4-argon via Google AI Studio": 1
+      },
+      "tokens": {
+        "prompt_tokens": 299265,
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "completion_tokens": 203,
+        "reasoning_tokens": 0,
+        "cache_read_share": "0%"
+      },
+      "cost": {
+        "total_usd": 0.30028,
+        "avg_per_call_usd": 0.30028,
+        "setup_usd_est": null,
+        "per_case_marginal_usd_est": null,
+        "per_correct_answer_usd": 0.30028,
+        "per_passed_pair_usd": null,
+        "note": "All costs are what OpenRouter billed for the original model calls; re-grading a results file (--rescore) makes no model call and costs nothing."
+      },
+      "latency": {
+        "mean_total_ms": 11054,
+        "mean_first_token_ms": 9621
+      },
+      "paired_accuracy": {
+        "passed": 0,
+        "scored": 0,
+        "rate": null,
+        "ci95": null,
+        "strong_pairs_only": {
+          "count": "0/0",
+          "rate": null,
+          "ci95": null
+        },
+        "weak_pairs_scored": 0,
+        "incomplete": 1,
+        "by_family": {}
+      },
+      "sampling_note": "1 sample(s) per case: intervals are wide, and a difference between sessions can be chance. Use -n 3 or more, and --compare for a paired test."
+    },
+    {
+      "session_id": "compact-20261026T222133Z",
+      "backend": "openrouter",
+      "test_file": "data/paired_cases.json",
+      "test_file_sha256": "a1c8a6a87be38407",
+      "model": "google/gemini-4-argon",
+      "tally_variant": "compact",
+      "rendering": "json",
+      "generation_settings": {
+        "temperature": 0,
+        "stream": true,
+        "usage": {
+          "include": true
+        },
+        "max_tokens": 16000,
+        "reasoning": {
+          "effort": "high"
+        },
+        "provider": {
+          "only": [
+            "google-ai-studio/flex"
+          ],
+          "allow_fallbacks": false
+        }
+      },
+      "prompt_layout": "system prompt | user: Section Tally + output instructions (cached) | assistant: fixed acknowledgement | user: known state + intent",
+      "shared_context": "595,444 + 2,443 characters (tally + instructions), sha256 6070eeb37021, cache ttl 5m",
+      "output_contract": "Respond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"term_code\": <string>, \"sections\": [<section entry>, ...]}, with at least one section and no crn twice. Each section entry MUST have exactly these fields, copied from the offered section: \"crn\", \"course_id\", \"section\", \"seats_total\", \"seats_taken\", \"campus\", \"modality\", \"meetings\" (each meeting's \"days\", and its \"start_time\" and \"end_time\" when it has them; \"type\" and \"location\" may be copied too), plus \"credit_hours\": <number>, the credits the student takes (the section's credits, or a number in the range of a variable-credit section). An entry MAY also have \"waitlist\": true (ONLY to join the waitlist of a full section). Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"term_code\": \"201920\", \"sections\": [{\"crn\": \"90512\", \"course_id\": \"HIST01150\", \"section\": \"2\", \"credit_hours\": 3, \"seats_total\": 35, \"seats_taken\": 20, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"9:30 AM\", \"end_time\": \"10:45 AM\", \"type\": \"Class\", \"location\": \"Bunce Hall 101\"}]}, {\"crn\": \"90877\", \"course_id\": \"ART09900\", \"section\": \"1\", \"credit_hours\": 2, \"seats_total\": 5, \"seats_taken\": 1, \"campus\": \"Glassboro\", \"modality\": \"online\", \"meetings\": []}, {\"crn\": \"91004\", \"course_id\": \"BIOL01120\", \"section\": \"4\", \"credit_hours\": 4, \"seats_total\": 24, \"seats_taken\": 24, \"campus\": \"Camden\", \"modality\": \"hybrid\", \"meetings\": [{\"days\": [\"Monday\"], \"start_time\": \"1:00 PM\", \"end_time\": \"3:50 PM\"}], \"waitlist\": true}]}} Each \"crn\" MUST be the crn of an offered section, and every other copied field MUST equal that section's value. \"term_code\" MUST be the schedule's term_code, and \"student_id\" MUST be the student's student_id. The sections offered this term are listed in the Section Tally at the start of this conversation; only sections in it exist. Copy a section's fields from its row there: crn, course_id, section, seats_total, seats_taken, campus and modality as written, and meetings as a list with each meeting's days (full day names), start_time and end_time.",
+      "samples_per_case": 1,
+      "cache_ttl": "5m",
+      "cost_estimate_usd": 0.0794,
+      "max_cost_usd": 0.65,
+      "started": "2026-10-26T22:21:34.147335+00:00",
+      "ended": "2026-10-26T22:21:51.434167+00:00",
+      "cases": [
+        "pair-full_fallback-music-industry-bs-a",
+        "pair-full_fallback-music-industry-bs-b"
+      ],
+      "calls": 2,
+      "generation_failures": 0,
+      "outcomes": {
+        "semantic_ok": 2
+      },
+      "semantic_ok": {
+        "count": "2/2",
+        "rate": 1.0,
+        "ci95": [
+          0.342,
+          1.0
+        ]
+      },
+      "semantic_ok_by_case_type": {
+        "full_fallback": "2/2"
+      },
+      "mean_chance_baseline": 0.3,
+      "mean_deviation_score": 0.0,
+      "error_types": {},
+      "finish_reasons": {
+        "stop (STOP)": 2
+      },
+      "served_by": {
+        "google/gemini-4-argon via Google AI Studio": 2
+      },
+      "tokens": {
+        "prompt_tokens": 598528,
+        "cached_tokens": 295662,
+        "cache_write_tokens": 0,
+        "completion_tokens": 2472,
+        "reasoning_tokens": 2034,
+        "cache_read_share": "49%"
+      },
+      "cost": {
+        "total_usd": 0.330009,
+        "avg_per_call_usd": 0.165005,
+        "setup_usd_est": 0.278971,
+        "per_case_marginal_usd_est": 0.025519,
+        "per_correct_answer_usd": 0.165005,
+        "per_passed_pair_usd": 0.330009,
+        "note": "All costs are what OpenRouter billed for the original model calls; re-grading a results file (--rescore) makes no model call and costs nothing."
+      },
+      "latency": {
+        "mean_total_ms": 16058,
+        "mean_first_token_ms": 8245
+      },
+      "paired_accuracy": {
+        "passed": 1,
+        "scored": 1,
+        "rate": 1.0,
+        "ci95": [
+          0.207,
+          1.0
+        ],
+        "strong_pairs_only": {
+          "count": "1/1",
+          "rate": 1.0,
+          "ci95": [
+            0.207,
+            1.0
+          ]
+        },
+        "weak_pairs_scored": 0,
+        "incomplete": 0,
+        "by_family": {
+          "full_fallback": "1/1"
+        }
+      },
+      "sampling_note": "1 sample(s) per case: intervals are wide, and a difference between sessions can be chance. Use -n 3 or more, and --compare for a paired test."
+    }
+  ],
+  "results": [
+    {
+      "task_id": "pair-full_fallback-music-industry-bs-a",
+      "session_id": "compact-20261026T221828Z-low",
+      "run_index": 0,
+      "ts": "2026-10-26T22:18:28.674809+00:00",
+      "case_hashes": {
+        "input": "da751e0e37ae4833",
+        "rules": "2f98ef0f8d88e79d"
+      },
+      "prompt_readable": {
+        "known_state": {
+          "student": {
+            "degree": "Bachelor of Science",
+            "major": "Music Industry",
+            "program_id": "MUSIC-INDUSTRY-BS",
+            "student_id": "S7001",
+            "catalog_year": "Fall 2025",
+            "entry": {
+              "type": "first_year"
+            }
+          },
+          "transcript": {
+            "completed_courses": [
+              {
+                "term": "Spring 2026",
+                "course_id": "CMS04205",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PUBLIC SPEAKING",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "COMP01111",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION I",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "COMP01112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION II",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "GEOG16130",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "EARTH SCIENCES LABORATORY I",
+                "grade": "B",
+                "credit_hours": 4,
+                "attributes": [
+                  "SCIL"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "GEOG16160",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "DIGITAL EARTH: MAPPING & GIS",
+                "grade": "B-",
+                "credit_hours": 3,
+                "attributes": [
+                  "ARTL"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "JRN02210",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "JOURNALISTIC WRITING",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "PHIL09120",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO TO PHILOSOPHY",
+                "grade": "B-",
+                "credit_hours": 3,
+                "attributes": [
+                  "HUML"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHIL09151",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRODUCTION TO ETHICS-WI",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "WI"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHIL09211",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "ANCIENT PHILOSOPHY-WI",
+                "grade": "A-",
+                "credit_hours": 3,
+                "attributes": [
+                  "LIT"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "RTF03294",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "CONTEMP INTERNATIONAL CINEMA",
+                "grade": "A",
+                "credit_hours": 3,
+                "attributes": [
+                  "GLBL"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "STAT02100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "grade": "A",
+                "credit_hours": 3,
+                "attributes": [
+                  "QNTL"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "THD07201",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO TO THEATRE AND DANCE-RS",
+                "grade": "B+",
+                "credit_hours": 3,
+                "attributes": [
+                  "RS"
+                ]
+              }
+            ],
+            "transfer_courses": [],
+            "courses_in_progress": []
+          },
+          "program_requirements": [
+            {
+              "req_id": "CORE-COML",
+              "category": "Rowan Core: Communicative Literacy (COML)",
+              "rule": "all_of",
+              "course_options": [
+                "COMP01111",
+                "COMP01112",
+                "CMS04205"
+              ],
+              "title": "Communicative Literacy",
+              "credit_hours": 9,
+              "minimum_grade": "D-",
+              "notes": "The three courses or their official equivalents; the only Rowan Core credits counted in the Rowan Core section.",
+              "exclusive": true,
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-ARTL",
+              "category": "Rowan Core: Artistic Literacy (ARTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Artistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated ARTL; its credits count in another section.",
+              "attribute": "ARTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              },
+              "recommended_courses": [
+                "MUS40201"
+              ]
+            },
+            {
+              "req_id": "CORE-GLBL",
+              "category": "Rowan Core: Global Literacy (GLBL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Global Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated GLBL; its credits count in another section.",
+              "attribute": "GLBL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-HUML",
+              "category": "Rowan Core: Humanistic Literacy (HUML)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Humanistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated HUML; its credits count in another section.",
+              "attribute": "HUML",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-QNTL",
+              "category": "Rowan Core: Quantitative Literacy (QNTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Quantitative Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated QNTL; its credits count in another section.",
+              "attribute": "QNTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-SCIL",
+              "category": "Rowan Core: Scientific Literacy (SCIL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Scientific Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated SCIL; its credits count in another section.",
+              "attribute": "SCIL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "EXP-LIT",
+              "category": "Rowan Experience: Broad-Based Literature Attribute (LIT)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Broad-Based Literature Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the LIT attribute; its credits count in another section.",
+              "attribute": "LIT",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-WI",
+              "category": "Rowan Experience: Writing Intensive Attribute (WI)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Writing Intensive Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the WI attribute; its credits count in another section.",
+              "attribute": "WI",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-RS",
+              "category": "Rowan Experience: Rowan Seminar Attribute (RS)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Rowan Seminar Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the RS attribute; its credits count in another section.",
+              "attribute": "RS",
+              "guide_section": "rowan_experience",
+              "waived_if": {
+                "transfer_credits_at_entry": 24
+              }
+            },
+            {
+              "req_id": "NONPROG-WRITING",
+              "category": "Non-Program Courses",
+              "rule": "all_of",
+              "course_options": [
+                "JRN02210"
+              ],
+              "title": "Journalistic Writing for Non-Majors",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "exclusive": true,
+              "guide_section": "non_program"
+            },
+            {
+              "req_id": "MI-FOUNDATIONAL",
+              "category": "Major Requirements: Foundational Courses",
+              "rule": "all_of",
+              "course_options": [
+                "MUS40111",
+                "MUS40121",
+                "MUS04110",
+                "MUS04118",
+                "MUS40113",
+                "MUS40122",
+                "MUS04103",
+                "MUS40201",
+                "MKT09200",
+                "ACC03405",
+                "MUS40202",
+                "MUS40223"
+              ],
+              "credit_hours": 34,
+              "minimum_grade": "C",
+              "notes": "MUS40201 History of Popular Music satisfies Artistic Literacy.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "MI-INSTRUMENT",
+              "category": "Major Requirements: Foundational Courses",
+              "rule": "any_of",
+              "course_options": [
+                "MUS97102",
+                "MUS97229"
+              ],
+              "title": "Piano I for Non-Majors or Guitar Class",
+              "credit_hours": 3,
+              "minimum_grade": "C",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "MI-MID",
+              "category": "Major Requirements: Mid-Level Courses",
+              "rule": "all_of",
+              "course_options": [
+                "MUS40211",
+                "MGT98242",
+                "ENT06240"
+              ],
+              "credit_hours": 9,
+              "minimum_grade": "C",
+              "notes": "Music Industry Internship I, Legal Environment of Business, Entrepreneurship and Innovation.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "MI-UPPER",
+              "category": "Major Requirements: Upper-Level Courses",
+              "rule": "all_of",
+              "course_options": [
+                "MUS40412",
+                "MUS40413",
+                "MUS40311"
+              ],
+              "credit_hours": 5,
+              "minimum_grade": "C",
+              "notes": "Capstone Project I is taken the summer after the junior year.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "MI-CONCENTRATION",
+              "category": "Major Requirements: Music Industry Concentrations",
+              "rule": "one_of_groups",
+              "course_options": [],
+              "credit_hours": 15,
+              "minimum_grade": "C",
+              "notes": "All 15 sh of one concentration: Music Business or Music Technology.",
+              "course_groups": [
+                [
+                  "MUS40212",
+                  "MUS40213",
+                  "MUS40314",
+                  "MUS40414",
+                  "MUS40415",
+                  "MUS40315"
+                ],
+                [
+                  "MUS40222",
+                  "MUS40221",
+                  "MUS40321",
+                  "MUS40323",
+                  "MUS40322"
+                ]
+              ],
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "MI-MUSIC-ELECTIVES",
+              "category": "Major Requirements: Music Electives",
+              "rule": "credits_from",
+              "course_options": [],
+              "credit_hours": 12,
+              "minimum_grade": "C",
+              "notes": "Four music electives (three mid-level, one upper-level): any course with a MUS or MUSG prefix. The guide lists suggested electives.",
+              "course_ranges": [
+                {
+                  "subject": "MUS"
+                },
+                {
+                  "subject": "MUSG"
+                }
+              ],
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "FREE",
+              "category": "Free Electives",
+              "rule": "credits_any",
+              "course_options": [],
+              "title": "Free Electives",
+              "credit_hours": 15,
+              "minimum_grade": "D-",
+              "notes": "Any credits not used by an exclusive requirement above; choose ones that satisfy unmet Rowan Core or Rowan Experience requirements.",
+              "exclusive": true,
+              "guide_section": "free_electives"
+            }
+          ],
+          "graduation_rules": {
+            "total_credits": 120,
+            "minimum_gpa": 2.0,
+            "residency_credits": 30,
+            "minimum_grade": "D-"
+          },
+          "program_guide": {
+            "program_name": "B.S. in Music Industry",
+            "department": "Department of Music",
+            "contact_email": "music@rowan.edu",
+            "effective_term": "Fall 2018",
+            "source_url": "https://sites.rowan.edu/registrar/_docs/2020core-bsmusic-industry-f19-rowan-core-program-guide.pdf",
+            "total_credits": 120,
+            "sections": [
+              {
+                "section": "rowan_core",
+                "title": "Rowan Core Requirements (Communicative Literacy)",
+                "credit_hours": 9
+              },
+              {
+                "section": "non_program",
+                "title": "Non-Program Courses",
+                "credit_hours": 18,
+                "notes": "Courses here cannot be in the major department; only JRN02210 is named."
+              },
+              {
+                "section": "major",
+                "title": "Major Requirements",
+                "credit_hours": 78,
+                "notes": "Foundational 37, Mid-Level 18, Upper-Level 8, Concentration 15."
+              },
+              {
+                "section": "free_electives",
+                "title": "Free Electives",
+                "credit_hours": 15
+              }
+            ],
+            "rowan_core": {
+              "literacies": [
+                "COML",
+                "ARTL",
+                "GLBL",
+                "HUML",
+                "QNTL",
+                "SCIL"
+              ],
+              "min_credits_per_literacy": 3
+            },
+            "rowan_experience": {
+              "attributes": [
+                "LIT",
+                "WI",
+                "RS"
+              ]
+            },
+            "program_rules": [
+              "At least 120 sh of coursework that applies to the degree.",
+              "Cumulative GPA of at least 2.0 in Rowan University coursework (transfer credit does not count toward the GPA).",
+              "At least 30 sh completed at/through Rowan University.",
+              "Only grades of D- or above apply to graduation/degree requirements.",
+              "Rowan Core and Rowan Experience requirements must be met; one course may satisfy one Rowan Core literacy and several Rowan Experience attributes.",
+              "The Rowan Core is waived for transfer students with an earned A.A. or A.S. from a NJ community/county college; the Rowan Seminar is waived for students transferring 24 or more approved credits at initial entry.",
+              "Grade of C or better in all courses satisfying Major requirements.",
+              "The registrar lists this guide for first-year students who entered Fall 2020 or later; the PDF says Effective Fall 2018."
+            ]
+          },
+          "course_attributes": {
+            "CMS04205": [
+              "COML"
+            ],
+            "COMP01111": [
+              "COML"
+            ],
+            "COMP01112": [
+              "COML"
+            ],
+            "MUS40201": [
+              "ARTL"
+            ]
+          },
+          "schedule": {
+            "term": "Fall 2026",
+            "term_code": "202640"
+          }
+        },
+        "intent": "Register me for Capstone Project in Music Industry II (MUS40413). If every section of it is full, register me for Survey of Record Production (MUS40223) instead."
+      },
+      "parsed_output": {
+        "id": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+        "type": "https://example.org/course-registration/1.0/register",
+        "body": {
+          "student_id": "S7001",
+          "term_code": "202640",
+          "sections": [
+            {
+              "crn": "43864",
+              "course_id": "MUS40223",
+              "section": "1",
+              "credit_hours": 1,
+              "seats_total": 18,
+              "seats_taken": 15,
+              "campus": "Glassboro",
+              "modality": "in-person",
+              "meetings": [
+                {
+                  "days": [
+                    "Monday"
+                  ],
+                  "start_time": "03:30 PM",
+                  "end_time": "04:20 PM"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "error": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "STOP",
+      "served_model": "google/gemini-4-argon",
+      "provider": "Google AI Studio",
+      "generation_id": "gen-1793053108-zcUEZEz9v0sugb019ptc",
+      "prompt_tokens": 299265,
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "completion_tokens": 203,
+      "reasoning_tokens": 0,
+      "first_token_ms": 9621.115499990992,
+      "latency_ms": 11054.222799954005,
+      "usd_cost": 0.30028,
+      "verdict": {
+        "outcome": "semantic_ok",
+        "detail": "satisfies every rule",
+        "tiers": {
+          "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
+          "tier2": "schema (our register message): passed (4/4 checks passed)",
+          "tier3": "consistency (invariants against the schedule and transcript): passed (9/9 checks passed)",
+          "tier4": "semantic (the request's rules): passed (5/5 checks passed)"
+        },
+        "tier1_checks": [
+          {
+            "check": "json",
+            "requires": "the whole answer is one JSON value, with no prose or code fence around it",
+            "found": "valid JSON",
+            "passed": true
+          },
+          {
+            "check": "envelope",
+            "requires": "a DIDComm v2 plaintext message: an object with an \"id\" string, a \"type\" message-type URI and a \"body\" object; any optional headers (typ, from, to, created_time) well-formed",
+            "found": "valid DIDComm envelope",
+            "passed": true
+          }
+        ],
+        "tier2_checks": [
+          {
+            "check": "type",
+            "requires": "\"type\" is exactly \"https://example.org/course-registration/1.0/register\"",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "body",
+            "requires": "the body has exactly \"student_id\" (string), \"term_code\" (string) and \"sections\" (a non-empty list)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "sections",
+            "requires": "every section entry has exactly the copied fields (crn, course_id, section, credit_hours, seats, campus, modality, meetings), each well-formed (full day names, 12-hour times)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "unique_crns",
+            "requires": "no crn appears twice in the cart",
+            "found": "1 distinct crn",
+            "passed": true
+          }
+        ],
+        "tier3_checks": [
+          {
+            "check": "term",
+            "section": null,
+            "requires": "term_code is the term being registered for (202640)",
+            "found": "term_code 202640",
+            "passed": true
+          },
+          {
+            "check": "exists",
+            "section": "43864",
+            "requires": "crn 43864 is a section offered this term",
+            "found": "offered: MUS40223",
+            "passed": true
+          },
+          {
+            "check": "copied_fields",
+            "section": "43864",
+            "requires": "course_id, section, campus, modality, seats and meetings are copied exactly from the offered section",
+            "found": "all match",
+            "passed": true
+          },
+          {
+            "check": "not_cancelled",
+            "section": "43864",
+            "requires": "the section is not cancelled",
+            "found": "not cancelled",
+            "passed": true
+          },
+          {
+            "check": "seat",
+            "section": "43864",
+            "requires": "the section has a free seat",
+            "found": "15/18 seats taken",
+            "passed": true
+          },
+          {
+            "check": "credits",
+            "section": "43864",
+            "requires": "credit_hours is allowed for this section (1)",
+            "found": "credit_hours 1",
+            "passed": true
+          },
+          {
+            "check": "prerequisites",
+            "section": "43864",
+            "requires": "the transcript shows every prerequisite of MUS40223",
+            "found": "no unmet prerequisite",
+            "passed": true
+          },
+          {
+            "check": "one_section_per_course",
+            "section": "43864",
+            "requires": "no other section of MUS40223 is in the cart",
+            "found": "the only one",
+            "passed": true
+          },
+          {
+            "check": "no_time_conflict",
+            "section": "43864",
+            "requires": "no meeting overlaps another section in the cart",
+            "found": "the first section in the cart",
+            "passed": true
+          }
+        ],
+        "tier4_checks": [
+          {
+            "rule": "student_id",
+            "requires": "the message is for student S7001",
+            "found": "student_id 'S7001'",
+            "passed": true
+          },
+          {
+            "rule": "term_code",
+            "requires": "the message is for term 202640",
+            "found": "term_code '202640'",
+            "passed": true
+          },
+          {
+            "rule": "count",
+            "requires": "exactly 1 section in the cart",
+            "found": "1: 43864",
+            "passed": true
+          },
+          {
+            "rule": "waitlist",
+            "requires": "no section is waitlisted (no request asks for a waitlist)",
+            "found": "nothing waitlisted",
+            "passed": true
+          },
+          {
+            "rule": "courses_in",
+            "requires": "every course is one of MUS40223",
+            "found": "courses: MUS40223",
+            "passed": true
+          }
+        ],
+        "deviation_score": 0.0
+      },
+      "pair_result": {
+        "pair_id": "full_fallback/music-industry-bs",
+        "twin_id": "pair-full_fallback-music-industry-bs-b",
+        "pair_passed": null,
+        "explanation": "Incomplete: its twin was not run in this session, so the pair is not scored."
+      }
+    },
+    {
+      "task_id": "pair-full_fallback-music-industry-bs-a",
+      "session_id": "compact-20261026T222133Z",
+      "run_index": 0,
+      "ts": "2026-10-26T22:21:34.147335+00:00",
+      "case_hashes": {
+        "input": "da751e0e37ae4833",
+        "rules": "2f98ef0f8d88e79d"
+      },
+      "prompt_readable": {
+        "known_state": {
+          "student": {
+            "degree": "Bachelor of Science",
+            "major": "Music Industry",
+            "program_id": "MUSIC-INDUSTRY-BS",
+            "student_id": "S7001",
+            "catalog_year": "Fall 2025",
+            "entry": {
+              "type": "first_year"
+            }
+          },
+          "transcript": {
+            "completed_courses": [
+              {
+                "term": "Spring 2026",
+                "course_id": "CMS04205",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PUBLIC SPEAKING",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "COMP01111",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION I",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "COMP01112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION II",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "GEOG16130",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "EARTH SCIENCES LABORATORY I",
+                "grade": "B",
+                "credit_hours": 4,
+                "attributes": [
+                  "SCIL"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "GEOG16160",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "DIGITAL EARTH: MAPPING & GIS",
+                "grade": "B-",
+                "credit_hours": 3,
+                "attributes": [
+                  "ARTL"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "JRN02210",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "JOURNALISTIC WRITING",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "PHIL09120",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO TO PHILOSOPHY",
+                "grade": "B-",
+                "credit_hours": 3,
+                "attributes": [
+                  "HUML"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHIL09151",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRODUCTION TO ETHICS-WI",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "WI"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHIL09211",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "ANCIENT PHILOSOPHY-WI",
+                "grade": "A-",
+                "credit_hours": 3,
+                "attributes": [
+                  "LIT"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "RTF03294",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "CONTEMP INTERNATIONAL CINEMA",
+                "grade": "A",
+                "credit_hours": 3,
+                "attributes": [
+                  "GLBL"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "STAT02100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "grade": "A",
+                "credit_hours": 3,
+                "attributes": [
+                  "QNTL"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "THD07201",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO TO THEATRE AND DANCE-RS",
+                "grade": "B+",
+                "credit_hours": 3,
+                "attributes": [
+                  "RS"
+                ]
+              }
+            ],
+            "transfer_courses": [],
+            "courses_in_progress": []
+          },
+          "program_requirements": [
+            {
+              "req_id": "CORE-COML",
+              "category": "Rowan Core: Communicative Literacy (COML)",
+              "rule": "all_of",
+              "course_options": [
+                "COMP01111",
+                "COMP01112",
+                "CMS04205"
+              ],
+              "title": "Communicative Literacy",
+              "credit_hours": 9,
+              "minimum_grade": "D-",
+              "notes": "The three courses or their official equivalents; the only Rowan Core credits counted in the Rowan Core section.",
+              "exclusive": true,
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-ARTL",
+              "category": "Rowan Core: Artistic Literacy (ARTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Artistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated ARTL; its credits count in another section.",
+              "attribute": "ARTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              },
+              "recommended_courses": [
+                "MUS40201"
+              ]
+            },
+            {
+              "req_id": "CORE-GLBL",
+              "category": "Rowan Core: Global Literacy (GLBL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Global Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated GLBL; its credits count in another section.",
+              "attribute": "GLBL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-HUML",
+              "category": "Rowan Core: Humanistic Literacy (HUML)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Humanistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated HUML; its credits count in another section.",
+              "attribute": "HUML",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-QNTL",
+              "category": "Rowan Core: Quantitative Literacy (QNTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Quantitative Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated QNTL; its credits count in another section.",
+              "attribute": "QNTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-SCIL",
+              "category": "Rowan Core: Scientific Literacy (SCIL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Scientific Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated SCIL; its credits count in another section.",
+              "attribute": "SCIL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "EXP-LIT",
+              "category": "Rowan Experience: Broad-Based Literature Attribute (LIT)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Broad-Based Literature Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the LIT attribute; its credits count in another section.",
+              "attribute": "LIT",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-WI",
+              "category": "Rowan Experience: Writing Intensive Attribute (WI)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Writing Intensive Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the WI attribute; its credits count in another section.",
+              "attribute": "WI",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-RS",
+              "category": "Rowan Experience: Rowan Seminar Attribute (RS)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Rowan Seminar Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the RS attribute; its credits count in another section.",
+              "attribute": "RS",
+              "guide_section": "rowan_experience",
+              "waived_if": {
+                "transfer_credits_at_entry": 24
+              }
+            },
+            {
+              "req_id": "NONPROG-WRITING",
+              "category": "Non-Program Courses",
+              "rule": "all_of",
+              "course_options": [
+                "JRN02210"
+              ],
+              "title": "Journalistic Writing for Non-Majors",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "exclusive": true,
+              "guide_section": "non_program"
+            },
+            {
+              "req_id": "MI-FOUNDATIONAL",
+              "category": "Major Requirements: Foundational Courses",
+              "rule": "all_of",
+              "course_options": [
+                "MUS40111",
+                "MUS40121",
+                "MUS04110",
+                "MUS04118",
+                "MUS40113",
+                "MUS40122",
+                "MUS04103",
+                "MUS40201",
+                "MKT09200",
+                "ACC03405",
+                "MUS40202",
+                "MUS40223"
+              ],
+              "credit_hours": 34,
+              "minimum_grade": "C",
+              "notes": "MUS40201 History of Popular Music satisfies Artistic Literacy.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "MI-INSTRUMENT",
+              "category": "Major Requirements: Foundational Courses",
+              "rule": "any_of",
+              "course_options": [
+                "MUS97102",
+                "MUS97229"
+              ],
+              "title": "Piano I for Non-Majors or Guitar Class",
+              "credit_hours": 3,
+              "minimum_grade": "C",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "MI-MID",
+              "category": "Major Requirements: Mid-Level Courses",
+              "rule": "all_of",
+              "course_options": [
+                "MUS40211",
+                "MGT98242",
+                "ENT06240"
+              ],
+              "credit_hours": 9,
+              "minimum_grade": "C",
+              "notes": "Music Industry Internship I, Legal Environment of Business, Entrepreneurship and Innovation.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "MI-UPPER",
+              "category": "Major Requirements: Upper-Level Courses",
+              "rule": "all_of",
+              "course_options": [
+                "MUS40412",
+                "MUS40413",
+                "MUS40311"
+              ],
+              "credit_hours": 5,
+              "minimum_grade": "C",
+              "notes": "Capstone Project I is taken the summer after the junior year.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "MI-CONCENTRATION",
+              "category": "Major Requirements: Music Industry Concentrations",
+              "rule": "one_of_groups",
+              "course_options": [],
+              "credit_hours": 15,
+              "minimum_grade": "C",
+              "notes": "All 15 sh of one concentration: Music Business or Music Technology.",
+              "course_groups": [
+                [
+                  "MUS40212",
+                  "MUS40213",
+                  "MUS40314",
+                  "MUS40414",
+                  "MUS40415",
+                  "MUS40315"
+                ],
+                [
+                  "MUS40222",
+                  "MUS40221",
+                  "MUS40321",
+                  "MUS40323",
+                  "MUS40322"
+                ]
+              ],
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "MI-MUSIC-ELECTIVES",
+              "category": "Major Requirements: Music Electives",
+              "rule": "credits_from",
+              "course_options": [],
+              "credit_hours": 12,
+              "minimum_grade": "C",
+              "notes": "Four music electives (three mid-level, one upper-level): any course with a MUS or MUSG prefix. The guide lists suggested electives.",
+              "course_ranges": [
+                {
+                  "subject": "MUS"
+                },
+                {
+                  "subject": "MUSG"
+                }
+              ],
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "FREE",
+              "category": "Free Electives",
+              "rule": "credits_any",
+              "course_options": [],
+              "title": "Free Electives",
+              "credit_hours": 15,
+              "minimum_grade": "D-",
+              "notes": "Any credits not used by an exclusive requirement above; choose ones that satisfy unmet Rowan Core or Rowan Experience requirements.",
+              "exclusive": true,
+              "guide_section": "free_electives"
+            }
+          ],
+          "graduation_rules": {
+            "total_credits": 120,
+            "minimum_gpa": 2.0,
+            "residency_credits": 30,
+            "minimum_grade": "D-"
+          },
+          "program_guide": {
+            "program_name": "B.S. in Music Industry",
+            "department": "Department of Music",
+            "contact_email": "music@rowan.edu",
+            "effective_term": "Fall 2018",
+            "source_url": "https://sites.rowan.edu/registrar/_docs/2020core-bsmusic-industry-f19-rowan-core-program-guide.pdf",
+            "total_credits": 120,
+            "sections": [
+              {
+                "section": "rowan_core",
+                "title": "Rowan Core Requirements (Communicative Literacy)",
+                "credit_hours": 9
+              },
+              {
+                "section": "non_program",
+                "title": "Non-Program Courses",
+                "credit_hours": 18,
+                "notes": "Courses here cannot be in the major department; only JRN02210 is named."
+              },
+              {
+                "section": "major",
+                "title": "Major Requirements",
+                "credit_hours": 78,
+                "notes": "Foundational 37, Mid-Level 18, Upper-Level 8, Concentration 15."
+              },
+              {
+                "section": "free_electives",
+                "title": "Free Electives",
+                "credit_hours": 15
+              }
+            ],
+            "rowan_core": {
+              "literacies": [
+                "COML",
+                "ARTL",
+                "GLBL",
+                "HUML",
+                "QNTL",
+                "SCIL"
+              ],
+              "min_credits_per_literacy": 3
+            },
+            "rowan_experience": {
+              "attributes": [
+                "LIT",
+                "WI",
+                "RS"
+              ]
+            },
+            "program_rules": [
+              "At least 120 sh of coursework that applies to the degree.",
+              "Cumulative GPA of at least 2.0 in Rowan University coursework (transfer credit does not count toward the GPA).",
+              "At least 30 sh completed at/through Rowan University.",
+              "Only grades of D- or above apply to graduation/degree requirements.",
+              "Rowan Core and Rowan Experience requirements must be met; one course may satisfy one Rowan Core literacy and several Rowan Experience attributes.",
+              "The Rowan Core is waived for transfer students with an earned A.A. or A.S. from a NJ community/county college; the Rowan Seminar is waived for students transferring 24 or more approved credits at initial entry.",
+              "Grade of C or better in all courses satisfying Major requirements.",
+              "The registrar lists this guide for first-year students who entered Fall 2020 or later; the PDF says Effective Fall 2018."
+            ]
+          },
+          "course_attributes": {
+            "CMS04205": [
+              "COML"
+            ],
+            "COMP01111": [
+              "COML"
+            ],
+            "COMP01112": [
+              "COML"
+            ],
+            "MUS40201": [
+              "ARTL"
+            ]
+          },
+          "schedule": {
+            "term": "Fall 2026",
+            "term_code": "202640"
+          }
+        },
+        "intent": "Register me for Capstone Project in Music Industry II (MUS40413). If every section of it is full, register me for Survey of Record Production (MUS40223) instead."
+      },
+      "parsed_output": {
+        "type": "https://example.org/course-registration/1.0/register",
+        "id": "b1a4d7e2-3c89-4f56-9a10-2e8d4f6c7b90",
+        "body": {
+          "student_id": "S7001",
+          "term_code": "202640",
+          "sections": [
+            {
+              "crn": "43864",
+              "course_id": "MUS40223",
+              "section": "1",
+              "credit_hours": 1,
+              "seats_total": 18,
+              "seats_taken": 15,
+              "campus": "Glassboro",
+              "modality": "in-person",
+              "meetings": [
+                {
+                  "days": [
+                    "Monday"
+                  ],
+                  "start_time": "03:30 PM",
+                  "end_time": "04:20 PM"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "error": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "STOP",
+      "served_model": "google/gemini-4-argon",
+      "provider": "Google AI Studio",
+      "generation_id": "gen-1793053294-nVMWxjrxJei6a5LZynDd",
+      "prompt_tokens": 299265,
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "completion_tokens": 1045,
+      "reasoning_tokens": 842,
+      "first_token_ms": 10854.498300002888,
+      "latency_ms": 17227.570499991998,
+      "usd_cost": 0.30449,
+      "verdict": {
+        "outcome": "semantic_ok",
+        "detail": "satisfies every rule",
+        "tiers": {
+          "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
+          "tier2": "schema (our register message): passed (4/4 checks passed)",
+          "tier3": "consistency (invariants against the schedule and transcript): passed (9/9 checks passed)",
+          "tier4": "semantic (the request's rules): passed (5/5 checks passed)"
+        },
+        "tier1_checks": [
+          {
+            "check": "json",
+            "requires": "the whole answer is one JSON value, with no prose or code fence around it",
+            "found": "valid JSON",
+            "passed": true
+          },
+          {
+            "check": "envelope",
+            "requires": "a DIDComm v2 plaintext message: an object with an \"id\" string, a \"type\" message-type URI and a \"body\" object; any optional headers (typ, from, to, created_time) well-formed",
+            "found": "valid DIDComm envelope",
+            "passed": true
+          }
+        ],
+        "tier2_checks": [
+          {
+            "check": "type",
+            "requires": "\"type\" is exactly \"https://example.org/course-registration/1.0/register\"",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "body",
+            "requires": "the body has exactly \"student_id\" (string), \"term_code\" (string) and \"sections\" (a non-empty list)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "sections",
+            "requires": "every section entry has exactly the copied fields (crn, course_id, section, credit_hours, seats, campus, modality, meetings), each well-formed (full day names, 12-hour times)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "unique_crns",
+            "requires": "no crn appears twice in the cart",
+            "found": "1 distinct crn",
+            "passed": true
+          }
+        ],
+        "tier3_checks": [
+          {
+            "check": "term",
+            "section": null,
+            "requires": "term_code is the term being registered for (202640)",
+            "found": "term_code 202640",
+            "passed": true
+          },
+          {
+            "check": "exists",
+            "section": "43864",
+            "requires": "crn 43864 is a section offered this term",
+            "found": "offered: MUS40223",
+            "passed": true
+          },
+          {
+            "check": "copied_fields",
+            "section": "43864",
+            "requires": "course_id, section, campus, modality, seats and meetings are copied exactly from the offered section",
+            "found": "all match",
+            "passed": true
+          },
+          {
+            "check": "not_cancelled",
+            "section": "43864",
+            "requires": "the section is not cancelled",
+            "found": "not cancelled",
+            "passed": true
+          },
+          {
+            "check": "seat",
+            "section": "43864",
+            "requires": "the section has a free seat",
+            "found": "15/18 seats taken",
+            "passed": true
+          },
+          {
+            "check": "credits",
+            "section": "43864",
+            "requires": "credit_hours is allowed for this section (1)",
+            "found": "credit_hours 1",
+            "passed": true
+          },
+          {
+            "check": "prerequisites",
+            "section": "43864",
+            "requires": "the transcript shows every prerequisite of MUS40223",
+            "found": "no unmet prerequisite",
+            "passed": true
+          },
+          {
+            "check": "one_section_per_course",
+            "section": "43864",
+            "requires": "no other section of MUS40223 is in the cart",
+            "found": "the only one",
+            "passed": true
+          },
+          {
+            "check": "no_time_conflict",
+            "section": "43864",
+            "requires": "no meeting overlaps another section in the cart",
+            "found": "the first section in the cart",
+            "passed": true
+          }
+        ],
+        "tier4_checks": [
+          {
+            "rule": "student_id",
+            "requires": "the message is for student S7001",
+            "found": "student_id 'S7001'",
+            "passed": true
+          },
+          {
+            "rule": "term_code",
+            "requires": "the message is for term 202640",
+            "found": "term_code '202640'",
+            "passed": true
+          },
+          {
+            "rule": "count",
+            "requires": "exactly 1 section in the cart",
+            "found": "1: 43864",
+            "passed": true
+          },
+          {
+            "rule": "waitlist",
+            "requires": "no section is waitlisted (no request asks for a waitlist)",
+            "found": "nothing waitlisted",
+            "passed": true
+          },
+          {
+            "rule": "courses_in",
+            "requires": "every course is one of MUS40223",
+            "found": "courses: MUS40223",
+            "passed": true
+          }
+        ],
+        "deviation_score": 0.0
+      },
+      "pair_result": {
+        "pair_id": "full_fallback/music-industry-bs",
+        "twin_id": "pair-full_fallback-music-industry-bs-b",
+        "same_answer_as_twin": false,
+        "pair_passed": true,
+        "explanation": "Both cases are correct and the answer changed with the prompt (first choice: MUS40413 (every section full) vs MUS40202 (open seats)): the model used the changed detail. Pair passed."
+      }
+    },
+    {
+      "task_id": "pair-full_fallback-music-industry-bs-b",
+      "session_id": "compact-20261026T222133Z",
+      "run_index": 0,
+      "ts": "2026-10-26T22:21:51.434167+00:00",
+      "case_hashes": {
+        "input": "c4dcfe1977122eaa",
+        "rules": "a02cde6e5238e6b1"
+      },
+      "prompt_readable": {
+        "known_state": {
+          "student": {
+            "degree": "Bachelor of Science",
+            "major": "Music Industry",
+            "program_id": "MUSIC-INDUSTRY-BS",
+            "student_id": "S7001",
+            "catalog_year": "Fall 2025",
+            "entry": {
+              "type": "first_year"
+            }
+          },
+          "transcript": {
+            "completed_courses": [
+              {
+                "term": "Spring 2026",
+                "course_id": "CMS04205",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PUBLIC SPEAKING",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "COMP01111",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION I",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "COMP01112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION II",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "GEOG16130",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "EARTH SCIENCES LABORATORY I",
+                "grade": "B",
+                "credit_hours": 4,
+                "attributes": [
+                  "SCIL"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "GEOG16160",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "DIGITAL EARTH: MAPPING & GIS",
+                "grade": "B-",
+                "credit_hours": 3,
+                "attributes": [
+                  "ARTL"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "JRN02210",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "JOURNALISTIC WRITING",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "PHIL09120",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO TO PHILOSOPHY",
+                "grade": "B-",
+                "credit_hours": 3,
+                "attributes": [
+                  "HUML"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHIL09151",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRODUCTION TO ETHICS-WI",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "WI"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHIL09211",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "ANCIENT PHILOSOPHY-WI",
+                "grade": "A-",
+                "credit_hours": 3,
+                "attributes": [
+                  "LIT"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "RTF03294",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "CONTEMP INTERNATIONAL CINEMA",
+                "grade": "A",
+                "credit_hours": 3,
+                "attributes": [
+                  "GLBL"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "STAT02100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "grade": "A",
+                "credit_hours": 3,
+                "attributes": [
+                  "QNTL"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "THD07201",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO TO THEATRE AND DANCE-RS",
+                "grade": "B+",
+                "credit_hours": 3,
+                "attributes": [
+                  "RS"
+                ]
+              }
+            ],
+            "transfer_courses": [],
+            "courses_in_progress": []
+          },
+          "program_requirements": [
+            {
+              "req_id": "CORE-COML",
+              "category": "Rowan Core: Communicative Literacy (COML)",
+              "rule": "all_of",
+              "course_options": [
+                "COMP01111",
+                "COMP01112",
+                "CMS04205"
+              ],
+              "title": "Communicative Literacy",
+              "credit_hours": 9,
+              "minimum_grade": "D-",
+              "notes": "The three courses or their official equivalents; the only Rowan Core credits counted in the Rowan Core section.",
+              "exclusive": true,
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-ARTL",
+              "category": "Rowan Core: Artistic Literacy (ARTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Artistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated ARTL; its credits count in another section.",
+              "attribute": "ARTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              },
+              "recommended_courses": [
+                "MUS40201"
+              ]
+            },
+            {
+              "req_id": "CORE-GLBL",
+              "category": "Rowan Core: Global Literacy (GLBL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Global Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated GLBL; its credits count in another section.",
+              "attribute": "GLBL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-HUML",
+              "category": "Rowan Core: Humanistic Literacy (HUML)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Humanistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated HUML; its credits count in another section.",
+              "attribute": "HUML",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-QNTL",
+              "category": "Rowan Core: Quantitative Literacy (QNTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Quantitative Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated QNTL; its credits count in another section.",
+              "attribute": "QNTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-SCIL",
+              "category": "Rowan Core: Scientific Literacy (SCIL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Scientific Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated SCIL; its credits count in another section.",
+              "attribute": "SCIL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "EXP-LIT",
+              "category": "Rowan Experience: Broad-Based Literature Attribute (LIT)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Broad-Based Literature Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the LIT attribute; its credits count in another section.",
+              "attribute": "LIT",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-WI",
+              "category": "Rowan Experience: Writing Intensive Attribute (WI)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Writing Intensive Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the WI attribute; its credits count in another section.",
+              "attribute": "WI",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-RS",
+              "category": "Rowan Experience: Rowan Seminar Attribute (RS)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Rowan Seminar Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the RS attribute; its credits count in another section.",
+              "attribute": "RS",
+              "guide_section": "rowan_experience",
+              "waived_if": {
+                "transfer_credits_at_entry": 24
+              }
+            },
+            {
+              "req_id": "NONPROG-WRITING",
+              "category": "Non-Program Courses",
+              "rule": "all_of",
+              "course_options": [
+                "JRN02210"
+              ],
+              "title": "Journalistic Writing for Non-Majors",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "exclusive": true,
+              "guide_section": "non_program"
+            },
+            {
+              "req_id": "MI-FOUNDATIONAL",
+              "category": "Major Requirements: Foundational Courses",
+              "rule": "all_of",
+              "course_options": [
+                "MUS40111",
+                "MUS40121",
+                "MUS04110",
+                "MUS04118",
+                "MUS40113",
+                "MUS40122",
+                "MUS04103",
+                "MUS40201",
+                "MKT09200",
+                "ACC03405",
+                "MUS40202",
+                "MUS40223"
+              ],
+              "credit_hours": 34,
+              "minimum_grade": "C",
+              "notes": "MUS40201 History of Popular Music satisfies Artistic Literacy.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "MI-INSTRUMENT",
+              "category": "Major Requirements: Foundational Courses",
+              "rule": "any_of",
+              "course_options": [
+                "MUS97102",
+                "MUS97229"
+              ],
+              "title": "Piano I for Non-Majors or Guitar Class",
+              "credit_hours": 3,
+              "minimum_grade": "C",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "MI-MID",
+              "category": "Major Requirements: Mid-Level Courses",
+              "rule": "all_of",
+              "course_options": [
+                "MUS40211",
+                "MGT98242",
+                "ENT06240"
+              ],
+              "credit_hours": 9,
+              "minimum_grade": "C",
+              "notes": "Music Industry Internship I, Legal Environment of Business, Entrepreneurship and Innovation.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "MI-UPPER",
+              "category": "Major Requirements: Upper-Level Courses",
+              "rule": "all_of",
+              "course_options": [
+                "MUS40412",
+                "MUS40413",
+                "MUS40311"
+              ],
+              "credit_hours": 5,
+              "minimum_grade": "C",
+              "notes": "Capstone Project I is taken the summer after the junior year.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "MI-CONCENTRATION",
+              "category": "Major Requirements: Music Industry Concentrations",
+              "rule": "one_of_groups",
+              "course_options": [],
+              "credit_hours": 15,
+              "minimum_grade": "C",
+              "notes": "All 15 sh of one concentration: Music Business or Music Technology.",
+              "course_groups": [
+                [
+                  "MUS40212",
+                  "MUS40213",
+                  "MUS40314",
+                  "MUS40414",
+                  "MUS40415",
+                  "MUS40315"
+                ],
+                [
+                  "MUS40222",
+                  "MUS40221",
+                  "MUS40321",
+                  "MUS40323",
+                  "MUS40322"
+                ]
+              ],
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "MI-MUSIC-ELECTIVES",
+              "category": "Major Requirements: Music Electives",
+              "rule": "credits_from",
+              "course_options": [],
+              "credit_hours": 12,
+              "minimum_grade": "C",
+              "notes": "Four music electives (three mid-level, one upper-level): any course with a MUS or MUSG prefix. The guide lists suggested electives.",
+              "course_ranges": [
+                {
+                  "subject": "MUS"
+                },
+                {
+                  "subject": "MUSG"
+                }
+              ],
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "FREE",
+              "category": "Free Electives",
+              "rule": "credits_any",
+              "course_options": [],
+              "title": "Free Electives",
+              "credit_hours": 15,
+              "minimum_grade": "D-",
+              "notes": "Any credits not used by an exclusive requirement above; choose ones that satisfy unmet Rowan Core or Rowan Experience requirements.",
+              "exclusive": true,
+              "guide_section": "free_electives"
+            }
+          ],
+          "graduation_rules": {
+            "total_credits": 120,
+            "minimum_gpa": 2.0,
+            "residency_credits": 30,
+            "minimum_grade": "D-"
+          },
+          "program_guide": {
+            "program_name": "B.S. in Music Industry",
+            "department": "Department of Music",
+            "contact_email": "music@rowan.edu",
+            "effective_term": "Fall 2018",
+            "source_url": "https://sites.rowan.edu/registrar/_docs/2020core-bsmusic-industry-f19-rowan-core-program-guide.pdf",
+            "total_credits": 120,
+            "sections": [
+              {
+                "section": "rowan_core",
+                "title": "Rowan Core Requirements (Communicative Literacy)",
+                "credit_hours": 9
+              },
+              {
+                "section": "non_program",
+                "title": "Non-Program Courses",
+                "credit_hours": 18,
+                "notes": "Courses here cannot be in the major department; only JRN02210 is named."
+              },
+              {
+                "section": "major",
+                "title": "Major Requirements",
+                "credit_hours": 78,
+                "notes": "Foundational 37, Mid-Level 18, Upper-Level 8, Concentration 15."
+              },
+              {
+                "section": "free_electives",
+                "title": "Free Electives",
+                "credit_hours": 15
+              }
+            ],
+            "rowan_core": {
+              "literacies": [
+                "COML",
+                "ARTL",
+                "GLBL",
+                "HUML",
+                "QNTL",
+                "SCIL"
+              ],
+              "min_credits_per_literacy": 3
+            },
+            "rowan_experience": {
+              "attributes": [
+                "LIT",
+                "WI",
+                "RS"
+              ]
+            },
+            "program_rules": [
+              "At least 120 sh of coursework that applies to the degree.",
+              "Cumulative GPA of at least 2.0 in Rowan University coursework (transfer credit does not count toward the GPA).",
+              "At least 30 sh completed at/through Rowan University.",
+              "Only grades of D- or above apply to graduation/degree requirements.",
+              "Rowan Core and Rowan Experience requirements must be met; one course may satisfy one Rowan Core literacy and several Rowan Experience attributes.",
+              "The Rowan Core is waived for transfer students with an earned A.A. or A.S. from a NJ community/county college; the Rowan Seminar is waived for students transferring 24 or more approved credits at initial entry.",
+              "Grade of C or better in all courses satisfying Major requirements.",
+              "The registrar lists this guide for first-year students who entered Fall 2020 or later; the PDF says Effective Fall 2018."
+            ]
+          },
+          "course_attributes": {
+            "CMS04205": [
+              "COML"
+            ],
+            "COMP01111": [
+              "COML"
+            ],
+            "COMP01112": [
+              "COML"
+            ],
+            "MUS40201": [
+              "ARTL"
+            ]
+          },
+          "schedule": {
+            "term": "Fall 2026",
+            "term_code": "202640"
+          }
+        },
+        "intent": "Register me for Introduction to Music Performance (MUS40202). If every section of it is full, register me for Survey of Record Production (MUS40223) instead."
+      },
+      "parsed_output": {
+        "type": "https://example.org/course-registration/1.0/register",
+        "id": "e4d5c6b7-8a9b-4c0d-9e1f-2a3b4c5d6e7f",
+        "body": {
+          "student_id": "S7001",
+          "term_code": "202640",
+          "sections": [
+            {
+              "crn": "43869",
+              "course_id": "MUS40202",
+              "section": "2",
+              "credit_hours": 3,
+              "seats_total": 15,
+              "seats_taken": 14,
+              "campus": "Glassboro",
+              "modality": "in-person",
+              "meetings": [
+                {
+                  "days": [
+                    "Friday"
+                  ],
+                  "start_time": "11:00 AM",
+                  "end_time": "12:15 PM"
+                },
+                {
+                  "days": [
+                    "Friday"
+                  ],
+                  "start_time": "12:30 PM",
+                  "end_time": "01:45 PM"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "error": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "STOP",
+      "served_model": "google/gemini-4-argon",
+      "provider": "Google AI Studio",
+      "generation_id": "gen-1793053311-F8k8t4znR7GWGRFJdJ2Y",
+      "prompt_tokens": 299263,
+      "cached_tokens": 295662,
+      "cache_write_tokens": 0,
+      "completion_tokens": 1427,
+      "reasoning_tokens": 1192,
+      "first_token_ms": 5636.217399965972,
+      "latency_ms": 14888.623400009237,
+      "usd_cost": 0.0255191,
+      "verdict": {
+        "outcome": "semantic_ok",
+        "detail": "satisfies every rule",
+        "tiers": {
+          "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
+          "tier2": "schema (our register message): passed (4/4 checks passed)",
+          "tier3": "consistency (invariants against the schedule and transcript): passed (9/9 checks passed)",
+          "tier4": "semantic (the request's rules): passed (5/5 checks passed)"
+        },
+        "tier1_checks": [
+          {
+            "check": "json",
+            "requires": "the whole answer is one JSON value, with no prose or code fence around it",
+            "found": "valid JSON",
+            "passed": true
+          },
+          {
+            "check": "envelope",
+            "requires": "a DIDComm v2 plaintext message: an object with an \"id\" string, a \"type\" message-type URI and a \"body\" object; any optional headers (typ, from, to, created_time) well-formed",
+            "found": "valid DIDComm envelope",
+            "passed": true
+          }
+        ],
+        "tier2_checks": [
+          {
+            "check": "type",
+            "requires": "\"type\" is exactly \"https://example.org/course-registration/1.0/register\"",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "body",
+            "requires": "the body has exactly \"student_id\" (string), \"term_code\" (string) and \"sections\" (a non-empty list)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "sections",
+            "requires": "every section entry has exactly the copied fields (crn, course_id, section, credit_hours, seats, campus, modality, meetings), each well-formed (full day names, 12-hour times)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "unique_crns",
+            "requires": "no crn appears twice in the cart",
+            "found": "1 distinct crn",
+            "passed": true
+          }
+        ],
+        "tier3_checks": [
+          {
+            "check": "term",
+            "section": null,
+            "requires": "term_code is the term being registered for (202640)",
+            "found": "term_code 202640",
+            "passed": true
+          },
+          {
+            "check": "exists",
+            "section": "43869",
+            "requires": "crn 43869 is a section offered this term",
+            "found": "offered: MUS40202",
+            "passed": true
+          },
+          {
+            "check": "copied_fields",
+            "section": "43869",
+            "requires": "course_id, section, campus, modality, seats and meetings are copied exactly from the offered section",
+            "found": "all match",
+            "passed": true
+          },
+          {
+            "check": "not_cancelled",
+            "section": "43869",
+            "requires": "the section is not cancelled",
+            "found": "not cancelled",
+            "passed": true
+          },
+          {
+            "check": "seat",
+            "section": "43869",
+            "requires": "the section has a free seat",
+            "found": "14/15 seats taken",
+            "passed": true
+          },
+          {
+            "check": "credits",
+            "section": "43869",
+            "requires": "credit_hours is allowed for this section (3)",
+            "found": "credit_hours 3",
+            "passed": true
+          },
+          {
+            "check": "prerequisites",
+            "section": "43869",
+            "requires": "the transcript shows every prerequisite of MUS40202",
+            "found": "no unmet prerequisite",
+            "passed": true
+          },
+          {
+            "check": "one_section_per_course",
+            "section": "43869",
+            "requires": "no other section of MUS40202 is in the cart",
+            "found": "the only one",
+            "passed": true
+          },
+          {
+            "check": "no_time_conflict",
+            "section": "43869",
+            "requires": "no meeting overlaps another section in the cart",
+            "found": "the first section in the cart",
+            "passed": true
+          }
+        ],
+        "tier4_checks": [
+          {
+            "rule": "student_id",
+            "requires": "the message is for student S7001",
+            "found": "student_id 'S7001'",
+            "passed": true
+          },
+          {
+            "rule": "term_code",
+            "requires": "the message is for term 202640",
+            "found": "term_code '202640'",
+            "passed": true
+          },
+          {
+            "rule": "count",
+            "requires": "exactly 1 section in the cart",
+            "found": "1: 43869",
+            "passed": true
+          },
+          {
+            "rule": "waitlist",
+            "requires": "no section is waitlisted (no request asks for a waitlist)",
+            "found": "nothing waitlisted",
+            "passed": true
+          },
+          {
+            "rule": "courses_in",
+            "requires": "every course is one of MUS40202",
+            "found": "courses: MUS40202",
+            "passed": true
+          }
+        ],
+        "deviation_score": 0.0
+      },
+      "pair_result": {
+        "pair_id": "full_fallback/music-industry-bs",
+        "twin_id": "pair-full_fallback-music-industry-bs-a",
+        "same_answer_as_twin": false,
+        "pair_passed": true,
+        "explanation": "Both cases are correct and the answer changed with the prompt (first choice: MUS40413 (every section full) vs MUS40202 (open seats)): the model used the changed detail. Pair passed."
+      }
+    }
+  ]
+}
