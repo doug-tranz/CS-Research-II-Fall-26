@@ -57126,5 +57126,1608 @@
         "prompt_words": 13
       }
     }
+  },
+  {
+    "case_id": "pair-o1_shared_rule-history-ba-a",
+    "input": {
+      "program": "history-ba",
+      "student": {
+        "student_id": "S8003",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 306615,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-POSC",
+            "NONPROG-GEOG-ANTH",
+            "NONPROG-LIT",
+            "NONPROG-ECON",
+            "NONPROG-EXPERIENTIAL"
+          ],
+          "rows": [],
+          "avoid": [
+            "HIST05120",
+            "HIST05306"
+          ],
+          "keep_unmet": [
+            "HIST-FOUNDATIONAL",
+            "HIST-FOUNDATIONAL-CHOICE"
+          ]
+        }
+      },
+      "prompt": "Register me for Historical Methods (HIST05306) and Wrld Hist After 1500 (HIST05120). I can only be on campus Mondays and Wednesdays, and I want both in person."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "HIST05120",
+        "HIST05306"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 2,
+          "max": 2
+        },
+        "must_include_courses": [
+          "HIST05306",
+          "HIST05120"
+        ],
+        "no_days": [
+          "Tuesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "modality_in": [
+          "in-person"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "42505",
+            "42493"
+          ]
+        ],
+        "invalid": [
+          [
+            "42507",
+            "42491"
+          ],
+          [
+            "42508",
+            "42491"
+          ],
+          [
+            "42505",
+            "42489"
+          ],
+          [
+            "42505",
+            "42491"
+          ],
+          [
+            "42505",
+            "42492"
+          ],
+          [
+            "42505",
+            "42496"
+          ]
+        ]
+      },
+      "implicit_relationship": "A complete answer is one section of HIST05306 and one section of HIST05120 that satisfy 'I can only be on campus Mondays and Wednesdays, and I want both in person.' and do not overlap each other. 1 correct cart: 42505+42493; full sections (no waitlist allowed): 42489, 42491, 42492, 42493, 42496, 42497, 42505, 42506 ...; 1 pair(s) overlap in time, e.g. 42506+42493; 6 cart(s) break a rule of the request. Its twin's answers 42508+42491, 42507+42491 are wrong here.",
+      "case_type": "o1_shared_rule",
+      "targets": [
+        "HIST-FOUNDATIONAL",
+        "HIST-FOUNDATIONAL-CHOICE"
+      ],
+      "pair": {
+        "id": "o1_shared_rule/history-ba",
+        "variant": "a",
+        "changed": "rule for both courses: mon_wed vs tue_thu",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'Mondays and Wednesdays'",
+          "twin_case": "prompt says 'Tuesdays and Thursdays'",
+          "twin_id": "pair-o1_shared_rule-history-ba-b",
+          "answer_here": "one section each of Historical Methods (HIST05306) and Wrld Hist After 1500 (HIST05120), in-person, meeting only on Mondays and Wednesdays",
+          "answer_in_twin": "one section each of Historical Methods (HIST05306) and Wrld Hist After 1500 (HIST05120), in-person, meeting only on Tuesdays and Thursdays",
+          "summary": "Only the prompt differs. Here: prompt says 'Mondays and Wednesdays'. In the twin (pair-o1_shared_rule-history-ba-b): prompt says 'Tuesdays and Thursdays'. So the answer here is one section each of Historical Methods (HIST05306) and Wrld Hist After 1500 (HIST05120), in-person, meeting only on Mondays and Wednesdays, while in the twin it is one section each of Historical Methods (HIST05306) and Wrld Hist After 1500 (HIST05120), in-person, meeting only on Tuesdays and Thursdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 2,
+        "candidate_answers": 30,
+        "correct_answers": 1,
+        "chance": 0.0333,
+        "rules": 4,
+        "prompt_words": 27
+      }
+    }
+  },
+  {
+    "case_id": "pair-o1_shared_rule-history-ba-b",
+    "input": {
+      "program": "history-ba",
+      "student": {
+        "student_id": "S8003",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 306615,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-POSC",
+            "NONPROG-GEOG-ANTH",
+            "NONPROG-LIT",
+            "NONPROG-ECON",
+            "NONPROG-EXPERIENTIAL"
+          ],
+          "rows": [],
+          "avoid": [
+            "HIST05120",
+            "HIST05306"
+          ],
+          "keep_unmet": [
+            "HIST-FOUNDATIONAL",
+            "HIST-FOUNDATIONAL-CHOICE"
+          ]
+        }
+      },
+      "prompt": "Register me for Historical Methods (HIST05306) and Wrld Hist After 1500 (HIST05120). I can only be on campus Tuesdays and Thursdays, and I want both in person."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "HIST05120",
+        "HIST05306"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 2,
+          "max": 2
+        },
+        "must_include_courses": [
+          "HIST05306",
+          "HIST05120"
+        ],
+        "no_days": [
+          "Monday",
+          "Wednesday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "modality_in": [
+          "in-person"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "42507",
+            "42491"
+          ],
+          [
+            "42508",
+            "42491"
+          ]
+        ],
+        "invalid": [
+          [
+            "42505",
+            "42493"
+          ],
+          [
+            "42505",
+            "42489"
+          ],
+          [
+            "42505",
+            "42491"
+          ],
+          [
+            "42505",
+            "42492"
+          ],
+          [
+            "42505",
+            "42496"
+          ],
+          [
+            "42505",
+            "42497"
+          ]
+        ]
+      },
+      "implicit_relationship": "A complete answer is one section of HIST05306 and one section of HIST05120 that satisfy 'I can only be on campus Tuesdays and Thursdays, and I want both in person.' and do not overlap each other. 2 correct carts: 42508+42491, 42507+42491; full sections (no waitlist allowed): 42489, 42491, 42492, 42493, 42496, 42497, 42505, 42506 ...; 1 pair(s) overlap in time, e.g. 42506+42493; 5 cart(s) break a rule of the request. Its twin's answers 42505+42493 are wrong here.",
+      "case_type": "o1_shared_rule",
+      "targets": [
+        "HIST-FOUNDATIONAL",
+        "HIST-FOUNDATIONAL-CHOICE"
+      ],
+      "pair": {
+        "id": "o1_shared_rule/history-ba",
+        "variant": "b",
+        "changed": "rule for both courses: mon_wed vs tue_thu",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'Tuesdays and Thursdays'",
+          "twin_case": "prompt says 'Mondays and Wednesdays'",
+          "twin_id": "pair-o1_shared_rule-history-ba-a",
+          "answer_here": "one section each of Historical Methods (HIST05306) and Wrld Hist After 1500 (HIST05120), in-person, meeting only on Tuesdays and Thursdays",
+          "answer_in_twin": "one section each of Historical Methods (HIST05306) and Wrld Hist After 1500 (HIST05120), in-person, meeting only on Mondays and Wednesdays",
+          "summary": "Only the prompt differs. Here: prompt says 'Tuesdays and Thursdays'. In the twin (pair-o1_shared_rule-history-ba-a): prompt says 'Mondays and Wednesdays'. So the answer here is one section each of Historical Methods (HIST05306) and Wrld Hist After 1500 (HIST05120), in-person, meeting only on Tuesdays and Thursdays, while in the twin it is one section each of Historical Methods (HIST05306) and Wrld Hist After 1500 (HIST05120), in-person, meeting only on Mondays and Wednesdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 2,
+        "candidate_answers": 30,
+        "correct_answers": 2,
+        "chance": 0.0667,
+        "rules": 4,
+        "prompt_words": 27
+      }
+    }
+  },
+  {
+    "case_id": "pair-o1_shared_rule-anthropology-ba-a",
+    "input": {
+      "program": "anthropology-ba",
+      "student": {
+        "student_id": "S8006",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 964818,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-GEOG",
+            "NONPROG-ETHICS"
+          ],
+          "rows": [],
+          "avoid": [
+            "ANTH02202",
+            "ANTH02221"
+          ],
+          "keep_unmet": [
+            "ANTH-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Human Variation (ANTH02221) and Cultural Anthropology (ANTH02202). I can only be on campus Mondays and Wednesdays, and I want both in person."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "ANTH02202",
+        "ANTH02221"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 2,
+          "max": 2
+        },
+        "must_include_courses": [
+          "ANTH02221",
+          "ANTH02202"
+        ],
+        "no_days": [
+          "Tuesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "modality_in": [
+          "in-person"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "42699",
+            "42649"
+          ]
+        ],
+        "invalid": [
+          [
+            "42698",
+            "42689"
+          ],
+          [
+            "42698",
+            "42691"
+          ],
+          [
+            "42696",
+            "42689"
+          ],
+          [
+            "42696",
+            "42690"
+          ],
+          [
+            "42696",
+            "42691"
+          ],
+          [
+            "42696",
+            "42692"
+          ]
+        ]
+      },
+      "implicit_relationship": "A complete answer is one section of ANTH02221 and one section of ANTH02202 that satisfy 'I can only be on campus Mondays and Wednesdays, and I want both in person.' and do not overlap each other. 1 correct cart: 42699+42649; full sections (no waitlist allowed): 42644, 42646, 42648, 42649, 42655, 42657, 42661, 42664 ...; 1 pair(s) overlap in time, e.g. 42700+42649; 13 cart(s) break a rule of the request. Its twin's answers 42698+42689, 42698+42691 are wrong here.",
+      "case_type": "o1_shared_rule",
+      "targets": [
+        "ANTH-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "o1_shared_rule/anthropology-ba",
+        "variant": "a",
+        "changed": "rule for both courses: mon_wed vs tue_thu",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'Mondays and Wednesdays'",
+          "twin_case": "prompt says 'Tuesdays and Thursdays'",
+          "twin_id": "pair-o1_shared_rule-anthropology-ba-b",
+          "answer_here": "one section each of Human Variation (ANTH02221) and Cultural Anthropology (ANTH02202), in-person, meeting only on Mondays and Wednesdays",
+          "answer_in_twin": "one section each of Human Variation (ANTH02221) and Cultural Anthropology (ANTH02202), in-person, meeting only on Tuesdays and Thursdays",
+          "summary": "Only the prompt differs. Here: prompt says 'Mondays and Wednesdays'. In the twin (pair-o1_shared_rule-anthropology-ba-b): prompt says 'Tuesdays and Thursdays'. So the answer here is one section each of Human Variation (ANTH02221) and Cultural Anthropology (ANTH02202), in-person, meeting only on Mondays and Wednesdays, while in the twin it is one section each of Human Variation (ANTH02221) and Cultural Anthropology (ANTH02202), in-person, meeting only on Tuesdays and Thursdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 2,
+        "candidate_answers": 88,
+        "correct_answers": 1,
+        "chance": 0.0114,
+        "rules": 4,
+        "prompt_words": 25
+      }
+    }
+  },
+  {
+    "case_id": "pair-o1_shared_rule-anthropology-ba-b",
+    "input": {
+      "program": "anthropology-ba",
+      "student": {
+        "student_id": "S8006",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 964818,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-GEOG",
+            "NONPROG-ETHICS"
+          ],
+          "rows": [],
+          "avoid": [
+            "ANTH02202",
+            "ANTH02221"
+          ],
+          "keep_unmet": [
+            "ANTH-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Human Variation (ANTH02221) and Cultural Anthropology (ANTH02202). I can only be on campus Tuesdays and Thursdays, and I want both in person."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "ANTH02202",
+        "ANTH02221"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 2,
+          "max": 2
+        },
+        "must_include_courses": [
+          "ANTH02221",
+          "ANTH02202"
+        ],
+        "no_days": [
+          "Monday",
+          "Wednesday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "modality_in": [
+          "in-person"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "42698",
+            "42689"
+          ],
+          [
+            "42698",
+            "42691"
+          ]
+        ],
+        "invalid": [
+          [
+            "42699",
+            "42649"
+          ],
+          [
+            "42696",
+            "42689"
+          ],
+          [
+            "42696",
+            "42690"
+          ],
+          [
+            "42696",
+            "42691"
+          ],
+          [
+            "42696",
+            "42692"
+          ],
+          [
+            "42696",
+            "42644"
+          ]
+        ]
+      },
+      "implicit_relationship": "A complete answer is one section of ANTH02221 and one section of ANTH02202 that satisfy 'I can only be on campus Tuesdays and Thursdays, and I want both in person.' and do not overlap each other. 2 correct carts: 42698+42689, 42698+42691; full sections (no waitlist allowed): 42644, 42646, 42648, 42649, 42655, 42657, 42661, 42664 ...; 1 pair(s) overlap in time, e.g. 42700+42649; 12 cart(s) break a rule of the request. Its twin's answers 42699+42649 are wrong here.",
+      "case_type": "o1_shared_rule",
+      "targets": [
+        "ANTH-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "o1_shared_rule/anthropology-ba",
+        "variant": "b",
+        "changed": "rule for both courses: mon_wed vs tue_thu",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'Tuesdays and Thursdays'",
+          "twin_case": "prompt says 'Mondays and Wednesdays'",
+          "twin_id": "pair-o1_shared_rule-anthropology-ba-a",
+          "answer_here": "one section each of Human Variation (ANTH02221) and Cultural Anthropology (ANTH02202), in-person, meeting only on Tuesdays and Thursdays",
+          "answer_in_twin": "one section each of Human Variation (ANTH02221) and Cultural Anthropology (ANTH02202), in-person, meeting only on Mondays and Wednesdays",
+          "summary": "Only the prompt differs. Here: prompt says 'Tuesdays and Thursdays'. In the twin (pair-o1_shared_rule-anthropology-ba-a): prompt says 'Mondays and Wednesdays'. So the answer here is one section each of Human Variation (ANTH02221) and Cultural Anthropology (ANTH02202), in-person, meeting only on Tuesdays and Thursdays, while in the twin it is one section each of Human Variation (ANTH02221) and Cultural Anthropology (ANTH02202), in-person, meeting only on Mondays and Wednesdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 2,
+        "candidate_answers": 88,
+        "correct_answers": 2,
+        "chance": 0.0227,
+        "rules": 4,
+        "prompt_words": 25
+      }
+    }
+  },
+  {
+    "case_id": "pair-o2_stacked_rules-bioinformatics-bs-a",
+    "input": {
+      "program": "bioinformatics-bs",
+      "student": {
+        "student_id": "S8004",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 462328,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-PHIL",
+            "NONPROG-PHYS1",
+            "NONPROG-PHYS2",
+            "NONPROG-CHEM",
+            "NONPROG-MATH",
+            "BINF-FOUNDATIONAL"
+          ],
+          "rows": [],
+          "avoid": [
+            "CS04113",
+            "STAT02284"
+          ],
+          "keep_unmet": [
+            "BINF-MID",
+            "BINF-RESTRICTED"
+          ]
+        }
+      },
+      "prompt": "Register me for Statistics for Biomed (STAT02284) and Intro to Object Oriented Programming (CS04113). I can only be on campus Mondays and Wednesdays, and I want both in person. I work evenings, so nothing that ends after 5 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "CS04113",
+        "STAT02284"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 2,
+          "max": 2
+        },
+        "must_include_courses": [
+          "STAT02284",
+          "CS04113"
+        ],
+        "no_days": [
+          "Tuesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "modality_in": [
+          "in-person"
+        ],
+        "ends_by": "5:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "41182",
+            "41977"
+          ]
+        ],
+        "invalid": [
+          [
+            "41181",
+            "41980"
+          ],
+          [
+            "41181",
+            "41977"
+          ],
+          [
+            "41181",
+            "41986"
+          ],
+          [
+            "41181",
+            "41982"
+          ]
+        ]
+      },
+      "implicit_relationship": "A complete answer is one section of STAT02284 and one section of CS04113 that satisfy 'I can only be on campus Mondays and Wednesdays, and I want both in person. I work evenings, so nothing that ends after 5 PM.' and do not overlap each other. 1 correct cart: 41182+41977; 7 cart(s) break a rule of the request. Its twin's answers 41181+41980 are wrong here.",
+      "case_type": "o2_stacked_rules",
+      "targets": [
+        "BINF-MID",
+        "BINF-RESTRICTED"
+      ],
+      "pair": {
+        "id": "o2_stacked_rules/bioinformatics-bs",
+        "variant": "a",
+        "changed": "day rule: Mon/Wed vs Tue/Thu, both with ends_by_5",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'Mondays and Wednesdays'",
+          "twin_case": "prompt says 'Tuesdays and Thursdays'",
+          "twin_id": "pair-o2_stacked_rules-bioinformatics-bs-b",
+          "answer_here": "one section each of Statistics for Biomed (STAT02284) and Intro to Object Oriented Programming (CS04113), in-person, meeting only on Mondays and Wednesdays",
+          "answer_in_twin": "one section each of Statistics for Biomed (STAT02284) and Intro to Object Oriented Programming (CS04113), in-person, meeting only on Tuesdays and Thursdays",
+          "summary": "Only the prompt differs. Here: prompt says 'Mondays and Wednesdays'. In the twin (pair-o2_stacked_rules-bioinformatics-bs-b): prompt says 'Tuesdays and Thursdays'. So the answer here is one section each of Statistics for Biomed (STAT02284) and Intro to Object Oriented Programming (CS04113), in-person, meeting only on Mondays and Wednesdays, while in the twin it is one section each of Statistics for Biomed (STAT02284) and Intro to Object Oriented Programming (CS04113), in-person, meeting only on Tuesdays and Thursdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 2,
+        "candidate_answers": 8,
+        "correct_answers": 1,
+        "chance": 0.125,
+        "rules": 5,
+        "prompt_words": 39
+      }
+    }
+  },
+  {
+    "case_id": "pair-o2_stacked_rules-bioinformatics-bs-b",
+    "input": {
+      "program": "bioinformatics-bs",
+      "student": {
+        "student_id": "S8004",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 462328,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG-PHIL",
+            "NONPROG-PHYS1",
+            "NONPROG-PHYS2",
+            "NONPROG-CHEM",
+            "NONPROG-MATH",
+            "BINF-FOUNDATIONAL"
+          ],
+          "rows": [],
+          "avoid": [
+            "CS04113",
+            "STAT02284"
+          ],
+          "keep_unmet": [
+            "BINF-MID",
+            "BINF-RESTRICTED"
+          ]
+        }
+      },
+      "prompt": "Register me for Statistics for Biomed (STAT02284) and Intro to Object Oriented Programming (CS04113). I can only be on campus Tuesdays and Thursdays, and I want both in person. I work evenings, so nothing that ends after 5 PM."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "CS04113",
+        "STAT02284"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 2,
+          "max": 2
+        },
+        "must_include_courses": [
+          "STAT02284",
+          "CS04113"
+        ],
+        "no_days": [
+          "Monday",
+          "Wednesday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "modality_in": [
+          "in-person"
+        ],
+        "ends_by": "5:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "41181",
+            "41980"
+          ]
+        ],
+        "invalid": [
+          [
+            "41182",
+            "41977"
+          ],
+          [
+            "41181",
+            "41977"
+          ],
+          [
+            "41181",
+            "41986"
+          ],
+          [
+            "41181",
+            "41982"
+          ]
+        ]
+      },
+      "implicit_relationship": "A complete answer is one section of STAT02284 and one section of CS04113 that satisfy 'I can only be on campus Tuesdays and Thursdays, and I want both in person. I work evenings, so nothing that ends after 5 PM.' and do not overlap each other. 1 correct cart: 41181+41980; 7 cart(s) break a rule of the request. Its twin's answers 41182+41977 are wrong here.",
+      "case_type": "o2_stacked_rules",
+      "targets": [
+        "BINF-MID",
+        "BINF-RESTRICTED"
+      ],
+      "pair": {
+        "id": "o2_stacked_rules/bioinformatics-bs",
+        "variant": "b",
+        "changed": "day rule: Mon/Wed vs Tue/Thu, both with ends_by_5",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'Tuesdays and Thursdays'",
+          "twin_case": "prompt says 'Mondays and Wednesdays'",
+          "twin_id": "pair-o2_stacked_rules-bioinformatics-bs-a",
+          "answer_here": "one section each of Statistics for Biomed (STAT02284) and Intro to Object Oriented Programming (CS04113), in-person, meeting only on Tuesdays and Thursdays",
+          "answer_in_twin": "one section each of Statistics for Biomed (STAT02284) and Intro to Object Oriented Programming (CS04113), in-person, meeting only on Mondays and Wednesdays",
+          "summary": "Only the prompt differs. Here: prompt says 'Tuesdays and Thursdays'. In the twin (pair-o2_stacked_rules-bioinformatics-bs-a): prompt says 'Mondays and Wednesdays'. So the answer here is one section each of Statistics for Biomed (STAT02284) and Intro to Object Oriented Programming (CS04113), in-person, meeting only on Tuesdays and Thursdays, while in the twin it is one section each of Statistics for Biomed (STAT02284) and Intro to Object Oriented Programming (CS04113), in-person, meeting only on Mondays and Wednesdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 2,
+        "candidate_answers": 8,
+        "correct_answers": 1,
+        "chance": 0.125,
+        "rules": 5,
+        "prompt_words": 39
+      }
+    }
+  },
+  {
+    "case_id": "pair-o2_stacked_rules-environmental-sustainability-studies-ba-a",
+    "input": {
+      "program": "environmental-sustainability-studies-ba",
+      "student": {
+        "student_id": "S8010",
+        "catalog_year": "Fall 2025",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 232596,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS"
+          ],
+          "rows": [],
+          "avoid": [
+            "GEOG16100",
+            "PLAN31280"
+          ],
+          "keep_unmet": [
+            "ESS-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Earth, People, and the Environment (GEOG16100) and Foundations of Planning & Environmental Design (PLAN31280). I can only be on campus Mondays and Wednesdays, and I want both in person. Nothing that starts at 5 PM or later."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "GEOG16100",
+        "PLAN31280"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 2,
+          "max": 2
+        },
+        "must_include_courses": [
+          "GEOG16100",
+          "PLAN31280"
+        ],
+        "no_days": [
+          "Tuesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "modality_in": [
+          "in-person"
+        ],
+        "starts_before": "5:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "44116",
+            "44237"
+          ]
+        ],
+        "invalid": [
+          [
+            "44133",
+            "44236"
+          ],
+          [
+            "44116",
+            "44236"
+          ],
+          [
+            "44116",
+            "44238"
+          ],
+          [
+            "44119",
+            "44236"
+          ],
+          [
+            "44119",
+            "44237"
+          ],
+          [
+            "44119",
+            "44238"
+          ]
+        ]
+      },
+      "implicit_relationship": "A complete answer is one section of GEOG16100 and one section of PLAN31280 that satisfy 'I can only be on campus Mondays and Wednesdays, and I want both in person. Nothing that starts at 5 PM or later.' and do not overlap each other. 1 correct cart: 44116+44237; full sections (no waitlist allowed): 44116, 44119, 44133, 44157, 44166, 44171, 44172, 44175 ...; 3 cart(s) break a rule of the request. Its twin's answers 44133+44236 are wrong here.",
+      "case_type": "o2_stacked_rules",
+      "targets": [
+        "ESS-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "o2_stacked_rules/environmental-sustainability-studies-ba",
+        "variant": "a",
+        "changed": "day rule: Mon/Wed vs Tue/Thu, both with before_5",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'Mondays and Wednesdays'",
+          "twin_case": "prompt says 'Tuesdays and Thursdays'",
+          "twin_id": "pair-o2_stacked_rules-environmental-sustainability-studies-ba-b",
+          "answer_here": "one section each of Earth, People, and the Environment (GEOG16100) and Foundations of Planning & Environmental Design (PLAN31280), in-person, meeting only on Mondays and Wednesdays",
+          "answer_in_twin": "one section each of Earth, People, and the Environment (GEOG16100) and Foundations of Planning & Environmental Design (PLAN31280), in-person, meeting only on Tuesdays and Thursdays",
+          "summary": "Only the prompt differs. Here: prompt says 'Mondays and Wednesdays'. In the twin (pair-o2_stacked_rules-environmental-sustainability-studies-ba-b): prompt says 'Tuesdays and Thursdays'. So the answer here is one section each of Earth, People, and the Environment (GEOG16100) and Foundations of Planning & Environmental Design (PLAN31280), in-person, meeting only on Mondays and Wednesdays, while in the twin it is one section each of Earth, People, and the Environment (GEOG16100) and Foundations of Planning & Environmental Design (PLAN31280), in-person, meeting only on Tuesdays and Thursdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 2,
+        "candidate_answers": 27,
+        "correct_answers": 1,
+        "chance": 0.037,
+        "rules": 5,
+        "prompt_words": 40
+      }
+    }
+  },
+  {
+    "case_id": "pair-o2_stacked_rules-environmental-sustainability-studies-ba-b",
+    "input": {
+      "program": "environmental-sustainability-studies-ba",
+      "student": {
+        "student_id": "S8010",
+        "catalog_year": "Fall 2025",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 232596,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS"
+          ],
+          "rows": [],
+          "avoid": [
+            "GEOG16100",
+            "PLAN31280"
+          ],
+          "keep_unmet": [
+            "ESS-FOUNDATIONAL"
+          ]
+        }
+      },
+      "prompt": "Register me for Earth, People, and the Environment (GEOG16100) and Foundations of Planning & Environmental Design (PLAN31280). I can only be on campus Tuesdays and Thursdays, and I want both in person. Nothing that starts at 5 PM or later."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "GEOG16100",
+        "PLAN31280"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 2,
+          "max": 2
+        },
+        "must_include_courses": [
+          "GEOG16100",
+          "PLAN31280"
+        ],
+        "no_days": [
+          "Monday",
+          "Wednesday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "modality_in": [
+          "in-person"
+        ],
+        "starts_before": "5:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "44133",
+            "44236"
+          ]
+        ],
+        "invalid": [
+          [
+            "44116",
+            "44237"
+          ],
+          [
+            "44116",
+            "44236"
+          ],
+          [
+            "44116",
+            "44238"
+          ],
+          [
+            "44119",
+            "44236"
+          ],
+          [
+            "44119",
+            "44237"
+          ],
+          [
+            "44119",
+            "44238"
+          ]
+        ]
+      },
+      "implicit_relationship": "A complete answer is one section of GEOG16100 and one section of PLAN31280 that satisfy 'I can only be on campus Tuesdays and Thursdays, and I want both in person. Nothing that starts at 5 PM or later.' and do not overlap each other. 1 correct cart: 44133+44236; full sections (no waitlist allowed): 44116, 44119, 44133, 44157, 44166, 44171, 44172, 44175 ...; 3 cart(s) break a rule of the request. Its twin's answers 44116+44237 are wrong here.",
+      "case_type": "o2_stacked_rules",
+      "targets": [
+        "ESS-FOUNDATIONAL"
+      ],
+      "pair": {
+        "id": "o2_stacked_rules/environmental-sustainability-studies-ba",
+        "variant": "b",
+        "changed": "day rule: Mon/Wed vs Tue/Thu, both with before_5",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'Tuesdays and Thursdays'",
+          "twin_case": "prompt says 'Mondays and Wednesdays'",
+          "twin_id": "pair-o2_stacked_rules-environmental-sustainability-studies-ba-a",
+          "answer_here": "one section each of Earth, People, and the Environment (GEOG16100) and Foundations of Planning & Environmental Design (PLAN31280), in-person, meeting only on Tuesdays and Thursdays",
+          "answer_in_twin": "one section each of Earth, People, and the Environment (GEOG16100) and Foundations of Planning & Environmental Design (PLAN31280), in-person, meeting only on Mondays and Wednesdays",
+          "summary": "Only the prompt differs. Here: prompt says 'Tuesdays and Thursdays'. In the twin (pair-o2_stacked_rules-environmental-sustainability-studies-ba-a): prompt says 'Mondays and Wednesdays'. So the answer here is one section each of Earth, People, and the Environment (GEOG16100) and Foundations of Planning & Environmental Design (PLAN31280), in-person, meeting only on Tuesdays and Thursdays, while in the twin it is one section each of Earth, People, and the Environment (GEOG16100) and Foundations of Planning & Environmental Design (PLAN31280), in-person, meeting only on Mondays and Wednesdays."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 2,
+        "candidate_answers": 27,
+        "correct_answers": 1,
+        "chance": 0.037,
+        "rules": 5,
+        "prompt_words": 40
+      }
+    }
+  },
+  {
+    "case_id": "pair-o3_busy_both-environmental-science-bs-a",
+    "input": {
+      "program": "environmental-science-bs",
+      "student": {
+        "student_id": "S8005",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 325598,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG"
+          ],
+          "rows": [],
+          "avoid": [
+            "ENST94102",
+            "EVSC01121"
+          ],
+          "keep_unmet": [
+            "EVSC-CORE",
+            "EVSC-INTRO"
+          ]
+        }
+      },
+      "prompt": "Register me for Hum Nature:intro Envir & Susta (ENST94102) and Global Environmental Change (EVSC01121). I work Mondays and Wednesdays from 4:00 PM to 5:15 PM, so neither class can overlap that."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "ENST94102",
+        "EVSC01121"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 2,
+          "max": 2
+        },
+        "must_include_courses": [
+          "ENST94102",
+          "EVSC01121"
+        ],
+        "busy": [
+          {
+            "days": [
+              "Monday",
+              "Wednesday"
+            ],
+            "start_time": "4:00 PM",
+            "end_time": "5:15 PM"
+          }
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "44099",
+            "41966"
+          ]
+        ],
+        "invalid": [
+          [
+            "46111",
+            "41970"
+          ],
+          [
+            "44095",
+            "41966"
+          ],
+          [
+            "44095",
+            "41967"
+          ],
+          [
+            "44095",
+            "41969"
+          ],
+          [
+            "44095",
+            "41970"
+          ],
+          [
+            "44095",
+            "41971"
+          ]
+        ]
+      },
+      "implicit_relationship": "A complete answer is one section of ENST94102 and one of EVSC01121, neither overlapping Mondays and Wednesdays 4:00 PM-5:15 PM, and not overlapping each other. 1 correct cart: 44099+41966; full sections (no waitlist allowed): 41966, 41967, 41969, 41970, 41971, 44095, 44099, 46111; 3 cart(s) break a rule of the request. Its twin's answers 46111+41970 are wrong here.",
+      "case_type": "o3_busy_both",
+      "targets": [
+        "EVSC-CORE",
+        "EVSC-INTRO"
+      ],
+      "pair": {
+        "id": "o3_busy_both/environmental-science-bs",
+        "variant": "a",
+        "changed": "commitment: Mondays and Wednesdays 4:00 PM-5:15 PM vs Mondays and Wednesdays 10:00 AM-11:15 AM",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says '4:00 PM to 5:15 PM'",
+          "twin_case": "prompt says '10:00 AM to 11:15 AM'",
+          "twin_id": "pair-o3_busy_both-environmental-science-bs-b",
+          "answer_here": "one section each of Hum Nature:intro Envir & Susta (ENST94102) and Global Environmental Change (EVSC01121), not overlapping Mondays and Wednesdays 4:00 PM-5:15 PM",
+          "answer_in_twin": "one section each of Hum Nature:intro Envir & Susta (ENST94102) and Global Environmental Change (EVSC01121), not overlapping Mondays and Wednesdays 10:00 AM-11:15 AM",
+          "summary": "Only the prompt differs. Here: prompt says '4:00 PM to 5:15 PM'. In the twin (pair-o3_busy_both-environmental-science-bs-b): prompt says '10:00 AM to 11:15 AM'. So the answer here is one section each of Hum Nature:intro Envir & Susta (ENST94102) and Global Environmental Change (EVSC01121), not overlapping Mondays and Wednesdays 4:00 PM-5:15 PM, while in the twin it is one section each of Hum Nature:intro Envir & Susta (ENST94102) and Global Environmental Change (EVSC01121), not overlapping Mondays and Wednesdays 10:00 AM-11:15 AM."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 2,
+        "candidate_answers": 15,
+        "correct_answers": 1,
+        "chance": 0.0667,
+        "rules": 3,
+        "prompt_words": 31
+      }
+    }
+  },
+  {
+    "case_id": "pair-o3_busy_both-environmental-science-bs-b",
+    "input": {
+      "program": "environmental-science-bs",
+      "student": {
+        "student_id": "S8005",
+        "catalog_year": "Fall 2024",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 325598,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS",
+            "NONPROG"
+          ],
+          "rows": [],
+          "avoid": [
+            "ENST94102",
+            "EVSC01121"
+          ],
+          "keep_unmet": [
+            "EVSC-CORE",
+            "EVSC-INTRO"
+          ]
+        }
+      },
+      "prompt": "Register me for Hum Nature:intro Envir & Susta (ENST94102) and Global Environmental Change (EVSC01121). I work Mondays and Wednesdays from 10:00 AM to 11:15 AM, so neither class can overlap that."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "ENST94102",
+        "EVSC01121"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 2,
+          "max": 2
+        },
+        "must_include_courses": [
+          "ENST94102",
+          "EVSC01121"
+        ],
+        "busy": [
+          {
+            "days": [
+              "Monday",
+              "Wednesday"
+            ],
+            "start_time": "10:00 AM",
+            "end_time": "11:15 AM"
+          }
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "46111",
+            "41970"
+          ]
+        ],
+        "invalid": [
+          [
+            "44099",
+            "41966"
+          ],
+          [
+            "44095",
+            "41966"
+          ],
+          [
+            "44095",
+            "41967"
+          ],
+          [
+            "44095",
+            "41969"
+          ],
+          [
+            "44095",
+            "41970"
+          ],
+          [
+            "44095",
+            "41971"
+          ]
+        ]
+      },
+      "implicit_relationship": "A complete answer is one section of ENST94102 and one of EVSC01121, neither overlapping Mondays and Wednesdays 10:00 AM-11:15 AM, and not overlapping each other. 1 correct cart: 46111+41970; full sections (no waitlist allowed): 41966, 41967, 41969, 41970, 41971, 44095, 44099, 46111; 3 cart(s) break a rule of the request. Its twin's answers 44099+41966 are wrong here.",
+      "case_type": "o3_busy_both",
+      "targets": [
+        "EVSC-CORE",
+        "EVSC-INTRO"
+      ],
+      "pair": {
+        "id": "o3_busy_both/environmental-science-bs",
+        "variant": "b",
+        "changed": "commitment: Mondays and Wednesdays 4:00 PM-5:15 PM vs Mondays and Wednesdays 10:00 AM-11:15 AM",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says '10:00 AM to 11:15 AM'",
+          "twin_case": "prompt says '4:00 PM to 5:15 PM'",
+          "twin_id": "pair-o3_busy_both-environmental-science-bs-a",
+          "answer_here": "one section each of Hum Nature:intro Envir & Susta (ENST94102) and Global Environmental Change (EVSC01121), not overlapping Mondays and Wednesdays 10:00 AM-11:15 AM",
+          "answer_in_twin": "one section each of Hum Nature:intro Envir & Susta (ENST94102) and Global Environmental Change (EVSC01121), not overlapping Mondays and Wednesdays 4:00 PM-5:15 PM",
+          "summary": "Only the prompt differs. Here: prompt says '10:00 AM to 11:15 AM'. In the twin (pair-o3_busy_both-environmental-science-bs-a): prompt says '4:00 PM to 5:15 PM'. So the answer here is one section each of Hum Nature:intro Envir & Susta (ENST94102) and Global Environmental Change (EVSC01121), not overlapping Mondays and Wednesdays 10:00 AM-11:15 AM, while in the twin it is one section each of Hum Nature:intro Envir & Susta (ENST94102) and Global Environmental Change (EVSC01121), not overlapping Mondays and Wednesdays 4:00 PM-5:15 PM."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 2,
+        "candidate_answers": 15,
+        "correct_answers": 1,
+        "chance": 0.0667,
+        "rules": 3,
+        "prompt_words": 31
+      }
+    }
+  },
+  {
+    "case_id": "pair-o3_busy_both-sports-communication-media-ba-a",
+    "input": {
+      "program": "sports-communication-media-ba",
+      "student": {
+        "student_id": "S8013",
+        "catalog_year": "Fall 2025",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 319418,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS"
+          ],
+          "rows": [],
+          "avoid": [
+            "PR06350",
+            "SPRT09401"
+          ],
+          "keep_unmet": [
+            "SPRT-CORE"
+          ]
+        }
+      },
+      "prompt": "Register me for Intro Public Relations (PR06350) and Senior Seminar Sports Cam (SPRT09401). I work Mondays and Wednesdays from 5:30 PM to 6:45 PM, so neither class can overlap that."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "PR06350",
+        "SPRT09401"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 2,
+          "max": 2
+        },
+        "must_include_courses": [
+          "PR06350",
+          "SPRT09401"
+        ],
+        "busy": [
+          {
+            "days": [
+              "Monday",
+              "Wednesday"
+            ],
+            "start_time": "5:30 PM",
+            "end_time": "6:45 PM"
+          }
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "43118",
+            "43988"
+          ],
+          [
+            "43120",
+            "43988"
+          ]
+        ],
+        "invalid": [
+          [
+            "43118",
+            "46488"
+          ],
+          [
+            "43120",
+            "46488"
+          ],
+          [
+            "43118",
+            "44384"
+          ],
+          [
+            "43120",
+            "44384"
+          ],
+          [
+            "43121",
+            "44384"
+          ],
+          [
+            "43121",
+            "46488"
+          ]
+        ]
+      },
+      "implicit_relationship": "A complete answer is one section of PR06350 and one of SPRT09401, neither overlapping Mondays and Wednesdays 5:30 PM-6:45 PM, and not overlapping each other. 2 correct carts: 43118+43988, 43120+43988; full sections (no waitlist allowed): 43118, 43120, 43121, 43123, 43988, 44384, 46488; 1 pair(s) overlap in time, e.g. 43121+46488; 3 cart(s) break a rule of the request. Its twin's answers 43118+46488, 43120+46488 are wrong here.",
+      "case_type": "o3_busy_both",
+      "targets": [
+        "SPRT-CORE"
+      ],
+      "pair": {
+        "id": "o3_busy_both/sports-communication-media-ba",
+        "variant": "a",
+        "changed": "commitment: Mondays and Wednesdays 5:30 PM-6:45 PM vs Fridays 10:00 AM-11:15 AM",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'Mondays and Wednesdays from 5:30 PM to 6:45 PM'",
+          "twin_case": "prompt says 'Fridays from 10:00 AM to 11:15 AM'",
+          "twin_id": "pair-o3_busy_both-sports-communication-media-ba-b",
+          "answer_here": "one section each of Intro Public Relations (PR06350) and Senior Seminar Sports Cam (SPRT09401), not overlapping Mondays and Wednesdays 5:30 PM-6:45 PM",
+          "answer_in_twin": "one section each of Intro Public Relations (PR06350) and Senior Seminar Sports Cam (SPRT09401), not overlapping Fridays 10:00 AM-11:15 AM",
+          "summary": "Only the prompt differs. Here: prompt says 'Mondays and Wednesdays from 5:30 PM to 6:45 PM'. In the twin (pair-o3_busy_both-sports-communication-media-ba-b): prompt says 'Fridays from 10:00 AM to 11:15 AM'. So the answer here is one section each of Intro Public Relations (PR06350) and Senior Seminar Sports Cam (SPRT09401), not overlapping Mondays and Wednesdays 5:30 PM-6:45 PM, while in the twin it is one section each of Intro Public Relations (PR06350) and Senior Seminar Sports Cam (SPRT09401), not overlapping Fridays 10:00 AM-11:15 AM."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 2,
+        "candidate_answers": 12,
+        "correct_answers": 2,
+        "chance": 0.1667,
+        "rules": 3,
+        "prompt_words": 30
+      }
+    }
+  },
+  {
+    "case_id": "pair-o3_busy_both-sports-communication-media-ba-b",
+    "input": {
+      "program": "sports-communication-media-ba",
+      "student": {
+        "student_id": "S8013",
+        "catalog_year": "Fall 2025",
+        "entry": {
+          "type": "first_year"
+        }
+      },
+      "transcript": {
+        "fabricate": {
+          "seed": 319418,
+          "through": "Spring 2026",
+          "complete": [
+            "CORE-COML",
+            "CORE-ARTL",
+            "CORE-GLBL",
+            "CORE-HUML",
+            "CORE-QNTL",
+            "CORE-SCIL",
+            "EXP-LIT",
+            "EXP-WI",
+            "EXP-RS"
+          ],
+          "rows": [],
+          "avoid": [
+            "PR06350",
+            "SPRT09401"
+          ],
+          "keep_unmet": [
+            "SPRT-CORE"
+          ]
+        }
+      },
+      "prompt": "Register me for Intro Public Relations (PR06350) and Senior Seminar Sports Cam (SPRT09401). I work Fridays from 10:00 AM to 11:15 AM, so neither class can overlap that."
+    },
+    "schedule_from_tally": {
+      "named_courses": true,
+      "courses": [
+        "PR06350",
+        "SPRT09401"
+      ]
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 2,
+          "max": 2
+        },
+        "must_include_courses": [
+          "PR06350",
+          "SPRT09401"
+        ],
+        "busy": [
+          {
+            "days": [
+              "Friday"
+            ],
+            "start_time": "10:00 AM",
+            "end_time": "11:15 AM"
+          }
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "43118",
+            "46488"
+          ],
+          [
+            "43120",
+            "46488"
+          ]
+        ],
+        "invalid": [
+          [
+            "43118",
+            "43988"
+          ],
+          [
+            "43120",
+            "43988"
+          ],
+          [
+            "43118",
+            "44384"
+          ],
+          [
+            "43120",
+            "44384"
+          ],
+          [
+            "43121",
+            "44384"
+          ],
+          [
+            "43121",
+            "46488"
+          ]
+        ]
+      },
+      "implicit_relationship": "A complete answer is one section of PR06350 and one of SPRT09401, neither overlapping Fridays 10:00 AM-11:15 AM, and not overlapping each other. 2 correct carts: 43118+46488, 43120+46488; full sections (no waitlist allowed): 43118, 43120, 43121, 43123, 43988, 44384, 46488; 1 pair(s) overlap in time, e.g. 43121+46488; 3 cart(s) break a rule of the request. Its twin's answers 43118+43988, 43120+43988 are wrong here.",
+      "case_type": "o3_busy_both",
+      "targets": [
+        "SPRT-CORE"
+      ],
+      "pair": {
+        "id": "o3_busy_both/sports-communication-media-ba",
+        "variant": "b",
+        "changed": "commitment: Mondays and Wednesdays 5:30 PM-6:45 PM vs Fridays 10:00 AM-11:15 AM",
+        "difference": {
+          "where": "prompt",
+          "this_case": "prompt says 'Fridays from 10:00 AM to 11:15 AM'",
+          "twin_case": "prompt says 'Mondays and Wednesdays from 5:30 PM to 6:45 PM'",
+          "twin_id": "pair-o3_busy_both-sports-communication-media-ba-a",
+          "answer_here": "one section each of Intro Public Relations (PR06350) and Senior Seminar Sports Cam (SPRT09401), not overlapping Fridays 10:00 AM-11:15 AM",
+          "answer_in_twin": "one section each of Intro Public Relations (PR06350) and Senior Seminar Sports Cam (SPRT09401), not overlapping Mondays and Wednesdays 5:30 PM-6:45 PM",
+          "summary": "Only the prompt differs. Here: prompt says 'Fridays from 10:00 AM to 11:15 AM'. In the twin (pair-o3_busy_both-sports-communication-media-ba-a): prompt says 'Mondays and Wednesdays from 5:30 PM to 6:45 PM'. So the answer here is one section each of Intro Public Relations (PR06350) and Senior Seminar Sports Cam (SPRT09401), not overlapping Fridays 10:00 AM-11:15 AM, while in the twin it is one section each of Intro Public Relations (PR06350) and Senior Seminar Sports Cam (SPRT09401), not overlapping Mondays and Wednesdays 5:30 PM-6:45 PM."
+        },
+        "has_shared_answer": false
+      },
+      "difficulty": {
+        "candidate_courses": 2,
+        "candidate_answers": 12,
+        "correct_answers": 2,
+        "chance": 0.1667,
+        "rules": 3,
+        "prompt_words": 28
+      }
+    }
   }
 ]

@@ -30,6 +30,13 @@ real, so a pair cannot make a section full; it flips what the student asked or h
   late_meeting    "nothing ends after <hour>" (a) or "no <day>        read every meeting of a section,
                   classes" (b); a later meeting runs past the hour   not only the first
 
+  o1_shared_rule  two named courses; Mon/Wed in person (a) or       answer completeness: a section of
+                  Tue/Thu in person (b)                              each, the rule holding for both
+  o2_stacked_rules  two named courses; the day rule above plus a    both courses and both rules at once
+                  time rule; the day rule flips
+  o3_busy_both    two named courses; a work commitment starting     both courses, neither overlapping the
+                  30 min into a section of X (a) or of Y (b)         commitment nor each other
+
 Not built: campus (all but 30 of 5,129 sections are in Glassboro, online or off-campus).
 
 Case ids are pair-<family>-<program>-a / -b; ground_truth.pair = {"id": "<family>/<program>",
@@ -823,9 +830,109 @@ def f_withdrawal(key, prog, rng, sid):
                        lambda x, lo, hi: f"grade in {x}: {lo} vs {hi}")
 
 
+# ── category O: answer completeness ──
+# The task card for O has no description. Doug Tranz's reading (Discord): O tests contain several
+# of the other categories. Built here as: the student asks for TWO courses under one or more rules,
+# and a complete answer is one section of EACH course with every rule holding at once. Leaving a
+# course out, or satisfying only one rule, is incomplete. Each pair flips one rule, so a model that
+# skips a rule or a course fails one variant. Answer keys are scored like any other case.
+
+TWO = {"count": {"min": 2, "max": 2}}
+
+
+def _two_course_case(key, prog, rng, sid, tries=8):
+    """Yields (case, Case, (rx, x), (ry, y)) for two named major courses, each with two or more open sections."""
+    pool = [(r, c) for r, c in major_pool(prog, most=12) if len(open_secs(c)) >= 2]
+    rng.shuffle(pool)
+    for (rx, x), (ry, y) in list(combinations(pool, 2))[:tries]:
+        if x == y:
+            continue
+        targets = sorted({rx, ry})
+        fab = plan_transcript(prog, targets, [x, y], rng.randrange(10 ** 6))
+        built = build(key, prog, fab, "", sid)
+        if built:
+            yield built[0], built[1], (rx, x), (ry, y)
+
+
+def _no_shared_cart(got, c, x, y):
+    """True when no cart (one section of each course) is correct in both variants of a pair, so a
+    model cannot pass the pair without reading the detail that changes."""
+    cands = (by_course()[x], by_course()[y])
+    right = [{tuple(cart) for cart, _, _ in judge(c, cands, v["ground_truth"]["rules"], 2)[0]} for v in got]
+    return not (right[0] & right[1])
+
+
+def _complete_pair(family, key, prog, rng, sid, variants, changed):
+    """variants: [(extra rules, text)] twice. Two named courses; a correct answer is one section of each."""
+    for case, c, (rx, x), (ry, y) in _two_course_case(key, prog, rng, sid):
+        made = []
+        for extra, text in variants:
+            v = reprompt(case, f"Register me for {named(x, prog)} and {named(y, prog)}. {text}")
+            made.append((v, c, {**TWO, "must_include_courses": [x, y], **extra}, (by_course()[x], by_course()[y]), 2,
+                         f"A complete answer is one section of {x} and one section of {y} that satisfy '{text}' "
+                         f"and do not overlap each other."))
+        got = pair(family, key, made[0], made[1], changed, sorted({rx, ry}), [x, y], rng)
+        if got and _no_shared_cart(got, c, x, y):
+            return got
+    return None
+
+
+def f_o1_shared_rule(key, prog, rng, sid):
+    """O1. 'Register me for <X> and <Y>. <one rule for both>': Mondays/Wednesdays in person vs
+    Tuesdays/Thursdays in person, or fully online vs in person. Needs both courses, each under the rule."""
+    texts = {name: (extra, two) for name, extra, _, two in CONSTRAINTS}
+    for first, second in rng.sample([("mon_wed", "tue_thu"), ("online", "in_person")], 2):
+        got = _complete_pair("o1_shared_rule", key, prog, rng, sid,
+                             [(texts[first][0], texts[first][1]), (texts[second][0], texts[second][1])],
+                             f"rule for both courses: {first} vs {second}")
+        if got:
+            return got
+    return None
+
+
+def f_o2_stacked_rules(key, prog, rng, sid):
+    """O2. 'Register me for <X> and <Y>. <Mondays/Wednesdays | Tuesdays/Thursdays> in person. <time rule>':
+    the same time rule in both (nothing ends after 5 PM, or nothing starts at 5 PM or later) and the
+    day rule flipped. Needs both courses and both rules at once; neither variant's rules contain the other's."""
+    texts = {name: (extra, two) for name, extra, _, two in CONSTRAINTS}
+    for time_rule in rng.sample(["ends_by_5", "before_5"], 2):
+        (t_extra, t_text), (a_extra, a_text), (b_extra, b_text) = texts[time_rule], texts["mon_wed"], texts["tue_thu"]
+        got = _complete_pair("o2_stacked_rules", key, prog, rng, sid,
+                             [({**a_extra, **t_extra}, f"{a_text} {t_text}"), ({**b_extra, **t_extra}, f"{b_text} {t_text}")],
+                             f"day rule: Mon/Wed vs Tue/Thu, both with {time_rule}")
+        if got:
+            return got
+    return None
+
+
+def f_o3_busy_both(key, prog, rng, sid):
+    """O3. 'Register me for <X> and <Y>. I work <days> from <start> to <end>, so neither class can
+    overlap that.' The commitment starts 30 minutes into a section of X (a) or of Y (b)."""
+    for case, c, (rx, x), (ry, y) in _two_course_case(key, prog, rng, sid):
+        sx = [s for s in open_secs(x) if busy_block(s)]
+        sy = [s for s in open_secs(y) if busy_block(s)]
+        for s1, s2 in [(p, q) for p in sx[:4] for q in sy[:4]]:
+            b1, b2 = busy_block(s1), busy_block(s2)
+            if b1 == b2:
+                continue
+            text = lambda b: (f"I work {plural_days(b['days'])} from {b['start_time']} to {b['end_time']}, "
+                              f"so neither class can overlap that.")
+            variants = [(reprompt(case, f"Register me for {named(x, prog)} and {named(y, prog)}. {text(b)}"), c,
+                         {**TWO, "must_include_courses": [x, y], "busy": [b]}, (by_course()[x], by_course()[y]), 2,
+                         f"A complete answer is one section of {x} and one of {y}, neither overlapping "
+                         f"{plural_days(b['days'])} {b['start_time']}-{b['end_time']}, and not overlapping each other.")
+                        for b in (b1, b2)]
+            got = pair("o3_busy_both", key, variants[0], variants[1],
+                       f"commitment: {plural_days(b1['days'])} {b1['start_time']}-{b1['end_time']} vs "
+                       f"{plural_days(b2['days'])} {b2['start_time']}-{b2['end_time']}", sorted({rx, ry}), [x, y], rng)
+            if got and _no_shared_cart(got, c, x, y):
+                return got
+    return None
+
+
 FAMILIES = {f.__name__[2:]: f for f in (f_full_fallback, f_in_progress, f_transfer, f_busy_block, f_nested_groups,
                                          f_credit_limit, f_modality, f_days, f_grade_threshold, f_withdrawal,
-                                         f_late_meeting)}
+                                         f_late_meeting, f_o1_shared_rule, f_o2_stacked_rules, f_o3_busy_both)}
 
 
 # ── ground_truth.pair.difference: what differs between a pair's two cases, in words ──
