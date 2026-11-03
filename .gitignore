@@ -1,6 +1,6 @@
 # generated data — not source
 runs.jsonl
-*.jsonl
+#*.jsonl
 *.db
 *.sqlite
 
