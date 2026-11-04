@@ -1,0 +1,74 @@
+{
+  "student": {
+    "student_id": "TEST-C2-02",
+    "degree": "BS",
+    "major": "Computer Science",
+    "program_id": "TEST-REG",
+    "catalog_year": "Fall 2026"
+  },
+  "transcript": {
+    "completed_courses": [],
+    "transfer_courses": [],
+    "courses_in_progress": []
+  },
+  "program_requirements": [
+    {
+      "req_id": "REQ-1",
+      "category": "Elective",
+      "rule": "any_of",
+      "course_options": [
+        "COMP01112"
+      ],
+      "credit_hours": 3.0,
+      "minimum_grade": "D-"
+    }
+  ],
+  "schedule": {
+    "term": "Fall 2026",
+    "sections": [
+      {
+        "crn": "40761",
+        "course_id": "COMP01112",
+        "section": "1",
+        "title": "COLLEGE COMPOSITION II",
+        "credit_hours": 3.0,
+        "seats_total": 22,
+        "seats_taken": 22,
+        "campus": "Glassboro",
+        "modality": "in-person",
+        "meetings": [
+          {
+            "days": [
+              "Monday",
+              "Wednesday"
+            ],
+            "start_time": "8:00 AM",
+            "end_time": "9:15 AM"
+          }
+        ]
+      },
+      {
+        "crn": "40767",
+        "course_id": "COMP01112",
+        "section": "5",
+        "title": "COLLEGE COMPOSITION II",
+        "credit_hours": 3.0,
+        "seats_total": 20,
+        "seats_taken": 19,
+        "campus": "Glassboro",
+        "modality": "in-person",
+        "meetings": [
+          {
+            "days": [
+              "Monday",
+              "Wednesday"
+            ],
+            "start_time": "2:00 PM",
+            "end_time": "3:15 PM"
+          }
+        ]
+      }
+    ]
+  },
+  "prompt": "Can I register for COMP01112? Identify the section with exactly one remaining seat."
+}

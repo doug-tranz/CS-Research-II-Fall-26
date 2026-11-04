@@ -1,0 +1,74 @@
+{
+  "student": {
+    "student_id": "TEST-C1-03",
+    "degree": "BS",
+    "major": "Computer Science",
+    "program_id": "TEST-REG",
+    "catalog_year": "Fall 2026"
+  },
+  "transcript": {
+    "completed_courses": [],
+    "transfer_courses": [],
+    "courses_in_progress": []
+  },
+  "program_requirements": [
+    {
+      "req_id": "REQ-1",
+      "category": "Elective",
+      "rule": "any_of",
+      "course_options": [
+        "UNIV01107"
+      ],
+      "credit_hours": 2.0,
+      "minimum_grade": "D-"
+    }
+  ],
+  "schedule": {
+    "term": "Fall 2026",
+    "sections": [
+      {
+        "crn": "43319",
+        "course_id": "UNIV01107",
+        "section": "1",
+        "title": "ROWAN 101: COLLEGE SUCCESS-RS(ASCEND students only. First-time undergraduate students only.)",
+        "credit_hours": 2.0,
+        "seats_total": 22,
+        "seats_taken": 22,
+        "campus": "Glassboro",
+        "modality": "in-person",
+        "meetings": [
+          {
+            "days": [
+              "Monday",
+              "Wednesday"
+            ],
+            "start_time": "8:30 AM",
+            "end_time": "9:20 AM"
+          }
+        ]
+      },
+      {
+        "crn": "43324",
+        "course_id": "UNIV01107",
+        "section": "2",
+        "title": "ROWAN 101: COLLEGE SUCCESS-RS(ASCEND students only. First-time undergraduate students only.)",
+        "credit_hours": 2.0,
+        "seats_total": 22,
+        "seats_taken": 20,
+        "campus": "Glassboro",
+        "modality": "in-person",
+        "meetings": [
+          {
+            "days": [
+              "Monday",
+              "Wednesday"
+            ],
+            "start_time": "3:30 PM",
+            "end_time": "4:20 PM"
+          }
+        ]
+      }
+    ]
+  },
+  "prompt": "Which section of UNIV01107 has an available seat? Do not recommend a full section."
+}

@@ -1,0 +1,74 @@
+{
+  "student": {
+    "student_id": "TEST-C2-01",
+    "degree": "BS",
+    "major": "Computer Science",
+    "program_id": "TEST-REG",
+    "catalog_year": "Fall 2026"
+  },
+  "transcript": {
+    "completed_courses": [],
+    "transfer_courses": [],
+    "courses_in_progress": []
+  },
+  "program_requirements": [
+    {
+      "req_id": "REQ-1",
+      "category": "Elective",
+      "rule": "any_of",
+      "course_options": [
+        "BUS01142"
+      ],
+      "credit_hours": 3.0,
+      "minimum_grade": "D-"
+    }
+  ],
+  "schedule": {
+    "term": "Fall 2026",
+    "sections": [
+      {
+        "crn": "46010",
+        "course_id": "BUS01142",
+        "section": "3",
+        "title": "BUSINESS TECHNOLOGY FNDS(First time undergraduate students only)",
+        "credit_hours": 3.0,
+        "seats_total": 30,
+        "seats_taken": 30,
+        "campus": "Glassboro",
+        "modality": "in-person",
+        "meetings": [
+          {
+            "days": [
+              "Monday",
+              "Wednesday"
+            ],
+            "start_time": "9:30 AM",
+            "end_time": "10:45 AM"
+          }
+        ]
+      },
+      {
+        "crn": "46013",
+        "course_id": "BUS01142",
+        "section": "6",
+        "title": "BUSINESS TECHNOLOGY FNDS(First time undergraduate students only)",
+        "credit_hours": 3.0,
+        "seats_total": 30,
+        "seats_taken": 29,
+        "campus": "Glassboro",
+        "modality": "in-person",
+        "meetings": [
+          {
+            "days": [
+              "Monday",
+              "Wednesday"
+            ],
+            "start_time": "11:00 AM",
+            "end_time": "12:15 PM"
+          }
+        ]
+      }
+    ]
+  },
+  "prompt": "Can I register for BUS01142? Identify the section with exactly one remaining seat."
+}

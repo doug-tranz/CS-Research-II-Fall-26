@@ -1,0 +1,74 @@
+{
+  "student": {
+    "student_id": "TEST-C3-01",
+    "degree": "BS",
+    "major": "Computer Science",
+    "program_id": "TEST-REG",
+    "catalog_year": "Fall 2026"
+  },
+  "transcript": {
+    "completed_courses": [],
+    "transfer_courses": [],
+    "courses_in_progress": []
+  },
+  "program_requirements": [
+    {
+      "req_id": "REQ-1",
+      "category": "Elective",
+      "rule": "any_of",
+      "course_options": [
+        "CHEM06100"
+      ],
+      "credit_hours": 4.0,
+      "minimum_grade": "D-"
+    }
+  ],
+  "schedule": {
+    "term": "Fall 2026",
+    "sections": [
+      {
+        "crn": "43518",
+        "course_id": "CHEM06100",
+        "section": "6",
+        "title": "CHEMISTRY I(Non-majors only.)",
+        "credit_hours": 4.0,
+        "seats_total": 24,
+        "seats_taken": 24,
+        "campus": "Glassboro",
+        "modality": "in-person",
+        "meetings": [
+          {
+            "days": [
+              "Monday",
+              "Wednesday"
+            ],
+            "start_time": "8:00 AM",
+            "end_time": "9:15 AM"
+          }
+        ]
+      },
+      {
+        "crn": "43513",
+        "course_id": "CHEM06100",
+        "section": "1",
+        "title": "CHEMISTRY I-RS(Majors only. Must be taken with CHEM L6100 Section 1.)",
+        "credit_hours": 4.0,
+        "seats_total": 22,
+        "seats_taken": 19,
+        "campus": "Glassboro",
+        "modality": "in-person",
+        "meetings": [
+          {
+            "days": [
+              "Monday",
+              "Wednesday"
+            ],
+            "start_time": "9:30 AM",
+            "end_time": "10:45 AM"
+          }
+        ]
+      }
+    ]
+  },
+  "prompt": "Which section of CHEM06100 has MORE open seats? Calculate seats_total minus seats_taken, not total capacity."
+}

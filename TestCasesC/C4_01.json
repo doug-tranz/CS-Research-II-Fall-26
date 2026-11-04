@@ -1,0 +1,56 @@
+{
+  "student": {
+    "student_id": "TEST-C4-01",
+    "degree": "BS",
+    "major": "Computer Science",
+    "program_id": "TEST-REG",
+    "catalog_year": "Fall 2026"
+  },
+  "transcript": {
+    "completed_courses": [],
+    "transfer_courses": [],
+    "courses_in_progress": []
+  },
+  "program_requirements": [
+    {
+      "req_id": "REQ-1",
+      "category": "Elective",
+      "rule": "any_of",
+      "course_options": [
+        "CMS04206"
+      ],
+      "credit_hours": 3.0,
+      "minimum_grade": "D-"
+    }
+  ],
+  "schedule": {
+    "term": "Fall 2026",
+    "sections": [
+      {
+        "crn": "44406",
+        "course_id": "CMS04206",
+        "section": "2",
+        "title": "DIGITAL PRESENTATIONS",
+        "credit_hours": 3.0,
+        "seats_total": 25,
+        "seats_taken": 25,
+        "campus": "Online",
+        "modality": "online",
+        "meetings": []
+      },
+      {
+        "crn": "44403",
+        "course_id": "CMS04206",
+        "section": "1",
+        "title": "DIGITAL PRESENTATIONS",
+        "credit_hours": 3.0,
+        "seats_total": 25,
+        "seats_taken": 24,
+        "campus": "Online",
+        "modality": "online",
+        "meetings": []
+      }
+    ]
+  },
+  "prompt": "Find an OPEN section for the exact course ID CMS04206. The first listed section may not be correct. Give its course ID, section number, and CRN."
+}

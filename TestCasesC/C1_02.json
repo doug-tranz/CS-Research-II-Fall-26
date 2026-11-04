@@ -1,0 +1,56 @@
+{
+  "student": {
+    "student_id": "TEST-C1-02",
+    "degree": "BS",
+    "major": "Computer Science",
+    "program_id": "TEST-REG",
+    "catalog_year": "Fall 2026"
+  },
+  "transcript": {
+    "completed_courses": [],
+    "transfer_courses": [],
+    "courses_in_progress": []
+  },
+  "program_requirements": [
+    {
+      "req_id": "REQ-1",
+      "category": "Elective",
+      "rule": "any_of",
+      "course_options": [
+        "ENGR01798"
+      ],
+      "credit_hours": 9.0,
+      "minimum_grade": "D-"
+    }
+  ],
+  "schedule": {
+    "term": "Fall 2026",
+    "sections": [
+      {
+        "crn": "44991",
+        "course_id": "ENGR01798",
+        "section": "2",
+        "title": "DOCTORAL DISSERTATION CONT",
+        "credit_hours": 9.0,
+        "seats_total": 3,
+        "seats_taken": 3,
+        "campus": "Glassboro",
+        "modality": "in-person",
+        "meetings": []
+      },
+      {
+        "crn": "44935",
+        "course_id": "ENGR01798",
+        "section": "1",
+        "title": "DOCTORAL DISSERTATION CONT",
+        "credit_hours": 9.0,
+        "seats_total": 3,
+        "seats_taken": 1,
+        "campus": "Glassboro",
+        "modality": "in-person",
+        "meetings": []
+      }
+    ]
+  },
+  "prompt": "Which section of ENGR01798 has an available seat? Do not recommend a full section."
+}

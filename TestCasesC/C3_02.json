@@ -1,0 +1,74 @@
+{
+  "student": {
+    "student_id": "TEST-C3-02",
+    "degree": "BS",
+    "major": "Computer Science",
+    "program_id": "TEST-REG",
+    "catalog_year": "Fall 2026"
+  },
+  "transcript": {
+    "completed_courses": [],
+    "transfer_courses": [],
+    "courses_in_progress": []
+  },
+  "program_requirements": [
+    {
+      "req_id": "REQ-1",
+      "category": "Elective",
+      "rule": "any_of",
+      "course_options": [
+        "COMP01105"
+      ],
+      "credit_hours": 4.0,
+      "minimum_grade": "D-"
+    }
+  ],
+  "schedule": {
+    "term": "Fall 2026",
+    "sections": [
+      {
+        "crn": "40552",
+        "course_id": "COMP01105",
+        "section": "4",
+        "title": "INTENSIVE COLLEGE COMP I(Includes 2 in-classroom meetings as noted and one weekly Writing Center session for one hour on Thursday with time TBA.)",
+        "credit_hours": 4.0,
+        "seats_total": 18,
+        "seats_taken": 18,
+        "campus": "Glassboro",
+        "modality": "in-person",
+        "meetings": [
+          {
+            "days": [
+              "Monday",
+              "Wednesday"
+            ],
+            "start_time": "12:30 PM",
+            "end_time": "1:45 PM"
+          }
+        ]
+      },
+      {
+        "crn": "40537",
+        "course_id": "COMP01105",
+        "section": "2",
+        "title": "INTENSIVE COLLEGE COMP I(Includes 2 in-classroom meetings as noted and one weekly Writing Center session for one hour on Thursday with time TBA.)",
+        "credit_hours": 4.0,
+        "seats_total": 16,
+        "seats_taken": 14,
+        "campus": "Glassboro",
+        "modality": "in-person",
+        "meetings": [
+          {
+            "days": [
+              "Monday",
+              "Wednesday"
+            ],
+            "start_time": "9:30 AM",
+            "end_time": "10:45 AM"
+          }
+        ]
+      }
+    ]
+  },
+  "prompt": "Which section of COMP01105 has MORE open seats? Calculate seats_total minus seats_taken, not total capacity."
+}

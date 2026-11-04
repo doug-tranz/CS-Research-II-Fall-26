@@ -1,0 +1,74 @@
+{
+  "student": {
+    "student_id": "TEST-C1-01",
+    "degree": "BS",
+    "major": "Computer Science",
+    "program_id": "TEST-REG",
+    "catalog_year": "Fall 2026"
+  },
+  "transcript": {
+    "completed_courses": [],
+    "transfer_courses": [],
+    "courses_in_progress": []
+  },
+  "program_requirements": [
+    {
+      "req_id": "REQ-1",
+      "category": "Elective",
+      "rule": "any_of",
+      "course_options": [
+        "COMP01111"
+      ],
+      "credit_hours": 3.0,
+      "minimum_grade": "D-"
+    }
+  ],
+  "schedule": {
+    "term": "Fall 2026",
+    "sections": [
+      {
+        "crn": "40638",
+        "course_id": "COMP01111",
+        "section": "1",
+        "title": "COLLEGE COMPOSITION I-RS",
+        "credit_hours": 3.0,
+        "seats_total": 19,
+        "seats_taken": 19,
+        "campus": "Glassboro",
+        "modality": "in-person",
+        "meetings": [
+          {
+            "days": [
+              "Monday",
+              "Wednesday"
+            ],
+            "start_time": "8:00 AM",
+            "end_time": "9:15 AM"
+          }
+        ]
+      },
+      {
+        "crn": "40642",
+        "course_id": "COMP01111",
+        "section": "3",
+        "title": "COLLEGE COMPOSITION I-RS",
+        "credit_hours": 3.0,
+        "seats_total": 22,
+        "seats_taken": 20,
+        "campus": "Glassboro",
+        "modality": "in-person",
+        "meetings": [
+          {
+            "days": [
+              "Monday",
+              "Wednesday"
+            ],
+            "start_time": "11:00 AM",
+            "end_time": "12:15 PM"
+          }
+        ]
+      }
+    ]
+  },
+  "prompt": "Which section of COMP01111 has an available seat? Do not recommend a full section."
+}
