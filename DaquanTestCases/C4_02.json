@@ -1,0 +1,74 @@
+{
+  "student": {
+    "student_id": "TEST-C4-02",
+    "degree": "BS",
+    "major": "Computer Science",
+    "program_id": "TEST-REG",
+    "catalog_year": "Fall 2026"
+  },
+  "transcript": {
+    "completed_courses": [],
+    "transfer_courses": [],
+    "courses_in_progress": []
+  },
+  "program_requirements": [
+    {
+      "req_id": "REQ-1",
+      "category": "Elective",
+      "rule": "any_of",
+      "course_options": [
+        "ARHS03130"
+      ],
+      "credit_hours": 3.0,
+      "minimum_grade": "D-"
+    }
+  ],
+  "schedule": {
+    "term": "Fall 2026",
+    "sections": [
+      {
+        "crn": "40470",
+        "course_id": "ARHS03130",
+        "section": "2",
+        "title": "ART APPRECIATION(Off-campus trip.)",
+        "credit_hours": 3.0,
+        "seats_total": 28,
+        "seats_taken": 28,
+        "campus": "Glassboro",
+        "modality": "in-person",
+        "meetings": [
+          {
+            "days": [
+              "Tuesday",
+              "Thursday"
+            ],
+            "start_time": "5:00 PM",
+            "end_time": "6:15 PM"
+          }
+        ]
+      },
+      {
+        "crn": "40469",
+        "course_id": "ARHS03130",
+        "section": "1",
+        "title": "ART APPRECIATION(Off-campus trip.)",
+        "credit_hours": 3.0,
+        "seats_total": 28,
+        "seats_taken": 27,
+        "campus": "Glassboro",
+        "modality": "in-person",
+        "meetings": [
+          {
+            "days": [
+              "Monday",
+              "Wednesday"
+            ],
+            "start_time": "12:30 PM",
+            "end_time": "1:45 PM"
+          }
+        ]
+      }
+    ]
+  },
+  "prompt": "Find an OPEN section for the exact course ID ARHS03130. The first listed section may not be correct. Give its course ID, section number, and CRN."
+}
