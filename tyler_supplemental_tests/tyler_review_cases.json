@@ -1,0 +1,2821 @@
+[
+  {
+    "case_id": "tyler-sem-003",
+    "input": {
+      "student": {
+        "student_id": "S001",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "32001",
+            "course_id": "CS06000",
+            "section": "01",
+            "title": "Database Systems",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "11:00 AM",
+                "end_time": "12:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "32002",
+            "course_id": "CS06000",
+            "section": "02",
+            "title": "Database Systems",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "online",
+            "meetings": []
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Enroll me in CS06000. I need an online section."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "modality_in": [
+          "online"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "32002"
+          ]
+        ],
+        "invalid": [
+          [
+            "32001"
+          ]
+        ]
+      },
+      "implicit_relationship": "The in-person section is open but fails the requested modality.",
+      "pair": {
+        "id": "modality/tyler-sem-003-sem-004",
+        "variant": "a",
+        "changed": "single explicit constraint in request"
+      }
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "SEM-003",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/semantic_cases_daquan_aneesh.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-sem-004",
+    "input": {
+      "student": {
+        "student_id": "S001",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "32001",
+            "course_id": "CS06000",
+            "section": "01",
+            "title": "Database Systems",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "11:00 AM",
+                "end_time": "12:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "32002",
+            "course_id": "CS06000",
+            "section": "02",
+            "title": "Database Systems",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "online",
+            "meetings": []
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Enroll me in CS06000. I need an in-person section."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "modality_in": [
+          "in-person"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "32001"
+          ]
+        ],
+        "invalid": [
+          [
+            "32002"
+          ]
+        ]
+      },
+      "implicit_relationship": "The online section is open but fails the requested modality.",
+      "pair": {
+        "id": "modality/tyler-sem-003-sem-004",
+        "variant": "b",
+        "changed": "single explicit constraint in request"
+      }
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "SEM-004",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/semantic_cases_daquan_aneesh.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-sem-005",
+    "input": {
+      "student": {
+        "student_id": "S001",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "33001",
+            "course_id": "CS07000",
+            "section": "01",
+            "title": "Systems Topics",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "1:00 PM",
+                "end_time": "2:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "33002",
+            "course_id": "CS07000",
+            "section": "02",
+            "title": "Systems Topics",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Tuesday",
+                  "Thursday"
+                ],
+                "start_time": "1:00 PM",
+                "end_time": "2:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Enroll me in CS07000 on Mondays and Wednesdays."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "no_days": [
+          "Tuesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "33001"
+          ]
+        ],
+        "invalid": [
+          [
+            "33002"
+          ]
+        ]
+      },
+      "implicit_relationship": "Both options have seats, but TR does not match the requested days.",
+      "pair": {
+        "id": "weekday/tyler-sem-005-sem-006",
+        "variant": "a",
+        "changed": "single explicit constraint in request"
+      }
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "SEM-005",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/semantic_cases_daquan_aneesh.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-sem-006",
+    "input": {
+      "student": {
+        "student_id": "S001",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "33001",
+            "course_id": "CS07000",
+            "section": "01",
+            "title": "Systems Topics",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "1:00 PM",
+                "end_time": "2:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "33002",
+            "course_id": "CS07000",
+            "section": "02",
+            "title": "Systems Topics",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Tuesday",
+                  "Thursday"
+                ],
+                "start_time": "1:00 PM",
+                "end_time": "2:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Enroll me in CS07000 on Tuesdays and Thursdays."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "no_days": [
+          "Monday",
+          "Wednesday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "33002"
+          ]
+        ],
+        "invalid": [
+          [
+            "33001"
+          ]
+        ]
+      },
+      "implicit_relationship": "Both options have seats, but MW does not match the requested days.",
+      "pair": {
+        "id": "weekday/tyler-sem-005-sem-006",
+        "variant": "b",
+        "changed": "single explicit constraint in request"
+      }
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "SEM-006",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/semantic_cases_daquan_aneesh.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-sem-007",
+    "input": {
+      "student": {
+        "student_id": "S001",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "34001",
+            "course_id": "CS08000",
+            "section": "01",
+            "title": "AI Topics",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "9:00 AM",
+                "end_time": "10:15 AM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "34002",
+            "course_id": "CS08000",
+            "section": "02",
+            "title": "AI Topics",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Tuesday",
+                  "Thursday"
+                ],
+                "start_time": "3:00 PM",
+                "end_time": "4:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Sign me up for the morning offering of CS08000."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "starts_before": "12:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "34001"
+          ]
+        ],
+        "invalid": [
+          [
+            "34002"
+          ]
+        ]
+      },
+      "implicit_relationship": "3:00 PM is not morning."
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "SEM-007",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/semantic_cases_daquan_aneesh.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-sem-014",
+    "input": {
+      "student": {
+        "student_id": "S001",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [
+        {
+          "req_id": "restricted_elective",
+          "category": "CS Restricted Electives",
+          "rule": "credits_from",
+          "course_options": [
+            "CS02435",
+            "CS02480"
+          ],
+          "title": "Restricted Elective Credits",
+          "credit_hours": 6,
+          "minimum_grade": "C-"
+        }
+      ],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "37001",
+            "course_id": "CS02435",
+            "section": "01",
+            "title": "Computer Science Elective",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "2:00 PM",
+                "end_time": "3:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "37002",
+            "course_id": "MATH03000",
+            "section": "01",
+            "title": "Applied Mathematics",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Tuesday",
+                  "Thursday"
+                ],
+                "start_time": "2:00 PM",
+                "end_time": "3:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "I specifically need the Applied Mathematics course, not a CS restricted elective. Enroll me in that course."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "courses_in": [
+          "MATH03000"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "37002"
+          ]
+        ],
+        "invalid": [
+          [
+            "37001"
+          ]
+        ]
+      },
+      "implicit_relationship": "CS02435 is available but is not the requested mathematics course."
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "SEM-014",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/semantic_cases_daquan_aneesh.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-sem-015",
+    "input": {
+      "student": {
+        "student_id": "S001",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "38001",
+            "course_id": "CS05500",
+            "section": "01",
+            "title": "Machine Learning",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "online",
+            "meetings": []
+          },
+          {
+            "crn": "38002",
+            "course_id": "CS05500",
+            "section": "02",
+            "title": "Machine Learning",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "9:00 AM",
+                "end_time": "10:15 AM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Enroll me in CS05500. Online is mandatory; morning is only a preference if possible."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "modality_in": [
+          "online"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "38001"
+          ]
+        ],
+        "invalid": [
+          [
+            "38002"
+          ]
+        ]
+      },
+      "implicit_relationship": "An in-person morning offering violates the mandatory online requirement."
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "SEM-015",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/semantic_cases_daquan_aneesh.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-sem-018",
+    "input": {
+      "student": {
+        "student_id": "S001",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "39001",
+            "course_id": "CS06600",
+            "section": "01",
+            "title": "Networks",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "online",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "9:00 AM",
+                "end_time": "10:15 AM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "39002",
+            "course_id": "CS06600",
+            "section": "02",
+            "title": "Networks",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "online",
+            "meetings": [
+              {
+                "days": [
+                  "Tuesday",
+                  "Thursday"
+                ],
+                "start_time": "2:00 PM",
+                "end_time": "3:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "39003",
+            "course_id": "CS06600",
+            "section": "03",
+            "title": "Networks",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "2:00 PM",
+                "end_time": "3:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "39004",
+            "course_id": "CS06600",
+            "section": "04",
+            "title": "Networks",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Tuesday",
+                  "Thursday"
+                ],
+                "start_time": "9:00 AM",
+                "end_time": "10:15 AM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "I need CS06600 in-person AND in the morning. Both conditions are required."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "modality_in": [
+          "in-person"
+        ],
+        "starts_before": "12:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "39004"
+          ]
+        ],
+        "invalid": [
+          [
+            "39001"
+          ],
+          [
+            "39002"
+          ],
+          [
+            "39003"
+          ]
+        ]
+      },
+      "implicit_relationship": "39001 is morning but online; 39003 is in-person but afternoon."
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "SEM-018",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/semantic_cases_daquan_aneesh.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-rc-007",
+    "input": {
+      "student": {
+        "student_id": "S-TYLER-DEMO",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "44001",
+            "course_id": "CS08300",
+            "section": "01",
+            "title": "Applied Security",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Wednesday"
+                ],
+                "start_time": "10:00 AM",
+                "end_time": "11:15 AM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "44002",
+            "course_id": "CS08300",
+            "section": "02",
+            "title": "Applied Security",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Wednesday"
+                ],
+                "start_time": "12:00 PM",
+                "end_time": "1:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "I have a non-negotiable lab on Wednesday from 10:30 AM to 11:30 AM. Enroll me in CS08300 only in a section whose meeting does not overlap any part of that lab."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "busy": [
+          {
+            "days": [
+              "Wednesday"
+            ],
+            "start_time": "10:30 AM",
+            "end_time": "11:30 AM"
+          }
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "44002"
+          ]
+        ],
+        "invalid": [
+          [
+            "44001"
+          ]
+        ]
+      },
+      "implicit_relationship": "10:30-11:30 overlaps the 10:00-11:15 section; noon section does not.",
+      "pair": {
+        "id": "busy/tyler-rc-007-rc-008",
+        "variant": "a",
+        "changed": "single explicit constraint in request"
+      }
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "RC-007",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/CSR2_Develop_Test_Cases_Prototype/csr2_reasoning_cases_12.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-rc-008",
+    "input": {
+      "student": {
+        "student_id": "S-TYLER-DEMO",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "44001",
+            "course_id": "CS08300",
+            "section": "01",
+            "title": "Applied Security",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Wednesday"
+                ],
+                "start_time": "10:00 AM",
+                "end_time": "11:15 AM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "44002",
+            "course_id": "CS08300",
+            "section": "02",
+            "title": "Applied Security",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 5,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Wednesday"
+                ],
+                "start_time": "12:00 PM",
+                "end_time": "1:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "I have a non-negotiable lab on Wednesday from 12:30 PM to 1:30 PM. Enroll me in CS08300 only in a section whose meeting does not overlap any part of that lab."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "busy": [
+          {
+            "days": [
+              "Wednesday"
+            ],
+            "start_time": "12:30 PM",
+            "end_time": "1:30 PM"
+          }
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "44001"
+          ]
+        ],
+        "invalid": [
+          [
+            "44002"
+          ]
+        ]
+      },
+      "implicit_relationship": "12:30-1:30 overlaps the 12:00-1:15 section; morning section does not.",
+      "pair": {
+        "id": "busy/tyler-rc-007-rc-008",
+        "variant": "b",
+        "changed": "single explicit constraint in request"
+      }
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "RC-008",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/CSR2_Develop_Test_Cases_Prototype/csr2_reasoning_cases_12.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-day-d1-001",
+    "input": {
+      "student": {
+        "student_id": "S-DYN-2026-001",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "92932",
+            "course_id": "CS25613",
+            "section": "01",
+            "title": "Day-Pattern Seminar",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 20,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "9:00 AM",
+                "end_time": "10:15 AM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "74633",
+            "course_id": "CS25613",
+            "section": "02",
+            "title": "Day-Pattern Seminar",
+            "credit_hours": 3,
+            "seats_total": 24,
+            "seats_taken": 19,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Tuesday",
+                  "Thursday"
+                ],
+                "start_time": "9:00 AM",
+                "end_time": "10:15 AM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Enroll me in CS25613. My available class days are Monday and Wednesday only; I cannot attend Tuesday/Thursday meetings."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "no_days": [
+          "Tuesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "92932"
+          ]
+        ],
+        "invalid": [
+          [
+            "74633"
+          ]
+        ]
+      },
+      "implicit_relationship": "The requested weekday pattern is Monday/Wednesday.",
+      "pair": {
+        "id": "weekday/tyler-day-d1-001-day-d1-002",
+        "variant": "a",
+        "changed": "single explicit constraint in request"
+      }
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "DAY-D1-001",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/d_category_cases_12.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-day-d1-002",
+    "input": {
+      "student": {
+        "student_id": "S-DYN-2026-001",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "92932",
+            "course_id": "CS25613",
+            "section": "01",
+            "title": "Day-Pattern Seminar",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 20,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "9:00 AM",
+                "end_time": "10:15 AM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "74633",
+            "course_id": "CS25613",
+            "section": "02",
+            "title": "Day-Pattern Seminar",
+            "credit_hours": 3,
+            "seats_total": 24,
+            "seats_taken": 19,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Tuesday",
+                  "Thursday"
+                ],
+                "start_time": "9:00 AM",
+                "end_time": "10:15 AM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Enroll me in CS25613. My available class days are Tuesday and Thursday only; I cannot attend Monday/Wednesday meetings."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "no_days": [
+          "Monday",
+          "Wednesday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "74633"
+          ]
+        ],
+        "invalid": [
+          [
+            "92932"
+          ]
+        ]
+      },
+      "implicit_relationship": "The requested weekday pattern is Tuesday/Thursday.",
+      "pair": {
+        "id": "weekday/tyler-day-d1-001-day-d1-002",
+        "variant": "b",
+        "changed": "single explicit constraint in request"
+      }
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "DAY-D1-002",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/d_category_cases_12.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-day-d1-007",
+    "input": {
+      "student": {
+        "student_id": "S-DYN-2026-004",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "65001",
+            "course_id": "CS55568",
+            "section": "02",
+            "title": "Day-Pattern Seminar",
+            "credit_hours": 3,
+            "seats_total": 35,
+            "seats_taken": 21,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Tuesday",
+                  "Thursday"
+                ],
+                "start_time": "1:00 PM",
+                "end_time": "2:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "84664",
+            "course_id": "CS55568",
+            "section": "01",
+            "title": "Day-Pattern Seminar",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 16,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "1:00 PM",
+                "end_time": "2:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Enroll me in CS55568. My available class days are Monday and Wednesday only; I cannot attend Tuesday/Thursday meetings."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "no_days": [
+          "Tuesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "84664"
+          ]
+        ],
+        "invalid": [
+          [
+            "65001"
+          ]
+        ]
+      },
+      "implicit_relationship": "The requested weekday pattern is Monday/Wednesday.",
+      "pair": {
+        "id": "weekday/tyler-day-d1-007-day-d1-008",
+        "variant": "a",
+        "changed": "single explicit constraint in request"
+      }
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "DAY-D1-007",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/d_category_cases_12.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-day-d1-008",
+    "input": {
+      "student": {
+        "student_id": "S-DYN-2026-004",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "65001",
+            "course_id": "CS55568",
+            "section": "02",
+            "title": "Day-Pattern Seminar",
+            "credit_hours": 3,
+            "seats_total": 35,
+            "seats_taken": 21,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Tuesday",
+                  "Thursday"
+                ],
+                "start_time": "1:00 PM",
+                "end_time": "2:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "84664",
+            "course_id": "CS55568",
+            "section": "01",
+            "title": "Day-Pattern Seminar",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 16,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "1:00 PM",
+                "end_time": "2:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Enroll me in CS55568. My available class days are Tuesday and Thursday only; I cannot attend Monday/Wednesday meetings."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "no_days": [
+          "Monday",
+          "Wednesday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "65001"
+          ]
+        ],
+        "invalid": [
+          [
+            "84664"
+          ]
+        ]
+      },
+      "implicit_relationship": "The requested weekday pattern is Tuesday/Thursday.",
+      "pair": {
+        "id": "weekday/tyler-day-d1-007-day-d1-008",
+        "variant": "b",
+        "changed": "single explicit constraint in request"
+      }
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "DAY-D1-008",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/d_category_cases_12.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-day-d2-003",
+    "input": {
+      "student": {
+        "student_id": "S-DYN-2026-002",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "60166",
+            "course_id": "CS85047",
+            "section": "02",
+            "title": "Shared-Day Workshop",
+            "credit_hours": 3,
+            "seats_total": 24,
+            "seats_taken": 2,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday",
+                  "Friday"
+                ],
+                "start_time": "11:00 AM",
+                "end_time": "12:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "92171",
+            "course_id": "CS85047",
+            "section": "01",
+            "title": "Shared-Day Workshop",
+            "credit_hours": 3,
+            "seats_total": 35,
+            "seats_taken": 28,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "11:00 AM",
+                "end_time": "12:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Enroll me in CS85047. I need the section scheduled on exactly Monday and Wednesday. Do not pick one with an additional meeting day."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "no_days": [
+          "Tuesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "92171"
+          ]
+        ],
+        "invalid": [
+          [
+            "60166"
+          ]
+        ]
+      },
+      "implicit_relationship": "Both meet on Monday and Wednesday, but only one has exactly two meeting days."
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "DAY-D2-003",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/d_category_cases_12.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-day-d2-009",
+    "input": {
+      "student": {
+        "student_id": "S-DYN-2026-005",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "79144",
+            "course_id": "CS83066",
+            "section": "01",
+            "title": "Shared-Day Workshop",
+            "credit_hours": 3,
+            "seats_total": 35,
+            "seats_taken": 29,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Tuesday",
+                  "Thursday"
+                ],
+                "start_time": "11:00 AM",
+                "end_time": "12:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "97842",
+            "course_id": "CS83066",
+            "section": "02",
+            "title": "Shared-Day Workshop",
+            "credit_hours": 3,
+            "seats_total": 24,
+            "seats_taken": 0,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Tuesday",
+                  "Thursday",
+                  "Saturday"
+                ],
+                "start_time": "11:00 AM",
+                "end_time": "12:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Enroll me in CS83066. I need the section scheduled on exactly Tuesday and Thursday. Do not pick one with an additional meeting day."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "no_days": [
+          "Monday",
+          "Wednesday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "79144"
+          ]
+        ],
+        "invalid": [
+          [
+            "97842"
+          ]
+        ]
+      },
+      "implicit_relationship": "Both meet on Tuesday and Thursday, but only one has exactly two meeting days."
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "DAY-D2-009",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/d_category_cases_12.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-day-d3-005",
+    "input": {
+      "student": {
+        "student_id": "S-DYN-2026-003",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "89468",
+            "course_id": "CS47649",
+            "section": "01",
+            "title": "Friday-Exclusion Topics",
+            "credit_hours": 3,
+            "seats_total": 24,
+            "seats_taken": 21,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday",
+                  "Friday"
+                ],
+                "start_time": "2:00 PM",
+                "end_time": "3:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "80593",
+            "course_id": "CS47649",
+            "section": "02",
+            "title": "Friday-Exclusion Topics",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 12,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "2:00 PM",
+                "end_time": "3:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Register me for CS47649. I cannot attend anything on Fridays. Choose an open section without a Friday meeting."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "no_days": [
+          "Friday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "80593"
+          ]
+        ],
+        "invalid": [
+          [
+            "89468"
+          ]
+        ]
+      },
+      "implicit_relationship": "The Friday meeting disqualifies the distractor despite open seats."
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "DAY-D3-005",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/d_category_cases_12.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-day-d3-006",
+    "input": {
+      "student": {
+        "student_id": "S-DYN-2026-003",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "89468",
+            "course_id": "CS47649",
+            "section": "01",
+            "title": "Friday-Exclusion Topics",
+            "credit_hours": 3,
+            "seats_total": 24,
+            "seats_taken": 21,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "2:00 PM",
+                "end_time": "3:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "80593",
+            "course_id": "CS47649",
+            "section": "02",
+            "title": "Friday-Exclusion Topics",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 12,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday",
+                  "Friday"
+                ],
+                "start_time": "2:00 PM",
+                "end_time": "3:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Register me for CS47649. I cannot attend anything on Fridays. Choose an open section without a Friday meeting."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "no_days": [
+          "Friday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "89468"
+          ]
+        ],
+        "invalid": [
+          [
+            "80593"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only the weekday schedule changed; the correct CRN must flip."
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "DAY-D3-006",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/d_category_cases_12.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-day-d3-011",
+    "input": {
+      "student": {
+        "student_id": "S-DYN-2026-006",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "87670",
+            "course_id": "CS57650",
+            "section": "01",
+            "title": "Friday-Exclusion Topics",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 12,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Tuesday",
+                  "Friday"
+                ],
+                "start_time": "2:00 PM",
+                "end_time": "3:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "96336",
+            "course_id": "CS57650",
+            "section": "02",
+            "title": "Friday-Exclusion Topics",
+            "credit_hours": 3,
+            "seats_total": 35,
+            "seats_taken": 7,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Tuesday",
+                  "Thursday"
+                ],
+                "start_time": "2:00 PM",
+                "end_time": "3:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Register me for CS57650. I cannot attend anything on Fridays. Choose an open section without a Friday meeting."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "no_days": [
+          "Friday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "96336"
+          ]
+        ],
+        "invalid": [
+          [
+            "87670"
+          ]
+        ]
+      },
+      "implicit_relationship": "The Friday meeting disqualifies the distractor despite open seats."
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "DAY-D3-011",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/d_category_cases_12.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-day-d3-012",
+    "input": {
+      "student": {
+        "student_id": "S-DYN-2026-006",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "87670",
+            "course_id": "CS57650",
+            "section": "01",
+            "title": "Friday-Exclusion Topics",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 12,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Tuesday",
+                  "Thursday"
+                ],
+                "start_time": "2:00 PM",
+                "end_time": "3:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "96336",
+            "course_id": "CS57650",
+            "section": "02",
+            "title": "Friday-Exclusion Topics",
+            "credit_hours": 3,
+            "seats_total": 35,
+            "seats_taken": 7,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Tuesday",
+                  "Friday"
+                ],
+                "start_time": "2:00 PM",
+                "end_time": "3:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Register me for CS57650. I cannot attend anything on Fridays. Choose an open section without a Friday meeting."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "no_days": [
+          "Friday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "87670"
+          ]
+        ],
+        "invalid": [
+          [
+            "96336"
+          ]
+        ]
+      },
+      "implicit_relationship": "Only the weekday schedule changed; the correct CRN must flip."
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "DAY-D3-012",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/d_category_cases_12.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-dyn-0003",
+    "input": {
+      "student": {
+        "student_id": "S-DYN-2026-002",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "60166",
+            "course_id": "CS85047",
+            "section": "02",
+            "title": "Advanced Programming",
+            "credit_hours": 3,
+            "seats_total": 24,
+            "seats_taken": 2,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "10:00 AM",
+                "end_time": "11:15 AM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "92171",
+            "course_id": "CS85047",
+            "section": "01",
+            "title": "Advanced Programming",
+            "credit_hours": 3,
+            "seats_total": 35,
+            "seats_taken": 28,
+            "campus": "Glassboro",
+            "modality": "online",
+            "meetings": []
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Enroll me in CS85047. Online delivery is required."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "modality_in": [
+          "online"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "92171"
+          ]
+        ],
+        "invalid": [
+          [
+            "60166"
+          ]
+        ]
+      },
+      "implicit_relationship": "In-person violates the required online modality.",
+      "pair": {
+        "id": "modality/tyler-dyn-0003-dyn-0004",
+        "variant": "a",
+        "changed": "single explicit constraint in request"
+      }
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "DYN-0003",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/generated_seed2026.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-dyn-0004",
+    "input": {
+      "student": {
+        "student_id": "S-DYN-2026-002",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "60166",
+            "course_id": "CS85047",
+            "section": "02",
+            "title": "Advanced Programming",
+            "credit_hours": 3,
+            "seats_total": 24,
+            "seats_taken": 2,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "10:00 AM",
+                "end_time": "11:15 AM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "92171",
+            "course_id": "CS85047",
+            "section": "01",
+            "title": "Advanced Programming",
+            "credit_hours": 3,
+            "seats_total": 35,
+            "seats_taken": 28,
+            "campus": "Glassboro",
+            "modality": "online",
+            "meetings": []
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Enroll me in CS85047. In-person delivery is required."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "modality_in": [
+          "in-person"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "60166"
+          ]
+        ],
+        "invalid": [
+          [
+            "92171"
+          ]
+        ]
+      },
+      "implicit_relationship": "Online violates the required in-person modality.",
+      "pair": {
+        "id": "modality/tyler-dyn-0003-dyn-0004",
+        "variant": "b",
+        "changed": "single explicit constraint in request"
+      }
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "DYN-0004",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/generated_seed2026.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-dyn-0005",
+    "input": {
+      "student": {
+        "student_id": "S-DYN-2026-003",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "89468",
+            "course_id": "CS47649",
+            "section": "01",
+            "title": "Algorithms",
+            "credit_hours": 3,
+            "seats_total": 24,
+            "seats_taken": 21,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "10:00 AM",
+                "end_time": "11:15 AM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "80593",
+            "course_id": "CS47649",
+            "section": "02",
+            "title": "Computer Networks",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 12,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Tuesday",
+                  "Thursday"
+                ],
+                "start_time": "10:00 AM",
+                "end_time": "11:15 AM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Enroll in CS47649 on Mondays and Wednesdays, not Tuesdays/Thursdays."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "no_days": [
+          "Tuesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "89468"
+          ]
+        ],
+        "invalid": [
+          [
+            "80593"
+          ]
+        ]
+      },
+      "implicit_relationship": "Tuesday/Thursday is not the requested meeting-day set.",
+      "pair": {
+        "id": "weekday/tyler-dyn-0005-dyn-0006",
+        "variant": "a",
+        "changed": "single explicit constraint in request"
+      }
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "DYN-0005",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/generated_seed2026.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-dyn-0006",
+    "input": {
+      "student": {
+        "student_id": "S-DYN-2026-003",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "89468",
+            "course_id": "CS47649",
+            "section": "01",
+            "title": "Algorithms",
+            "credit_hours": 3,
+            "seats_total": 24,
+            "seats_taken": 21,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "10:00 AM",
+                "end_time": "11:15 AM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "80593",
+            "course_id": "CS47649",
+            "section": "02",
+            "title": "Computer Networks",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 12,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Tuesday",
+                  "Thursday"
+                ],
+                "start_time": "10:00 AM",
+                "end_time": "11:15 AM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Enroll in CS47649 on Tuesdays and Thursdays, not Mondays/Wednesdays."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "no_days": [
+          "Monday",
+          "Wednesday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "80593"
+          ]
+        ],
+        "invalid": [
+          [
+            "89468"
+          ]
+        ]
+      },
+      "implicit_relationship": "Monday/Wednesday is not the requested meeting-day set.",
+      "pair": {
+        "id": "weekday/tyler-dyn-0005-dyn-0006",
+        "variant": "b",
+        "changed": "single explicit constraint in request"
+      }
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "DYN-0006",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/generated_seed2026.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-dyn-0007",
+    "input": {
+      "student": {
+        "student_id": "S-DYN-2026-004",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "65001",
+            "course_id": "CS55568",
+            "section": "02",
+            "title": "Software Testing",
+            "credit_hours": 3,
+            "seats_total": 35,
+            "seats_taken": 21,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Tuesday",
+                  "Thursday"
+                ],
+                "start_time": "2:00 PM",
+                "end_time": "3:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "84664",
+            "course_id": "CS55568",
+            "section": "01",
+            "title": "Software Testing",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 16,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "9:00 AM",
+                "end_time": "10:15 AM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Register for CS55568 in the morning only (before noon)."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "starts_before": "12:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "84664"
+          ]
+        ],
+        "invalid": [
+          [
+            "65001"
+          ]
+        ]
+      },
+      "implicit_relationship": "2:00 PM starts in the afternoon."
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "DYN-0007",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/generated_seed2026.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-dyn-0013",
+    "input": {
+      "student": {
+        "student_id": "S-DYN-2026-007",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "92180",
+            "course_id": "CS76369",
+            "section": "01",
+            "title": "Mobile Computing",
+            "credit_hours": 3,
+            "seats_total": 35,
+            "seats_taken": 33,
+            "campus": "Glassboro",
+            "modality": "online",
+            "meetings": []
+          },
+          {
+            "crn": "87522",
+            "course_id": "CS76369",
+            "section": "02",
+            "title": "Advanced Programming",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 29,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "9:00 AM",
+                "end_time": "10:15 AM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Enroll in CS76369: online is MANDATORY, and morning is only a preference if possible."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "modality_in": [
+          "online"
+        ]
+      },
+      "examples": {
+        "valid": [
+          [
+            "92180"
+          ]
+        ],
+        "invalid": [
+          [
+            "87522"
+          ]
+        ]
+      },
+      "implicit_relationship": "In-person violates the mandatory online constraint."
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "DYN-0013",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/generated_seed2026.jsonl",
+    "synthetic": true
+  },
+  {
+    "case_id": "tyler-dyn-0016",
+    "input": {
+      "student": {
+        "student_id": "S-DYN-2026-008",
+        "degree": "Bachelor of Science",
+        "major": "Computer Science",
+        "program_id": "O701",
+        "catalog_year": "Fall 2026"
+      },
+      "transcript": {
+        "completed_courses": [],
+        "transfer_courses": [],
+        "courses_in_progress": []
+      },
+      "program_requirements": [],
+      "schedule": {
+        "term": "Fall 2026",
+        "sections": [
+          {
+            "crn": "66722",
+            "course_id": "CS77233",
+            "section": "03",
+            "title": "Software Testing",
+            "credit_hours": 3,
+            "seats_total": 35,
+            "seats_taken": 27,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Tuesday",
+                  "Thursday"
+                ],
+                "start_time": "2:00 PM",
+                "end_time": "3:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "69333",
+            "course_id": "CS77233",
+            "section": "04",
+            "title": "Information Systems",
+            "credit_hours": 3,
+            "seats_total": 30,
+            "seats_taken": 28,
+            "campus": "Glassboro",
+            "modality": "in-person",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "9:00 AM",
+                "end_time": "10:15 AM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "61663",
+            "course_id": "CS77233",
+            "section": "01",
+            "title": "Advanced Programming",
+            "credit_hours": 3,
+            "seats_total": 35,
+            "seats_taken": 14,
+            "campus": "Glassboro",
+            "modality": "online",
+            "meetings": [
+              {
+                "days": [
+                  "Monday",
+                  "Wednesday"
+                ],
+                "start_time": "9:00 AM",
+                "end_time": "10:15 AM",
+                "type": "Lecture"
+              }
+            ]
+          },
+          {
+            "crn": "63203",
+            "course_id": "CS77233",
+            "section": "02",
+            "title": "Software Testing",
+            "credit_hours": 3,
+            "seats_total": 24,
+            "seats_taken": 16,
+            "campus": "Glassboro",
+            "modality": "online",
+            "meetings": [
+              {
+                "days": [
+                  "Tuesday",
+                  "Thursday"
+                ],
+                "start_time": "2:00 PM",
+                "end_time": "3:15 PM",
+                "type": "Lecture"
+              }
+            ]
+          }
+        ],
+        "term_code": "202640"
+      },
+      "prompt": "Enroll in CS77233 in-person AND in the morning. BOTH conditions are mandatory."
+    },
+    "ground_truth": {
+      "rules": {
+        "count": {
+          "min": 1,
+          "max": 1
+        },
+        "modality_in": [
+          "in-person"
+        ],
+        "starts_before": "12:00 PM"
+      },
+      "examples": {
+        "valid": [
+          [
+            "69333"
+          ]
+        ],
+        "invalid": [
+          [
+            "66722"
+          ],
+          [
+            "61663"
+          ],
+          [
+            "63203"
+          ]
+        ]
+      },
+      "implicit_relationship": "All other sections violate at least one of the two mandatory constraints."
+    },
+    "review_status": "candidate_needs_human_review",
+    "source_case_id": "DYN-0016",
+    "source_branch": "Tyler",
+    "source_file": "Tyler_branch_ready_semantic_tests/semantic_tests/generated_seed2026.jsonl",
+    "synthetic": true
+  }
+]
