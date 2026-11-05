@@ -105,6 +105,7 @@ class GenerationResult:
     energy_wh: float | None = None      # watt-hours the GPU (plus --extra-watts) drew during the call
     avg_watts: float | None = None      # mean power over the call
     energy_usd: float | None = None     # energy_wh at --kwh-price
+    reasoning: str = ""         # the thinking text the provider sent; "" when it hides it (OpenAI)
 
 
 def context_label(task: TaskSpec) -> str:
@@ -137,7 +138,7 @@ def generate(backend, model: str, task: TaskSpec, run_index: int = 0) -> Generat
         reasoning_tokens=rc.reasoning_tokens, first_token_ms=rc.first_token_ms,
         finish_reason=rc.finish_reason, native_finish_reason=rc.native_finish_reason,
         served_model=rc.served_model, provider=rc.provider, generation_id=rc.generation_id,
-        energy_wh=rc.energy_wh, avg_watts=rc.avg_watts, energy_usd=rc.energy_usd)
+        energy_wh=rc.energy_wh, avg_watts=rc.avg_watts, energy_usd=rc.energy_usd, reasoning=rc.reasoning)
 
 
 # ── Shared DIDComm envelope parsing (the body's schema is domain-specific) ──

@@ -28,7 +28,7 @@ ROW_DROPPED = ("prompt_sent", "ok")
 # Local-run fields (LM Studio): dropped from a row when empty, so OpenRouter rows are unchanged.
 LOCAL_FIELDS = ("energy_wh", "avg_watts", "energy_usd", "projected_openrouter_usd")
 ROW_ORDER = ("task_id", "session_id", "run_index", "ts", "case_hashes", "prompt_readable", "parsed_output",
-             "raw_output", "error", "finish_reason", "native_finish_reason", "served_model", "provider",
+             "raw_output", "reasoning", "error", "finish_reason", "native_finish_reason", "served_model", "provider",
              "generation_id", "prompt_tokens", "cached_tokens", "cache_write_tokens", "completion_tokens",
              "reasoning_tokens", "first_token_ms", "latency_ms", "usd_cost", *LOCAL_FIELDS, "verdict", "pair_result")
 
@@ -90,6 +90,8 @@ def slim_row(row: dict) -> dict:
             pass
     if out.get("parsed_output") is None:
         out.pop("parsed_output", None)
+    if not out.get("reasoning"):
+        out.pop("reasoning", None)            # the provider hid it (OpenAI) or the row predates the field
     if out.get("raw_output") == "" and out.get("error") is not None:
         del out["raw_output"]                 # a failed call returned nothing; error says why
     ordered = {k: out[k] for k in ROW_ORDER if k in out}

@@ -106,6 +106,23 @@ class RetryTests(unittest.TestCase):
             self.assertEqual(b._stream("m", []).content, "ok")
         self.assertEqual(post.call_count, 2)
 
+    def test_the_stream_is_read_as_utf8(self):
+        r = mock.MagicMock()
+        r.iter_lines.return_value = iter([])
+        list(backends._sse_chunks(r))
+        self.assertEqual(r.encoding, "utf-8")
+
+    def test_the_thinking_text_is_kept_apart_from_the_answer(self):
+        r = mock.MagicMock(status_code=200)
+        r.iter_lines.return_value = iter(['data: {"choices": [{"delta": {"reasoning": "PR06310 is "}}]}',
+                                          'data: {"choices": [{"delta": {"reasoning_content": "the one."}}]}',
+                                          'data: {"choices": [{"delta": {"content": "{}"}, "finish_reason": "stop"}]}',
+                                          "data: [DONE]"])
+        r.__enter__.return_value = r
+        with mock.patch("pipeline.backends.requests.post", return_value=r):
+            got = OpenRouterBackend(api_key="k")._stream("m", [])
+        self.assertEqual((got.content, got.reasoning), ("{}", "PR06310 is the one."))
+
     def test_other_errors_and_a_last_refusal_are_not_retried(self):
         b = OpenRouterBackend(api_key="k")
         with self.post(400) as post, mock.patch("pipeline.backends.time.sleep"), \

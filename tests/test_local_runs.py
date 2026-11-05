@@ -279,6 +279,11 @@ class EndToEndTests(unittest.TestCase):
         self.assertEqual(set(Counter(code[cid] for cid in hundred).values()), {4, 6})   # 100 pairs over 43 checks
         self.assertEqual(hundred[:20], ten)                                  # a smaller n is a subset
 
+    def test_a_row_keeps_its_reasoning_and_drops_an_empty_one(self):
+        kept = results.slim_row({"task_id": "t", "reasoning": "because", "verdict": {}})
+        self.assertEqual(kept["reasoning"], "because")
+        self.assertNotIn("reasoning", results.slim_row({"task_id": "t", "reasoning": "", "verdict": {}}))
+
     def test_cloud_rows_have_no_local_fields(self):
         row = results.slim_row({"task_id": "t", "energy_wh": None, "avg_watts": None, "energy_usd": None,
                                 "usd_cost": 0.1, "verdict": {}})

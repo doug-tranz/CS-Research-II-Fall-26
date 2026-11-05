@@ -579,7 +579,7 @@ except `deviation_score` (per row, and averaged in the summary).
   exact case version it ran on; `transcript_courses`, how many courses the student's record lists.
 - **What was sent:** `prompt_readable`, the case's own turn as `known_state` and `intent`; the
   output instructions are in the cached opening (the summary's `output_contract`).
-- **What came back:** `parsed_output`, the model's message. `raw_output` (the verbatim text) is
+- **What came back:** `reasoning`, the model's thinking as its provider sent it: the full text for Qwen and Nemotron, a summary for Gemini and OpenAI (OpenAI also sends an encrypted copy, which only OpenAI can read and is not kept); absent when there was none. It costs nothing extra (thinking is billed as output whether or not it is kept). `parsed_output`, the model's message. `raw_output` (the verbatim text) is
   kept only when it is not JSON, e.g. wrapped in a code fence, so the parsed copy would be lossy.
 - **The call:** `error` (null when the call succeeded); `finish_reason` and
   `native_finish_reason` (why generation stopped: `stop`/`end_turn`, `length`/`max_tokens` =
@@ -644,7 +644,7 @@ and `think_mean_wrong`, `cost_usd`, `setup_usd_est`, `per_case_marginal_usd_est`
 | `outcome`, `semantic_ok`, `error_type`, `tier1_ok` ... `tier4_ok` | The verdict, `1` if right, what went wrong, and whether each tier's checks all passed (empty when that tier was not reached) |
 | `sections_registered`, `registered_nothing` | How many sections the cart holds; `1` for an empty cart |
 | `pair_passed`, `same_answer_as_twin` | `1` if both twins were right; `1` if the model gave both twins the same cart |
-| `prompt_tokens`, `cached_tokens`, `cache_write_tokens`, `completion_tokens`, `reasoning_tokens` | Tokens of the call |
+| `prompt_tokens`, `cached_tokens`, `cache_write_tokens`, `completion_tokens`, `reasoning_tokens`, `reasoning_chars` | Tokens of the call, and the length of the saved reasoning text (empty when none was sent) |
 | `usd_cost`, `first_token_ms`, `latency_ms`, `finish_reason`, `reused` | Its cost and timing, why generation stopped, `1` if the answer was reused from another session (`--reuse-from`) |
 
 **Comparing sessions:** `python run_semantic_eval.py --test-file <cases> --compare A.json B.json`
@@ -1602,6 +1602,7 @@ backends × models × domains × tasks × samples
 
 | Version | Date | Changes |
 |---|---|---|
+| 4.1 | 2026-11-05 | Rows keep the model's `reasoning` text (CSV: `reasoning_chars`). Event streams are read as UTF-8 (requests guessed Latin-1, which garbled non-ASCII text such as curly quotes; earlier answers were ASCII and unaffected). |
 | 4.0 | 2026-11-05 | `run_main.sh`: the main runs, one model per command. `--max-tokens` defaults to 32000 (Nemotron Lightning thinks up to ~10k tokens a call). `:free` models are priced as themselves ($0), not as their paid twin. Batch submissions put `provider` before `requests` (OpenRouter refused them otherwise); the Batch API is not used for the main runs, since its calls skip the prompt cache (a Sol test: 9 calls, $2.12, ~18x a cached live call). |
 | 3.9 | 2026-11-05 | Finalized case file: 8 cases (4 pairs) per checklist code, 344 in all (K2 none); each case carries only its own code; `cases_by_owner` removed. Analysis adds `errors_by_check`, `ignored_change_by_check`, `empty_cart`, `sections_vs_requested_by_check` and `reasoning_tokens_by_outcome`; `--effort-report` adds thinking tokens on right / wrong answers and a per-check table; `--export-csv` writes one flat row per call for EDA, and `<OUT>_sessions.csv` one row per session (model x effort). |
 | 3.7 | 2026-10-26 | `--provider TAG`: every call to one OpenRouter endpoint (`provider.only`, no fallback), and the estimate at that endpoint's prices instead of the most expensive one's. `--batch-api`: one live call writes the cache (1h), the session's other calls go through OpenRouter's Batch API at about half price; batch rows have `latency_ms: null` and the summary records `batch_api`. Corrected: the `:batch` ids are price listings, not models a live call can use. Estimates use the 1-hour cache-write price under `--cache-ttl 1h`. `tests/test_openrouter_routing.py`. `--batch-api` splits a session into batches of at most 150 MB (OpenRouter takes 200 MB; 400 cases are ~246 MB) and keeps `<output>.pending-batch.json`, so running a stopped command again collects its batches instead of paying twice. `--effort` takes several efforts (one session each, back to back, approved together); `--resume` skips those already finished. `--reuse-from FILE`: answers already made with exactly the same calls count as a run's first samples (the `-n 3` check after the main runs makes 40 calls instead of 60); the summary's tokens and cost count only the calls made, `reused_answers` the rest. Live OpenRouter calls refused with 429/502/503 are tried again (15 s to 4 min apart), for flex endpoints. Removed: the live dashboard (`dashboard.py`, `dashboard.html`, `--dashboard`). |

@@ -110,7 +110,7 @@ CSV_COLUMNS = ("session_id", "model", "effort", "provider", "tally_variant", "ta
                "transcript_courses", "expected_min", "expected_max", "outcome", "semantic_ok", "error_type",
                "tier1_ok", "tier2_ok", "tier3_ok", "tier4_ok", "sections_registered", "registered_nothing",
                "pair_passed", "same_answer_as_twin", "prompt_tokens", "cached_tokens", "cache_write_tokens",
-               "completion_tokens", "reasoning_tokens", "usd_cost", "first_token_ms", "latency_ms",
+               "completion_tokens", "reasoning_tokens", "reasoning_chars", "usd_cost", "first_token_ms", "latency_ms",
                "finish_reason", "reused")
 
 
@@ -221,6 +221,7 @@ def export_csv(case_file: str, out_path: str, results_files: list) -> tuple:
                 "pair_passed": bit(pr.get("pair_passed")), "same_answer_as_twin": bit(pr.get("same_answer_as_twin")),
                 **{k: r.get(k) for k in ("prompt_tokens", "cached_tokens", "cache_write_tokens", "completion_tokens",
                                          "reasoning_tokens", "usd_cost", "first_token_ms", "latency_ms", "finish_reason")},
+                "reasoning_chars": len(r["reasoning"]) if r.get("reasoning") else "",
                 "reused": bit(r.get("reused_from"))})
     with open(out_path, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=CSV_COLUMNS)

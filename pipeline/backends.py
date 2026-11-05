@@ -43,6 +43,7 @@ class RawCall:
     energy_wh: float | None = None        # local only: energy drawn during the call
     avg_watts: float | None = None        # local only: mean power during the call
     energy_usd: float | None = None       # local only: energy_wh at the electricity price
+    reasoning: str = ""                   # the thinking text the provider sent (full, a summary, or "" when hidden)
 
 
 # The generation settings every call sends (beyond model and messages). Recorded in each results
@@ -68,7 +69,9 @@ def generation_settings(max_tokens: int | None = None, effort: str | None = None
 
 def _sse_chunks(response):
     """The JSON chunks of an OpenAI-style server-sent event stream, in order. Skips keep-alive
-    comments (": OPENROUTER PROCESSING") and stops at [DONE]."""
+    comments (": OPENROUTER PROCESSING") and stops at [DONE]. Read as UTF-8, as event streams
+    are: the header names no charset, so requests would guess Latin-1 and garble "it’s"."""
+    response.encoding = "utf-8"
     for line in response.iter_lines(decode_unicode=True):
         if not line or line.startswith(":") or not line.startswith("data: "):
             continue
@@ -92,7 +95,7 @@ class _StreamReader:
 
     def __init__(self, t0: float, server: str):
         self.t0, self.server = t0, server
-        self.text, self.first, self.usage, self.info = [], None, {}, {}
+        self.text, self.thinking, self.first, self.usage, self.info = [], [], None, {}, {}
         self.latency_ms = None
 
     def read(self, response) -> None:
@@ -111,6 +114,7 @@ class _StreamReader:
                 if self.first is None and (delta.get("content") or thinking):
                     self.first = (time.perf_counter() - self.t0) * 1000
                 self.text.append(delta.get("content") or "")
+                self.thinking.append(thinking or "")
                 if choice.get("finish_reason"):
                     self.info["finish_reason"] = choice["finish_reason"]
                     self.info["native_finish_reason"] = choice.get("native_finish_reason")
@@ -120,7 +124,8 @@ class _StreamReader:
     def raw_call(self, **extra) -> RawCall:
         """The collected stream as a RawCall; `extra` sets fields the stream does not carry."""
         fields = dict(
-            content="".join(self.text), latency_ms=self.latency_ms, **usage_fields(self.usage),
+            content="".join(self.text), reasoning="".join(self.thinking), latency_ms=self.latency_ms,
+            **usage_fields(self.usage),
             first_token_ms=self.first, finish_reason=self.info.get("finish_reason"),
             native_finish_reason=self.info.get("native_finish_reason"),
             served_model=self.info.get("model"), provider=self.info.get("provider"),
@@ -317,7 +322,9 @@ class OpenRouterBackend:        # One key, many models (§4.2).
             return RuntimeError(f"batch request failed: {entry['error'].get('message', entry['error'])}")
         body = (entry.get("response") or {}).get("body") or {}
         choice = (body.get("choices") or [{}])[0]
-        return RawCall(content=(choice.get("message") or {}).get("content") or "", latency_ms=None,
+        message = choice.get("message") or {}
+        return RawCall(content=message.get("content") or "", latency_ms=None,
+                       reasoning=message.get("reasoning") or message.get("reasoning_content") or "",
                        **usage_fields(body.get("usage") or {}),
                        finish_reason=choice.get("finish_reason"),
                        native_finish_reason=choice.get("native_finish_reason"),
