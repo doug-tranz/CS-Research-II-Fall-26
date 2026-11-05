@@ -14,6 +14,8 @@ import json
 from dataclasses import dataclass
 from datetime import datetime, timezone
 
+from .backends import DailyLimitReached
+
 SYSTEM_PROMPT = (
     "You produce transactions as DIDComm-format JSON messages. "
     "Respond with ONLY the JSON message — no prose, no markdown, no code fences. "
@@ -124,6 +126,8 @@ def generate(backend, model: str, task: TaskSpec, run_index: int = 0) -> Generat
     ts = datetime.now(timezone.utc).isoformat()
     try:
         rc = backend.call(model, messages)
+    except DailyLimitReached:
+        raise                           # the run stops: no call can succeed until the allowance resets
     except Exception as e:
         return GenerationResult(task.task_id, model, prompt_sent, "", 0, 0, 0.0, 0.0,
                                 run_index, False, str(e), ts, shared_context=context_label(task))

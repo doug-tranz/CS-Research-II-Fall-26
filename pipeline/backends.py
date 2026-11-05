@@ -15,6 +15,7 @@ call(model, messages) -> RawCall.
 import hashlib
 import json
 import os
+import re
 import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -79,6 +80,14 @@ def _sse_chunks(response):
         if data == "[DONE]":
             return
         yield json.loads(data)
+
+
+class DailyLimitReached(RuntimeError):
+    """OpenRouter's daily allowance of free-model requests is used up: no call can succeed until it
+    resets at 00:00 UTC, so the run stops instead of retrying and logging failures."""
+
+
+DAILY_LIMIT = re.compile(r"per[- _]?day", re.I)     # the 429 that names the daily allowance
 
 
 class _Refused(RuntimeError):
@@ -398,6 +407,8 @@ class OpenRouterBackend:        # One key, many models (§4.2).
                 else:
                     d = r.json() if r.content else {}
                     error = f"OpenRouter {status}: {d.get('error', r.text)}"
+            if status == 429 and DAILY_LIMIT.search(error):
+                raise DailyLimitReached(error)
             if status not in self.RETRY_STATUS or wait is None:
                 raise RuntimeError(error)
             print(f"  {error}; trying again in {wait}s")

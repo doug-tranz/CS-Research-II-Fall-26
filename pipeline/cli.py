@@ -46,7 +46,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 from types import SimpleNamespace
 
-from .backends import LMStudioBackend, OpenRouterBackend, generation_settings
+from .backends import DailyLimitReached, LMStudioBackend, OpenRouterBackend, generation_settings
+
+DAILY_LIMIT_EXIT = 3        # exit status of a run stopped by the daily free-model limit (run_main.sh reads it)
 from .batch import batch_report, batch_totals, pair_groups, report_lines, spread_pairs
 from .cases import case_subjects, case_hashes, load_test_cases, read_cases, validate_case
 from .energy import PowerMeter
@@ -92,7 +94,8 @@ def build_parser() -> argparse.ArgumentParser:
                           "(--subjects auto per pair): how a local model gets through many cases. Ends with "
                           "the batch's grand totals")
     run.add_argument("--resume", action="store_true",
-                     help="with several --effort: skip the efforts --output already has a whole session of. "
+                     help="skip the efforts --output already has a whole session of, and continue a session "
+                          "that stopped (daily free-model limit, --max-cost, crash) from its next call. "
                           "With --session-per-pair: continue the last batch in --output, skipping the pairs "
                           "already done (rerun the same command with --resume after a crash or a stop)")
     run.add_argument("--reuse-from", metavar="FILE",
@@ -371,17 +374,36 @@ def call_note(result, projected: float | None) -> str:
             f"{result.energy_wh:.4f} Wh at {result.avg_watts:.0f} W, ${result.energy_usd:.6f}{projected_text}]")
 
 
+def unfinished_session(args, calls: dict, cases: list) -> tuple:
+    """--resume: the latest session of --output that made these exact calls (same_calls(), same -n)
+    but not all of them, because it stopped at the daily free-model limit, at --max-cost or in a
+    crash. Returns (its id, the (case id, run) pairs it has rows for), or (None, set())."""
+    if not args.resume or not Path(args.output).exists():
+        return None, set()
+    sessions, results = load_results(args.output)
+    ids = {c["case_id"] for c in cases}
+    for s in reversed(sessions):
+        if s.get("samples_per_case") != args.n or s.get("batch") or not same_calls(s, calls):
+            continue
+        rows = [r for r in results if r.get("session_id") == s["session_id"]]
+        if rows and {r["task_id"] for r in rows} <= ids and len(rows) < len(cases) * args.n:
+            return s["session_id"], {(r["task_id"], r["run_index"]) for r in rows}
+    return None, set()
+
+
 def run_cases(cases: list, backend, args, session: TallySession, meta: dict, projection=None,
-              spent: float = 0.0, reuse: dict | None = None) -> dict:
+              spent: float = 0.0, reuse: dict | None = None, done: set = frozenset()) -> dict:
     """Runs every case n times: generate, score through all four tiers, print one line, and
     append the row to the results file; stops early once the calls (with `spent`, what earlier
     sessions of a batch cost) reach --max-cost. At the end, sets each pair row's pair_result and
     writes the session's summary into the file, then prints the totals and paired accuracy.
-    reuse: reusable()'s answers, which fill a case's first samples instead of new calls.
-    Returns {"cost", "stopped"}."""
+    reuse: reusable()'s answers, which fill a case's first samples instead of new calls. done: the
+    (case, run) pairs a continued session already has (unfinished_session()); they are skipped.
+    Stops at OpenRouter's daily free-model limit too (no failed rows). Returns {"cost", "stopped",
+    "daily_limit"}."""
     raw_cases = {c["case_id"]: c for c in read_cases(args.test_file)}
     passed, runs, cost, outcomes = 0, 0, 0.0, {}
-    stopped = False
+    stopped = daily = False
     batch_api = getattr(backend, "batch_api", False)
     pending = pending_file(args.output)
     reuse = reuse or {}
@@ -396,6 +418,8 @@ def run_cases(cases: list, backend, args, session: TallySession, meta: dict, pro
         old = reuse.get(case["case_id"], [])
         for run_index in range(args.n):
             label = task.task_id if args.n == 1 else f"{task.task_id} run {run_index}"
+            if (task.task_id, run_index) in done:     # a continued session made this call before
+                continue
             if run_index < len(old):          # answered before with these exact calls: no new call
                 row = {**old[run_index], "run_index": run_index, "session_id": meta["session_id"],
                        "reused_from": {"file": shown(args.reuse_from), "session_id": old[run_index]["session_id"],
@@ -409,7 +433,12 @@ def run_cases(cases: list, backend, args, session: TallySession, meta: dict, pro
             if not batch_api and args.max_cost is not None and spent + cost >= args.max_cost:
                 stopped = True
                 break
-            result = generate(backend, args.model, task, run_index=run_index)
+            try:
+                result = generate(backend, args.model, task, run_index=run_index)
+            except DailyLimitReached as e:
+                print(f"{label}: not made: {e}")
+                stopped = daily = True
+                break
             if result.ok:
                 verdict = score_answer(case, result.raw_output, result.finish_reason, result.native_finish_reason)
             else:
@@ -433,7 +462,10 @@ def run_cases(cases: list, backend, args, session: TallySession, meta: dict, pro
         if stopped:
             break
 
-    if stopped:
+    if daily:
+        print(f"stopped: OpenRouter's daily allowance of free-model requests is used up; it resets at 00:00 UTC. "
+              f"Run the same command with --resume then: this session continues where it stopped.")
+    elif stopped:
         print(f"stopped: the calls made have cost ${spent + cost:.4f}, reaching --max-cost ${args.max_cost:g}; "
               f"{len(cases) * args.n - runs} call(s) of this session not made")
     if reuse:
@@ -441,8 +473,11 @@ def run_cases(cases: list, backend, args, session: TallySession, meta: dict, pro
     # The run's summary: mark an early stop, relate each pair row to its twin, recompute totals.
     sessions, results = load_results(args.output)
     for s in sessions:
-        if s["session_id"] == meta["session_id"] and stopped:
-            s["stopped_at_max_cost"] = True
+        if s["session_id"] == meta["session_id"]:
+            s.pop("stopped_at_max_cost", None)        # a continued session that now finished
+            s.pop("stopped_at_daily_limit", None)
+            if stopped:
+                s["stopped_at_daily_limit" if daily else "stopped_at_max_cost"] = True
     if getattr(backend, "api_key", None):          # OpenRouter's record of each call: version, tier, attempts
         mine = [r for r in results if r.get("session_id") == meta["session_id"]]
         print(f"OpenRouter's records: {add_generations(mine, backend.api_key)} of {len(mine)} calls")
@@ -455,7 +490,7 @@ def run_cases(cases: list, backend, args, session: TallySession, meta: dict, pro
           f"Full results in {shown(args.output)} (session {meta['session_id']})")
     for line in pair_summary(pairs_of(cases), outcomes):
         print(line)
-    return {"cost": cost, "stopped": stopped}
+    return {"cost": cost, "stopped": stopped, "daily_limit": daily}
 
 
 def run_session(args, backend, cases: list, subjects, label=None, batch=None, spent: float = 0.0,
@@ -467,18 +502,24 @@ def run_session(args, backend, cases: list, subjects, label=None, batch=None, sp
     extra = {"batch": batch} if batch else {}
     with TallySession(args.cache_ttl, args.tally, subjects, label) as session:
         tasks = [to_task(c, args.rendering, session) for c in cases]
-        reuse = reusable(args, call_settings(args, session, tasks[0], backend.settings), cases)
+        calls = call_settings(args, session, tasks[0], backend.settings)
+        reuse = reusable(args, calls, cases)
+        continued, done = unfinished_session(args, calls, cases)
+        if continued:
+            print(f"--resume: continuing session {continued}, which has {len(done)} of "
+                  f"{len(cases) * args.n} calls; only the rest are made")
+            extra = {**extra, "session_id": continued}
         if backend.paid:
             estimate = session_estimate(args, args.model, session, tasks, sum(map(len, reuse.values())))
             print(estimate["text"])
             if not approved and not confirm_spend(estimate, args.max_cost, args.yes):
                 return None
             meta = session_meta(args, backend, session, tasks[0], estimate["usd"], extra)
-            return run_cases(cases, backend, args, session, meta, spent=spent, reuse=reuse)
+            return run_cases(cases, backend, args, session, meta, spent=spent, reuse=reuse, done=done)
         lines, local, projection = local_preamble(args, backend, session, cases, tasks, whole=batch is None)
         print("\n".join(lines))
         meta = session_meta(args, backend, session, tasks[0], None, {**local, **extra})
-        return run_cases(cases, backend, args, session, meta, projection, spent=spent, reuse=reuse)
+        return run_cases(cases, backend, args, session, meta, projection, spent=spent, reuse=reuse, done=done)
 
 
 def run_batch(args, backend, cases: list) -> None:
@@ -625,7 +666,7 @@ def main():
         print(f"note: {args.n} sample(s) per case; use -n 3 or more to compare sessions reliably")
     if args.session_per_pair:
         run_batch(args, make_backend(args), cases)
-    elif len(efforts) == 1:
+    elif len(efforts) == 1 and not args.resume:     # --resume: run_efforts() skips a finished session
         run_session(args, make_backend(args), cases, pick_subjects(args, cases))
     else:
         run_efforts(args, efforts, cases, pick_subjects(args, cases))
@@ -633,7 +674,7 @@ def main():
 
 def finished_efforts(args, cases: list) -> set:
     """The efforts --output already holds a whole session of: this model and tally, these cases,
-    every call made (not stopped at --max-cost). Read by --resume with several --effort."""
+    every call made (not stopped at --max-cost). Read by --resume."""
     sessions, _ = load_results(args.output) if Path(args.output).exists() else ([], [])
     ids = sorted(c["case_id"] for c in cases)
     return {(s.get("generation_settings") or {}).get("reasoning", {}).get("effort") for s in sessions
@@ -673,6 +714,8 @@ def run_efforts(args, efforts: list, cases: list, subjects) -> None:
         result = run_session(args, make_backend(args), cases, subjects, label=effort, spent=spent, approved=True)
         spent += result["cost"]
         if result["stopped"]:
+            if result["daily_limit"]:
+                raise SystemExit(DAILY_LIMIT_EXIT)
             break
 
 

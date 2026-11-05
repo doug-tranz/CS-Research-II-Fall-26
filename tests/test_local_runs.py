@@ -173,6 +173,42 @@ class BackendTests(unittest.TestCase):
 class EndToEndTests(unittest.TestCase):
     """The command line, run locally against the stand-in server, on one real pair."""
 
+    def test_the_daily_limit_stops_a_session_and_resume_continues_it(self):
+        from pipeline.backends import DailyLimitReached, LMStudioBackend
+        case = load_test_cases(task_ids={PAIR[0]})[0]
+        stub = StubLMStudio(answer=expected_message(case, case["ground_truth"]["examples"]["valid"][0]),
+                            prompt_tokens=20000, completion_tokens=300, context=200000)
+        out = Path(tempfile.mkdtemp()) / "free.json"
+        argv = ["run_semantic_eval.py", "--backend", "lmstudio", "--model", "stub-model", "--lmstudio-url", stub.url,
+                "--watts", "150", "--subjects", "auto", "--task-ids", *PAIR, "--output", str(out)]
+        real, made = LMStudioBackend.call, []
+
+        def second_call_hits_the_limit(self, model, messages):
+            made.append(1)
+            if len(made) == 2:
+                raise DailyLimitReached("OpenRouter 429: Rate limit exceeded: free-models-per-day")
+            return real(self, model, messages)
+        try:
+            with mock.patch.object(sys, "argv", argv), mock.patch.object(LMStudioBackend, "call", second_call_hits_the_limit), \
+                    mock.patch("pipeline.cli.lookup_price", return_value=(None, "no price")), \
+                    contextlib.redirect_stdout(io.StringIO()) as printed:
+                cli.main()
+            data = json.loads(out.read_text(encoding="utf-8"))
+            self.assertEqual(len(data["results"]), 1, printed.getvalue())       # no failed row for the refused call
+            self.assertTrue(data["sessions"][0]["stopped_at_daily_limit"])
+            for _ in range(2):                  # the second --resume finds the session whole: no call
+                with mock.patch.object(sys, "argv", argv + ["--resume"]), \
+                        mock.patch("pipeline.cli.lookup_price", return_value=(None, "no price")), \
+                        contextlib.redirect_stdout(io.StringIO()) as printed:
+                    cli.main()
+        finally:
+            stub.close()
+        data = json.loads(out.read_text(encoding="utf-8"))
+        self.assertEqual(len(data["sessions"]), 1, printed.getvalue())         # the same session, continued
+        self.assertEqual(sorted(r["task_id"] for r in data["results"]), sorted(PAIR))
+        self.assertNotIn("stopped_at_daily_limit", data["sessions"][0])
+        self.assertEqual(len(stub.requests), 2)                               # the first case was not asked again
+
     def test_local_run_records_energy_and_projected_cost(self):
         case = load_test_cases(task_ids={PAIR[0]})[0]
         right = expected_message(case, case["ground_truth"]["examples"]["valid"][0])

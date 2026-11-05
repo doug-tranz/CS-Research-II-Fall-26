@@ -130,6 +130,16 @@ class RetryTests(unittest.TestCase):
             self.assertEqual(b._stream("m", []).content, "ok")
         self.assertEqual(post.call_count, 2)
 
+    def test_the_daily_free_limit_stops_at_once_instead_of_retrying(self):
+        r = mock.MagicMock(status_code=429, content=b"x")
+        r.json.return_value = {"error": {"code": 429, "message": "Rate limit exceeded: free-models-per-day. "
+                                                                 "Add 10 credits to unlock 1000 free model requests per day"}}
+        r.__enter__.return_value = r
+        with mock.patch("pipeline.backends.requests.post", return_value=r) as post, \
+                mock.patch("pipeline.backends.time.sleep") as sleep, self.assertRaises(backends.DailyLimitReached):
+            OpenRouterBackend(api_key="k")._stream("m:free", [])
+        self.assertEqual((post.call_count, sleep.call_count), (1, 0))
+
     def test_the_stream_is_read_as_utf8(self):
         r = mock.MagicMock()
         r.iter_lines.return_value = iter([])
