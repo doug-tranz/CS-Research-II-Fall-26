@@ -206,6 +206,41 @@ def usage_fields(usage: dict) -> dict:
 
 # ── OpenRouter: cloud, paid ──
 
+GENERATION_URL = "https://openrouter.ai/api/v1/generation"
+
+
+def generation_record(api_key: str, generation_id: str, tries: int = 4, wait: float = 2.0) -> dict | None:
+    """What OpenRouter recorded about one call (GET /generation), the parts a row keeps: the dated
+    model version that answered, the service tier it ran at (flex or not), every attempt at a
+    provider (retries, rate limits), timing, both token counts and the cache discount. A record can
+    take a few seconds to appear, so a 404 or 429 is tried again; None when there is none."""
+    for i in range(tries):
+        try:
+            r = requests.get(GENERATION_URL, params={"id": generation_id},
+                             headers={"Authorization": f"Bearer {api_key}"}, timeout=30)
+        except requests.RequestException:
+            r = None
+        if r is not None and r.status_code == 200:
+            d = r.json().get("data") or {}
+            return {
+                "model_version": d.get("model"), "service_tier": d.get("service_tier"),
+                "provider_name": d.get("provider_name"),
+                "first_token_ms": d.get("latency"), "generation_time_ms": d.get("generation_time"),
+                "tokens": {k: d.get(k) for k in ("tokens_prompt", "tokens_completion", "native_tokens_prompt",
+                                                  "native_tokens_completion", "native_tokens_reasoning",
+                                                  "native_tokens_cached")},
+                "total_cost": d.get("total_cost"), "cache_discount": d.get("cache_discount"),
+                "attempts": [{k: a.get(k) for k in ("provider_name", "status", "latency", "routed_service_tier",
+                                                     "model_permaslug")} for a in d.get("provider_responses") or []],
+                "cancelled": d.get("cancelled"), "upstream_id": d.get("upstream_id"),
+                "data_region": d.get("data_region")}
+        if r is not None and r.status_code not in (404, 429) and r.status_code < 500:
+            return None
+        if i < tries - 1:
+            time.sleep(wait * (i + 1))
+    return None
+
+
 class OpenRouterBackend:        # One key, many models (§4.2).
     """Cloud models through OpenRouter's OpenAI-compatible API, streamed: reports the exact cost,
     how many input tokens were read from or written to the prompt cache, thinking tokens, time

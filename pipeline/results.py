@@ -30,7 +30,8 @@ LOCAL_FIELDS = ("energy_wh", "avg_watts", "energy_usd", "projected_openrouter_us
 ROW_ORDER = ("task_id", "session_id", "run_index", "ts", "case_hashes", "prompt_readable", "parsed_output",
              "raw_output", "reasoning", "error", "finish_reason", "native_finish_reason", "served_model", "provider",
              "generation_id", "prompt_tokens", "cached_tokens", "cache_write_tokens", "completion_tokens",
-             "reasoning_tokens", "first_token_ms", "latency_ms", "usd_cost", *LOCAL_FIELDS, "verdict", "pair_result")
+             "reasoning_tokens", "first_token_ms", "latency_ms", "usd_cost", *LOCAL_FIELDS, "generation", "verdict",
+             "pair_result")
 
 
 # ── One row ──
@@ -138,6 +139,23 @@ def append_row(path: str, row: dict, meta: dict) -> None:
     results.append(row)
     save_results(path, sessions, results)
 
+
+
+def add_generations(rows: list, api_key: str) -> int:
+    """Adds OpenRouter's record of each call (backends.generation_record()) as `generation` to the
+    rows that have a generation_id and no record yet, in place; batch calls have none to fetch.
+    Returns how many rows got one."""
+    from .backends import generation_record
+    added = 0
+    for r in rows:
+        gid = r.get("generation_id")
+        if not gid or "generation" in r or str(gid).startswith("gen-batch"):
+            continue
+        record = generation_record(api_key, gid)
+        if record:
+            r["generation"] = record
+            added += 1
+    return added
 
 
 def file_hash(path: str) -> str:

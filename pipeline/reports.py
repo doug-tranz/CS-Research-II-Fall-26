@@ -111,7 +111,7 @@ CSV_COLUMNS = ("session_id", "model", "effort", "provider", "tally_variant", "ta
                "tier1_ok", "tier2_ok", "tier3_ok", "tier4_ok", "sections_registered", "registered_nothing",
                "pair_passed", "same_answer_as_twin", "prompt_tokens", "cached_tokens", "cache_write_tokens",
                "completion_tokens", "reasoning_tokens", "reasoning_chars", "usd_cost", "first_token_ms", "latency_ms",
-               "finish_reason", "reused")
+               "finish_reason", "model_version", "service_tier", "attempts", "generation_time_ms", "reused")
 
 
 def _case_index(case_file: str) -> dict:
@@ -199,7 +199,7 @@ def export_csv(case_file: str, out_path: str, results_files: list) -> tuple:
             answer = _answer(r) if r.get("error") is None else None
             tiers = {f"tier{i}_ok": bit(all(x["passed"] for x in v[f"tier{i}_checks"])) if v.get(f"tier{i}_checks") else ""
                      for i in range(1, 5)}
-            pr = r.get("pair_result") or {}
+            pr, gen = r.get("pair_result") or {}, r.get("generation") or {}
             rows.append({
                 "session_id": r.get("session_id"), "model": s.get("model"),
                 "effort": (g.get("reasoning") or {}).get("effort", "default"),
@@ -222,6 +222,9 @@ def export_csv(case_file: str, out_path: str, results_files: list) -> tuple:
                 **{k: r.get(k) for k in ("prompt_tokens", "cached_tokens", "cache_write_tokens", "completion_tokens",
                                          "reasoning_tokens", "usd_cost", "first_token_ms", "latency_ms", "finish_reason")},
                 "reasoning_chars": len(r["reasoning"]) if r.get("reasoning") else "",
+                "model_version": gen.get("model_version"), "service_tier": gen.get("service_tier"),
+                "attempts": len(gen["attempts"]) if gen.get("attempts") else "",
+                "generation_time_ms": gen.get("generation_time_ms"),
                 "reused": bit(r.get("reused_from"))})
     with open(out_path, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=CSV_COLUMNS)

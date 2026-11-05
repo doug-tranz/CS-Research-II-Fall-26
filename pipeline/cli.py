@@ -56,7 +56,7 @@ from .paths import CASES, DEFAULT_OUTPUT, shown
 from .pricing import Projection, confirm_spend, estimate_cost, lookup_price, opening_tokens
 from .render import RENDERINGS, TALLY_VARIANTS, render_opening, session_contract, to_task
 from .reports import _sessions_path, compare, effort_report, export_csv, pair_report, rescore
-from .results import append_row, file_hash, load_results, log_row, rebuild_summaries, save_results
+from .results import add_generations, append_row, file_hash, load_results, log_row, rebuild_summaries, save_results
 from .scoring import failed_call_verdict, score_answer
 from .selfcheck import check_cases
 from .session import TallySession
@@ -162,6 +162,9 @@ def build_parser() -> argparse.ArgumentParser:
     other.add_argument("--effort-report", action="store_true",
                        help="print one line per session in --output (model, effort, accuracy, paired accuracy, cost "
                             "per correct answer, thinking tokens, latency) and exit; no model call")
+    other.add_argument("--fetch-generations", action="store_true",
+                       help="add OpenRouter's record of each call (model version, service tier, attempts, timing) "
+                            "to the rows of --output that lack one, and exit; no model call")
     other.add_argument("--export-csv", nargs="+", metavar="PATH",
                        help="OUT [RESULTS ...]: write one flat row per call (for pandas / EDA) to OUT from the results "
                             "files after it (default: --output) and exit; no model call")
@@ -440,6 +443,9 @@ def run_cases(cases: list, backend, args, session: TallySession, meta: dict, pro
     for s in sessions:
         if s["session_id"] == meta["session_id"] and stopped:
             s["stopped_at_max_cost"] = True
+    if getattr(backend, "api_key", None):          # OpenRouter's record of each call: version, tier, attempts
+        mine = [r for r in results if r.get("session_id") == meta["session_id"]]
+        print(f"OpenRouter's records: {add_generations(mine, backend.api_key)} of {len(mine)} calls")
     if pairs_of(cases):
         relate_pairs(args.test_file, results)     # each pair row's pair_result
     save_results(args.output, rebuild_summaries(args.test_file, sessions, results), results)
@@ -558,6 +564,12 @@ def main():
         return
     if args.compare:
         compare(args.test_file, *args.compare)
+        return
+    if args.fetch_generations:
+        sessions, results = load_results(args.output)
+        added = add_generations(results, OpenRouterBackend().api_key)
+        save_results(args.output, sessions, results)
+        print(f"OpenRouter's records added to {added} rows of {shown(args.output)}")
         return
     if args.export_csv:
         out, files = args.export_csv[0], args.export_csv[1:] or [args.output]

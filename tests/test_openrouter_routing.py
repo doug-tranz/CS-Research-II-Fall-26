@@ -17,7 +17,7 @@ from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from pipeline import backends, cli, pricing                                     # noqa: E402
+from pipeline import backends, cli, pricing, results                            # noqa: E402
 from pipeline.backends import OpenRouterBackend, RawCall                        # noqa: E402
 from pipeline.cases import read_cases                                          # noqa: E402
 
@@ -72,6 +72,30 @@ class ProviderTests(unittest.TestCase):
     def test_one_hour_cache_uses_its_own_write_price(self):
         self.assertAlmostEqual(pricing.rates(SONNET, "1h")["cache_write"], 0.000004)
         self.assertAlmostEqual(pricing.rates(SONNET)["cache_write"], 0.0000025)
+
+
+class GenerationRecordTests(unittest.TestCase):
+    RECORD = {"data": {"model": "openai/gpt-6-luna-20260922", "service_tier": "flex", "provider_name": "OpenAI",
+                       "latency": 7658, "generation_time": 9015, "native_tokens_cached": 0, "cache_discount": -0.003,
+                       "provider_responses": [{"provider_name": "OpenAI", "status": 429, "latency": 80},
+                                              {"provider_name": "OpenAI", "status": 200, "latency": 499}]}}
+
+    def test_a_row_gets_its_version_tier_and_attempts(self):
+        rows = [{"generation_id": "gen-1"}, {"generation_id": "gen-batch-2"}, {"generation_id": "gen-3", "generation": {}},
+                {"task_id": "no id"}]
+        with mock.patch("pipeline.backends.requests.get", return_value=reply(self.RECORD)) as get:
+            self.assertEqual(results.add_generations(rows, "k"), 1)
+        self.assertEqual(get.call_count, 1)                        # batch, already fetched and id-less rows skipped
+        g = rows[0]["generation"]
+        self.assertEqual((g["model_version"], g["service_tier"], g["generation_time_ms"]),
+                         ("openai/gpt-6-luna-20260922", "flex", 9015))
+        self.assertEqual([a["status"] for a in g["attempts"]], [429, 200])
+
+    def test_a_missing_record_is_tried_again_then_given_up(self):
+        with mock.patch("pipeline.backends.requests.get", return_value=reply({}, 404)) as get, \
+                mock.patch("pipeline.backends.time.sleep"):
+            self.assertIsNone(backends.generation_record("k", "gen-1", tries=3))
+        self.assertEqual(get.call_count, 3)
 
 
 class RetryTests(unittest.TestCase):

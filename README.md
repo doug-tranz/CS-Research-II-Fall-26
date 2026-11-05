@@ -204,6 +204,7 @@ asked and gives neither `--max-cost` nor `--yes` does not start, so nothing is s
 | `--pair-report` | Print paired accuracy per session from `--output`, and exit. No model call | off |
 | `--rescore` | Re-grade the saved answers in `--output` with the current scorer and rewrite their verdicts (and refresh the summaries' `analysis`). No model call | off |
 | `--effort-report` | Print one line per session in `--output`: model, effort, accuracy, paired accuracy, cost per correct answer, thinking tokens (per call, and on right / wrong answers), latency; then accuracy per check, one column per session. No model call | off |
+| `--fetch-generations` | Add OpenRouter's record of each call (model version, service tier, attempts, timing) to the rows of `--output` that lack one (a run does this itself at the end of each session). No model call | off |
 | `--export-csv OUT [RESULTS ...]` | Write one flat row per call from the results files (default `--output`) to the CSV `OUT`, for pandas or a spreadsheet; see [EDA export](#eda-export---export-csv). No model call | |
 | `--compare A B` | McNemar's test between two results files, per case and per pair. No model call | |
 | `--lmstudio-url`, `--price-as`, `--kwh-price`, `--watts`, `--extra-watts` | Local runs only; see [Local runs](#local-runs-lm-studio) | |
@@ -589,6 +590,7 @@ except `deviation_score` (per row, and averaged in the summary).
   token, thinking or answer), `latency_ms`, `usd_cost`. A local run adds `energy_wh`,
   `avg_watts`, `energy_usd` and `projected_openrouter_usd`
   ([Local runs](#local-runs-lm-studio)); cloud rows never carry them.
+- **OpenRouter's record** (`generation`, fetched at the end of each session, or later with `--fetch-generations`): `model_version` (the dated release that answered, e.g. `openai/gpt-6-luna-20260922`), `service_tier` (`flex` when it ran at the flex price), `attempts` (each try at a provider: status, latency, tier; retries and rate limits show here), `first_token_ms` and `generation_time_ms` (OpenRouter's timing), `tokens` (OpenRouter's normalized counts and the provider's `native_*` counts, cached included), `total_cost`, `cache_discount` (negative when the call paid to write the cache), `upstream_id`, `data_region`. Batch calls have none.
 - **Grading:** `verdict`, with `error_type` on a failure. For a pair case, also `pair_result`:
   `pair_id`, `twin_id`, `same_answer_as_twin`, `pair_passed`, and an `explanation` naming the
   twin's outcome.
@@ -645,6 +647,7 @@ and `think_mean_wrong`, `cost_usd`, `setup_usd_est`, `per_case_marginal_usd_est`
 | `sections_registered`, `registered_nothing` | How many sections the cart holds; `1` for an empty cart |
 | `pair_passed`, `same_answer_as_twin` | `1` if both twins were right; `1` if the model gave both twins the same cart |
 | `prompt_tokens`, `cached_tokens`, `cache_write_tokens`, `completion_tokens`, `reasoning_tokens`, `reasoning_chars` | Tokens of the call, and the length of the saved reasoning text (empty when none was sent) |
+| `model_version`, `service_tier`, `attempts`, `generation_time_ms` | From OpenRouter's record: the dated model release, the tier it ran at, how many tries it took, its generation time |
 | `usd_cost`, `first_token_ms`, `latency_ms`, `finish_reason`, `reused` | Its cost and timing, why generation stopped, `1` if the answer was reused from another session (`--reuse-from`) |
 
 **Comparing sessions:** `python run_semantic_eval.py --test-file <cases> --compare A.json B.json`
@@ -1602,6 +1605,7 @@ backends × models × domains × tasks × samples
 
 | Version | Date | Changes |
 |---|---|---|
+| 4.3 | 2026-11-05 | Each row gets OpenRouter's record of its call (`generation`: dated model version, service tier, attempts, timing, native token counts, cache discount), fetched at the end of the session; `--fetch-generations` adds it to older files. CSV gains `model_version`, `service_tier`, `attempts`, `generation_time_ms`. |
 | 4.2 | 2026-11-05 | The finalized file leaves out pairs whose answer is a course a degree guide gives a condition only in its notes ("PR06310 needs 60 sh", "needs junior status", "need the instructor's permission"): the scorer does not check those, so such a case could mark a model wrong for following the guide (found in Luna's reasoning). 10 pairs; every check keeps 8 cases; listed in `data/rebuild_manifest.json` (`unchecked_condition_skipped`). |
 | 4.1 | 2026-11-05 | Rows keep the model's `reasoning` text (CSV: `reasoning_chars`). Event streams are read as UTF-8 (requests guessed Latin-1, which garbled non-ASCII text such as curly quotes; earlier answers were ASCII and unaffected). |
 | 4.0 | 2026-11-05 | `run_main.sh`: the main runs, one model per command. `--max-tokens` defaults to 32000 (Nemotron Lightning thinks up to ~10k tokens a call). `:free` models are priced as themselves ($0), not as their paid twin. Batch submissions put `provider` before `requests` (OpenRouter refused them otherwise); the Batch API is not used for the main runs, since its calls skip the prompt cache (a Sol test: 9 calls, $2.12, ~18x a cached live call). |
