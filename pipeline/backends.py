@@ -266,11 +266,11 @@ class OpenRouterBackend:        # One key, many models (§4.2).
             print(f"batch {batch_id}: submitted by an earlier run of this command; collecting it")
             return self._wait(model, calls, {"id": batch_id, "status": "in_progress"}, headers)
         body = {k: v for k, v in self.settings.items() if k not in ("stream", "provider")}
-        submit = {"endpoint": "/v1/chat/completions", "model": model,
-                  "requests": [{"custom_id": f"call-{i:04d}", "body": {"messages": m, **body}}
-                               for i, m in enumerate(calls)]}
-        if "provider" in self.settings:
+        submit = {"endpoint": "/v1/chat/completions", "model": model}
+        if "provider" in self.settings:     # OpenRouter reads the body as a stream: provider must come before requests
             submit["provider"] = self.settings["provider"]
+        submit["requests"] = [{"custom_id": f"call-{i:04d}", "body": {"messages": m, **body}}
+                              for i, m in enumerate(calls)]
         r = requests.post(self.BATCH_URL, headers=headers, json=submit, timeout=600)
         if r.status_code not in (200, 202):
             d = r.json() if r.content else {}

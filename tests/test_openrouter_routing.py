@@ -156,6 +156,8 @@ class BatchBackendTests(unittest.TestCase):
         live.assert_called_once_with("m", calls[0])
         submit = post.call_args.kwargs["json"]
         self.assertEqual(submit["provider"], {"only": ["anthropic"], "allow_fallbacks": False})
+        keys = list(submit)                                 # OpenRouter refuses requests before provider (400)
+        self.assertLess(keys.index("provider"), keys.index("requests"))
         self.assertNotIn("stream", submit["requests"][0]["body"])
         self.assertEqual([r["body"]["messages"] for r in submit["requests"]], calls[1:])
         self.assertEqual([b.call("m", c).content for c in calls], ["live", "zero", "one"])
