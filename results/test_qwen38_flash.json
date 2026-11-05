@@ -1,0 +1,4980 @@
+{
+  "sessions": [
+    {
+      "session_id": "compact-20261105T171122Z-low",
+      "backend": "openrouter",
+      "test_file": "data/FINALIZED_TEST_CASES.json",
+      "test_file_sha256": "df4247251c621a71",
+      "model": "qwen/qwen3.8-flash",
+      "tally_variant": "compact",
+      "rendering": "json",
+      "generation_settings": {
+        "temperature": 0,
+        "stream": true,
+        "usage": {
+          "include": true
+        },
+        "max_tokens": 16000,
+        "reasoning": {
+          "effort": "low"
+        },
+        "provider": {
+          "only": [
+            "alibaba"
+          ],
+          "allow_fallbacks": false
+        }
+      },
+      "prompt_layout": "system prompt | user: Section Tally + output instructions (cached) | assistant: fixed acknowledgement | user: known state + intent",
+      "shared_context": "595,444 + 2,565 characters (tally + instructions), sha256 b13de239bb60, cache ttl 5m",
+      "output_contract": "Respond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"term_code\": <string>, \"sections\": [<section entry>, ...]}, with no crn twice. If no offered section satisfies the request, \"sections\" MUST be the empty list []: register nothing rather than a section that breaks the request. Each section entry MUST have exactly these fields, copied from the offered section: \"crn\", \"course_id\", \"section\", \"seats_total\", \"seats_taken\", \"campus\", \"modality\", \"meetings\" (each meeting's \"days\", and its \"start_time\" and \"end_time\" when it has them; \"type\" and \"location\" may be copied too), plus \"credit_hours\": <number>, the credits the student takes (the section's credits, or a number in the range of a variable-credit section). An entry MAY also have \"waitlist\": true (ONLY to join the waitlist of a full section). Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"term_code\": \"201920\", \"sections\": [{\"crn\": \"90512\", \"course_id\": \"HIST01150\", \"section\": \"2\", \"credit_hours\": 3, \"seats_total\": 35, \"seats_taken\": 20, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"9:30 AM\", \"end_time\": \"10:45 AM\", \"type\": \"Class\", \"location\": \"Bunce Hall 101\"}]}, {\"crn\": \"90877\", \"course_id\": \"ART09900\", \"section\": \"1\", \"credit_hours\": 2, \"seats_total\": 5, \"seats_taken\": 1, \"campus\": \"Glassboro\", \"modality\": \"online\", \"meetings\": []}, {\"crn\": \"91004\", \"course_id\": \"BIOL01120\", \"section\": \"4\", \"credit_hours\": 4, \"seats_total\": 24, \"seats_taken\": 24, \"campus\": \"Camden\", \"modality\": \"hybrid\", \"meetings\": [{\"days\": [\"Monday\"], \"start_time\": \"1:00 PM\", \"end_time\": \"3:50 PM\"}], \"waitlist\": true}]}} Each \"crn\" MUST be the crn of an offered section, and every other copied field MUST equal that section's value. \"term_code\" MUST be the schedule's term_code, and \"student_id\" MUST be the student's student_id. The sections offered this term are listed in the Section Tally at the start of this conversation; only sections in it exist. Copy a section's fields from its row there: crn, course_id, section, seats_total, seats_taken, campus and modality as written, and meetings as a list with each meeting's days (full day names), start_time and end_time.",
+      "samples_per_case": 1,
+      "cache_ttl": "5m",
+      "cost_estimate_usd": 0.0832,
+      "max_cost_usd": 1.0,
+      "started": "2026-11-05T17:11:22.280455+00:00",
+      "ended": "2026-11-05T17:12:31.883221+00:00",
+      "cases": [
+        "T1-001",
+        "T1-002"
+      ],
+      "calls": 2,
+      "generation_failures": 0,
+      "outcomes": {
+        "semantic_ok": 2
+      },
+      "semantic_ok": {
+        "count": "2/2",
+        "rate": 1.0,
+        "ci95": [
+          0.342,
+          1.0
+        ]
+      },
+      "semantic_ok_by_case_type": {
+        "time_of_day": "2/2"
+      },
+      "mean_chance_baseline": 0.5,
+      "mean_deviation_score": 0.0,
+      "error_types": {},
+      "finish_reasons": {
+        "stop (stop)": 2
+      },
+      "served_by": {
+        "qwen/qwen3.8-flash via Alibaba": 2
+      },
+      "tokens": {
+        "prompt_tokens": 601566,
+        "cached_tokens": 297147,
+        "cache_write_tokens": 0,
+        "completion_tokens": 10023,
+        "reasoning_tokens": 9490,
+        "cache_read_share": "49%"
+      },
+      "cost": {
+        "total_usd": 0.055128,
+        "avg_per_call_usd": 0.027564,
+        "setup_usd_est": 0.039639,
+        "per_case_marginal_usd_est": 0.007745,
+        "per_correct_answer_usd": 0.027564,
+        "per_passed_pair_usd": 0.055128,
+        "note": "All costs are what OpenRouter billed for the original model calls; re-grading a results file (--rescore) makes no model call and costs nothing."
+      },
+      "latency": {
+        "mean_total_ms": 63822,
+        "mean_first_token_ms": 10856
+      },
+      "paired_accuracy": {
+        "passed": 1,
+        "scored": 1,
+        "rate": 1.0,
+        "ci95": [
+          0.207,
+          1.0
+        ],
+        "strong_pairs_only": {
+          "count": "1/1",
+          "rate": 1.0,
+          "ci95": [
+            0.207,
+            1.0
+          ]
+        },
+        "weak_pairs_scored": 0,
+        "incomplete": 0,
+        "by_family": {
+          "time_of_day": "1/1"
+        }
+      },
+      "analysis": {
+        "semantic_ok_by_check": {
+          "T1": {
+            "count": "2/2",
+            "rate": 1.0,
+            "ci95": [
+              0.342,
+              1.0
+            ],
+            "mean_chance": 0.5,
+            "lift_over_chance": 0.5
+          }
+        },
+        "semantic_ok_by_group": {
+          "Temporal reasoning": {
+            "count": "2/2",
+            "rate": 1.0,
+            "ci95": [
+              0.342,
+              1.0
+            ],
+            "mean_chance": 0.5,
+            "lift_over_chance": 0.5
+          }
+        },
+        "semantic_ok_by_owner": {
+          "Tyler Henry": {
+            "count": "2/2",
+            "rate": 1.0,
+            "ci95": [
+              0.342,
+              1.0
+            ],
+            "mean_chance": 0.5,
+            "lift_over_chance": 0.5
+          }
+        },
+        "semantic_ok_by_transcript_size": {
+          "11-20 courses": {
+            "count": "2/2",
+            "rate": 1.0,
+            "ci95": [
+              0.342,
+              1.0
+            ],
+            "mean_chance": 0.5,
+            "lift_over_chance": 0.5
+          }
+        },
+        "paired_by_change": {
+          "prompt": {
+            "passed": 1,
+            "scored": 1,
+            "rate": 1.0,
+            "ci95": [
+              0.207,
+              1.0
+            ]
+          }
+        },
+        "errors_by_check": {},
+        "ignored_change_by_check": {
+          "T1": {
+            "count": "0/1",
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.793
+            ]
+          }
+        },
+        "empty_cart": {
+          "registered_nothing_when_right": {
+            "count": "0/0",
+            "rate": null,
+            "ci95": null
+          },
+          "registered_nothing_when_wrong": {
+            "count": "0/2",
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.658
+            ]
+          }
+        },
+        "sections_vs_requested_by_check": {
+          "T1": {
+            "fewer": 0,
+            "as_requested": 2,
+            "more": 0
+          }
+        },
+        "reasoning_tokens_by_outcome": {
+          "correct": {
+            "calls": 2,
+            "mean": 4745,
+            "median": 4936
+          }
+        }
+      },
+      "sampling_note": "1 sample(s) per case: intervals are wide, and a difference between sessions can be chance. Use -n 3 or more, and --compare for a paired test."
+    },
+    {
+      "session_id": "compact-20261105T171425Z-medium",
+      "backend": "openrouter",
+      "test_file": "data/FINALIZED_TEST_CASES.json",
+      "test_file_sha256": "df4247251c621a71",
+      "model": "qwen/qwen3.8-flash",
+      "tally_variant": "compact",
+      "rendering": "json",
+      "generation_settings": {
+        "temperature": 0,
+        "stream": true,
+        "usage": {
+          "include": true
+        },
+        "max_tokens": 16000,
+        "reasoning": {
+          "effort": "medium"
+        },
+        "provider": {
+          "only": [
+            "alibaba"
+          ],
+          "allow_fallbacks": false
+        }
+      },
+      "prompt_layout": "system prompt | user: Section Tally + output instructions (cached) | assistant: fixed acknowledgement | user: known state + intent",
+      "shared_context": "595,444 + 2,565 characters (tally + instructions), sha256 b13de239bb60, cache ttl 5m",
+      "output_contract": "Respond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"term_code\": <string>, \"sections\": [<section entry>, ...]}, with no crn twice. If no offered section satisfies the request, \"sections\" MUST be the empty list []: register nothing rather than a section that breaks the request. Each section entry MUST have exactly these fields, copied from the offered section: \"crn\", \"course_id\", \"section\", \"seats_total\", \"seats_taken\", \"campus\", \"modality\", \"meetings\" (each meeting's \"days\", and its \"start_time\" and \"end_time\" when it has them; \"type\" and \"location\" may be copied too), plus \"credit_hours\": <number>, the credits the student takes (the section's credits, or a number in the range of a variable-credit section). An entry MAY also have \"waitlist\": true (ONLY to join the waitlist of a full section). Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"term_code\": \"201920\", \"sections\": [{\"crn\": \"90512\", \"course_id\": \"HIST01150\", \"section\": \"2\", \"credit_hours\": 3, \"seats_total\": 35, \"seats_taken\": 20, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"9:30 AM\", \"end_time\": \"10:45 AM\", \"type\": \"Class\", \"location\": \"Bunce Hall 101\"}]}, {\"crn\": \"90877\", \"course_id\": \"ART09900\", \"section\": \"1\", \"credit_hours\": 2, \"seats_total\": 5, \"seats_taken\": 1, \"campus\": \"Glassboro\", \"modality\": \"online\", \"meetings\": []}, {\"crn\": \"91004\", \"course_id\": \"BIOL01120\", \"section\": \"4\", \"credit_hours\": 4, \"seats_total\": 24, \"seats_taken\": 24, \"campus\": \"Camden\", \"modality\": \"hybrid\", \"meetings\": [{\"days\": [\"Monday\"], \"start_time\": \"1:00 PM\", \"end_time\": \"3:50 PM\"}], \"waitlist\": true}]}} Each \"crn\" MUST be the crn of an offered section, and every other copied field MUST equal that section's value. \"term_code\" MUST be the schedule's term_code, and \"student_id\" MUST be the student's student_id. The sections offered this term are listed in the Section Tally at the start of this conversation; only sections in it exist. Copy a section's fields from its row there: crn, course_id, section, seats_total, seats_taken, campus and modality as written, and meetings as a list with each meeting's days (full day names), start_time and end_time.",
+      "samples_per_case": 1,
+      "cache_ttl": "5m",
+      "cost_estimate_usd": 0.0832,
+      "max_cost_usd": 1.0,
+      "started": "2026-11-05T17:14:25.452127+00:00",
+      "ended": "2026-11-05T17:15:48.633174+00:00",
+      "cases": [
+        "T1-001",
+        "T1-002"
+      ],
+      "calls": 2,
+      "generation_failures": 0,
+      "outcomes": {
+        "semantic_error": 2
+      },
+      "semantic_ok": {
+        "count": "0/2",
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.658
+        ]
+      },
+      "semantic_ok_by_case_type": {
+        "time_of_day": "0/2"
+      },
+      "mean_chance_baseline": 0.5,
+      "mean_deviation_score": 0.3095,
+      "error_types": {
+        "time_of_day_misread": 2
+      },
+      "finish_reasons": {
+        "stop (stop)": 2
+      },
+      "served_by": {
+        "qwen/qwen3.8-flash via Alibaba": 2
+      },
+      "tokens": {
+        "prompt_tokens": 601566,
+        "cached_tokens": 594294,
+        "cache_write_tokens": 0,
+        "completion_tokens": 8840,
+        "reasoning_tokens": 8649,
+        "cache_read_share": "99%"
+      },
+      "cost": {
+        "total_usd": 0.014754,
+        "avg_per_call_usd": 0.007377,
+        "setup_usd_est": 0.00129,
+        "per_case_marginal_usd_est": 0.006732,
+        "per_correct_answer_usd": null,
+        "per_passed_pair_usd": null,
+        "note": "All costs are what OpenRouter billed for the original model calls; re-grading a results file (--rescore) makes no model call and costs nothing."
+      },
+      "latency": {
+        "mean_total_ms": 48892,
+        "mean_first_token_ms": 3050
+      },
+      "paired_accuracy": {
+        "passed": 0,
+        "scored": 1,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.793
+        ],
+        "strong_pairs_only": {
+          "count": "0/1",
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.793
+          ]
+        },
+        "weak_pairs_scored": 0,
+        "incomplete": 0,
+        "by_family": {
+          "time_of_day": "0/1"
+        }
+      },
+      "analysis": {
+        "semantic_ok_by_check": {
+          "T1": {
+            "count": "0/2",
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.658
+            ],
+            "mean_chance": 0.5,
+            "lift_over_chance": -0.5
+          }
+        },
+        "semantic_ok_by_group": {
+          "Temporal reasoning": {
+            "count": "0/2",
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.658
+            ],
+            "mean_chance": 0.5,
+            "lift_over_chance": -0.5
+          }
+        },
+        "semantic_ok_by_owner": {
+          "Tyler Henry": {
+            "count": "0/2",
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.658
+            ],
+            "mean_chance": 0.5,
+            "lift_over_chance": -0.5
+          }
+        },
+        "semantic_ok_by_transcript_size": {
+          "11-20 courses": {
+            "count": "0/2",
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.658
+            ],
+            "mean_chance": 0.5,
+            "lift_over_chance": -0.5
+          }
+        },
+        "paired_by_change": {
+          "prompt": {
+            "passed": 0,
+            "scored": 1,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.793
+            ]
+          }
+        },
+        "errors_by_check": {
+          "T1": {
+            "time_of_day_misread": 2
+          }
+        },
+        "ignored_change_by_check": {
+          "T1": {
+            "count": "1/1",
+            "rate": 1.0,
+            "ci95": [
+              0.207,
+              1.0
+            ]
+          }
+        },
+        "empty_cart": {
+          "registered_nothing_when_right": {
+            "count": "0/0",
+            "rate": null,
+            "ci95": null
+          },
+          "registered_nothing_when_wrong": {
+            "count": "2/2",
+            "rate": 1.0,
+            "ci95": [
+              0.342,
+              1.0
+            ]
+          }
+        },
+        "sections_vs_requested_by_check": {
+          "T1": {
+            "fewer": 2,
+            "as_requested": 0,
+            "more": 0
+          }
+        },
+        "reasoning_tokens_by_outcome": {
+          "wrong": {
+            "calls": 2,
+            "mean": 4324,
+            "median": 5683
+          }
+        }
+      },
+      "sampling_note": "1 sample(s) per case: intervals are wide, and a difference between sessions can be chance. Use -n 3 or more, and --compare for a paired test."
+    },
+    {
+      "session_id": "compact-20261105T171623Z-high",
+      "backend": "openrouter",
+      "test_file": "data/FINALIZED_TEST_CASES.json",
+      "test_file_sha256": "df4247251c621a71",
+      "model": "qwen/qwen3.8-flash",
+      "tally_variant": "compact",
+      "rendering": "json",
+      "generation_settings": {
+        "temperature": 0,
+        "stream": true,
+        "usage": {
+          "include": true
+        },
+        "max_tokens": 16000,
+        "reasoning": {
+          "effort": "high"
+        },
+        "provider": {
+          "only": [
+            "alibaba"
+          ],
+          "allow_fallbacks": false
+        }
+      },
+      "prompt_layout": "system prompt | user: Section Tally + output instructions (cached) | assistant: fixed acknowledgement | user: known state + intent",
+      "shared_context": "595,444 + 2,565 characters (tally + instructions), sha256 b13de239bb60, cache ttl 5m",
+      "output_contract": "Respond with one DIDComm v2 plaintext message that registers the student for every section in a single request. \"type\" MUST be exactly \"https://example.org/course-registration/1.0/register\". \"id\" MUST be a unique string such as a UUID. The body MUST have exactly these fields: {\"student_id\": <string>, \"term_code\": <string>, \"sections\": [<section entry>, ...]}, with no crn twice. If no offered section satisfies the request, \"sections\" MUST be the empty list []: register nothing rather than a section that breaks the request. Each section entry MUST have exactly these fields, copied from the offered section: \"crn\", \"course_id\", \"section\", \"seats_total\", \"seats_taken\", \"campus\", \"modality\", \"meetings\" (each meeting's \"days\", and its \"start_time\" and \"end_time\" when it has them; \"type\" and \"location\" may be copied too), plus \"credit_hours\": <number>, the credits the student takes (the section's credits, or a number in the range of a variable-credit section). An entry MAY also have \"waitlist\": true (ONLY to join the waitlist of a full section). Example for an unrelated request: {\"id\": \"3f2b8c1e-7a4d-4e9b-9c55-0d1e2f3a4b5c\", \"type\": \"https://example.org/course-registration/1.0/register\", \"body\": {\"student_id\": \"S042\", \"term_code\": \"201920\", \"sections\": [{\"crn\": \"90512\", \"course_id\": \"HIST01150\", \"section\": \"2\", \"credit_hours\": 3, \"seats_total\": 35, \"seats_taken\": 20, \"campus\": \"Glassboro\", \"modality\": \"in-person\", \"meetings\": [{\"days\": [\"Tuesday\", \"Thursday\"], \"start_time\": \"9:30 AM\", \"end_time\": \"10:45 AM\", \"type\": \"Class\", \"location\": \"Bunce Hall 101\"}]}, {\"crn\": \"90877\", \"course_id\": \"ART09900\", \"section\": \"1\", \"credit_hours\": 2, \"seats_total\": 5, \"seats_taken\": 1, \"campus\": \"Glassboro\", \"modality\": \"online\", \"meetings\": []}, {\"crn\": \"91004\", \"course_id\": \"BIOL01120\", \"section\": \"4\", \"credit_hours\": 4, \"seats_total\": 24, \"seats_taken\": 24, \"campus\": \"Camden\", \"modality\": \"hybrid\", \"meetings\": [{\"days\": [\"Monday\"], \"start_time\": \"1:00 PM\", \"end_time\": \"3:50 PM\"}], \"waitlist\": true}]}} Each \"crn\" MUST be the crn of an offered section, and every other copied field MUST equal that section's value. \"term_code\" MUST be the schedule's term_code, and \"student_id\" MUST be the student's student_id. The sections offered this term are listed in the Section Tally at the start of this conversation; only sections in it exist. Copy a section's fields from its row there: crn, course_id, section, seats_total, seats_taken, campus and modality as written, and meetings as a list with each meeting's days (full day names), start_time and end_time.",
+      "samples_per_case": 1,
+      "cache_ttl": "5m",
+      "cost_estimate_usd": 0.0832,
+      "max_cost_usd": 1.0,
+      "started": "2026-11-05T17:16:24.119312+00:00",
+      "ended": "2026-11-05T17:17:20.964526+00:00",
+      "cases": [
+        "T1-001",
+        "T1-002"
+      ],
+      "calls": 2,
+      "generation_failures": 0,
+      "outcomes": {
+        "semantic_error": 1,
+        "semantic_ok": 1
+      },
+      "semantic_ok": {
+        "count": "1/2",
+        "rate": 0.5,
+        "ci95": [
+          0.095,
+          0.905
+        ]
+      },
+      "semantic_ok_by_case_type": {
+        "time_of_day": "1/2"
+      },
+      "mean_chance_baseline": 0.5,
+      "mean_deviation_score": 0.1667,
+      "error_types": {
+        "time_of_day_misread": 1
+      },
+      "finish_reasons": {
+        "stop (stop)": 2
+      },
+      "served_by": {
+        "qwen/qwen3.8-flash via Alibaba": 2
+      },
+      "tokens": {
+        "prompt_tokens": 601566,
+        "cached_tokens": 594294,
+        "cache_write_tokens": 0,
+        "completion_tokens": 7254,
+        "reasoning_tokens": 6878,
+        "cache_read_share": "99%"
+      },
+      "cost": {
+        "total_usd": 0.014009,
+        "avg_per_call_usd": 0.007004,
+        "setup_usd_est": 0.00103,
+        "per_case_marginal_usd_est": 0.006489,
+        "per_correct_answer_usd": 0.014009,
+        "per_passed_pair_usd": null,
+        "note": "All costs are what OpenRouter billed for the original model calls; re-grading a results file (--rescore) makes no model call and costs nothing."
+      },
+      "latency": {
+        "mean_total_ms": 45819,
+        "mean_first_token_ms": 3270
+      },
+      "paired_accuracy": {
+        "passed": 0,
+        "scored": 1,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.793
+        ],
+        "strong_pairs_only": {
+          "count": "0/1",
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.793
+          ]
+        },
+        "weak_pairs_scored": 0,
+        "incomplete": 0,
+        "by_family": {
+          "time_of_day": "0/1"
+        }
+      },
+      "analysis": {
+        "semantic_ok_by_check": {
+          "T1": {
+            "count": "1/2",
+            "rate": 0.5,
+            "ci95": [
+              0.095,
+              0.905
+            ],
+            "mean_chance": 0.5,
+            "lift_over_chance": 0.0
+          }
+        },
+        "semantic_ok_by_group": {
+          "Temporal reasoning": {
+            "count": "1/2",
+            "rate": 0.5,
+            "ci95": [
+              0.095,
+              0.905
+            ],
+            "mean_chance": 0.5,
+            "lift_over_chance": 0.0
+          }
+        },
+        "semantic_ok_by_owner": {
+          "Tyler Henry": {
+            "count": "1/2",
+            "rate": 0.5,
+            "ci95": [
+              0.095,
+              0.905
+            ],
+            "mean_chance": 0.5,
+            "lift_over_chance": 0.0
+          }
+        },
+        "semantic_ok_by_transcript_size": {
+          "11-20 courses": {
+            "count": "1/2",
+            "rate": 0.5,
+            "ci95": [
+              0.095,
+              0.905
+            ],
+            "mean_chance": 0.5,
+            "lift_over_chance": 0.0
+          }
+        },
+        "paired_by_change": {
+          "prompt": {
+            "passed": 0,
+            "scored": 1,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.793
+            ]
+          }
+        },
+        "errors_by_check": {
+          "T1": {
+            "time_of_day_misread": 1
+          }
+        },
+        "ignored_change_by_check": {
+          "T1": {
+            "count": "0/1",
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.793
+            ]
+          }
+        },
+        "empty_cart": {
+          "registered_nothing_when_right": {
+            "count": "0/0",
+            "rate": null,
+            "ci95": null
+          },
+          "registered_nothing_when_wrong": {
+            "count": "1/2",
+            "rate": 0.5,
+            "ci95": [
+              0.095,
+              0.905
+            ]
+          }
+        },
+        "sections_vs_requested_by_check": {
+          "T1": {
+            "fewer": 1,
+            "as_requested": 1,
+            "more": 0
+          }
+        },
+        "reasoning_tokens_by_outcome": {
+          "correct": {
+            "calls": 1,
+            "mean": 2264,
+            "median": 2264
+          },
+          "wrong": {
+            "calls": 1,
+            "mean": 4614,
+            "median": 4614
+          }
+        }
+      },
+      "sampling_note": "1 sample(s) per case: intervals are wide, and a difference between sessions can be chance. Use -n 3 or more, and --compare for a paired test."
+    }
+  ],
+  "results": [
+    {
+      "task_id": "T1-001",
+      "session_id": "compact-20261105T171122Z-low",
+      "run_index": 0,
+      "ts": "2026-11-05T17:11:22.280455+00:00",
+      "case_hashes": {
+        "input": "59fe15d330e1bc20",
+        "rules": "b77366a7d9a47504"
+      },
+      "prompt_readable": {
+        "known_state": {
+          "student": {
+            "degree": "Bachelor of Arts",
+            "major": "Advertising",
+            "program_id": "ADVERTISING-BA",
+            "student_id": "S8009",
+            "catalog_year": "Fall 2025",
+            "entry": {
+              "type": "first_year"
+            }
+          },
+          "transcript": {
+            "completed_courses": [
+              {
+                "term": "Spring 2026",
+                "course_id": "BUS01100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "HOW TO SUCCEED IN BUSN SCHL-RS",
+                "grade": "A-",
+                "credit_hours": 2,
+                "attributes": [
+                  "RS"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "CMS04205",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PUBLIC SPEAKING",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "COMP01111",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION I",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "COMP01112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION II",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "ECON04102",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO ECON-MICROECON",
+                "grade": "A",
+                "credit_hours": 3,
+                "attributes": [
+                  "HUML"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "ENGL02112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "grade": "B-",
+                "credit_hours": 3,
+                "attributes": [
+                  "LIT"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "GEOG16100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "EARTH, PEOPLE, AND ENVIRONMENT",
+                "grade": "B+",
+                "credit_hours": 3,
+                "attributes": [
+                  "GLBL"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "MATH01115",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "CONTEMP MATHEMATICS",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "QNTL"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHIL09110",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "LOGIC OF EVERYDAY REASONING",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHIL09261",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PHIL PERSPECTIVES ON SCI-WI",
+                "grade": "B-",
+                "credit_hours": 3,
+                "attributes": [
+                  "WI"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHYS00220",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRODUCTORY MECHANICS",
+                "grade": "B+",
+                "credit_hours": 4,
+                "attributes": [
+                  "SCIL"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "THD07215",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "EXPERIENCING ACTING",
+                "grade": "C+",
+                "credit_hours": 3,
+                "attributes": [
+                  "ARTL"
+                ]
+              }
+            ],
+            "transfer_courses": [],
+            "courses_in_progress": []
+          },
+          "program_requirements": [
+            {
+              "req_id": "CORE-COML",
+              "category": "Rowan Core: Communicative Literacy (COML)",
+              "rule": "all_of",
+              "course_options": [
+                "COMP01111",
+                "COMP01112",
+                "CMS04205"
+              ],
+              "title": "Communicative Literacy",
+              "credit_hours": 9,
+              "minimum_grade": "D-",
+              "notes": "The three courses or their official equivalents; the only Rowan Core credits counted in the Rowan Core section.",
+              "exclusive": true,
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-ARTL",
+              "category": "Rowan Core: Artistic Literacy (ARTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Artistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated ARTL; its credits count in another section.",
+              "attribute": "ARTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-GLBL",
+              "category": "Rowan Core: Global Literacy (GLBL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Global Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated GLBL; its credits count in another section.",
+              "attribute": "GLBL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-HUML",
+              "category": "Rowan Core: Humanistic Literacy (HUML)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Humanistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated HUML; its credits count in another section.",
+              "attribute": "HUML",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-QNTL",
+              "category": "Rowan Core: Quantitative Literacy (QNTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Quantitative Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated QNTL; its credits count in another section.",
+              "attribute": "QNTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-SCIL",
+              "category": "Rowan Core: Scientific Literacy (SCIL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Scientific Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated SCIL; its credits count in another section.",
+              "attribute": "SCIL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "EXP-LIT",
+              "category": "Rowan Experience: Broad-Based Literature Attribute (LIT)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Broad-Based Literature Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the LIT attribute; its credits count in another section.",
+              "attribute": "LIT",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-WI",
+              "category": "Rowan Experience: Writing Intensive Attribute (WI)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Writing Intensive Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the WI attribute; its credits count in another section.",
+              "attribute": "WI",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-RS",
+              "category": "Rowan Experience: Rowan Seminar Attribute (RS)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Rowan Seminar Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the RS attribute; its credits count in another section.",
+              "attribute": "RS",
+              "guide_section": "rowan_experience",
+              "waived_if": {
+                "transfer_credits_at_entry": 24
+              }
+            },
+            {
+              "req_id": "NONPROG-LOGIC",
+              "category": "Non-Program Courses",
+              "rule": "all_of",
+              "course_options": [
+                "PHIL09110"
+              ],
+              "title": "Logic of Everyday Reasoning",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "exclusive": true,
+              "guide_section": "non_program"
+            },
+            {
+              "req_id": "ADV-REQUIRED",
+              "category": "Major Requirements: Required Advertising Courses",
+              "rule": "all_of",
+              "course_options": [
+                "ADV04330",
+                "PR06350",
+                "ADV04375",
+                "JRN02317",
+                "PR06310"
+              ],
+              "credit_hours": 15,
+              "minimum_grade": "C",
+              "notes": "Intro to Advertising and Intro to Public Relations need major status; JRN02317 needs 45 sh; PR06310 needs 60 sh.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-PLANNING",
+              "category": "Major Requirements: Required Advertising Courses",
+              "rule": "any_of",
+              "course_options": [
+                "ADV04421",
+                "ADV04420"
+              ],
+              "title": "Account Planning or Portfolio Preparation",
+              "credit_hours": 3,
+              "minimum_grade": "C",
+              "notes": "ADV04420 needs permission of the instructor / department.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-IMC",
+              "category": "Major Requirements: Required Advertising Courses",
+              "rule": "any_of",
+              "course_options": [
+                "ADV04360",
+                "MKT09200"
+              ],
+              "title": "Integrated Marketing Communication or Principles of Marketing",
+              "credit_hours": 3,
+              "minimum_grade": "C",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-UPPER",
+              "category": "Major Requirements: Upper-Level and Capstone Courses",
+              "rule": "all_of",
+              "course_options": [
+                "ADV04332",
+                "ADV04352",
+                "ADV04434",
+                "PR06355"
+              ],
+              "credit_hours": 12,
+              "minimum_grade": "C",
+              "notes": "Advertising Campaigns satisfies Writing Intensive.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-RELATED",
+              "category": "Major Requirements: Related Electives Bank",
+              "rule": "credits_from",
+              "course_options": [
+                "ADV04355",
+                "CMS04210",
+                "CMS04240",
+                "CMS04241",
+                "CMS04250",
+                "CMS04270",
+                "CMS04370",
+                "CMS04380",
+                "JRN02310",
+                "JRN02312",
+                "JRN02313",
+                "JRN02319",
+                "JRN02335",
+                "MGT06300",
+                "PR06360",
+                "PR06362",
+                "PR06364",
+                "PR06354",
+                "RTF03220"
+              ],
+              "credit_hours": 6,
+              "minimum_grade": "C",
+              "notes": "Two courses. The PR/Ad internships need a PR or Advertising major GPA of 2.50.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "FREE",
+              "category": "Free Electives",
+              "rule": "credits_any",
+              "course_options": [],
+              "title": "Free Electives",
+              "credit_hours": 54,
+              "minimum_grade": "D-",
+              "notes": "Any credits not used by an exclusive requirement above; choose ones that satisfy unmet Rowan Core or Rowan Experience requirements.",
+              "exclusive": true,
+              "guide_section": "free_electives"
+            }
+          ],
+          "prerequisites": [
+            {
+              "course_id": "ADV04375",
+              "requires": [
+                "ADV04330"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04360",
+              "requires": [
+                "PR06350",
+                "ADV04330"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04332",
+              "requires": [
+                "ADV04330",
+                "ADV04421"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04352",
+              "requires": [
+                "ADV04375",
+                "PR06310"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04434",
+              "requires": [
+                "ADV04352"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "PR06355",
+              "requires": [
+                "ADV04330",
+                "ADV04375"
+              ],
+              "minimum_grade": "D-"
+            }
+          ],
+          "graduation_rules": {
+            "total_credits": 120,
+            "minimum_gpa": 2.0,
+            "residency_credits": 30,
+            "minimum_grade": "D-"
+          },
+          "program_guide": {
+            "program_name": "B.A. in Advertising",
+            "department": "Department of Public Relations and Advertising",
+            "effective_term": "Fall 2018",
+            "source_url": "https://sites.rowan.edu/registrar/_docs/program-guide-advertising-ba---rc.pdf",
+            "total_credits": 120,
+            "sections": [
+              {
+                "section": "rowan_core",
+                "title": "Rowan Core Requirements (Communicative Literacy)",
+                "credit_hours": 9
+              },
+              {
+                "section": "non_program",
+                "title": "Non-Program Courses",
+                "credit_hours": 18,
+                "notes": "Courses here cannot be in the major department; only PHIL09110 is named."
+              },
+              {
+                "section": "major",
+                "title": "Major Requirements",
+                "credit_hours": 39,
+                "notes": "Required Advertising 21, Upper-Level and Capstone 12, Related Electives 6."
+              },
+              {
+                "section": "free_electives",
+                "title": "Free Electives",
+                "credit_hours": 54
+              }
+            ],
+            "rowan_core": {
+              "literacies": [
+                "COML",
+                "ARTL",
+                "GLBL",
+                "HUML",
+                "QNTL",
+                "SCIL"
+              ],
+              "min_credits_per_literacy": 3
+            },
+            "rowan_experience": {
+              "attributes": [
+                "LIT",
+                "WI",
+                "RS"
+              ]
+            },
+            "program_rules": [
+              "At least 120 sh of coursework that applies to the degree.",
+              "Cumulative GPA of at least 2.0 in Rowan University coursework (transfer credit does not count toward the GPA).",
+              "At least 30 sh completed at/through Rowan University.",
+              "Only grades of D- or above apply to graduation/degree requirements.",
+              "Rowan Core and Rowan Experience requirements must be met; one course may satisfy one Rowan Core literacy and several Rowan Experience attributes.",
+              "The Rowan Core is waived for transfer students with an earned A.A. or A.S. from a NJ community/county college; the Rowan Seminar is waived for students transferring 24 or more approved credits at initial entry.",
+              "Grade of C or better in all courses satisfying Major requirements.",
+              "The registrar lists this guide for all students who entered Fall 2021 or later; the PDF says Effective Fall 2018."
+            ]
+          },
+          "course_attributes": {
+            "ADV04434": [
+              "WI"
+            ],
+            "CMS04205": [
+              "COML"
+            ],
+            "CMS04241": [
+              "WI"
+            ],
+            "COMP01111": [
+              "COML"
+            ],
+            "COMP01112": [
+              "COML"
+            ]
+          },
+          "schedule": {
+            "term": "Fall 2026",
+            "term_code": "202640"
+          }
+        },
+        "intent": "Register me for Intro Pr/Advertising Research (PR06310). I want a morning class."
+      },
+      "parsed_output": {
+        "id": "b6d3f7a1-2c4e-4a8b-9f1d-3e5c7a9b1d2f",
+        "type": "https://example.org/course-registration/1.0/register",
+        "body": {
+          "student_id": "S8009",
+          "term_code": "202640",
+          "sections": [
+            {
+              "crn": "43105",
+              "course_id": "PR06310",
+              "section": "3",
+              "credit_hours": 3,
+              "seats_total": 20,
+              "seats_taken": 19,
+              "campus": "Glassboro",
+              "modality": "in-person",
+              "meetings": [
+                {
+                  "days": [
+                    "Tuesday",
+                    "Thursday"
+                  ],
+                  "start_time": "11:00 AM",
+                  "end_time": "12:15 PM"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "error": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "stop",
+      "served_model": "qwen/qwen3.8-flash",
+      "provider": "Alibaba",
+      "generation_id": "gen-1793898682-cuOzD5pSVKlnMsrh9HzN",
+      "prompt_tokens": 300783,
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "completion_tokens": 4821,
+      "reasoning_tokens": 4554,
+      "first_token_ms": 16535.329699981958,
+      "latency_ms": 69462.01750007458,
+      "usd_cost": 0.04738332,
+      "verdict": {
+        "outcome": "semantic_ok",
+        "detail": "satisfies every rule",
+        "tiers": {
+          "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
+          "tier2": "schema (our register message): passed (4/4 checks passed)",
+          "tier3": "consistency (invariants against the schedule and transcript): passed (9/9 checks passed)",
+          "tier4": "semantic (the request's rules): passed (6/6 checks passed)"
+        },
+        "tier1_checks": [
+          {
+            "check": "json",
+            "requires": "the whole answer is one JSON value, with no prose or code fence around it",
+            "found": "valid JSON",
+            "passed": true
+          },
+          {
+            "check": "envelope",
+            "requires": "a DIDComm v2 plaintext message: an object with an \"id\" string, a \"type\" message-type URI and a \"body\" object; any optional headers (typ, from, to, created_time) well-formed",
+            "found": "valid DIDComm envelope",
+            "passed": true
+          }
+        ],
+        "tier2_checks": [
+          {
+            "check": "type",
+            "requires": "\"type\" is exactly \"https://example.org/course-registration/1.0/register\"",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "body",
+            "requires": "the body has exactly \"student_id\" (string), \"term_code\" (string) and \"sections\" (a list)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "sections",
+            "requires": "every section entry has exactly the copied fields (crn, course_id, section, credit_hours, seats, campus, modality, meetings), each well-formed (full day names, 12-hour times)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "unique_crns",
+            "requires": "no crn appears twice in the cart",
+            "found": "1 distinct crn",
+            "passed": true
+          }
+        ],
+        "tier3_checks": [
+          {
+            "check": "term",
+            "section": null,
+            "requires": "term_code is the term being registered for (202640)",
+            "found": "term_code 202640",
+            "passed": true
+          },
+          {
+            "check": "exists",
+            "section": "43105",
+            "requires": "crn 43105 is a section offered this term",
+            "found": "offered: PR06310",
+            "passed": true
+          },
+          {
+            "check": "copied_fields",
+            "section": "43105",
+            "requires": "course_id, section, campus, modality, seats and meetings are copied exactly from the offered section",
+            "found": "all match",
+            "passed": true
+          },
+          {
+            "check": "not_cancelled",
+            "section": "43105",
+            "requires": "the section is not cancelled",
+            "found": "not cancelled",
+            "passed": true
+          },
+          {
+            "check": "seat",
+            "section": "43105",
+            "requires": "the section has a free seat",
+            "found": "19/20 seats taken",
+            "passed": true
+          },
+          {
+            "check": "credits",
+            "section": "43105",
+            "requires": "credit_hours is allowed for this section (3)",
+            "found": "credit_hours 3",
+            "passed": true
+          },
+          {
+            "check": "prerequisites",
+            "section": "43105",
+            "requires": "the transcript shows every prerequisite of PR06310",
+            "found": "no unmet prerequisite",
+            "passed": true
+          },
+          {
+            "check": "one_section_per_course",
+            "section": "43105",
+            "requires": "no other section of PR06310 is in the cart",
+            "found": "the only one",
+            "passed": true
+          },
+          {
+            "check": "no_time_conflict",
+            "section": "43105",
+            "requires": "no meeting overlaps another section in the cart",
+            "found": "the first section in the cart",
+            "passed": true
+          }
+        ],
+        "tier4_checks": [
+          {
+            "rule": "student_id",
+            "requires": "the message is for student S8009",
+            "found": "student_id 'S8009'",
+            "passed": true
+          },
+          {
+            "rule": "term_code",
+            "requires": "the message is for term 202640",
+            "found": "term_code '202640'",
+            "passed": true
+          },
+          {
+            "rule": "count",
+            "requires": "exactly 1 section in the cart",
+            "found": "1: 43105",
+            "passed": true
+          },
+          {
+            "rule": "starts_before",
+            "requires": "every meeting starts before 12:00 PM",
+            "found": "43105 Tue/Thu 11:00 AM-12:15 PM",
+            "passed": true
+          },
+          {
+            "rule": "waitlist",
+            "requires": "no section is waitlisted (no request asks for a waitlist)",
+            "found": "nothing waitlisted",
+            "passed": true
+          },
+          {
+            "rule": "must_include_courses",
+            "requires": "the cart contains PR06310",
+            "found": "courses: PR06310",
+            "passed": true
+          }
+        ],
+        "deviation_score": 0.0
+      },
+      "pair_result": {
+        "pair_id": "time_of_day/advertising-ba",
+        "twin_id": "T1-002",
+        "same_answer_as_twin": false,
+        "pair_passed": true,
+        "explanation": "Both cases are correct and the answer changed with the prompt (time of day: morning vs afternoon): the model used the changed detail. Pair passed."
+      },
+      "transcript_courses": 12
+    },
+    {
+      "task_id": "T1-002",
+      "session_id": "compact-20261105T171122Z-low",
+      "run_index": 0,
+      "ts": "2026-11-05T17:12:31.883221+00:00",
+      "case_hashes": {
+        "input": "6505c7bef1ae52d0",
+        "rules": "6cb95e4e6b7f9ed2"
+      },
+      "prompt_readable": {
+        "known_state": {
+          "student": {
+            "degree": "Bachelor of Arts",
+            "major": "Advertising",
+            "program_id": "ADVERTISING-BA",
+            "student_id": "S8009",
+            "catalog_year": "Fall 2025",
+            "entry": {
+              "type": "first_year"
+            }
+          },
+          "transcript": {
+            "completed_courses": [
+              {
+                "term": "Spring 2026",
+                "course_id": "BUS01100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "HOW TO SUCCEED IN BUSN SCHL-RS",
+                "grade": "A-",
+                "credit_hours": 2,
+                "attributes": [
+                  "RS"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "CMS04205",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PUBLIC SPEAKING",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "COMP01111",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION I",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "COMP01112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION II",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "ECON04102",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO ECON-MICROECON",
+                "grade": "A",
+                "credit_hours": 3,
+                "attributes": [
+                  "HUML"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "ENGL02112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "grade": "B-",
+                "credit_hours": 3,
+                "attributes": [
+                  "LIT"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "GEOG16100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "EARTH, PEOPLE, AND ENVIRONMENT",
+                "grade": "B+",
+                "credit_hours": 3,
+                "attributes": [
+                  "GLBL"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "MATH01115",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "CONTEMP MATHEMATICS",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "QNTL"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHIL09110",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "LOGIC OF EVERYDAY REASONING",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHIL09261",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PHIL PERSPECTIVES ON SCI-WI",
+                "grade": "B-",
+                "credit_hours": 3,
+                "attributes": [
+                  "WI"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHYS00220",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRODUCTORY MECHANICS",
+                "grade": "B+",
+                "credit_hours": 4,
+                "attributes": [
+                  "SCIL"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "THD07215",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "EXPERIENCING ACTING",
+                "grade": "C+",
+                "credit_hours": 3,
+                "attributes": [
+                  "ARTL"
+                ]
+              }
+            ],
+            "transfer_courses": [],
+            "courses_in_progress": []
+          },
+          "program_requirements": [
+            {
+              "req_id": "CORE-COML",
+              "category": "Rowan Core: Communicative Literacy (COML)",
+              "rule": "all_of",
+              "course_options": [
+                "COMP01111",
+                "COMP01112",
+                "CMS04205"
+              ],
+              "title": "Communicative Literacy",
+              "credit_hours": 9,
+              "minimum_grade": "D-",
+              "notes": "The three courses or their official equivalents; the only Rowan Core credits counted in the Rowan Core section.",
+              "exclusive": true,
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-ARTL",
+              "category": "Rowan Core: Artistic Literacy (ARTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Artistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated ARTL; its credits count in another section.",
+              "attribute": "ARTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-GLBL",
+              "category": "Rowan Core: Global Literacy (GLBL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Global Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated GLBL; its credits count in another section.",
+              "attribute": "GLBL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-HUML",
+              "category": "Rowan Core: Humanistic Literacy (HUML)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Humanistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated HUML; its credits count in another section.",
+              "attribute": "HUML",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-QNTL",
+              "category": "Rowan Core: Quantitative Literacy (QNTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Quantitative Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated QNTL; its credits count in another section.",
+              "attribute": "QNTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-SCIL",
+              "category": "Rowan Core: Scientific Literacy (SCIL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Scientific Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated SCIL; its credits count in another section.",
+              "attribute": "SCIL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "EXP-LIT",
+              "category": "Rowan Experience: Broad-Based Literature Attribute (LIT)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Broad-Based Literature Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the LIT attribute; its credits count in another section.",
+              "attribute": "LIT",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-WI",
+              "category": "Rowan Experience: Writing Intensive Attribute (WI)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Writing Intensive Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the WI attribute; its credits count in another section.",
+              "attribute": "WI",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-RS",
+              "category": "Rowan Experience: Rowan Seminar Attribute (RS)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Rowan Seminar Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the RS attribute; its credits count in another section.",
+              "attribute": "RS",
+              "guide_section": "rowan_experience",
+              "waived_if": {
+                "transfer_credits_at_entry": 24
+              }
+            },
+            {
+              "req_id": "NONPROG-LOGIC",
+              "category": "Non-Program Courses",
+              "rule": "all_of",
+              "course_options": [
+                "PHIL09110"
+              ],
+              "title": "Logic of Everyday Reasoning",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "exclusive": true,
+              "guide_section": "non_program"
+            },
+            {
+              "req_id": "ADV-REQUIRED",
+              "category": "Major Requirements: Required Advertising Courses",
+              "rule": "all_of",
+              "course_options": [
+                "ADV04330",
+                "PR06350",
+                "ADV04375",
+                "JRN02317",
+                "PR06310"
+              ],
+              "credit_hours": 15,
+              "minimum_grade": "C",
+              "notes": "Intro to Advertising and Intro to Public Relations need major status; JRN02317 needs 45 sh; PR06310 needs 60 sh.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-PLANNING",
+              "category": "Major Requirements: Required Advertising Courses",
+              "rule": "any_of",
+              "course_options": [
+                "ADV04421",
+                "ADV04420"
+              ],
+              "title": "Account Planning or Portfolio Preparation",
+              "credit_hours": 3,
+              "minimum_grade": "C",
+              "notes": "ADV04420 needs permission of the instructor / department.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-IMC",
+              "category": "Major Requirements: Required Advertising Courses",
+              "rule": "any_of",
+              "course_options": [
+                "ADV04360",
+                "MKT09200"
+              ],
+              "title": "Integrated Marketing Communication or Principles of Marketing",
+              "credit_hours": 3,
+              "minimum_grade": "C",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-UPPER",
+              "category": "Major Requirements: Upper-Level and Capstone Courses",
+              "rule": "all_of",
+              "course_options": [
+                "ADV04332",
+                "ADV04352",
+                "ADV04434",
+                "PR06355"
+              ],
+              "credit_hours": 12,
+              "minimum_grade": "C",
+              "notes": "Advertising Campaigns satisfies Writing Intensive.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-RELATED",
+              "category": "Major Requirements: Related Electives Bank",
+              "rule": "credits_from",
+              "course_options": [
+                "ADV04355",
+                "CMS04210",
+                "CMS04240",
+                "CMS04241",
+                "CMS04250",
+                "CMS04270",
+                "CMS04370",
+                "CMS04380",
+                "JRN02310",
+                "JRN02312",
+                "JRN02313",
+                "JRN02319",
+                "JRN02335",
+                "MGT06300",
+                "PR06360",
+                "PR06362",
+                "PR06364",
+                "PR06354",
+                "RTF03220"
+              ],
+              "credit_hours": 6,
+              "minimum_grade": "C",
+              "notes": "Two courses. The PR/Ad internships need a PR or Advertising major GPA of 2.50.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "FREE",
+              "category": "Free Electives",
+              "rule": "credits_any",
+              "course_options": [],
+              "title": "Free Electives",
+              "credit_hours": 54,
+              "minimum_grade": "D-",
+              "notes": "Any credits not used by an exclusive requirement above; choose ones that satisfy unmet Rowan Core or Rowan Experience requirements.",
+              "exclusive": true,
+              "guide_section": "free_electives"
+            }
+          ],
+          "prerequisites": [
+            {
+              "course_id": "ADV04375",
+              "requires": [
+                "ADV04330"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04360",
+              "requires": [
+                "PR06350",
+                "ADV04330"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04332",
+              "requires": [
+                "ADV04330",
+                "ADV04421"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04352",
+              "requires": [
+                "ADV04375",
+                "PR06310"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04434",
+              "requires": [
+                "ADV04352"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "PR06355",
+              "requires": [
+                "ADV04330",
+                "ADV04375"
+              ],
+              "minimum_grade": "D-"
+            }
+          ],
+          "graduation_rules": {
+            "total_credits": 120,
+            "minimum_gpa": 2.0,
+            "residency_credits": 30,
+            "minimum_grade": "D-"
+          },
+          "program_guide": {
+            "program_name": "B.A. in Advertising",
+            "department": "Department of Public Relations and Advertising",
+            "effective_term": "Fall 2018",
+            "source_url": "https://sites.rowan.edu/registrar/_docs/program-guide-advertising-ba---rc.pdf",
+            "total_credits": 120,
+            "sections": [
+              {
+                "section": "rowan_core",
+                "title": "Rowan Core Requirements (Communicative Literacy)",
+                "credit_hours": 9
+              },
+              {
+                "section": "non_program",
+                "title": "Non-Program Courses",
+                "credit_hours": 18,
+                "notes": "Courses here cannot be in the major department; only PHIL09110 is named."
+              },
+              {
+                "section": "major",
+                "title": "Major Requirements",
+                "credit_hours": 39,
+                "notes": "Required Advertising 21, Upper-Level and Capstone 12, Related Electives 6."
+              },
+              {
+                "section": "free_electives",
+                "title": "Free Electives",
+                "credit_hours": 54
+              }
+            ],
+            "rowan_core": {
+              "literacies": [
+                "COML",
+                "ARTL",
+                "GLBL",
+                "HUML",
+                "QNTL",
+                "SCIL"
+              ],
+              "min_credits_per_literacy": 3
+            },
+            "rowan_experience": {
+              "attributes": [
+                "LIT",
+                "WI",
+                "RS"
+              ]
+            },
+            "program_rules": [
+              "At least 120 sh of coursework that applies to the degree.",
+              "Cumulative GPA of at least 2.0 in Rowan University coursework (transfer credit does not count toward the GPA).",
+              "At least 30 sh completed at/through Rowan University.",
+              "Only grades of D- or above apply to graduation/degree requirements.",
+              "Rowan Core and Rowan Experience requirements must be met; one course may satisfy one Rowan Core literacy and several Rowan Experience attributes.",
+              "The Rowan Core is waived for transfer students with an earned A.A. or A.S. from a NJ community/county college; the Rowan Seminar is waived for students transferring 24 or more approved credits at initial entry.",
+              "Grade of C or better in all courses satisfying Major requirements.",
+              "The registrar lists this guide for all students who entered Fall 2021 or later; the PDF says Effective Fall 2018."
+            ]
+          },
+          "course_attributes": {
+            "ADV04434": [
+              "WI"
+            ],
+            "CMS04205": [
+              "COML"
+            ],
+            "CMS04241": [
+              "WI"
+            ],
+            "COMP01111": [
+              "COML"
+            ],
+            "COMP01112": [
+              "COML"
+            ]
+          },
+          "schedule": {
+            "term": "Fall 2026",
+            "term_code": "202640"
+          }
+        },
+        "intent": "Register me for Intro Pr/Advertising Research (PR06310). I want an afternoon class."
+      },
+      "parsed_output": {
+        "id": "5d1e7a82-9b34-4c11-8f72-2a6c1d9e4f77",
+        "type": "https://example.org/course-registration/1.0/register",
+        "body": {
+          "student_id": "S8009",
+          "term_code": "202640",
+          "sections": [
+            {
+              "crn": "43101",
+              "course_id": "PR06310",
+              "section": "1",
+              "seats_total": 25,
+              "seats_taken": 20,
+              "campus": "Glassboro",
+              "modality": "in-person",
+              "meetings": [
+                {
+                  "days": [
+                    "Tuesday",
+                    "Thursday"
+                  ],
+                  "start_time": "02:00 PM",
+                  "end_time": "03:15 PM"
+                }
+              ],
+              "credit_hours": 3
+            }
+          ]
+        }
+      },
+      "error": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "stop",
+      "served_model": "qwen/qwen3.8-flash",
+      "provider": "Alibaba",
+      "generation_id": "gen-1793898807-U1jJTfuANxLIHdzUYG7D",
+      "prompt_tokens": 300783,
+      "cached_tokens": 297147,
+      "cache_write_tokens": 0,
+      "completion_tokens": 5202,
+      "reasoning_tokens": 4936,
+      "first_token_ms": 5176.838300190866,
+      "latency_ms": 58182.62240011245,
+      "usd_cost": 0.007744692,
+      "verdict": {
+        "outcome": "semantic_ok",
+        "detail": "satisfies every rule",
+        "tiers": {
+          "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
+          "tier2": "schema (our register message): passed (4/4 checks passed)",
+          "tier3": "consistency (invariants against the schedule and transcript): passed (9/9 checks passed)",
+          "tier4": "semantic (the request's rules): passed (7/7 checks passed)"
+        },
+        "tier1_checks": [
+          {
+            "check": "json",
+            "requires": "the whole answer is one JSON value, with no prose or code fence around it",
+            "found": "valid JSON",
+            "passed": true
+          },
+          {
+            "check": "envelope",
+            "requires": "a DIDComm v2 plaintext message: an object with an \"id\" string, a \"type\" message-type URI and a \"body\" object; any optional headers (typ, from, to, created_time) well-formed",
+            "found": "valid DIDComm envelope",
+            "passed": true
+          }
+        ],
+        "tier2_checks": [
+          {
+            "check": "type",
+            "requires": "\"type\" is exactly \"https://example.org/course-registration/1.0/register\"",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "body",
+            "requires": "the body has exactly \"student_id\" (string), \"term_code\" (string) and \"sections\" (a list)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "sections",
+            "requires": "every section entry has exactly the copied fields (crn, course_id, section, credit_hours, seats, campus, modality, meetings), each well-formed (full day names, 12-hour times)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "unique_crns",
+            "requires": "no crn appears twice in the cart",
+            "found": "1 distinct crn",
+            "passed": true
+          }
+        ],
+        "tier3_checks": [
+          {
+            "check": "term",
+            "section": null,
+            "requires": "term_code is the term being registered for (202640)",
+            "found": "term_code 202640",
+            "passed": true
+          },
+          {
+            "check": "exists",
+            "section": "43101",
+            "requires": "crn 43101 is a section offered this term",
+            "found": "offered: PR06310",
+            "passed": true
+          },
+          {
+            "check": "copied_fields",
+            "section": "43101",
+            "requires": "course_id, section, campus, modality, seats and meetings are copied exactly from the offered section",
+            "found": "all match",
+            "passed": true
+          },
+          {
+            "check": "not_cancelled",
+            "section": "43101",
+            "requires": "the section is not cancelled",
+            "found": "not cancelled",
+            "passed": true
+          },
+          {
+            "check": "seat",
+            "section": "43101",
+            "requires": "the section has a free seat",
+            "found": "20/25 seats taken",
+            "passed": true
+          },
+          {
+            "check": "credits",
+            "section": "43101",
+            "requires": "credit_hours is allowed for this section (3)",
+            "found": "credit_hours 3",
+            "passed": true
+          },
+          {
+            "check": "prerequisites",
+            "section": "43101",
+            "requires": "the transcript shows every prerequisite of PR06310",
+            "found": "no unmet prerequisite",
+            "passed": true
+          },
+          {
+            "check": "one_section_per_course",
+            "section": "43101",
+            "requires": "no other section of PR06310 is in the cart",
+            "found": "the only one",
+            "passed": true
+          },
+          {
+            "check": "no_time_conflict",
+            "section": "43101",
+            "requires": "no meeting overlaps another section in the cart",
+            "found": "the first section in the cart",
+            "passed": true
+          }
+        ],
+        "tier4_checks": [
+          {
+            "rule": "student_id",
+            "requires": "the message is for student S8009",
+            "found": "student_id 'S8009'",
+            "passed": true
+          },
+          {
+            "rule": "term_code",
+            "requires": "the message is for term 202640",
+            "found": "term_code '202640'",
+            "passed": true
+          },
+          {
+            "rule": "count",
+            "requires": "exactly 1 section in the cart",
+            "found": "1: 43101",
+            "passed": true
+          },
+          {
+            "rule": "starts_before",
+            "requires": "every meeting starts before 5:00 PM",
+            "found": "43101 Tue/Thu 02:00 PM-03:15 PM",
+            "passed": true
+          },
+          {
+            "rule": "starts_at_or_after",
+            "requires": "every meeting starts at 12:00 PM or later",
+            "found": "43101 Tue/Thu 02:00 PM-03:15 PM",
+            "passed": true
+          },
+          {
+            "rule": "waitlist",
+            "requires": "no section is waitlisted (no request asks for a waitlist)",
+            "found": "nothing waitlisted",
+            "passed": true
+          },
+          {
+            "rule": "must_include_courses",
+            "requires": "the cart contains PR06310",
+            "found": "courses: PR06310",
+            "passed": true
+          }
+        ],
+        "deviation_score": 0.0
+      },
+      "pair_result": {
+        "pair_id": "time_of_day/advertising-ba",
+        "twin_id": "T1-001",
+        "same_answer_as_twin": false,
+        "pair_passed": true,
+        "explanation": "Both cases are correct and the answer changed with the prompt (time of day: morning vs afternoon): the model used the changed detail. Pair passed."
+      },
+      "transcript_courses": 12
+    },
+    {
+      "task_id": "T1-001",
+      "session_id": "compact-20261105T171425Z-medium",
+      "run_index": 0,
+      "ts": "2026-11-05T17:14:25.452127+00:00",
+      "case_hashes": {
+        "input": "59fe15d330e1bc20",
+        "rules": "b77366a7d9a47504"
+      },
+      "prompt_readable": {
+        "known_state": {
+          "student": {
+            "degree": "Bachelor of Arts",
+            "major": "Advertising",
+            "program_id": "ADVERTISING-BA",
+            "student_id": "S8009",
+            "catalog_year": "Fall 2025",
+            "entry": {
+              "type": "first_year"
+            }
+          },
+          "transcript": {
+            "completed_courses": [
+              {
+                "term": "Spring 2026",
+                "course_id": "BUS01100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "HOW TO SUCCEED IN BUSN SCHL-RS",
+                "grade": "A-",
+                "credit_hours": 2,
+                "attributes": [
+                  "RS"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "CMS04205",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PUBLIC SPEAKING",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "COMP01111",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION I",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "COMP01112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION II",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "ECON04102",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO ECON-MICROECON",
+                "grade": "A",
+                "credit_hours": 3,
+                "attributes": [
+                  "HUML"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "ENGL02112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "grade": "B-",
+                "credit_hours": 3,
+                "attributes": [
+                  "LIT"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "GEOG16100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "EARTH, PEOPLE, AND ENVIRONMENT",
+                "grade": "B+",
+                "credit_hours": 3,
+                "attributes": [
+                  "GLBL"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "MATH01115",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "CONTEMP MATHEMATICS",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "QNTL"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHIL09110",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "LOGIC OF EVERYDAY REASONING",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHIL09261",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PHIL PERSPECTIVES ON SCI-WI",
+                "grade": "B-",
+                "credit_hours": 3,
+                "attributes": [
+                  "WI"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHYS00220",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRODUCTORY MECHANICS",
+                "grade": "B+",
+                "credit_hours": 4,
+                "attributes": [
+                  "SCIL"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "THD07215",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "EXPERIENCING ACTING",
+                "grade": "C+",
+                "credit_hours": 3,
+                "attributes": [
+                  "ARTL"
+                ]
+              }
+            ],
+            "transfer_courses": [],
+            "courses_in_progress": []
+          },
+          "program_requirements": [
+            {
+              "req_id": "CORE-COML",
+              "category": "Rowan Core: Communicative Literacy (COML)",
+              "rule": "all_of",
+              "course_options": [
+                "COMP01111",
+                "COMP01112",
+                "CMS04205"
+              ],
+              "title": "Communicative Literacy",
+              "credit_hours": 9,
+              "minimum_grade": "D-",
+              "notes": "The three courses or their official equivalents; the only Rowan Core credits counted in the Rowan Core section.",
+              "exclusive": true,
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-ARTL",
+              "category": "Rowan Core: Artistic Literacy (ARTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Artistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated ARTL; its credits count in another section.",
+              "attribute": "ARTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-GLBL",
+              "category": "Rowan Core: Global Literacy (GLBL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Global Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated GLBL; its credits count in another section.",
+              "attribute": "GLBL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-HUML",
+              "category": "Rowan Core: Humanistic Literacy (HUML)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Humanistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated HUML; its credits count in another section.",
+              "attribute": "HUML",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-QNTL",
+              "category": "Rowan Core: Quantitative Literacy (QNTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Quantitative Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated QNTL; its credits count in another section.",
+              "attribute": "QNTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-SCIL",
+              "category": "Rowan Core: Scientific Literacy (SCIL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Scientific Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated SCIL; its credits count in another section.",
+              "attribute": "SCIL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "EXP-LIT",
+              "category": "Rowan Experience: Broad-Based Literature Attribute (LIT)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Broad-Based Literature Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the LIT attribute; its credits count in another section.",
+              "attribute": "LIT",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-WI",
+              "category": "Rowan Experience: Writing Intensive Attribute (WI)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Writing Intensive Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the WI attribute; its credits count in another section.",
+              "attribute": "WI",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-RS",
+              "category": "Rowan Experience: Rowan Seminar Attribute (RS)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Rowan Seminar Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the RS attribute; its credits count in another section.",
+              "attribute": "RS",
+              "guide_section": "rowan_experience",
+              "waived_if": {
+                "transfer_credits_at_entry": 24
+              }
+            },
+            {
+              "req_id": "NONPROG-LOGIC",
+              "category": "Non-Program Courses",
+              "rule": "all_of",
+              "course_options": [
+                "PHIL09110"
+              ],
+              "title": "Logic of Everyday Reasoning",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "exclusive": true,
+              "guide_section": "non_program"
+            },
+            {
+              "req_id": "ADV-REQUIRED",
+              "category": "Major Requirements: Required Advertising Courses",
+              "rule": "all_of",
+              "course_options": [
+                "ADV04330",
+                "PR06350",
+                "ADV04375",
+                "JRN02317",
+                "PR06310"
+              ],
+              "credit_hours": 15,
+              "minimum_grade": "C",
+              "notes": "Intro to Advertising and Intro to Public Relations need major status; JRN02317 needs 45 sh; PR06310 needs 60 sh.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-PLANNING",
+              "category": "Major Requirements: Required Advertising Courses",
+              "rule": "any_of",
+              "course_options": [
+                "ADV04421",
+                "ADV04420"
+              ],
+              "title": "Account Planning or Portfolio Preparation",
+              "credit_hours": 3,
+              "minimum_grade": "C",
+              "notes": "ADV04420 needs permission of the instructor / department.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-IMC",
+              "category": "Major Requirements: Required Advertising Courses",
+              "rule": "any_of",
+              "course_options": [
+                "ADV04360",
+                "MKT09200"
+              ],
+              "title": "Integrated Marketing Communication or Principles of Marketing",
+              "credit_hours": 3,
+              "minimum_grade": "C",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-UPPER",
+              "category": "Major Requirements: Upper-Level and Capstone Courses",
+              "rule": "all_of",
+              "course_options": [
+                "ADV04332",
+                "ADV04352",
+                "ADV04434",
+                "PR06355"
+              ],
+              "credit_hours": 12,
+              "minimum_grade": "C",
+              "notes": "Advertising Campaigns satisfies Writing Intensive.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-RELATED",
+              "category": "Major Requirements: Related Electives Bank",
+              "rule": "credits_from",
+              "course_options": [
+                "ADV04355",
+                "CMS04210",
+                "CMS04240",
+                "CMS04241",
+                "CMS04250",
+                "CMS04270",
+                "CMS04370",
+                "CMS04380",
+                "JRN02310",
+                "JRN02312",
+                "JRN02313",
+                "JRN02319",
+                "JRN02335",
+                "MGT06300",
+                "PR06360",
+                "PR06362",
+                "PR06364",
+                "PR06354",
+                "RTF03220"
+              ],
+              "credit_hours": 6,
+              "minimum_grade": "C",
+              "notes": "Two courses. The PR/Ad internships need a PR or Advertising major GPA of 2.50.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "FREE",
+              "category": "Free Electives",
+              "rule": "credits_any",
+              "course_options": [],
+              "title": "Free Electives",
+              "credit_hours": 54,
+              "minimum_grade": "D-",
+              "notes": "Any credits not used by an exclusive requirement above; choose ones that satisfy unmet Rowan Core or Rowan Experience requirements.",
+              "exclusive": true,
+              "guide_section": "free_electives"
+            }
+          ],
+          "prerequisites": [
+            {
+              "course_id": "ADV04375",
+              "requires": [
+                "ADV04330"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04360",
+              "requires": [
+                "PR06350",
+                "ADV04330"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04332",
+              "requires": [
+                "ADV04330",
+                "ADV04421"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04352",
+              "requires": [
+                "ADV04375",
+                "PR06310"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04434",
+              "requires": [
+                "ADV04352"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "PR06355",
+              "requires": [
+                "ADV04330",
+                "ADV04375"
+              ],
+              "minimum_grade": "D-"
+            }
+          ],
+          "graduation_rules": {
+            "total_credits": 120,
+            "minimum_gpa": 2.0,
+            "residency_credits": 30,
+            "minimum_grade": "D-"
+          },
+          "program_guide": {
+            "program_name": "B.A. in Advertising",
+            "department": "Department of Public Relations and Advertising",
+            "effective_term": "Fall 2018",
+            "source_url": "https://sites.rowan.edu/registrar/_docs/program-guide-advertising-ba---rc.pdf",
+            "total_credits": 120,
+            "sections": [
+              {
+                "section": "rowan_core",
+                "title": "Rowan Core Requirements (Communicative Literacy)",
+                "credit_hours": 9
+              },
+              {
+                "section": "non_program",
+                "title": "Non-Program Courses",
+                "credit_hours": 18,
+                "notes": "Courses here cannot be in the major department; only PHIL09110 is named."
+              },
+              {
+                "section": "major",
+                "title": "Major Requirements",
+                "credit_hours": 39,
+                "notes": "Required Advertising 21, Upper-Level and Capstone 12, Related Electives 6."
+              },
+              {
+                "section": "free_electives",
+                "title": "Free Electives",
+                "credit_hours": 54
+              }
+            ],
+            "rowan_core": {
+              "literacies": [
+                "COML",
+                "ARTL",
+                "GLBL",
+                "HUML",
+                "QNTL",
+                "SCIL"
+              ],
+              "min_credits_per_literacy": 3
+            },
+            "rowan_experience": {
+              "attributes": [
+                "LIT",
+                "WI",
+                "RS"
+              ]
+            },
+            "program_rules": [
+              "At least 120 sh of coursework that applies to the degree.",
+              "Cumulative GPA of at least 2.0 in Rowan University coursework (transfer credit does not count toward the GPA).",
+              "At least 30 sh completed at/through Rowan University.",
+              "Only grades of D- or above apply to graduation/degree requirements.",
+              "Rowan Core and Rowan Experience requirements must be met; one course may satisfy one Rowan Core literacy and several Rowan Experience attributes.",
+              "The Rowan Core is waived for transfer students with an earned A.A. or A.S. from a NJ community/county college; the Rowan Seminar is waived for students transferring 24 or more approved credits at initial entry.",
+              "Grade of C or better in all courses satisfying Major requirements.",
+              "The registrar lists this guide for all students who entered Fall 2021 or later; the PDF says Effective Fall 2018."
+            ]
+          },
+          "course_attributes": {
+            "ADV04434": [
+              "WI"
+            ],
+            "CMS04205": [
+              "COML"
+            ],
+            "CMS04241": [
+              "WI"
+            ],
+            "COMP01111": [
+              "COML"
+            ],
+            "COMP01112": [
+              "COML"
+            ]
+          },
+          "schedule": {
+            "term": "Fall 2026",
+            "term_code": "202640"
+          }
+        },
+        "intent": "Register me for Intro Pr/Advertising Research (PR06310). I want a morning class."
+      },
+      "parsed_output": {
+        "type": "https://example.org/course-registration/1.0/register",
+        "id": "5b8f7a2e-3c4d-4e5f-9a1b-2c3d4e5f6a7b",
+        "body": {
+          "student_id": "S8009",
+          "term_code": "202640",
+          "sections": []
+        }
+      },
+      "error": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "stop",
+      "served_model": "qwen/qwen3.8-flash",
+      "provider": "Alibaba",
+      "generation_id": "gen-1793898885-3YhwDBB9BbccSbccPCXk",
+      "prompt_tokens": 300783,
+      "cached_tokens": 297147,
+      "cache_write_tokens": 0,
+      "completion_tokens": 5792,
+      "reasoning_tokens": 5683,
+      "first_token_ms": 2983.6669000796974,
+      "latency_ms": 62873.18620015867,
+      "usd_cost": 0.008021992,
+      "verdict": {
+        "outcome": "semantic_error",
+        "detail": "rules broken: {'count': \"0 sections, wanted {'min': 1, 'max': 1}\", 'must_include_courses': \"missing ['PR06310']\"}",
+        "error_type": "time_of_day_misread",
+        "why_wrong": "2 of 6 Tier 4 checks failed (count and must_include_courses). What the request needed: A morning class starts before noon.",
+        "tiers": {
+          "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
+          "tier2": "schema (our register message): passed (4/4 checks passed)",
+          "tier3": "consistency (invariants against the schedule and transcript): passed (1/1 checks passed)",
+          "tier4": "semantic (the request's rules): failed (4/6 checks passed)"
+        },
+        "tier1_checks": [
+          {
+            "check": "json",
+            "requires": "the whole answer is one JSON value, with no prose or code fence around it",
+            "found": "valid JSON",
+            "passed": true
+          },
+          {
+            "check": "envelope",
+            "requires": "a DIDComm v2 plaintext message: an object with an \"id\" string, a \"type\" message-type URI and a \"body\" object; any optional headers (typ, from, to, created_time) well-formed",
+            "found": "valid DIDComm envelope",
+            "passed": true
+          }
+        ],
+        "tier2_checks": [
+          {
+            "check": "type",
+            "requires": "\"type\" is exactly \"https://example.org/course-registration/1.0/register\"",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "body",
+            "requires": "the body has exactly \"student_id\" (string), \"term_code\" (string) and \"sections\" (a list)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "sections",
+            "requires": "every section entry has exactly the copied fields (crn, course_id, section, credit_hours, seats, campus, modality, meetings), each well-formed (full day names, 12-hour times)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "unique_crns",
+            "requires": "no crn appears twice in the cart",
+            "found": "0 distinct crns",
+            "passed": true
+          }
+        ],
+        "tier3_checks": [
+          {
+            "check": "term",
+            "section": null,
+            "requires": "term_code is the term being registered for (202640)",
+            "found": "term_code 202640",
+            "passed": true
+          }
+        ],
+        "tier4_checks": [
+          {
+            "rule": "student_id",
+            "requires": "the message is for student S8009",
+            "found": "student_id 'S8009'",
+            "passed": true
+          },
+          {
+            "rule": "term_code",
+            "requires": "the message is for term 202640",
+            "found": "term_code '202640'",
+            "passed": true
+          },
+          {
+            "rule": "count",
+            "requires": "exactly 1 section in the cart",
+            "found": "0: none",
+            "passed": false,
+            "why": "The request calls for exactly 1 section, but the cart has 0 (none). The cart leaves out a class the request asked for."
+          },
+          {
+            "rule": "starts_before",
+            "requires": "every meeting starts before 12:00 PM",
+            "found": "no meetings",
+            "passed": true
+          },
+          {
+            "rule": "waitlist",
+            "requires": "no section is waitlisted (no request asks for a waitlist)",
+            "found": "nothing waitlisted",
+            "passed": true
+          },
+          {
+            "rule": "must_include_courses",
+            "requires": "the cart contains PR06310",
+            "found": "courses: none",
+            "passed": false,
+            "why": "The request names PR06310, but the cart has no section of it (it has none). PR06310 has 3 open section(s) this term."
+          }
+        ],
+        "deviation_score": 0.3333333333333333
+      },
+      "pair_result": {
+        "pair_id": "time_of_day/advertising-ba",
+        "twin_id": "T1-002",
+        "same_answer_as_twin": false,
+        "pair_passed": false,
+        "explanation": "Neither case is correct (this: semantic_error, twin: semantic_error). Pair failed."
+      },
+      "transcript_courses": 12
+    },
+    {
+      "task_id": "T1-002",
+      "session_id": "compact-20261105T171425Z-medium",
+      "run_index": 0,
+      "ts": "2026-11-05T17:15:48.633174+00:00",
+      "case_hashes": {
+        "input": "6505c7bef1ae52d0",
+        "rules": "6cb95e4e6b7f9ed2"
+      },
+      "prompt_readable": {
+        "known_state": {
+          "student": {
+            "degree": "Bachelor of Arts",
+            "major": "Advertising",
+            "program_id": "ADVERTISING-BA",
+            "student_id": "S8009",
+            "catalog_year": "Fall 2025",
+            "entry": {
+              "type": "first_year"
+            }
+          },
+          "transcript": {
+            "completed_courses": [
+              {
+                "term": "Spring 2026",
+                "course_id": "BUS01100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "HOW TO SUCCEED IN BUSN SCHL-RS",
+                "grade": "A-",
+                "credit_hours": 2,
+                "attributes": [
+                  "RS"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "CMS04205",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PUBLIC SPEAKING",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "COMP01111",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION I",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "COMP01112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION II",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "ECON04102",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO ECON-MICROECON",
+                "grade": "A",
+                "credit_hours": 3,
+                "attributes": [
+                  "HUML"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "ENGL02112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "grade": "B-",
+                "credit_hours": 3,
+                "attributes": [
+                  "LIT"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "GEOG16100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "EARTH, PEOPLE, AND ENVIRONMENT",
+                "grade": "B+",
+                "credit_hours": 3,
+                "attributes": [
+                  "GLBL"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "MATH01115",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "CONTEMP MATHEMATICS",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "QNTL"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHIL09110",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "LOGIC OF EVERYDAY REASONING",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHIL09261",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PHIL PERSPECTIVES ON SCI-WI",
+                "grade": "B-",
+                "credit_hours": 3,
+                "attributes": [
+                  "WI"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHYS00220",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRODUCTORY MECHANICS",
+                "grade": "B+",
+                "credit_hours": 4,
+                "attributes": [
+                  "SCIL"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "THD07215",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "EXPERIENCING ACTING",
+                "grade": "C+",
+                "credit_hours": 3,
+                "attributes": [
+                  "ARTL"
+                ]
+              }
+            ],
+            "transfer_courses": [],
+            "courses_in_progress": []
+          },
+          "program_requirements": [
+            {
+              "req_id": "CORE-COML",
+              "category": "Rowan Core: Communicative Literacy (COML)",
+              "rule": "all_of",
+              "course_options": [
+                "COMP01111",
+                "COMP01112",
+                "CMS04205"
+              ],
+              "title": "Communicative Literacy",
+              "credit_hours": 9,
+              "minimum_grade": "D-",
+              "notes": "The three courses or their official equivalents; the only Rowan Core credits counted in the Rowan Core section.",
+              "exclusive": true,
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-ARTL",
+              "category": "Rowan Core: Artistic Literacy (ARTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Artistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated ARTL; its credits count in another section.",
+              "attribute": "ARTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-GLBL",
+              "category": "Rowan Core: Global Literacy (GLBL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Global Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated GLBL; its credits count in another section.",
+              "attribute": "GLBL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-HUML",
+              "category": "Rowan Core: Humanistic Literacy (HUML)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Humanistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated HUML; its credits count in another section.",
+              "attribute": "HUML",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-QNTL",
+              "category": "Rowan Core: Quantitative Literacy (QNTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Quantitative Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated QNTL; its credits count in another section.",
+              "attribute": "QNTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-SCIL",
+              "category": "Rowan Core: Scientific Literacy (SCIL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Scientific Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated SCIL; its credits count in another section.",
+              "attribute": "SCIL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "EXP-LIT",
+              "category": "Rowan Experience: Broad-Based Literature Attribute (LIT)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Broad-Based Literature Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the LIT attribute; its credits count in another section.",
+              "attribute": "LIT",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-WI",
+              "category": "Rowan Experience: Writing Intensive Attribute (WI)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Writing Intensive Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the WI attribute; its credits count in another section.",
+              "attribute": "WI",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-RS",
+              "category": "Rowan Experience: Rowan Seminar Attribute (RS)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Rowan Seminar Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the RS attribute; its credits count in another section.",
+              "attribute": "RS",
+              "guide_section": "rowan_experience",
+              "waived_if": {
+                "transfer_credits_at_entry": 24
+              }
+            },
+            {
+              "req_id": "NONPROG-LOGIC",
+              "category": "Non-Program Courses",
+              "rule": "all_of",
+              "course_options": [
+                "PHIL09110"
+              ],
+              "title": "Logic of Everyday Reasoning",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "exclusive": true,
+              "guide_section": "non_program"
+            },
+            {
+              "req_id": "ADV-REQUIRED",
+              "category": "Major Requirements: Required Advertising Courses",
+              "rule": "all_of",
+              "course_options": [
+                "ADV04330",
+                "PR06350",
+                "ADV04375",
+                "JRN02317",
+                "PR06310"
+              ],
+              "credit_hours": 15,
+              "minimum_grade": "C",
+              "notes": "Intro to Advertising and Intro to Public Relations need major status; JRN02317 needs 45 sh; PR06310 needs 60 sh.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-PLANNING",
+              "category": "Major Requirements: Required Advertising Courses",
+              "rule": "any_of",
+              "course_options": [
+                "ADV04421",
+                "ADV04420"
+              ],
+              "title": "Account Planning or Portfolio Preparation",
+              "credit_hours": 3,
+              "minimum_grade": "C",
+              "notes": "ADV04420 needs permission of the instructor / department.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-IMC",
+              "category": "Major Requirements: Required Advertising Courses",
+              "rule": "any_of",
+              "course_options": [
+                "ADV04360",
+                "MKT09200"
+              ],
+              "title": "Integrated Marketing Communication or Principles of Marketing",
+              "credit_hours": 3,
+              "minimum_grade": "C",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-UPPER",
+              "category": "Major Requirements: Upper-Level and Capstone Courses",
+              "rule": "all_of",
+              "course_options": [
+                "ADV04332",
+                "ADV04352",
+                "ADV04434",
+                "PR06355"
+              ],
+              "credit_hours": 12,
+              "minimum_grade": "C",
+              "notes": "Advertising Campaigns satisfies Writing Intensive.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-RELATED",
+              "category": "Major Requirements: Related Electives Bank",
+              "rule": "credits_from",
+              "course_options": [
+                "ADV04355",
+                "CMS04210",
+                "CMS04240",
+                "CMS04241",
+                "CMS04250",
+                "CMS04270",
+                "CMS04370",
+                "CMS04380",
+                "JRN02310",
+                "JRN02312",
+                "JRN02313",
+                "JRN02319",
+                "JRN02335",
+                "MGT06300",
+                "PR06360",
+                "PR06362",
+                "PR06364",
+                "PR06354",
+                "RTF03220"
+              ],
+              "credit_hours": 6,
+              "minimum_grade": "C",
+              "notes": "Two courses. The PR/Ad internships need a PR or Advertising major GPA of 2.50.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "FREE",
+              "category": "Free Electives",
+              "rule": "credits_any",
+              "course_options": [],
+              "title": "Free Electives",
+              "credit_hours": 54,
+              "minimum_grade": "D-",
+              "notes": "Any credits not used by an exclusive requirement above; choose ones that satisfy unmet Rowan Core or Rowan Experience requirements.",
+              "exclusive": true,
+              "guide_section": "free_electives"
+            }
+          ],
+          "prerequisites": [
+            {
+              "course_id": "ADV04375",
+              "requires": [
+                "ADV04330"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04360",
+              "requires": [
+                "PR06350",
+                "ADV04330"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04332",
+              "requires": [
+                "ADV04330",
+                "ADV04421"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04352",
+              "requires": [
+                "ADV04375",
+                "PR06310"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04434",
+              "requires": [
+                "ADV04352"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "PR06355",
+              "requires": [
+                "ADV04330",
+                "ADV04375"
+              ],
+              "minimum_grade": "D-"
+            }
+          ],
+          "graduation_rules": {
+            "total_credits": 120,
+            "minimum_gpa": 2.0,
+            "residency_credits": 30,
+            "minimum_grade": "D-"
+          },
+          "program_guide": {
+            "program_name": "B.A. in Advertising",
+            "department": "Department of Public Relations and Advertising",
+            "effective_term": "Fall 2018",
+            "source_url": "https://sites.rowan.edu/registrar/_docs/program-guide-advertising-ba---rc.pdf",
+            "total_credits": 120,
+            "sections": [
+              {
+                "section": "rowan_core",
+                "title": "Rowan Core Requirements (Communicative Literacy)",
+                "credit_hours": 9
+              },
+              {
+                "section": "non_program",
+                "title": "Non-Program Courses",
+                "credit_hours": 18,
+                "notes": "Courses here cannot be in the major department; only PHIL09110 is named."
+              },
+              {
+                "section": "major",
+                "title": "Major Requirements",
+                "credit_hours": 39,
+                "notes": "Required Advertising 21, Upper-Level and Capstone 12, Related Electives 6."
+              },
+              {
+                "section": "free_electives",
+                "title": "Free Electives",
+                "credit_hours": 54
+              }
+            ],
+            "rowan_core": {
+              "literacies": [
+                "COML",
+                "ARTL",
+                "GLBL",
+                "HUML",
+                "QNTL",
+                "SCIL"
+              ],
+              "min_credits_per_literacy": 3
+            },
+            "rowan_experience": {
+              "attributes": [
+                "LIT",
+                "WI",
+                "RS"
+              ]
+            },
+            "program_rules": [
+              "At least 120 sh of coursework that applies to the degree.",
+              "Cumulative GPA of at least 2.0 in Rowan University coursework (transfer credit does not count toward the GPA).",
+              "At least 30 sh completed at/through Rowan University.",
+              "Only grades of D- or above apply to graduation/degree requirements.",
+              "Rowan Core and Rowan Experience requirements must be met; one course may satisfy one Rowan Core literacy and several Rowan Experience attributes.",
+              "The Rowan Core is waived for transfer students with an earned A.A. or A.S. from a NJ community/county college; the Rowan Seminar is waived for students transferring 24 or more approved credits at initial entry.",
+              "Grade of C or better in all courses satisfying Major requirements.",
+              "The registrar lists this guide for all students who entered Fall 2021 or later; the PDF says Effective Fall 2018."
+            ]
+          },
+          "course_attributes": {
+            "ADV04434": [
+              "WI"
+            ],
+            "CMS04205": [
+              "COML"
+            ],
+            "CMS04241": [
+              "WI"
+            ],
+            "COMP01111": [
+              "COML"
+            ],
+            "COMP01112": [
+              "COML"
+            ]
+          },
+          "schedule": {
+            "term": "Fall 2026",
+            "term_code": "202640"
+          }
+        },
+        "intent": "Register me for Intro Pr/Advertising Research (PR06310). I want an afternoon class."
+      },
+      "parsed_output": {
+        "type": "https://example.org/course-registration/1.0/register",
+        "id": "d4f6a7b2-1c3e-4f8a-9b2d-7e5c1a9f3b62",
+        "body": {
+          "student_id": "S8009",
+          "term_code": "202640",
+          "sections": []
+        }
+      },
+      "error": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "stop",
+      "served_model": "qwen/qwen3.8-flash",
+      "provider": "Alibaba",
+      "generation_id": "gen-1793898948-Q8TuE8GWE6AmJBnExGay",
+      "prompt_tokens": 300783,
+      "cached_tokens": 297147,
+      "cache_write_tokens": 0,
+      "completion_tokens": 3048,
+      "reasoning_tokens": 2966,
+      "first_token_ms": 3115.6070998404175,
+      "latency_ms": 34910.99779983051,
+      "usd_cost": 0.006732312,
+      "verdict": {
+        "outcome": "semantic_error",
+        "detail": "rules broken: {'count': \"0 sections, wanted {'min': 1, 'max': 1}\", 'must_include_courses': \"missing ['PR06310']\"}",
+        "error_type": "time_of_day_misread",
+        "why_wrong": "2 of 7 Tier 4 checks failed (count and must_include_courses). What the request needed: An afternoon class starts between noon and 5 PM.",
+        "tiers": {
+          "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
+          "tier2": "schema (our register message): passed (4/4 checks passed)",
+          "tier3": "consistency (invariants against the schedule and transcript): passed (1/1 checks passed)",
+          "tier4": "semantic (the request's rules): failed (5/7 checks passed)"
+        },
+        "tier1_checks": [
+          {
+            "check": "json",
+            "requires": "the whole answer is one JSON value, with no prose or code fence around it",
+            "found": "valid JSON",
+            "passed": true
+          },
+          {
+            "check": "envelope",
+            "requires": "a DIDComm v2 plaintext message: an object with an \"id\" string, a \"type\" message-type URI and a \"body\" object; any optional headers (typ, from, to, created_time) well-formed",
+            "found": "valid DIDComm envelope",
+            "passed": true
+          }
+        ],
+        "tier2_checks": [
+          {
+            "check": "type",
+            "requires": "\"type\" is exactly \"https://example.org/course-registration/1.0/register\"",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "body",
+            "requires": "the body has exactly \"student_id\" (string), \"term_code\" (string) and \"sections\" (a list)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "sections",
+            "requires": "every section entry has exactly the copied fields (crn, course_id, section, credit_hours, seats, campus, modality, meetings), each well-formed (full day names, 12-hour times)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "unique_crns",
+            "requires": "no crn appears twice in the cart",
+            "found": "0 distinct crns",
+            "passed": true
+          }
+        ],
+        "tier3_checks": [
+          {
+            "check": "term",
+            "section": null,
+            "requires": "term_code is the term being registered for (202640)",
+            "found": "term_code 202640",
+            "passed": true
+          }
+        ],
+        "tier4_checks": [
+          {
+            "rule": "student_id",
+            "requires": "the message is for student S8009",
+            "found": "student_id 'S8009'",
+            "passed": true
+          },
+          {
+            "rule": "term_code",
+            "requires": "the message is for term 202640",
+            "found": "term_code '202640'",
+            "passed": true
+          },
+          {
+            "rule": "count",
+            "requires": "exactly 1 section in the cart",
+            "found": "0: none",
+            "passed": false,
+            "why": "The request calls for exactly 1 section, but the cart has 0 (none). The cart leaves out a class the request asked for."
+          },
+          {
+            "rule": "starts_before",
+            "requires": "every meeting starts before 5:00 PM",
+            "found": "no meetings",
+            "passed": true
+          },
+          {
+            "rule": "starts_at_or_after",
+            "requires": "every meeting starts at 12:00 PM or later",
+            "found": "no meetings",
+            "passed": true
+          },
+          {
+            "rule": "waitlist",
+            "requires": "no section is waitlisted (no request asks for a waitlist)",
+            "found": "nothing waitlisted",
+            "passed": true
+          },
+          {
+            "rule": "must_include_courses",
+            "requires": "the cart contains PR06310",
+            "found": "courses: none",
+            "passed": false,
+            "why": "The request names PR06310, but the cart has no section of it (it has none). PR06310 has 3 open section(s) this term."
+          }
+        ],
+        "deviation_score": 0.2857142857142857
+      },
+      "pair_result": {
+        "pair_id": "time_of_day/advertising-ba",
+        "twin_id": "T1-001",
+        "same_answer_as_twin": false,
+        "pair_passed": false,
+        "explanation": "Neither case is correct (this: semantic_error, twin: semantic_error). Pair failed."
+      },
+      "transcript_courses": 12
+    },
+    {
+      "task_id": "T1-001",
+      "session_id": "compact-20261105T171623Z-high",
+      "run_index": 0,
+      "ts": "2026-11-05T17:16:24.119312+00:00",
+      "case_hashes": {
+        "input": "59fe15d330e1bc20",
+        "rules": "b77366a7d9a47504"
+      },
+      "prompt_readable": {
+        "known_state": {
+          "student": {
+            "degree": "Bachelor of Arts",
+            "major": "Advertising",
+            "program_id": "ADVERTISING-BA",
+            "student_id": "S8009",
+            "catalog_year": "Fall 2025",
+            "entry": {
+              "type": "first_year"
+            }
+          },
+          "transcript": {
+            "completed_courses": [
+              {
+                "term": "Spring 2026",
+                "course_id": "BUS01100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "HOW TO SUCCEED IN BUSN SCHL-RS",
+                "grade": "A-",
+                "credit_hours": 2,
+                "attributes": [
+                  "RS"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "CMS04205",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PUBLIC SPEAKING",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "COMP01111",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION I",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "COMP01112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION II",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "ECON04102",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO ECON-MICROECON",
+                "grade": "A",
+                "credit_hours": 3,
+                "attributes": [
+                  "HUML"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "ENGL02112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "grade": "B-",
+                "credit_hours": 3,
+                "attributes": [
+                  "LIT"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "GEOG16100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "EARTH, PEOPLE, AND ENVIRONMENT",
+                "grade": "B+",
+                "credit_hours": 3,
+                "attributes": [
+                  "GLBL"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "MATH01115",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "CONTEMP MATHEMATICS",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "QNTL"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHIL09110",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "LOGIC OF EVERYDAY REASONING",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHIL09261",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PHIL PERSPECTIVES ON SCI-WI",
+                "grade": "B-",
+                "credit_hours": 3,
+                "attributes": [
+                  "WI"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHYS00220",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRODUCTORY MECHANICS",
+                "grade": "B+",
+                "credit_hours": 4,
+                "attributes": [
+                  "SCIL"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "THD07215",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "EXPERIENCING ACTING",
+                "grade": "C+",
+                "credit_hours": 3,
+                "attributes": [
+                  "ARTL"
+                ]
+              }
+            ],
+            "transfer_courses": [],
+            "courses_in_progress": []
+          },
+          "program_requirements": [
+            {
+              "req_id": "CORE-COML",
+              "category": "Rowan Core: Communicative Literacy (COML)",
+              "rule": "all_of",
+              "course_options": [
+                "COMP01111",
+                "COMP01112",
+                "CMS04205"
+              ],
+              "title": "Communicative Literacy",
+              "credit_hours": 9,
+              "minimum_grade": "D-",
+              "notes": "The three courses or their official equivalents; the only Rowan Core credits counted in the Rowan Core section.",
+              "exclusive": true,
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-ARTL",
+              "category": "Rowan Core: Artistic Literacy (ARTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Artistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated ARTL; its credits count in another section.",
+              "attribute": "ARTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-GLBL",
+              "category": "Rowan Core: Global Literacy (GLBL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Global Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated GLBL; its credits count in another section.",
+              "attribute": "GLBL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-HUML",
+              "category": "Rowan Core: Humanistic Literacy (HUML)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Humanistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated HUML; its credits count in another section.",
+              "attribute": "HUML",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-QNTL",
+              "category": "Rowan Core: Quantitative Literacy (QNTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Quantitative Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated QNTL; its credits count in another section.",
+              "attribute": "QNTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-SCIL",
+              "category": "Rowan Core: Scientific Literacy (SCIL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Scientific Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated SCIL; its credits count in another section.",
+              "attribute": "SCIL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "EXP-LIT",
+              "category": "Rowan Experience: Broad-Based Literature Attribute (LIT)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Broad-Based Literature Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the LIT attribute; its credits count in another section.",
+              "attribute": "LIT",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-WI",
+              "category": "Rowan Experience: Writing Intensive Attribute (WI)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Writing Intensive Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the WI attribute; its credits count in another section.",
+              "attribute": "WI",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-RS",
+              "category": "Rowan Experience: Rowan Seminar Attribute (RS)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Rowan Seminar Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the RS attribute; its credits count in another section.",
+              "attribute": "RS",
+              "guide_section": "rowan_experience",
+              "waived_if": {
+                "transfer_credits_at_entry": 24
+              }
+            },
+            {
+              "req_id": "NONPROG-LOGIC",
+              "category": "Non-Program Courses",
+              "rule": "all_of",
+              "course_options": [
+                "PHIL09110"
+              ],
+              "title": "Logic of Everyday Reasoning",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "exclusive": true,
+              "guide_section": "non_program"
+            },
+            {
+              "req_id": "ADV-REQUIRED",
+              "category": "Major Requirements: Required Advertising Courses",
+              "rule": "all_of",
+              "course_options": [
+                "ADV04330",
+                "PR06350",
+                "ADV04375",
+                "JRN02317",
+                "PR06310"
+              ],
+              "credit_hours": 15,
+              "minimum_grade": "C",
+              "notes": "Intro to Advertising and Intro to Public Relations need major status; JRN02317 needs 45 sh; PR06310 needs 60 sh.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-PLANNING",
+              "category": "Major Requirements: Required Advertising Courses",
+              "rule": "any_of",
+              "course_options": [
+                "ADV04421",
+                "ADV04420"
+              ],
+              "title": "Account Planning or Portfolio Preparation",
+              "credit_hours": 3,
+              "minimum_grade": "C",
+              "notes": "ADV04420 needs permission of the instructor / department.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-IMC",
+              "category": "Major Requirements: Required Advertising Courses",
+              "rule": "any_of",
+              "course_options": [
+                "ADV04360",
+                "MKT09200"
+              ],
+              "title": "Integrated Marketing Communication or Principles of Marketing",
+              "credit_hours": 3,
+              "minimum_grade": "C",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-UPPER",
+              "category": "Major Requirements: Upper-Level and Capstone Courses",
+              "rule": "all_of",
+              "course_options": [
+                "ADV04332",
+                "ADV04352",
+                "ADV04434",
+                "PR06355"
+              ],
+              "credit_hours": 12,
+              "minimum_grade": "C",
+              "notes": "Advertising Campaigns satisfies Writing Intensive.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-RELATED",
+              "category": "Major Requirements: Related Electives Bank",
+              "rule": "credits_from",
+              "course_options": [
+                "ADV04355",
+                "CMS04210",
+                "CMS04240",
+                "CMS04241",
+                "CMS04250",
+                "CMS04270",
+                "CMS04370",
+                "CMS04380",
+                "JRN02310",
+                "JRN02312",
+                "JRN02313",
+                "JRN02319",
+                "JRN02335",
+                "MGT06300",
+                "PR06360",
+                "PR06362",
+                "PR06364",
+                "PR06354",
+                "RTF03220"
+              ],
+              "credit_hours": 6,
+              "minimum_grade": "C",
+              "notes": "Two courses. The PR/Ad internships need a PR or Advertising major GPA of 2.50.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "FREE",
+              "category": "Free Electives",
+              "rule": "credits_any",
+              "course_options": [],
+              "title": "Free Electives",
+              "credit_hours": 54,
+              "minimum_grade": "D-",
+              "notes": "Any credits not used by an exclusive requirement above; choose ones that satisfy unmet Rowan Core or Rowan Experience requirements.",
+              "exclusive": true,
+              "guide_section": "free_electives"
+            }
+          ],
+          "prerequisites": [
+            {
+              "course_id": "ADV04375",
+              "requires": [
+                "ADV04330"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04360",
+              "requires": [
+                "PR06350",
+                "ADV04330"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04332",
+              "requires": [
+                "ADV04330",
+                "ADV04421"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04352",
+              "requires": [
+                "ADV04375",
+                "PR06310"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04434",
+              "requires": [
+                "ADV04352"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "PR06355",
+              "requires": [
+                "ADV04330",
+                "ADV04375"
+              ],
+              "minimum_grade": "D-"
+            }
+          ],
+          "graduation_rules": {
+            "total_credits": 120,
+            "minimum_gpa": 2.0,
+            "residency_credits": 30,
+            "minimum_grade": "D-"
+          },
+          "program_guide": {
+            "program_name": "B.A. in Advertising",
+            "department": "Department of Public Relations and Advertising",
+            "effective_term": "Fall 2018",
+            "source_url": "https://sites.rowan.edu/registrar/_docs/program-guide-advertising-ba---rc.pdf",
+            "total_credits": 120,
+            "sections": [
+              {
+                "section": "rowan_core",
+                "title": "Rowan Core Requirements (Communicative Literacy)",
+                "credit_hours": 9
+              },
+              {
+                "section": "non_program",
+                "title": "Non-Program Courses",
+                "credit_hours": 18,
+                "notes": "Courses here cannot be in the major department; only PHIL09110 is named."
+              },
+              {
+                "section": "major",
+                "title": "Major Requirements",
+                "credit_hours": 39,
+                "notes": "Required Advertising 21, Upper-Level and Capstone 12, Related Electives 6."
+              },
+              {
+                "section": "free_electives",
+                "title": "Free Electives",
+                "credit_hours": 54
+              }
+            ],
+            "rowan_core": {
+              "literacies": [
+                "COML",
+                "ARTL",
+                "GLBL",
+                "HUML",
+                "QNTL",
+                "SCIL"
+              ],
+              "min_credits_per_literacy": 3
+            },
+            "rowan_experience": {
+              "attributes": [
+                "LIT",
+                "WI",
+                "RS"
+              ]
+            },
+            "program_rules": [
+              "At least 120 sh of coursework that applies to the degree.",
+              "Cumulative GPA of at least 2.0 in Rowan University coursework (transfer credit does not count toward the GPA).",
+              "At least 30 sh completed at/through Rowan University.",
+              "Only grades of D- or above apply to graduation/degree requirements.",
+              "Rowan Core and Rowan Experience requirements must be met; one course may satisfy one Rowan Core literacy and several Rowan Experience attributes.",
+              "The Rowan Core is waived for transfer students with an earned A.A. or A.S. from a NJ community/county college; the Rowan Seminar is waived for students transferring 24 or more approved credits at initial entry.",
+              "Grade of C or better in all courses satisfying Major requirements.",
+              "The registrar lists this guide for all students who entered Fall 2021 or later; the PDF says Effective Fall 2018."
+            ]
+          },
+          "course_attributes": {
+            "ADV04434": [
+              "WI"
+            ],
+            "CMS04205": [
+              "COML"
+            ],
+            "CMS04241": [
+              "WI"
+            ],
+            "COMP01111": [
+              "COML"
+            ],
+            "COMP01112": [
+              "COML"
+            ]
+          },
+          "schedule": {
+            "term": "Fall 2026",
+            "term_code": "202640"
+          }
+        },
+        "intent": "Register me for Intro Pr/Advertising Research (PR06310). I want a morning class."
+      },
+      "parsed_output": {
+        "type": "https://example.org/course-registration/1.0/register",
+        "id": "d9f2b7c4-5a31-4e8d-9c60-1b2d3e4f5a6b",
+        "body": {
+          "student_id": "S8009",
+          "term_code": "202640",
+          "sections": []
+        }
+      },
+      "error": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "stop",
+      "served_model": "qwen/qwen3.8-flash",
+      "provider": "Alibaba",
+      "generation_id": "gen-1793898984-yscFvhItLQx61j2P7mai",
+      "prompt_tokens": 300783,
+      "cached_tokens": 297147,
+      "cache_write_tokens": 0,
+      "completion_tokens": 4723,
+      "reasoning_tokens": 4614,
+      "first_token_ms": 3281.5052999649197,
+      "latency_ms": 56669.06760004349,
+      "usd_cost": 0.007519562,
+      "verdict": {
+        "outcome": "semantic_error",
+        "detail": "rules broken: {'count': \"0 sections, wanted {'min': 1, 'max': 1}\", 'must_include_courses': \"missing ['PR06310']\"}",
+        "error_type": "time_of_day_misread",
+        "why_wrong": "2 of 6 Tier 4 checks failed (count and must_include_courses). What the request needed: A morning class starts before noon.",
+        "tiers": {
+          "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
+          "tier2": "schema (our register message): passed (4/4 checks passed)",
+          "tier3": "consistency (invariants against the schedule and transcript): passed (1/1 checks passed)",
+          "tier4": "semantic (the request's rules): failed (4/6 checks passed)"
+        },
+        "tier1_checks": [
+          {
+            "check": "json",
+            "requires": "the whole answer is one JSON value, with no prose or code fence around it",
+            "found": "valid JSON",
+            "passed": true
+          },
+          {
+            "check": "envelope",
+            "requires": "a DIDComm v2 plaintext message: an object with an \"id\" string, a \"type\" message-type URI and a \"body\" object; any optional headers (typ, from, to, created_time) well-formed",
+            "found": "valid DIDComm envelope",
+            "passed": true
+          }
+        ],
+        "tier2_checks": [
+          {
+            "check": "type",
+            "requires": "\"type\" is exactly \"https://example.org/course-registration/1.0/register\"",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "body",
+            "requires": "the body has exactly \"student_id\" (string), \"term_code\" (string) and \"sections\" (a list)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "sections",
+            "requires": "every section entry has exactly the copied fields (crn, course_id, section, credit_hours, seats, campus, modality, meetings), each well-formed (full day names, 12-hour times)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "unique_crns",
+            "requires": "no crn appears twice in the cart",
+            "found": "0 distinct crns",
+            "passed": true
+          }
+        ],
+        "tier3_checks": [
+          {
+            "check": "term",
+            "section": null,
+            "requires": "term_code is the term being registered for (202640)",
+            "found": "term_code 202640",
+            "passed": true
+          }
+        ],
+        "tier4_checks": [
+          {
+            "rule": "student_id",
+            "requires": "the message is for student S8009",
+            "found": "student_id 'S8009'",
+            "passed": true
+          },
+          {
+            "rule": "term_code",
+            "requires": "the message is for term 202640",
+            "found": "term_code '202640'",
+            "passed": true
+          },
+          {
+            "rule": "count",
+            "requires": "exactly 1 section in the cart",
+            "found": "0: none",
+            "passed": false,
+            "why": "The request calls for exactly 1 section, but the cart has 0 (none). The cart leaves out a class the request asked for."
+          },
+          {
+            "rule": "starts_before",
+            "requires": "every meeting starts before 12:00 PM",
+            "found": "no meetings",
+            "passed": true
+          },
+          {
+            "rule": "waitlist",
+            "requires": "no section is waitlisted (no request asks for a waitlist)",
+            "found": "nothing waitlisted",
+            "passed": true
+          },
+          {
+            "rule": "must_include_courses",
+            "requires": "the cart contains PR06310",
+            "found": "courses: none",
+            "passed": false,
+            "why": "The request names PR06310, but the cart has no section of it (it has none). PR06310 has 3 open section(s) this term."
+          }
+        ],
+        "deviation_score": 0.3333333333333333
+      },
+      "pair_result": {
+        "pair_id": "time_of_day/advertising-ba",
+        "twin_id": "T1-002",
+        "same_answer_as_twin": false,
+        "pair_passed": false,
+        "explanation": "Only its twin is correct; this case is a semantic_error. Pair failed. The model changed its answer between the two, but not to a correct one in this case."
+      },
+      "transcript_courses": 12
+    },
+    {
+      "task_id": "T1-002",
+      "session_id": "compact-20261105T171623Z-high",
+      "run_index": 0,
+      "ts": "2026-11-05T17:17:20.964526+00:00",
+      "case_hashes": {
+        "input": "6505c7bef1ae52d0",
+        "rules": "6cb95e4e6b7f9ed2"
+      },
+      "prompt_readable": {
+        "known_state": {
+          "student": {
+            "degree": "Bachelor of Arts",
+            "major": "Advertising",
+            "program_id": "ADVERTISING-BA",
+            "student_id": "S8009",
+            "catalog_year": "Fall 2025",
+            "entry": {
+              "type": "first_year"
+            }
+          },
+          "transcript": {
+            "completed_courses": [
+              {
+                "term": "Spring 2026",
+                "course_id": "BUS01100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "HOW TO SUCCEED IN BUSN SCHL-RS",
+                "grade": "A-",
+                "credit_hours": 2,
+                "attributes": [
+                  "RS"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "CMS04205",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PUBLIC SPEAKING",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "COMP01111",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION I",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "COMP01112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "COLLEGE COMPOSITION II",
+                "grade": "C+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "ECON04102",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRO ECON-MICROECON",
+                "grade": "A",
+                "credit_hours": 3,
+                "attributes": [
+                  "HUML"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "ENGL02112",
+                "campus": "Glassboro",
+                "level": "UG",
+                "grade": "B-",
+                "credit_hours": 3,
+                "attributes": [
+                  "LIT"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "GEOG16100",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "EARTH, PEOPLE, AND ENVIRONMENT",
+                "grade": "B+",
+                "credit_hours": 3,
+                "attributes": [
+                  "GLBL"
+                ]
+              },
+              {
+                "term": "Fall 2025",
+                "course_id": "MATH01115",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "CONTEMP MATHEMATICS",
+                "grade": "B",
+                "credit_hours": 3,
+                "attributes": [
+                  "QNTL"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHIL09110",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "LOGIC OF EVERYDAY REASONING",
+                "grade": "B+",
+                "credit_hours": 3
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHIL09261",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "PHIL PERSPECTIVES ON SCI-WI",
+                "grade": "B-",
+                "credit_hours": 3,
+                "attributes": [
+                  "WI"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "PHYS00220",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "INTRODUCTORY MECHANICS",
+                "grade": "B+",
+                "credit_hours": 4,
+                "attributes": [
+                  "SCIL"
+                ]
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "THD07215",
+                "campus": "Glassboro",
+                "level": "UG",
+                "title": "EXPERIENCING ACTING",
+                "grade": "C+",
+                "credit_hours": 3,
+                "attributes": [
+                  "ARTL"
+                ]
+              }
+            ],
+            "transfer_courses": [],
+            "courses_in_progress": []
+          },
+          "program_requirements": [
+            {
+              "req_id": "CORE-COML",
+              "category": "Rowan Core: Communicative Literacy (COML)",
+              "rule": "all_of",
+              "course_options": [
+                "COMP01111",
+                "COMP01112",
+                "CMS04205"
+              ],
+              "title": "Communicative Literacy",
+              "credit_hours": 9,
+              "minimum_grade": "D-",
+              "notes": "The three courses or their official equivalents; the only Rowan Core credits counted in the Rowan Core section.",
+              "exclusive": true,
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-ARTL",
+              "category": "Rowan Core: Artistic Literacy (ARTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Artistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated ARTL; its credits count in another section.",
+              "attribute": "ARTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-GLBL",
+              "category": "Rowan Core: Global Literacy (GLBL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Global Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated GLBL; its credits count in another section.",
+              "attribute": "GLBL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-HUML",
+              "category": "Rowan Core: Humanistic Literacy (HUML)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Humanistic Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated HUML; its credits count in another section.",
+              "attribute": "HUML",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-QNTL",
+              "category": "Rowan Core: Quantitative Literacy (QNTL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Quantitative Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated QNTL; its credits count in another section.",
+              "attribute": "QNTL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "CORE-SCIL",
+              "category": "Rowan Core: Scientific Literacy (SCIL)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Scientific Literacy",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "notes": "Any course designated SCIL; its credits count in another section.",
+              "attribute": "SCIL",
+              "guide_section": "rowan_core",
+              "waived_if": {
+                "nj_associate_degree": true
+              }
+            },
+            {
+              "req_id": "EXP-LIT",
+              "category": "Rowan Experience: Broad-Based Literature Attribute (LIT)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Broad-Based Literature Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the LIT attribute; its credits count in another section.",
+              "attribute": "LIT",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-WI",
+              "category": "Rowan Experience: Writing Intensive Attribute (WI)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Writing Intensive Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the WI attribute; its credits count in another section.",
+              "attribute": "WI",
+              "guide_section": "rowan_experience"
+            },
+            {
+              "req_id": "EXP-RS",
+              "category": "Rowan Experience: Rowan Seminar Attribute (RS)",
+              "rule": "credits_with_attribute",
+              "course_options": [],
+              "title": "Rowan Seminar Attribute",
+              "credit_hours": 1,
+              "minimum_grade": "D-",
+              "notes": "Any one course with the RS attribute; its credits count in another section.",
+              "attribute": "RS",
+              "guide_section": "rowan_experience",
+              "waived_if": {
+                "transfer_credits_at_entry": 24
+              }
+            },
+            {
+              "req_id": "NONPROG-LOGIC",
+              "category": "Non-Program Courses",
+              "rule": "all_of",
+              "course_options": [
+                "PHIL09110"
+              ],
+              "title": "Logic of Everyday Reasoning",
+              "credit_hours": 3,
+              "minimum_grade": "D-",
+              "exclusive": true,
+              "guide_section": "non_program"
+            },
+            {
+              "req_id": "ADV-REQUIRED",
+              "category": "Major Requirements: Required Advertising Courses",
+              "rule": "all_of",
+              "course_options": [
+                "ADV04330",
+                "PR06350",
+                "ADV04375",
+                "JRN02317",
+                "PR06310"
+              ],
+              "credit_hours": 15,
+              "minimum_grade": "C",
+              "notes": "Intro to Advertising and Intro to Public Relations need major status; JRN02317 needs 45 sh; PR06310 needs 60 sh.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-PLANNING",
+              "category": "Major Requirements: Required Advertising Courses",
+              "rule": "any_of",
+              "course_options": [
+                "ADV04421",
+                "ADV04420"
+              ],
+              "title": "Account Planning or Portfolio Preparation",
+              "credit_hours": 3,
+              "minimum_grade": "C",
+              "notes": "ADV04420 needs permission of the instructor / department.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-IMC",
+              "category": "Major Requirements: Required Advertising Courses",
+              "rule": "any_of",
+              "course_options": [
+                "ADV04360",
+                "MKT09200"
+              ],
+              "title": "Integrated Marketing Communication or Principles of Marketing",
+              "credit_hours": 3,
+              "minimum_grade": "C",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-UPPER",
+              "category": "Major Requirements: Upper-Level and Capstone Courses",
+              "rule": "all_of",
+              "course_options": [
+                "ADV04332",
+                "ADV04352",
+                "ADV04434",
+                "PR06355"
+              ],
+              "credit_hours": 12,
+              "minimum_grade": "C",
+              "notes": "Advertising Campaigns satisfies Writing Intensive.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "ADV-RELATED",
+              "category": "Major Requirements: Related Electives Bank",
+              "rule": "credits_from",
+              "course_options": [
+                "ADV04355",
+                "CMS04210",
+                "CMS04240",
+                "CMS04241",
+                "CMS04250",
+                "CMS04270",
+                "CMS04370",
+                "CMS04380",
+                "JRN02310",
+                "JRN02312",
+                "JRN02313",
+                "JRN02319",
+                "JRN02335",
+                "MGT06300",
+                "PR06360",
+                "PR06362",
+                "PR06364",
+                "PR06354",
+                "RTF03220"
+              ],
+              "credit_hours": 6,
+              "minimum_grade": "C",
+              "notes": "Two courses. The PR/Ad internships need a PR or Advertising major GPA of 2.50.",
+              "exclusive": true,
+              "guide_section": "major"
+            },
+            {
+              "req_id": "FREE",
+              "category": "Free Electives",
+              "rule": "credits_any",
+              "course_options": [],
+              "title": "Free Electives",
+              "credit_hours": 54,
+              "minimum_grade": "D-",
+              "notes": "Any credits not used by an exclusive requirement above; choose ones that satisfy unmet Rowan Core or Rowan Experience requirements.",
+              "exclusive": true,
+              "guide_section": "free_electives"
+            }
+          ],
+          "prerequisites": [
+            {
+              "course_id": "ADV04375",
+              "requires": [
+                "ADV04330"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04360",
+              "requires": [
+                "PR06350",
+                "ADV04330"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04332",
+              "requires": [
+                "ADV04330",
+                "ADV04421"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04352",
+              "requires": [
+                "ADV04375",
+                "PR06310"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "ADV04434",
+              "requires": [
+                "ADV04352"
+              ],
+              "minimum_grade": "D-"
+            },
+            {
+              "course_id": "PR06355",
+              "requires": [
+                "ADV04330",
+                "ADV04375"
+              ],
+              "minimum_grade": "D-"
+            }
+          ],
+          "graduation_rules": {
+            "total_credits": 120,
+            "minimum_gpa": 2.0,
+            "residency_credits": 30,
+            "minimum_grade": "D-"
+          },
+          "program_guide": {
+            "program_name": "B.A. in Advertising",
+            "department": "Department of Public Relations and Advertising",
+            "effective_term": "Fall 2018",
+            "source_url": "https://sites.rowan.edu/registrar/_docs/program-guide-advertising-ba---rc.pdf",
+            "total_credits": 120,
+            "sections": [
+              {
+                "section": "rowan_core",
+                "title": "Rowan Core Requirements (Communicative Literacy)",
+                "credit_hours": 9
+              },
+              {
+                "section": "non_program",
+                "title": "Non-Program Courses",
+                "credit_hours": 18,
+                "notes": "Courses here cannot be in the major department; only PHIL09110 is named."
+              },
+              {
+                "section": "major",
+                "title": "Major Requirements",
+                "credit_hours": 39,
+                "notes": "Required Advertising 21, Upper-Level and Capstone 12, Related Electives 6."
+              },
+              {
+                "section": "free_electives",
+                "title": "Free Electives",
+                "credit_hours": 54
+              }
+            ],
+            "rowan_core": {
+              "literacies": [
+                "COML",
+                "ARTL",
+                "GLBL",
+                "HUML",
+                "QNTL",
+                "SCIL"
+              ],
+              "min_credits_per_literacy": 3
+            },
+            "rowan_experience": {
+              "attributes": [
+                "LIT",
+                "WI",
+                "RS"
+              ]
+            },
+            "program_rules": [
+              "At least 120 sh of coursework that applies to the degree.",
+              "Cumulative GPA of at least 2.0 in Rowan University coursework (transfer credit does not count toward the GPA).",
+              "At least 30 sh completed at/through Rowan University.",
+              "Only grades of D- or above apply to graduation/degree requirements.",
+              "Rowan Core and Rowan Experience requirements must be met; one course may satisfy one Rowan Core literacy and several Rowan Experience attributes.",
+              "The Rowan Core is waived for transfer students with an earned A.A. or A.S. from a NJ community/county college; the Rowan Seminar is waived for students transferring 24 or more approved credits at initial entry.",
+              "Grade of C or better in all courses satisfying Major requirements.",
+              "The registrar lists this guide for all students who entered Fall 2021 or later; the PDF says Effective Fall 2018."
+            ]
+          },
+          "course_attributes": {
+            "ADV04434": [
+              "WI"
+            ],
+            "CMS04205": [
+              "COML"
+            ],
+            "CMS04241": [
+              "WI"
+            ],
+            "COMP01111": [
+              "COML"
+            ],
+            "COMP01112": [
+              "COML"
+            ]
+          },
+          "schedule": {
+            "term": "Fall 2026",
+            "term_code": "202640"
+          }
+        },
+        "intent": "Register me for Intro Pr/Advertising Research (PR06310). I want an afternoon class."
+      },
+      "parsed_output": {
+        "type": "https://example.org/course-registration/1.0/register",
+        "id": "b6f1c2d4-8a3e-4f5b-9c7d-1e2f3a4b5c6d",
+        "body": {
+          "student_id": "S8009",
+          "term_code": "202640",
+          "sections": [
+            {
+              "crn": "43101",
+              "course_id": "PR06310",
+              "section": "1",
+              "credit_hours": 3,
+              "seats_total": 25,
+              "seats_taken": 20,
+              "campus": "Glassboro",
+              "modality": "in-person",
+              "meetings": [
+                {
+                  "days": [
+                    "Tuesday",
+                    "Thursday"
+                  ],
+                  "start_time": "02:00 PM",
+                  "end_time": "03:15 PM"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "error": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "stop",
+      "served_model": "qwen/qwen3.8-flash",
+      "provider": "Alibaba",
+      "generation_id": "gen-1793899040-NBZXTwQuqDkkQBzDf9fC",
+      "prompt_tokens": 300783,
+      "cached_tokens": 297147,
+      "cache_write_tokens": 0,
+      "completion_tokens": 2531,
+      "reasoning_tokens": 2264,
+      "first_token_ms": 3259.137599961832,
+      "latency_ms": 34969.25979992375,
+      "usd_cost": 0.006489322,
+      "verdict": {
+        "outcome": "semantic_ok",
+        "detail": "satisfies every rule",
+        "tiers": {
+          "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
+          "tier2": "schema (our register message): passed (4/4 checks passed)",
+          "tier3": "consistency (invariants against the schedule and transcript): passed (9/9 checks passed)",
+          "tier4": "semantic (the request's rules): passed (7/7 checks passed)"
+        },
+        "tier1_checks": [
+          {
+            "check": "json",
+            "requires": "the whole answer is one JSON value, with no prose or code fence around it",
+            "found": "valid JSON",
+            "passed": true
+          },
+          {
+            "check": "envelope",
+            "requires": "a DIDComm v2 plaintext message: an object with an \"id\" string, a \"type\" message-type URI and a \"body\" object; any optional headers (typ, from, to, created_time) well-formed",
+            "found": "valid DIDComm envelope",
+            "passed": true
+          }
+        ],
+        "tier2_checks": [
+          {
+            "check": "type",
+            "requires": "\"type\" is exactly \"https://example.org/course-registration/1.0/register\"",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "body",
+            "requires": "the body has exactly \"student_id\" (string), \"term_code\" (string) and \"sections\" (a list)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "sections",
+            "requires": "every section entry has exactly the copied fields (crn, course_id, section, credit_hours, seats, campus, modality, meetings), each well-formed (full day names, 12-hour times)",
+            "found": "as required",
+            "passed": true
+          },
+          {
+            "check": "unique_crns",
+            "requires": "no crn appears twice in the cart",
+            "found": "1 distinct crn",
+            "passed": true
+          }
+        ],
+        "tier3_checks": [
+          {
+            "check": "term",
+            "section": null,
+            "requires": "term_code is the term being registered for (202640)",
+            "found": "term_code 202640",
+            "passed": true
+          },
+          {
+            "check": "exists",
+            "section": "43101",
+            "requires": "crn 43101 is a section offered this term",
+            "found": "offered: PR06310",
+            "passed": true
+          },
+          {
+            "check": "copied_fields",
+            "section": "43101",
+            "requires": "course_id, section, campus, modality, seats and meetings are copied exactly from the offered section",
+            "found": "all match",
+            "passed": true
+          },
+          {
+            "check": "not_cancelled",
+            "section": "43101",
+            "requires": "the section is not cancelled",
+            "found": "not cancelled",
+            "passed": true
+          },
+          {
+            "check": "seat",
+            "section": "43101",
+            "requires": "the section has a free seat",
+            "found": "20/25 seats taken",
+            "passed": true
+          },
+          {
+            "check": "credits",
+            "section": "43101",
+            "requires": "credit_hours is allowed for this section (3)",
+            "found": "credit_hours 3",
+            "passed": true
+          },
+          {
+            "check": "prerequisites",
+            "section": "43101",
+            "requires": "the transcript shows every prerequisite of PR06310",
+            "found": "no unmet prerequisite",
+            "passed": true
+          },
+          {
+            "check": "one_section_per_course",
+            "section": "43101",
+            "requires": "no other section of PR06310 is in the cart",
+            "found": "the only one",
+            "passed": true
+          },
+          {
+            "check": "no_time_conflict",
+            "section": "43101",
+            "requires": "no meeting overlaps another section in the cart",
+            "found": "the first section in the cart",
+            "passed": true
+          }
+        ],
+        "tier4_checks": [
+          {
+            "rule": "student_id",
+            "requires": "the message is for student S8009",
+            "found": "student_id 'S8009'",
+            "passed": true
+          },
+          {
+            "rule": "term_code",
+            "requires": "the message is for term 202640",
+            "found": "term_code '202640'",
+            "passed": true
+          },
+          {
+            "rule": "count",
+            "requires": "exactly 1 section in the cart",
+            "found": "1: 43101",
+            "passed": true
+          },
+          {
+            "rule": "starts_before",
+            "requires": "every meeting starts before 5:00 PM",
+            "found": "43101 Tue/Thu 02:00 PM-03:15 PM",
+            "passed": true
+          },
+          {
+            "rule": "starts_at_or_after",
+            "requires": "every meeting starts at 12:00 PM or later",
+            "found": "43101 Tue/Thu 02:00 PM-03:15 PM",
+            "passed": true
+          },
+          {
+            "rule": "waitlist",
+            "requires": "no section is waitlisted (no request asks for a waitlist)",
+            "found": "nothing waitlisted",
+            "passed": true
+          },
+          {
+            "rule": "must_include_courses",
+            "requires": "the cart contains PR06310",
+            "found": "courses: PR06310",
+            "passed": true
+          }
+        ],
+        "deviation_score": 0.0
+      },
+      "pair_result": {
+        "pair_id": "time_of_day/advertising-ba",
+        "twin_id": "T1-001",
+        "same_answer_as_twin": false,
+        "pair_passed": false,
+        "explanation": "Only this case is correct; its twin is a semantic_error. Pair failed. The model changed its answer between the two, but not to a correct one in its twin."
+      },
+      "transcript_courses": 12
+    }
+  ]
+}

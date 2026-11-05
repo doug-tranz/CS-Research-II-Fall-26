@@ -42,7 +42,8 @@ def model_price(model: str, prompt_tokens: float, provider: str | None = None) -
     per-provider endpoints are read; the list is the fallback. None when the model is unknown.
     provider: an endpoint tag (--provider); only that endpoint's prices, and a ValueError naming
     the model's tags when it has no such endpoint."""
-    url = f"{MODELS_URL}/{model.split(':')[0]}/endpoints"
+    # ":batch" is a price listing of the model itself; ":free" is its own model with its own (zero) prices
+    url = f"{MODELS_URL}/{model.removesuffix(':batch')}/endpoints"
     endpoints = (requests.get(url, timeout=30).json().get("data") or {}).get("endpoints") or []
     if provider is not None:
         tags = [e.get("tag") for e in endpoints]

@@ -57,6 +57,12 @@ class ProviderTests(unittest.TestCase):
         self.assertAlmostEqual(worst["input_cache_read"], 0.000000149)
         self.assertAlmostEqual(pinned["input_cache_read"], 0.0000000042)
 
+    def test_a_free_model_is_priced_as_itself_not_its_paid_twin(self):
+        with mock.patch("pipeline.pricing.requests.get", return_value=reply(ENDPOINTS)) as get:
+            pricing.model_price("nvidia/x:free", 400000)
+            pricing.model_price("deepseek/x:batch", 400000)
+        self.assertEqual([c.args[0].rsplit("/", 2)[-2] for c in get.call_args_list], ["x:free", "x"])
+
     def test_an_unknown_tag_names_the_models_tags(self):
         with mock.patch("pipeline.pricing.requests.get", return_value=reply(ENDPOINTS)):
             price, why = pricing.lookup_price("deepseek/x", 400000, "deepinfra")
