@@ -4,7 +4,8 @@
 #   bash run_main.sh list          the models, in run order, with their estimates
 #   bash run_main.sh credits       what is left on the OpenRouter key (free)
 #   bash run_main.sh luna          one model: its main run, then its stability check
-#   bash run_main.sh free          the three free Nemotron models at once (logs in results/logs/);
+#   bash run_main.sh paid          the eight paid models one after another (logs in results/FINALIZED_RESULTS/logs/)
+#   bash run_main.sh free          the three free Nemotron models at once (logs in results/FINALIZED_RESULTS/logs/);
 #                                  run it again each day after 00:00 UTC until all three finish
 #
 # Free models share OpenRouter's daily allowance (~1,000 requests). When it runs out the run stops
@@ -12,9 +13,9 @@
 # session where it left off (--resume), so no request is spent twice.
 #
 # Main run: 200 cases (--pairs 100, every check 4 or 6 cases) at low, medium and high effort,
-# one session each, into results/main_<name>.json. Stability check: 10 pairs (all seven
+# one session each, into results/FINALIZED_RESULTS/main_<name>.json. Stability check: 10 pairs (all seven
 # groups) sampled 3 times at medium effort, reusing the main run's answers as the first sample,
-# into results/check_<name>.json. Every run is live (no Batch API: its calls skip the cache).
+# into results/FINALIZED_RESULTS/check_<name>.json. Every run is live (no Batch API: its calls skip the cache).
 #
 # --max-cost is about 1.5x each measured estimate: a run whose estimate is above it does not
 # start, and one that reaches it stops. Estimates come from the model's test run
@@ -23,6 +24,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 PYTHON="${PYTHON:-python}"   # the interpreter (a test can stand one in)
+OUT=results/FINALIZED_RESULTS   # every main run, check and log of the study
 
 #      name       model                                    provider               main$  check$  estimate (3 efforts)
 MODELS="
@@ -65,41 +67,52 @@ run_model() {  # one model: its main run, then (once the main run is whole) its 
   local common=(--model "$model" "${prov[@]}" --tally compact --max-tokens 32000 --resume
                 --measured-from "results/${TESTED[$name]}.json")
 
-  echo "=== $name: main run, 200 cases x low/medium/high -> results/main_$name.json"
+  echo "=== $name: main run, 200 cases x low/medium/high -> $OUT/main_$name.json"
   status=0
   "$PYTHON" run_semantic_eval.py "${common[@]}" --pairs 100 --effort low medium high \
-    --output "results/main_$name.json" --max-cost "$cap" || status=$?
+    --output "$OUT/main_$name.json" --max-cost "$cap" || status=$?
   if [ "$status" = "$DAILY_LIMIT_EXIT" ]; then
     echo "=== $name: stopped at the daily free-model limit; run this again after 00:00 UTC to continue"
     return "$status"
   fi
   [ "$status" = 0 ] || return "$status"
-  echo "=== $name: stability check, 10 pairs x 3 samples at medium -> results/check_$name.json"
+  echo "=== $name: stability check, 10 pairs x 3 samples at medium -> $OUT/check_$name.json"
   "$PYTHON" run_semantic_eval.py "${common[@]}" --pairs 10 -n 3 --effort medium \
-    --reuse-from "results/main_$name.json" --output "results/check_$name.json" --max-cost "$check_cap" || status=$?
+    --reuse-from "$OUT/main_$name.json" --output "$OUT/check_$name.json" --max-cost "$check_cap" || status=$?
   [ "$status" = "$DAILY_LIMIT_EXIT" ] && echo "=== $name: check stopped at the daily limit; run this again after 00:00 UTC"
   return "$status"
 }
 
 case "${1:-}" in
-  ""|-h|--help) sed -n '2,22p' "$0"; exit 0 ;;
+  ""|-h|--help) sed -n '2,23p' "$0"; exit 0 ;;
   list) echo "run order (name, model, endpoint, --max-cost main / check, estimate):"; echo "$MODELS" | sed '/^$/d'; exit 0 ;;
   credits) credits; exit 0 ;;
   free)    # the three free Nemotron models at once, each with its own log; run again daily until all finish
-    mkdir -p results/logs
+    mkdir -p "$OUT/logs"
     for n in lightning super ultra; do
-      run_model "$n" > "results/logs/$n.log" 2>&1 &
-      echo "started $n (log: results/logs/$n.log)"
+      run_model "$n" > "$OUT/logs/$n.log" 2>&1 &
+      echo "started $n (log: $OUT/logs/$n.log)"
     done
     failed=0
     for n in lightning super ultra; do
       wait -n || failed=$((failed + 1))
     done
-    for n in lightning super ultra; do echo "--- $n: $(grep -E '^=== ' "results/logs/$n.log" | tail -1)"; done
+    for n in lightning super ultra; do echo "--- $n: $(grep -E '^=== ' "$OUT/logs/$n.log" | tail -1)"; done
     [ "$failed" = 0 ] && echo "all three finished" || echo "$failed not finished: run 'bash run_main.sh free' again after 00:00 UTC"
+    exit 0 ;;
+  paid)    # the eight paid models one after another, in run order, the credits printed before each
+    mkdir -p "$OUT/logs"
+    failed=""
+    for n in luna terra sol flashlite flash argon qwenflash qwen27b; do
+      credits
+      run_model "$n" 2>&1 | tee "$OUT/logs/$n.log" || failed="$failed $n"
+    done
+    credits
+    [ -z "$failed" ] && echo "all eight paid models finished" || echo "not finished:$failed (see $OUT/logs; run 'bash run_main.sh paid' again to continue)"
     exit 0 ;;
 esac
 
+mkdir -p "$OUT/logs"
 credits
 status=0
 run_model "$1" || status=$?
