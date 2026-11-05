@@ -58,7 +58,8 @@ from .paths import CASES, DEFAULT_OUTPUT, shown
 from .pricing import Projection, confirm_spend, estimate_cost, lookup_price, opening_tokens
 from .render import RENDERINGS, TALLY_VARIANTS, render_opening, session_contract, to_task
 from .reports import _sessions_path, compare, effort_report, export_csv, pair_report, rescore
-from .results import add_generations, append_row, file_hash, load_results, log_row, rebuild_summaries, save_results
+from .results import (LIVE_SUMMARY_EVERY, add_generations, append_row, file_hash, load_results, log_row,
+                      rebuild_summaries, refresh_summary, save_results)
 from .scoring import failed_call_verdict, score_answer
 from .selfcheck import check_cases
 from .session import TallySession
@@ -459,6 +460,8 @@ def run_cases(cases: list, backend, args, session: TallySession, meta: dict, pro
             if projected is not None:
                 extra["projected_openrouter_usd"] = projected
             log_row(result, verdict, args.output, meta, extra)
+            if runs % LIVE_SUMMARY_EVERY == 0:      # the file's summary shows the totals so far
+                refresh_summary(args.test_file, args.output, meta["session_id"], len(cases) * args.n)
         if stopped:
             break
 

@@ -1605,6 +1605,7 @@ backends × models × domains × tasks × samples
 
 | Version | Date | Changes |
 |---|---|---|
+| 4.5 | 2026-11-05 | A running session's summary is recomputed every 20 calls (marked `in_progress`: "N of M calls so far"), so the results file shows accuracy, cost and the analysis while a run goes; the end-of-session summary replaces it. |
 | 4.4 | 2026-11-05 | OpenRouter's daily free-model limit stops a run at once (no retries, no failed rows; exit status 3), and `--resume` continues a stopped session from its next call instead of starting the effort over (also after `--max-cost` or a crash), and skips a finished single-effort session. `bash run_main.sh free` runs the three Nemotron models in parallel; run it again each day after 00:00 UTC until all finish. |
 | 4.3 | 2026-11-05 | Each row gets OpenRouter's record of its call (`generation`: dated model version, service tier, attempts, timing, native token counts, cache discount), fetched at the end of the session; `--fetch-generations` adds it to older files. CSV gains `model_version`, `service_tier`, `attempts`, `generation_time_ms`. |
 | 4.2 | 2026-11-05 | The finalized file leaves out pairs whose answer is a course a degree guide gives a condition only in its notes ("PR06310 needs 60 sh", "needs junior status", "need the instructor's permission"): the scorer does not check those, so such a case could mark a model wrong for following the guide (found in Luna's reasoning). 10 pairs; every check keeps 8 cases; listed in `data/rebuild_manifest.json` (`unchecked_condition_skipped`). |

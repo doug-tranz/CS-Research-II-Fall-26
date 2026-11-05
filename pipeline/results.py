@@ -443,7 +443,23 @@ def summarize_session(meta: dict, rows: list, pairs: dict, cases: dict | None = 
 SUMMARY_TOTALS = ("started", "ended", "cases", "calls", "generation_failures", "outcomes", "semantic_ok",
                   "semantic_ok_by_case_type", "mean_chance_baseline", "mean_deviation_score", "error_types",
                   "finish_reasons", "served_by", "tokens", "cost", "latency", "local_cost", "paired_accuracy",
-                  "sampling_note", "reused_answers", "analysis")
+                  "sampling_note", "reused_answers", "analysis", "in_progress")
+
+
+LIVE_SUMMARY_EVERY = 20     # a running session's summary is recomputed after this many calls
+
+
+def refresh_summary(case_file: str, path: str, session_id: str, calls_planned: int) -> None:
+    """Recomputes every summary of the results file from its rows so far, the running session's
+    marked in_progress, so the file shows accuracy, cost and the analysis while a run goes. The
+    session's last summary (at its end) replaces it and drops the mark."""
+    sessions, results = load_results(path)
+    rebuilt = rebuild_summaries(case_file, sessions, results)
+    for s in rebuilt:
+        if s["session_id"] == session_id:
+            s["in_progress"] = (f"{s['calls']} of {calls_planned} calls so far; the totals are final when the "
+                                f"session ends")
+    save_results(path, rebuilt, results)
 
 
 def rebuild_summaries(case_file: str, sessions: list, results: list, raw: list | None = None) -> list:

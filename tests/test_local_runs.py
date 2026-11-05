@@ -394,6 +394,18 @@ class ResultsFileTests(unittest.TestCase):
         self.assertEqual((session["model"], session["effort"], session["semantic_ok_rate"], session["ok_K1"]),
                          ("m", "low", "1.0", "1.0"))
 
+    def test_a_running_sessions_summary_shows_its_totals_so_far(self):
+        path = Path(tempfile.mkdtemp()) / "r.json"
+        row = {"task_id": PAIR[0], "session_id": "s", "run_index": 0, "ts": "2026-11-05T00:00:00Z", "error": None,
+               "usd_cost": 0.01, "verdict": {"outcome": "semantic_ok"}, "parsed_output": {"body": {"sections": []}}}
+        results.save_results(str(path), [{"session_id": "s", "model": "m"}], [row])
+        results.refresh_summary(str(paths.CASES), str(path), "s", 200)
+        s = json.loads(path.read_text(encoding="utf-8"))["sessions"][0]
+        self.assertEqual((s["semantic_ok"]["count"], s["in_progress"][:14]), ("1/1", "1 of 200 calls"))
+        self.assertIn("analysis", s)
+        final = results.rebuild_summaries(str(paths.CASES), [s], [row])[0]     # the end-of-session rebuild
+        self.assertNotIn("in_progress", final)
+
     def test_save_is_atomic_and_leaves_no_temp_file(self):
         path = Path(tempfile.mkdtemp()) / "r.json"
         results.save_results(str(path), [{"session_id": "s"}], [])
