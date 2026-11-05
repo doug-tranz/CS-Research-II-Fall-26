@@ -503,5 +503,97 @@
    ],
    "why": "the compact Section Tally every case shares leaves out instructors (adding them to every call, about +16% tokens, was declined), so a request by instructor cannot be answered on the tally"
   }
+ ],
+ "unchecked_condition_skipped": [
+  {
+   "pair_id": "time_of_day/advertising-ba",
+   "check": "T1",
+   "courses": [
+    "PR06310"
+   ],
+   "program": "advertising-ba",
+   "owner": "Tyler Henry"
+  },
+  {
+   "pair_id": "transfer/computer-science-bs#4",
+   "check": "R9",
+   "courses": [
+    "CS99300"
+   ],
+   "program": "computer-science-bs",
+   "owner": "Aneesh Anand"
+  },
+  {
+   "pair_id": "requirement_options/psychology-ba",
+   "check": "R8",
+   "courses": [
+    "PSY02300"
+   ],
+   "program": "psychology-ba",
+   "owner": "Daquan and Aneesh Anand"
+  },
+  {
+   "pair_id": "transfer/computer-science-bs",
+   "check": "R9",
+   "courses": [
+    "CS99300"
+   ],
+   "program": "computer-science-bs",
+   "owner": "Khalil"
+  },
+  {
+   "pair_id": "transfer/computer-science-bs#3",
+   "check": "R9",
+   "courses": [
+    "CS99300"
+   ],
+   "program": "computer-science-bs",
+   "owner": "Khalil"
+  },
+  {
+   "pair_id": "days/mathematics-bs",
+   "check": "D1",
+   "courses": [
+    "MATH01332"
+   ],
+   "program": "mathematics-bs",
+   "owner": "Khalil"
+  },
+  {
+   "pair_id": "time_of_day/communication-studies-ba",
+   "check": "T1",
+   "courses": [
+    "CMS04425"
+   ],
+   "program": "communication-studies-ba",
+   "owner": "Khalil"
+  },
+  {
+   "pair_id": "back_to_back/advertising-ba",
+   "check": "T7",
+   "courses": [
+    "PR06310"
+   ],
+   "program": "advertising-ba",
+   "owner": "Khalil"
+  },
+  {
+   "pair_id": "prereq_transfer/communication-studies-ba",
+   "check": "R6",
+   "courses": [
+    "CMS04425"
+   ],
+   "program": "communication-studies-ba",
+   "owner": "Khalil"
+  },
+  {
+   "pair_id": "prereq_min_grade/communication-studies-ba",
+   "check": "R7",
+   "courses": [
+    "CMS04425"
+   ],
+   "program": "communication-studies-ba",
+   "owner": "Khalil"
+  }
  ]
 }

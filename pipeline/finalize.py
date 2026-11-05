@@ -117,6 +117,33 @@ FAMILIES = {  # pipeline pair family (ground_truth.case_type) -> codes
     "complete_cart": ["O2", "O1"], "any_correct": ["O3"], "impossible_days": ["K7", "D3"], "impossible_full": ["K7", "C1"],
 }
 PER_CHECK = 8   # cases kept per check (4 pairs): T5 (chained_conflict) runs out of real sections at 4 pairs
+# A condition a degree guide states only in a requirement's notes ("PR06310 needs 60 sh", "needs junior
+# status", "need the instructor's permission"): the scorer does not check it, so a case whose answer is
+# such a course could mark a model wrong for following the guide. Those pairs are not kept.
+UNCHECKED_CONDITION = re.compile(r"\d+\s*sh\b|standing|status|permission|consent|approval", re.I)
+COURSE_ID = re.compile(r"\b[A-Z]{2,4}\d{5}\b")
+
+
+def restricted_courses(program: dict) -> set:
+    """The courses a program's notes give an unchecked condition: in a note's clause (split at . and
+    ;) that says "need(s)" followed by an UNCHECKED_CONDITION, the course ids before "need" ("PR06310
+    needs 60 sh"; not "they need COMP01112 ... and 90 sh", whose ids are the prerequisites)."""
+    out = set()
+
+    def walk(x):
+        if isinstance(x, dict):
+            if isinstance(x.get("notes"), str):
+                for clause in re.split(r"[.;]", x["notes"]):
+                    need = re.search(r"\bneeds?\b", clause)
+                    if need and UNCHECKED_CONDITION.search(clause[need.end():]):
+                        out.update(COURSE_ID.findall(clause[:need.start()]))
+            for v in x.values():
+                walk(v)
+        elif isinstance(x, list):
+            for v in x:
+                walk(v)
+    walk(program)
+    return out
 NOT_REBUILT = {
     "K2": "the compact Section Tally every case shares leaves out instructors (adding them to every call, about "
           "+16% tokens, was declined), so a request by instructor cannot be answered on the tally",
@@ -389,9 +416,20 @@ def main():
 
     # The same number of cases for every check: PER_CHECK // 2 whole pairs per main code. Team cases
     # (found on a branch or rebuilt from one) first, then the rest, taking turns across owners and families.
-    groups = {}
+    programs = json.loads((DATA / "degree_requirements.json").read_text(encoding="utf-8"))["programs"]
+    restricted = {key: restricted_courses(prog) for key, prog in programs.items()}
+    groups, skipped = {}, []
     for checks, rec in found:
-        groups.setdefault(checks[0], {}).setdefault(rec["ground_truth"]["pair"]["id"], []).append((checks, rec))
+        pid = rec["ground_truth"]["pair"]["id"]
+        hit = sorted(set(rec.get("candidate_courses") or []) & restricted.get((rec.get("input") or {}).get("program"), set()))
+        if hit:
+            skipped.append({"pair_id": pid, "check": checks[0], "courses": hit,
+                            "program": rec["input"]["program"], "owner": credit_of(rec)["owner"]})
+            continue
+        groups.setdefault(checks[0], {}).setdefault(pid, []).append((checks, rec))
+    skipped = list({d["pair_id"]: d for d in skipped}.values())
+    print("left out, a course with a condition the scorer does not check:",
+          [(d["check"], d["pair_id"], d["courses"]) for d in skipped])
     kept, turn = [], {}
     for code, by_pair in groups.items():
         def rank(item):
@@ -475,6 +513,7 @@ def main():
     text = json.dumps({"about": about, "checklist": checklist, "cases": cases}, indent=2, ensure_ascii=False) + "\n"
     CASES.write_bytes(text.replace("\n", "\r\n").encode("utf-8"))        # CRLF, like data/paired_cases.json
     MANIFEST["dropped"] = dropped
+    MANIFEST["unchecked_condition_skipped"] = skipped
     (DATA / "rebuild_manifest.json").write_text(json.dumps(MANIFEST, indent=1) + "\n", encoding="utf-8")
     print(f"{len(cases)} cases -> {CASES}")
     for code, name, _ in CHECKS:

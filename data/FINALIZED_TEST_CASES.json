@@ -812,227 +812,6 @@
       "case_id": "T1-001",
       "semantic_check": "T1: Time-of-day words (morning / afternoon)",
       "input": {
-        "program": "advertising-ba",
-        "student": {
-          "student_id": "S8009",
-          "catalog_year": "Fall 2025",
-          "entry": {
-            "type": "first_year"
-          }
-        },
-        "transcript": {
-          "fabricate": {
-            "seed": 779212,
-            "through": "Spring 2026",
-            "complete": [
-              "CORE-COML",
-              "CORE-ARTL",
-              "CORE-GLBL",
-              "CORE-HUML",
-              "CORE-QNTL",
-              "CORE-SCIL",
-              "EXP-LIT",
-              "EXP-WI",
-              "EXP-RS",
-              "NONPROG-LOGIC"
-            ],
-            "rows": [],
-            "avoid": [
-              "PR06310"
-            ],
-            "keep_unmet": [
-              "ADV-REQUIRED"
-            ]
-          }
-        },
-        "prompt": "Register me for Intro Pr/Advertising Research (PR06310). I want a morning class."
-      },
-      "candidate_courses": [
-        "PR06310"
-      ],
-      "ground_truth": {
-        "rules": {
-          "count": {
-            "min": 1,
-            "max": 1
-          },
-          "must_include_courses": [
-            "PR06310"
-          ],
-          "starts_before": "12:00 PM"
-        },
-        "examples": {
-          "valid": [
-            [
-              "43105"
-            ]
-          ],
-          "invalid": [
-            [
-              "43101"
-            ],
-            [
-              "43103"
-            ]
-          ]
-        },
-        "implicit_relationship": "A morning class starts before noon. 1 correct section: 43105; 2 section(s) break a rule of the request. Its twin's answers 43101, 43103 are wrong here.",
-        "case_type": "time_of_day",
-        "targets": [
-          "ADV-REQUIRED"
-        ],
-        "pair": {
-          "id": "time_of_day/advertising-ba",
-          "variant": "a",
-          "changed": "time of day: morning vs afternoon",
-          "difference": {
-            "where": "prompt",
-            "this_case": "prompt says 'a morning'",
-            "twin_case": "prompt says 'an afternoon'",
-            "twin_id": "pair-time_of_day-advertising-ba-b",
-            "answer_here": "a section of Intro Pr/Advertising Research (PR06310), starting before 12:00 PM",
-            "answer_in_twin": "a section of Intro Pr/Advertising Research (PR06310), starting at 12:00 PM or later, starting before 5:00 PM",
-            "summary": "Only the prompt differs. Here: prompt says 'a morning'. In the twin (pair-time_of_day-advertising-ba-b): prompt says 'an afternoon'. So the answer here is a section of Intro Pr/Advertising Research (PR06310), starting before 12:00 PM, while in the twin it is a section of Intro Pr/Advertising Research (PR06310), starting at 12:00 PM or later, starting before 5:00 PM."
-          },
-          "has_shared_answer": false,
-          "shared_answer_example": null
-        },
-        "difficulty": {
-          "candidate_courses": 1,
-          "candidate_answers": 3,
-          "correct_answers": 1,
-          "chance": 0.3333,
-          "rules": 3,
-          "prompt_words": 12
-        },
-        "checks": [
-          "T1"
-        ],
-        "credit": {
-          "owner": "Tyler Henry",
-          "branch": "ben-test-branch",
-          "file": "semantic_test_cases.jsonl",
-          "original_case_id": "reg-sem-001",
-          "rebuilt_by": "Khalil",
-          "rebuilt_as": "pair-time_of_day-advertising-ba-a"
-        }
-      }
-    },
-    {
-      "case_id": "T1-002",
-      "semantic_check": "T1: Time-of-day words (morning / afternoon)",
-      "input": {
-        "program": "advertising-ba",
-        "student": {
-          "student_id": "S8009",
-          "catalog_year": "Fall 2025",
-          "entry": {
-            "type": "first_year"
-          }
-        },
-        "transcript": {
-          "fabricate": {
-            "seed": 779212,
-            "through": "Spring 2026",
-            "complete": [
-              "CORE-COML",
-              "CORE-ARTL",
-              "CORE-GLBL",
-              "CORE-HUML",
-              "CORE-QNTL",
-              "CORE-SCIL",
-              "EXP-LIT",
-              "EXP-WI",
-              "EXP-RS",
-              "NONPROG-LOGIC"
-            ],
-            "rows": [],
-            "avoid": [
-              "PR06310"
-            ],
-            "keep_unmet": [
-              "ADV-REQUIRED"
-            ]
-          }
-        },
-        "prompt": "Register me for Intro Pr/Advertising Research (PR06310). I want an afternoon class."
-      },
-      "candidate_courses": [
-        "PR06310"
-      ],
-      "ground_truth": {
-        "rules": {
-          "count": {
-            "min": 1,
-            "max": 1
-          },
-          "must_include_courses": [
-            "PR06310"
-          ],
-          "starts_at_or_after": "12:00 PM",
-          "starts_before": "5:00 PM"
-        },
-        "examples": {
-          "valid": [
-            [
-              "43101"
-            ],
-            [
-              "43103"
-            ]
-          ],
-          "invalid": [
-            [
-              "43105"
-            ]
-          ]
-        },
-        "implicit_relationship": "An afternoon class starts between noon and 5 PM. 2 correct sections: 43101, 43103; 1 section(s) break a rule of the request. Its twin's answers 43105 are wrong here.",
-        "case_type": "time_of_day",
-        "targets": [
-          "ADV-REQUIRED"
-        ],
-        "pair": {
-          "id": "time_of_day/advertising-ba",
-          "variant": "b",
-          "changed": "time of day: morning vs afternoon",
-          "difference": {
-            "where": "prompt",
-            "this_case": "prompt says 'an afternoon'",
-            "twin_case": "prompt says 'a morning'",
-            "twin_id": "pair-time_of_day-advertising-ba-a",
-            "answer_here": "a section of Intro Pr/Advertising Research (PR06310), starting at 12:00 PM or later, starting before 5:00 PM",
-            "answer_in_twin": "a section of Intro Pr/Advertising Research (PR06310), starting before 12:00 PM",
-            "summary": "Only the prompt differs. Here: prompt says 'an afternoon'. In the twin (pair-time_of_day-advertising-ba-a): prompt says 'a morning'. So the answer here is a section of Intro Pr/Advertising Research (PR06310), starting at 12:00 PM or later, starting before 5:00 PM, while in the twin it is a section of Intro Pr/Advertising Research (PR06310), starting before 12:00 PM."
-          },
-          "has_shared_answer": false,
-          "shared_answer_example": null
-        },
-        "difficulty": {
-          "candidate_courses": 1,
-          "candidate_answers": 3,
-          "correct_answers": 2,
-          "chance": 0.6667,
-          "rules": 4,
-          "prompt_words": 12
-        },
-        "checks": [
-          "T1"
-        ],
-        "credit": {
-          "owner": "Tyler Henry",
-          "branch": "ben-test-branch",
-          "file": "semantic_test_cases.jsonl",
-          "original_case_id": "reg-sem-002",
-          "rebuilt_by": "Khalil",
-          "rebuilt_as": "pair-time_of_day-advertising-ba-b"
-        }
-      }
-    },
-    {
-      "case_id": "T1-003",
-      "semantic_check": "T1: Time-of-day words (morning / afternoon)",
-      "input": {
         "program": "bioinformatics-bs",
         "student": {
           "student_id": "S8027",
@@ -1142,7 +921,7 @@
       }
     },
     {
-      "case_id": "T1-004",
+      "case_id": "T1-002",
       "semantic_check": "T1: Time-of-day words (morning / afternoon)",
       "input": {
         "program": "bioinformatics-bs",
@@ -1255,7 +1034,7 @@
       }
     },
     {
-      "case_id": "T1-005",
+      "case_id": "T1-003",
       "semantic_check": "T1: Time-of-day words (morning / afternoon)",
       "input": {
         "program": "exercise-science-bs",
@@ -1367,7 +1146,7 @@
       }
     },
     {
-      "case_id": "T1-006",
+      "case_id": "T1-004",
       "semantic_check": "T1: Time-of-day words (morning / afternoon)",
       "input": {
         "program": "exercise-science-bs",
@@ -1480,7 +1259,7 @@
       }
     },
     {
-      "case_id": "T1-007",
+      "case_id": "T1-005",
       "semantic_check": "T1: Time-of-day words (morning / afternoon)",
       "input": {
         "program": "philosophy-ba",
@@ -1588,7 +1367,7 @@
       }
     },
     {
-      "case_id": "T1-008",
+      "case_id": "T1-006",
       "semantic_check": "T1: Time-of-day words (morning / afternoon)",
       "input": {
         "program": "philosophy-ba",
@@ -1693,6 +1472,223 @@
           "original_case_id": "tyler-dyn-0007",
           "rebuilt_by": "Khalil",
           "rebuilt_as": "pair-time_of_day-philosophy-ba-b"
+        }
+      }
+    },
+    {
+      "case_id": "T1-007",
+      "semantic_check": "T1: Time-of-day words (morning / afternoon)",
+      "input": {
+        "program": "sports-communication-media-ba",
+        "student": {
+          "student_id": "S8026",
+          "catalog_year": "Fall 2024",
+          "entry": {
+            "type": "first_year"
+          }
+        },
+        "transcript": {
+          "fabricate": {
+            "seed": 888616,
+            "through": "Spring 2026",
+            "complete": [
+              "CORE-COML",
+              "CORE-ARTL",
+              "CORE-GLBL",
+              "CORE-HUML",
+              "CORE-QNTL",
+              "CORE-SCIL",
+              "EXP-LIT",
+              "EXP-WI",
+              "EXP-RS",
+              "SPRT-CORE",
+              "SPRT-INTERNSHIP"
+            ],
+            "rows": [],
+            "avoid": [
+              "PR06307"
+            ],
+            "keep_unmet": [
+              "SPRT-CONCENTRATION"
+            ]
+          }
+        },
+        "prompt": "Register me for Sport/Entertain Event Planng (PR06307). I want a morning class."
+      },
+      "candidate_courses": [
+        "PR06307"
+      ],
+      "ground_truth": {
+        "rules": {
+          "count": {
+            "min": 1,
+            "max": 1
+          },
+          "must_include_courses": [
+            "PR06307"
+          ],
+          "starts_before": "12:00 PM"
+        },
+        "examples": {
+          "valid": [
+            [
+              "43089"
+            ]
+          ],
+          "invalid": [
+            [
+              "43090"
+            ]
+          ]
+        },
+        "implicit_relationship": "A morning class starts before noon. 1 correct section: 43089; 1 section(s) break a rule of the request. Its twin's answers 43090 are wrong here.",
+        "case_type": "time_of_day",
+        "targets": [
+          "SPRT-CONCENTRATION"
+        ],
+        "pair": {
+          "id": "time_of_day/sports-communication-media-ba",
+          "variant": "a",
+          "changed": "time of day: morning vs afternoon",
+          "difference": {
+            "where": "prompt",
+            "this_case": "prompt says 'a morning'",
+            "twin_case": "prompt says 'an afternoon'",
+            "twin_id": "pair-time_of_day-sports-communication-media-ba-b",
+            "answer_here": "a section of Sport/Entertain Event Planng (PR06307), starting before 12:00 PM",
+            "answer_in_twin": "a section of Sport/Entertain Event Planng (PR06307), starting at 12:00 PM or later, starting before 5:00 PM",
+            "summary": "Only the prompt differs. Here: prompt says 'a morning'. In the twin (pair-time_of_day-sports-communication-media-ba-b): prompt says 'an afternoon'. So the answer here is a section of Sport/Entertain Event Planng (PR06307), starting before 12:00 PM, while in the twin it is a section of Sport/Entertain Event Planng (PR06307), starting at 12:00 PM or later, starting before 5:00 PM."
+          },
+          "has_shared_answer": false,
+          "shared_answer_example": null
+        },
+        "difficulty": {
+          "candidate_courses": 1,
+          "candidate_answers": 2,
+          "correct_answers": 1,
+          "chance": 0.5,
+          "rules": 3,
+          "prompt_words": 12
+        },
+        "checks": [
+          "T1"
+        ],
+        "credit": {
+          "owner": "Daquan and Aneesh Anand",
+          "branch": "Tyler",
+          "file": "Tyler_branch_ready_semantic_tests/semantic_tests/semantic_cases_daquan_aneesh.jsonl",
+          "original_case_id": "SEM-008",
+          "rebuilt_by": "Khalil",
+          "rebuilt_as": "pair-time_of_day-sports-communication-media-ba-a"
+        }
+      }
+    },
+    {
+      "case_id": "T1-008",
+      "semantic_check": "T1: Time-of-day words (morning / afternoon)",
+      "input": {
+        "program": "sports-communication-media-ba",
+        "student": {
+          "student_id": "S8026",
+          "catalog_year": "Fall 2024",
+          "entry": {
+            "type": "first_year"
+          }
+        },
+        "transcript": {
+          "fabricate": {
+            "seed": 888616,
+            "through": "Spring 2026",
+            "complete": [
+              "CORE-COML",
+              "CORE-ARTL",
+              "CORE-GLBL",
+              "CORE-HUML",
+              "CORE-QNTL",
+              "CORE-SCIL",
+              "EXP-LIT",
+              "EXP-WI",
+              "EXP-RS",
+              "SPRT-CORE",
+              "SPRT-INTERNSHIP"
+            ],
+            "rows": [],
+            "avoid": [
+              "PR06307"
+            ],
+            "keep_unmet": [
+              "SPRT-CONCENTRATION"
+            ]
+          }
+        },
+        "prompt": "Register me for Sport/Entertain Event Planng (PR06307). I want an afternoon class."
+      },
+      "candidate_courses": [
+        "PR06307"
+      ],
+      "ground_truth": {
+        "rules": {
+          "count": {
+            "min": 1,
+            "max": 1
+          },
+          "must_include_courses": [
+            "PR06307"
+          ],
+          "starts_at_or_after": "12:00 PM",
+          "starts_before": "5:00 PM"
+        },
+        "examples": {
+          "valid": [
+            [
+              "43090"
+            ]
+          ],
+          "invalid": [
+            [
+              "43089"
+            ]
+          ]
+        },
+        "implicit_relationship": "An afternoon class starts between noon and 5 PM. 1 correct section: 43090; 1 section(s) break a rule of the request. Its twin's answers 43089 are wrong here.",
+        "case_type": "time_of_day",
+        "targets": [
+          "SPRT-CONCENTRATION"
+        ],
+        "pair": {
+          "id": "time_of_day/sports-communication-media-ba",
+          "variant": "b",
+          "changed": "time of day: morning vs afternoon",
+          "difference": {
+            "where": "prompt",
+            "this_case": "prompt says 'an afternoon'",
+            "twin_case": "prompt says 'a morning'",
+            "twin_id": "pair-time_of_day-sports-communication-media-ba-a",
+            "answer_here": "a section of Sport/Entertain Event Planng (PR06307), starting at 12:00 PM or later, starting before 5:00 PM",
+            "answer_in_twin": "a section of Sport/Entertain Event Planng (PR06307), starting before 12:00 PM",
+            "summary": "Only the prompt differs. Here: prompt says 'an afternoon'. In the twin (pair-time_of_day-sports-communication-media-ba-a): prompt says 'a morning'. So the answer here is a section of Sport/Entertain Event Planng (PR06307), starting at 12:00 PM or later, starting before 5:00 PM, while in the twin it is a section of Sport/Entertain Event Planng (PR06307), starting before 12:00 PM."
+          },
+          "has_shared_answer": false,
+          "shared_answer_example": null
+        },
+        "difficulty": {
+          "candidate_courses": 1,
+          "candidate_answers": 2,
+          "correct_answers": 1,
+          "chance": 0.5,
+          "rules": 4,
+          "prompt_words": 12
+        },
+        "checks": [
+          "T1"
+        ],
+        "credit": {
+          "owner": "Khalil",
+          "branch": "Khalil-context-path",
+          "file": "data/paired_cases.json",
+          "original_case_id": "pair-time_of_day-sports-communication-media-ba-b",
+          "rebuilt_by": null,
+          "rebuilt_as": null
         }
       }
     },
@@ -35843,285 +35839,6 @@
       "case_id": "R7-003",
       "semantic_check": "R7: Minimum grade on a prereq",
       "input": {
-        "program": "communication-studies-ba",
-        "student": {
-          "student_id": "S8055",
-          "catalog_year": "Fall 2024",
-          "entry": {
-            "type": "first_year"
-          }
-        },
-        "transcript": {
-          "fabricate": {
-            "seed": 136650,
-            "through": "Spring 2026",
-            "complete": [
-              "CORE-COML",
-              "CORE-ARTL",
-              "CORE-GLBL",
-              "CORE-HUML",
-              "CORE-QNTL",
-              "CORE-SCIL",
-              "EXP-LIT",
-              "EXP-WI",
-              "EXP-RS",
-              "NONPROG-PSY",
-              "NONPROG-SOC",
-              "NONPROG-ECON-POSC",
-              "NONPROG-HIST",
-              "NONPROG-PHIL",
-              "NONPROG-ENGL"
-            ],
-            "rows": [
-              {
-                "term": "Spring 2026",
-                "course_id": "CMS04350",
-                "grade": "C-"
-              }
-            ],
-            "avoid": [
-              "CMS04200",
-              "CMS04250",
-              "CMS04350",
-              "CMS04425"
-            ],
-            "keep_unmet": [
-              "CMS-CAPSTONE",
-              "CMS-FOUNDATIONAL"
-            ]
-          }
-        },
-        "prompt": "Register me for Ethical Issues in Human Communication (CMS04425) if I meet its prerequisites. If I don't, register me for Introduction to Communication Studies (CMS04200) instead."
-      },
-      "candidate_courses": [
-        "CMS04200",
-        "CMS04425"
-      ],
-      "ground_truth": {
-        "rules": {
-          "count": {
-            "min": 1,
-            "max": 1
-          },
-          "courses_in": [
-            "CMS04425"
-          ]
-        },
-        "examples": {
-          "valid": [
-            [
-              "44332"
-            ],
-            [
-              "44334"
-            ]
-          ],
-          "invalid": [
-            [
-              "44314"
-            ],
-            [
-              "44311"
-            ],
-            [
-              "44312"
-            ],
-            [
-              "44313"
-            ]
-          ]
-        },
-        "implicit_relationship": "CMS04350 meets CMS04425's prerequisite, so CMS04425. 2 correct sections: 44332, 44334; full sections (no waitlist allowed): 44311, 44312, 44313; 1 section(s) break a rule of the request. Its twin's answers 44314 are wrong here.",
-        "case_type": "prereq_min_grade",
-        "targets": [
-          "CMS-CAPSTONE",
-          "CMS-FOUNDATIONAL"
-        ],
-        "pair": {
-          "id": "prereq_min_grade/communication-studies-ba",
-          "variant": "a",
-          "changed": "grade in CMS04350: at the prerequisite minimum vs one step below",
-          "difference": {
-            "where": "transcript",
-            "this_case": "completed: CMS04350 Comm Studies Rsrch Methods (C-)",
-            "twin_case": "completed: CMS04350 Comm Studies Rsrch Methods (D+)",
-            "twin_id": "pair-prereq_min_grade-communication-studies-ba-b",
-            "answer_here": "a section of Ethical Issues in Human Communication (CMS04425)",
-            "answer_in_twin": "a section of Introduction to Communication Studies (CMS04200)",
-            "summary": "Only the transcript differs. Here: completed: CMS04350 Comm Studies Rsrch Methods (C-). In the twin (pair-prereq_min_grade-communication-studies-ba-b): completed: CMS04350 Comm Studies Rsrch Methods (D+). So the answer here is a section of Ethical Issues in Human Communication (CMS04425), while in the twin it is a section of Introduction to Communication Studies (CMS04200)."
-          },
-          "has_shared_answer": false,
-          "shared_answer_example": null
-        },
-        "difficulty": {
-          "candidate_courses": 2,
-          "candidate_answers": 6,
-          "correct_answers": 2,
-          "chance": 0.3333,
-          "rules": 2,
-          "prompt_words": 26
-        },
-        "checks": [
-          "R7"
-        ],
-        "credit": {
-          "owner": "Khalil",
-          "branch": "Khalil-context-path",
-          "file": "data/paired_cases.json",
-          "original_case_id": "pair-prereq_min_grade-communication-studies-ba-a",
-          "rebuilt_by": null,
-          "rebuilt_as": null
-        }
-      }
-    },
-    {
-      "case_id": "R7-004",
-      "semantic_check": "R7: Minimum grade on a prereq",
-      "input": {
-        "program": "communication-studies-ba",
-        "student": {
-          "student_id": "S8055",
-          "catalog_year": "Fall 2024",
-          "entry": {
-            "type": "first_year"
-          }
-        },
-        "transcript": {
-          "fabricate": {
-            "seed": 136650,
-            "through": "Spring 2026",
-            "complete": [
-              "CORE-COML",
-              "CORE-ARTL",
-              "CORE-GLBL",
-              "CORE-HUML",
-              "CORE-QNTL",
-              "CORE-SCIL",
-              "EXP-LIT",
-              "EXP-WI",
-              "EXP-RS",
-              "NONPROG-PSY",
-              "NONPROG-SOC",
-              "NONPROG-ECON-POSC",
-              "NONPROG-HIST",
-              "NONPROG-PHIL",
-              "NONPROG-ENGL"
-            ],
-            "rows": [
-              {
-                "term": "Spring 2026",
-                "course_id": "CMS04350",
-                "grade": "C-"
-              }
-            ],
-            "avoid": [
-              "CMS04200",
-              "CMS04250",
-              "CMS04350",
-              "CMS04425"
-            ],
-            "keep_unmet": [
-              "CMS-CAPSTONE",
-              "CMS-FOUNDATIONAL"
-            ],
-            "edits": [
-              {
-                "in": "completed_courses",
-                "course_id": "CMS04350",
-                "set": {
-                  "grade": "D+"
-                }
-              }
-            ]
-          }
-        },
-        "prompt": "Register me for Ethical Issues in Human Communication (CMS04425) if I meet its prerequisites. If I don't, register me for Introduction to Communication Studies (CMS04200) instead."
-      },
-      "candidate_courses": [
-        "CMS04200",
-        "CMS04425"
-      ],
-      "ground_truth": {
-        "rules": {
-          "count": {
-            "min": 1,
-            "max": 1
-          },
-          "courses_in": [
-            "CMS04200"
-          ]
-        },
-        "examples": {
-          "valid": [
-            [
-              "44314"
-            ]
-          ],
-          "invalid": [
-            [
-              "44332"
-            ],
-            [
-              "44334"
-            ],
-            [
-              "44311"
-            ],
-            [
-              "44312"
-            ],
-            [
-              "44313"
-            ]
-          ]
-        },
-        "implicit_relationship": "CMS04425's prerequisite CMS04350 is not met, so CMS04200. 1 correct section: 44314; full sections (no waitlist allowed): 44311, 44312, 44313; missing a prerequisite: 44332, 44334. Its twin's answers 44332, 44334 are wrong here.",
-        "case_type": "prereq_min_grade",
-        "targets": [
-          "CMS-CAPSTONE",
-          "CMS-FOUNDATIONAL"
-        ],
-        "pair": {
-          "id": "prereq_min_grade/communication-studies-ba",
-          "variant": "b",
-          "changed": "grade in CMS04350: at the prerequisite minimum vs one step below",
-          "difference": {
-            "where": "transcript",
-            "this_case": "completed: CMS04350 Comm Studies Rsrch Methods (D+)",
-            "twin_case": "completed: CMS04350 Comm Studies Rsrch Methods (C-)",
-            "twin_id": "pair-prereq_min_grade-communication-studies-ba-a",
-            "answer_here": "a section of Introduction to Communication Studies (CMS04200)",
-            "answer_in_twin": "a section of Ethical Issues in Human Communication (CMS04425)",
-            "summary": "Only the transcript differs. Here: completed: CMS04350 Comm Studies Rsrch Methods (D+). In the twin (pair-prereq_min_grade-communication-studies-ba-a): completed: CMS04350 Comm Studies Rsrch Methods (C-). So the answer here is a section of Introduction to Communication Studies (CMS04200), while in the twin it is a section of Ethical Issues in Human Communication (CMS04425)."
-          },
-          "has_shared_answer": false,
-          "shared_answer_example": null
-        },
-        "difficulty": {
-          "candidate_courses": 2,
-          "candidate_answers": 6,
-          "correct_answers": 1,
-          "chance": 0.1667,
-          "rules": 2,
-          "prompt_words": 26
-        },
-        "checks": [
-          "R7"
-        ],
-        "credit": {
-          "owner": "Khalil",
-          "branch": "Khalil-context-path",
-          "file": "data/paired_cases.json",
-          "original_case_id": "pair-prereq_min_grade-communication-studies-ba-b",
-          "rebuilt_by": null,
-          "rebuilt_as": null
-        }
-      }
-    },
-    {
-      "case_id": "R7-005",
-      "semantic_check": "R7: Minimum grade on a prereq",
-      "input": {
         "program": "public-relations-ba",
         "student": {
           "student_id": "S8107",
@@ -36244,7 +35961,7 @@
       }
     },
     {
-      "case_id": "R7-006",
+      "case_id": "R7-004",
       "semantic_check": "R7: Minimum grade on a prereq",
       "input": {
         "program": "public-relations-ba",
@@ -36378,7 +36095,7 @@
       }
     },
     {
-      "case_id": "R7-007",
+      "case_id": "R7-005",
       "semantic_check": "R7: Minimum grade on a prereq",
       "input": {
         "program": "human-services-ba",
@@ -36511,7 +36228,7 @@
       }
     },
     {
-      "case_id": "R7-008",
+      "case_id": "R7-006",
       "semantic_check": "R7: Minimum grade on a prereq",
       "input": {
         "program": "human-services-ba",
@@ -36653,6 +36370,301 @@
           "branch": "Khalil-context-path",
           "file": "data/paired_cases.json",
           "original_case_id": "pair-prereq_min_grade-human-services-ba-b",
+          "rebuilt_by": null,
+          "rebuilt_as": null
+        }
+      }
+    },
+    {
+      "case_id": "R7-007",
+      "semantic_check": "R7: Minimum grade on a prereq",
+      "input": {
+        "program": "psychological-science-bs",
+        "student": {
+          "student_id": "S8273",
+          "catalog_year": "Fall 2024",
+          "entry": {
+            "type": "first_year"
+          }
+        },
+        "transcript": {
+          "fabricate": {
+            "seed": 65597,
+            "through": "Spring 2026",
+            "complete": [
+              "CORE-COML",
+              "CORE-ARTL",
+              "CORE-GLBL",
+              "CORE-HUML",
+              "CORE-QNTL",
+              "CORE-SCIL",
+              "EXP-LIT",
+              "EXP-WI",
+              "EXP-RS",
+              "NONPROG-PHIL",
+              "NONPROG-BIOL"
+            ],
+            "rows": [
+              {
+                "term": "Spring 2026",
+                "course_id": "PSY07301",
+                "grade": "B"
+              }
+            ],
+            "avoid": [
+              "PSY01107",
+              "PSY02300",
+              "PSY07301",
+              "PSY07303"
+            ],
+            "keep_unmet": [
+              "PSY-INTRO",
+              "PSY-RESEARCH"
+            ]
+          }
+        },
+        "prompt": "Register me for Research Methods in Psychology (PSY07303) if I meet its prerequisites. If I don't, register me for Essentials of Psychology (PSY01107) instead."
+      },
+      "candidate_courses": [
+        "PSY01107",
+        "PSY07303"
+      ],
+      "ground_truth": {
+        "rules": {
+          "count": {
+            "min": 1,
+            "max": 1
+          },
+          "courses_in": [
+            "PSY07303"
+          ]
+        },
+        "examples": {
+          "valid": [
+            [
+              "40316"
+            ],
+            [
+              "40317"
+            ],
+            [
+              "40318"
+            ],
+            [
+              "44587"
+            ]
+          ],
+          "invalid": [
+            [
+              "40079"
+            ],
+            [
+              "40080"
+            ],
+            [
+              "40081"
+            ],
+            [
+              "40319"
+            ],
+            [
+              "40321"
+            ],
+            [
+              "40322"
+            ]
+          ]
+        },
+        "implicit_relationship": "PSY07301 meets PSY07303's prerequisite, so PSY07303. 4 correct sections: 40316, 40317, 40318, 44587; full sections (no waitlist allowed): 40084, 40174, 40178, 40258, 40261, 40266, 40319, 40321 ...; 15 section(s) break a rule of the request. Its twin's answers 40338, 40339, 40340, 40265 are wrong here.",
+        "case_type": "prereq_min_grade",
+        "targets": [
+          "PSY-INTRO",
+          "PSY-RESEARCH"
+        ],
+        "pair": {
+          "id": "prereq_min_grade/psychological-science-bs#3",
+          "variant": "a",
+          "changed": "grade in PSY07301: at the prerequisite minimum vs one step below",
+          "difference": {
+            "where": "transcript",
+            "this_case": "completed: PSY07301 Statistics In Psychology (B)",
+            "twin_case": "completed: PSY07301 Statistics In Psychology (B-)",
+            "twin_id": "pair-prereq_min_grade-psychological-science-bs-3-b",
+            "answer_here": "a section of Research Methods in Psychology (PSY07303)",
+            "answer_in_twin": "a section of Essentials of Psychology (PSY01107)",
+            "summary": "Only the transcript differs. Here: completed: PSY07301 Statistics In Psychology (B). In the twin (pair-prereq_min_grade-psychological-science-bs-3-b): completed: PSY07301 Statistics In Psychology (B-). So the answer here is a section of Research Methods in Psychology (PSY07303), while in the twin it is a section of Essentials of Psychology (PSY01107)."
+          },
+          "has_shared_answer": false,
+          "shared_answer_example": null
+        },
+        "difficulty": {
+          "candidate_courses": 2,
+          "candidate_answers": 34,
+          "correct_answers": 4,
+          "chance": 0.1176,
+          "rules": 2,
+          "prompt_words": 24
+        },
+        "checks": [
+          "R7"
+        ],
+        "credit": {
+          "owner": "Khalil",
+          "branch": "Khalil-context-path",
+          "file": "data/paired_cases.json",
+          "original_case_id": "pair-prereq_min_grade-psychological-science-bs-3-a",
+          "rebuilt_by": null,
+          "rebuilt_as": null
+        }
+      }
+    },
+    {
+      "case_id": "R7-008",
+      "semantic_check": "R7: Minimum grade on a prereq",
+      "input": {
+        "program": "psychological-science-bs",
+        "student": {
+          "student_id": "S8273",
+          "catalog_year": "Fall 2024",
+          "entry": {
+            "type": "first_year"
+          }
+        },
+        "transcript": {
+          "fabricate": {
+            "seed": 65597,
+            "through": "Spring 2026",
+            "complete": [
+              "CORE-COML",
+              "CORE-ARTL",
+              "CORE-GLBL",
+              "CORE-HUML",
+              "CORE-QNTL",
+              "CORE-SCIL",
+              "EXP-LIT",
+              "EXP-WI",
+              "EXP-RS",
+              "NONPROG-PHIL",
+              "NONPROG-BIOL"
+            ],
+            "rows": [
+              {
+                "term": "Spring 2026",
+                "course_id": "PSY07301",
+                "grade": "B"
+              }
+            ],
+            "avoid": [
+              "PSY01107",
+              "PSY02300",
+              "PSY07301",
+              "PSY07303"
+            ],
+            "keep_unmet": [
+              "PSY-INTRO",
+              "PSY-RESEARCH"
+            ],
+            "edits": [
+              {
+                "in": "completed_courses",
+                "course_id": "PSY07301",
+                "set": {
+                  "grade": "B-"
+                }
+              }
+            ]
+          }
+        },
+        "prompt": "Register me for Research Methods in Psychology (PSY07303) if I meet its prerequisites. If I don't, register me for Essentials of Psychology (PSY01107) instead."
+      },
+      "candidate_courses": [
+        "PSY01107",
+        "PSY07303"
+      ],
+      "ground_truth": {
+        "rules": {
+          "count": {
+            "min": 1,
+            "max": 1
+          },
+          "courses_in": [
+            "PSY01107"
+          ]
+        },
+        "examples": {
+          "valid": [
+            [
+              "40079"
+            ],
+            [
+              "40080"
+            ],
+            [
+              "40086"
+            ],
+            [
+              "40339"
+            ]
+          ],
+          "invalid": [
+            [
+              "40316"
+            ],
+            [
+              "40317"
+            ],
+            [
+              "40318"
+            ],
+            [
+              "40319"
+            ],
+            [
+              "40321"
+            ],
+            [
+              "40322"
+            ]
+          ]
+        },
+        "implicit_relationship": "PSY07303's prerequisite PSY07301 is not met, so PSY01107. 15 correct sections: 40338, 40339, 40340, 40265, 40264, 40259, 40262, 40263, 40079, 40080 ...; full sections (no waitlist allowed): 40084, 40174, 40178, 40258, 40261, 40266, 40319, 40321 ...; missing a prerequisite: 40316, 40317, 40318, 44587. Its twin's answers 40316, 40317, 40318, 44587 are wrong here.",
+        "case_type": "prereq_min_grade",
+        "targets": [
+          "PSY-INTRO",
+          "PSY-RESEARCH"
+        ],
+        "pair": {
+          "id": "prereq_min_grade/psychological-science-bs#3",
+          "variant": "b",
+          "changed": "grade in PSY07301: at the prerequisite minimum vs one step below",
+          "difference": {
+            "where": "transcript",
+            "this_case": "completed: PSY07301 Statistics In Psychology (B-)",
+            "twin_case": "completed: PSY07301 Statistics In Psychology (B)",
+            "twin_id": "pair-prereq_min_grade-psychological-science-bs-3-a",
+            "answer_here": "a section of Essentials of Psychology (PSY01107)",
+            "answer_in_twin": "a section of Research Methods in Psychology (PSY07303)",
+            "summary": "Only the transcript differs. Here: completed: PSY07301 Statistics In Psychology (B-). In the twin (pair-prereq_min_grade-psychological-science-bs-3-a): completed: PSY07301 Statistics In Psychology (B). So the answer here is a section of Essentials of Psychology (PSY01107), while in the twin it is a section of Research Methods in Psychology (PSY07303)."
+          },
+          "has_shared_answer": false,
+          "shared_answer_example": null
+        },
+        "difficulty": {
+          "candidate_courses": 2,
+          "candidate_answers": 34,
+          "correct_answers": 15,
+          "chance": 0.4412,
+          "rules": 2,
+          "prompt_words": 24
+        },
+        "checks": [
+          "R7"
+        ],
+        "credit": {
+          "owner": "Khalil",
+          "branch": "Khalil-context-path",
+          "file": "data/paired_cases.json",
+          "original_case_id": "pair-prereq_min_grade-psychological-science-bs-3-b",
           "rebuilt_by": null,
           "rebuilt_as": null
         }
@@ -36938,276 +36950,6 @@
       "case_id": "R8-003",
       "semantic_check": "R8: Course must be in the requirement's options",
       "input": {
-        "program": "psychology-ba",
-        "student": {
-          "student_id": "S8001",
-          "catalog_year": "Fall 2025",
-          "entry": {
-            "type": "first_year"
-          }
-        },
-        "transcript": {
-          "fabricate": {
-            "seed": 533752,
-            "through": "Spring 2026",
-            "complete": [
-              "CORE-COML",
-              "CORE-ARTL",
-              "CORE-GLBL",
-              "CORE-HUML",
-              "CORE-QNTL",
-              "CORE-SCIL",
-              "EXP-LIT",
-              "EXP-WI",
-              "EXP-RS",
-              "NONPROG-PHIL"
-            ],
-            "rows": [],
-            "avoid": [],
-            "keep_unmet": [
-              "NONPROG-BIOL",
-              "PSY-FOUNDATIONAL"
-            ]
-          }
-        },
-        "prompt": "Register me for one class that counts toward my General Biology: Human Focus requirement."
-      },
-      "candidate_courses": [
-        "BIOL01113",
-        "PSY01107",
-        "PSY01301",
-        "PSY02300",
-        "PSY07301",
-        "PSY07303"
-      ],
-      "ground_truth": {
-        "rules": {
-          "count": {
-            "min": 1,
-            "max": 1
-          },
-          "courses_count_toward": [
-            "NONPROG-BIOL"
-          ]
-        },
-        "examples": {
-          "valid": [
-            [
-              "44081"
-            ],
-            [
-              "44088"
-            ],
-            [
-              "44096"
-            ],
-            [
-              "44097"
-            ]
-          ],
-          "invalid": [
-            [
-              "40079"
-            ],
-            [
-              "40080"
-            ],
-            [
-              "40081"
-            ],
-            [
-              "44098"
-            ],
-            [
-              "40337"
-            ],
-            [
-              "40341"
-            ]
-          ]
-        },
-        "implicit_relationship": "Only a course among NONPROG-BIOL's options counts. 14 correct sections: 44078, 44081, 44084, 44085, 44087, 44088, 44089, 44090, 44091, 44092 ...; full sections (no waitlist allowed): 40084, 40144, 40174, 40178, 40187, 40189, 40191, 40192 ...; missing a prerequisite: 40140, 40141, 40142, 40186, 40300, 40301; 15 section(s) break a rule of the request. Its twin's answers 40338, 40339, 40340, 40265 are wrong here.",
-        "case_type": "requirement_options",
-        "targets": [
-          "NONPROG-BIOL",
-          "PSY-FOUNDATIONAL"
-        ],
-        "pair": {
-          "id": "requirement_options/psychology-ba",
-          "variant": "a",
-          "changed": "requirement: General Biology: Human Focus vs Foundational Courses",
-          "difference": {
-            "where": "prompt",
-            "this_case": "prompt says 'General Biology: Human Focus requirement'",
-            "twin_case": "prompt says 'Foundational Courses'",
-            "twin_id": "pair-requirement_options-psychology-ba-b",
-            "answer_here": "one class that counts toward General Biology: Human Focus (NONPROG-BIOL)",
-            "answer_in_twin": "one class that counts toward Foundational Courses (PSY-FOUNDATIONAL)",
-            "summary": "Only the prompt differs. Here: prompt says 'General Biology: Human Focus requirement'. In the twin (pair-requirement_options-psychology-ba-b): prompt says 'Foundational Courses'. So the answer here is one class that counts toward General Biology: Human Focus (NONPROG-BIOL), while in the twin it is one class that counts toward Foundational Courses (PSY-FOUNDATIONAL)."
-          },
-          "has_shared_answer": false,
-          "shared_answer_example": null
-        },
-        "difficulty": {
-          "candidate_courses": 6,
-          "candidate_answers": 77,
-          "correct_answers": 14,
-          "chance": 0.1818,
-          "rules": 2,
-          "prompt_words": 14
-        },
-        "checks": [
-          "R8"
-        ],
-        "credit": {
-          "owner": "Daquan and Aneesh Anand (reviewed by Tyler Henry)",
-          "branch": "main",
-          "file": "tyler_supplemental_tests/tyler_review_cases.json",
-          "original_case_id": "tyler-sem-014",
-          "rebuilt_by": "Khalil",
-          "rebuilt_as": "pair-requirement_options-psychology-ba-a"
-        }
-      }
-    },
-    {
-      "case_id": "R8-004",
-      "semantic_check": "R8: Course must be in the requirement's options",
-      "input": {
-        "program": "psychology-ba",
-        "student": {
-          "student_id": "S8001",
-          "catalog_year": "Fall 2025",
-          "entry": {
-            "type": "first_year"
-          }
-        },
-        "transcript": {
-          "fabricate": {
-            "seed": 533752,
-            "through": "Spring 2026",
-            "complete": [
-              "CORE-COML",
-              "CORE-ARTL",
-              "CORE-GLBL",
-              "CORE-HUML",
-              "CORE-QNTL",
-              "CORE-SCIL",
-              "EXP-LIT",
-              "EXP-WI",
-              "EXP-RS",
-              "NONPROG-PHIL"
-            ],
-            "rows": [],
-            "avoid": [],
-            "keep_unmet": [
-              "NONPROG-BIOL",
-              "PSY-FOUNDATIONAL"
-            ]
-          }
-        },
-        "prompt": "Register me for one class that counts toward my Foundational Courses."
-      },
-      "candidate_courses": [
-        "BIOL01113",
-        "PSY01107",
-        "PSY01301",
-        "PSY02300",
-        "PSY07301",
-        "PSY07303"
-      ],
-      "ground_truth": {
-        "rules": {
-          "count": {
-            "min": 1,
-            "max": 1
-          },
-          "courses_count_toward": [
-            "PSY-FOUNDATIONAL"
-          ]
-        },
-        "examples": {
-          "valid": [
-            [
-              "40259"
-            ],
-            [
-              "40262"
-            ],
-            [
-              "40264"
-            ],
-            [
-              "44294"
-            ]
-          ],
-          "invalid": [
-            [
-              "44078"
-            ],
-            [
-              "44081"
-            ],
-            [
-              "44084"
-            ],
-            [
-              "44085"
-            ],
-            [
-              "44098"
-            ],
-            [
-              "40337"
-            ]
-          ]
-        },
-        "implicit_relationship": "Only a course among PSY-FOUNDATIONAL's options counts. 15 correct sections: 40338, 40339, 40340, 40265, 40264, 40259, 40262, 40263, 40079, 40080 ...; full sections (no waitlist allowed): 40084, 40144, 40174, 40178, 40187, 40189, 40191, 40192 ...; missing a prerequisite: 40140, 40141, 40142, 40186, 40300, 40301; 14 section(s) break a rule of the request. Its twin's answers 44078, 44081, 44084, 44085 are wrong here.",
-        "case_type": "requirement_options",
-        "targets": [
-          "NONPROG-BIOL",
-          "PSY-FOUNDATIONAL"
-        ],
-        "pair": {
-          "id": "requirement_options/psychology-ba",
-          "variant": "b",
-          "changed": "requirement: General Biology: Human Focus vs Foundational Courses",
-          "difference": {
-            "where": "prompt",
-            "this_case": "prompt says 'Foundational Courses'",
-            "twin_case": "prompt says 'General Biology: Human Focus requirement'",
-            "twin_id": "pair-requirement_options-psychology-ba-a",
-            "answer_here": "one class that counts toward Foundational Courses (PSY-FOUNDATIONAL)",
-            "answer_in_twin": "one class that counts toward General Biology: Human Focus (NONPROG-BIOL)",
-            "summary": "Only the prompt differs. Here: prompt says 'Foundational Courses'. In the twin (pair-requirement_options-psychology-ba-a): prompt says 'General Biology: Human Focus requirement'. So the answer here is one class that counts toward Foundational Courses (PSY-FOUNDATIONAL), while in the twin it is one class that counts toward General Biology: Human Focus (NONPROG-BIOL)."
-          },
-          "has_shared_answer": false,
-          "shared_answer_example": null
-        },
-        "difficulty": {
-          "candidate_courses": 6,
-          "candidate_answers": 77,
-          "correct_answers": 15,
-          "chance": 0.1948,
-          "rules": 2,
-          "prompt_words": 11
-        },
-        "checks": [
-          "R8"
-        ],
-        "credit": {
-          "owner": "Daquan and Aneesh Anand",
-          "branch": "Tyler",
-          "file": "Tyler_branch_ready_semantic_tests/semantic_tests/semantic_cases_daquan_aneesh.jsonl",
-          "original_case_id": "SEM-013",
-          "rebuilt_by": "Khalil",
-          "rebuilt_as": "pair-requirement_options-psychology-ba-b"
-        }
-      }
-    },
-    {
-      "case_id": "R8-005",
-      "semantic_check": "R8: Course must be in the requirement's options",
-      "input": {
         "program": "computer-science-bs",
         "student": {
           "student_id": "S8003",
@@ -37346,7 +37088,7 @@
       }
     },
     {
-      "case_id": "R8-006",
+      "case_id": "R8-004",
       "semantic_check": "R8: Course must be in the requirement's options",
       "input": {
         "program": "computer-science-bs",
@@ -37487,7 +37229,7 @@
       }
     },
     {
-      "case_id": "R8-007",
+      "case_id": "R8-005",
       "semantic_check": "R8: Course must be in the requirement's options",
       "input": {
         "program": "radio-television-film-ba",
@@ -37623,7 +37365,7 @@
       }
     },
     {
-      "case_id": "R8-008",
+      "case_id": "R8-006",
       "semantic_check": "R8: Course must be in the requirement's options",
       "input": {
         "program": "radio-television-film-ba",
@@ -37747,6 +37489,282 @@
           "branch": "Khalil-context-path",
           "file": "data/paired_cases.json",
           "original_case_id": "pair-requirement_options-radio-television-film-ba-b",
+          "rebuilt_by": null,
+          "rebuilt_as": null
+        }
+      }
+    },
+    {
+      "case_id": "R8-007",
+      "semantic_check": "R8: Course must be in the requirement's options",
+      "input": {
+        "program": "advertising-ba",
+        "student": {
+          "student_id": "S8010",
+          "catalog_year": "Fall 2024",
+          "entry": {
+            "type": "first_year"
+          }
+        },
+        "transcript": {
+          "fabricate": {
+            "seed": 486258,
+            "through": "Spring 2026",
+            "complete": [
+              "CORE-COML",
+              "CORE-ARTL",
+              "CORE-GLBL",
+              "CORE-HUML",
+              "CORE-QNTL",
+              "CORE-SCIL",
+              "EXP-LIT",
+              "EXP-WI",
+              "EXP-RS",
+              "NONPROG-LOGIC",
+              "ADV-REQUIRED",
+              "ADV-PLANNING",
+              "ADV-IMC"
+            ],
+            "rows": [],
+            "avoid": [],
+            "keep_unmet": [
+              "ADV-RELATED",
+              "ADV-UPPER"
+            ]
+          }
+        },
+        "prompt": "Register me for one class that counts toward my Upper-Level and Capstone Courses."
+      },
+      "candidate_courses": [
+        "ADV04352",
+        "ADV04355",
+        "ADV04434",
+        "CMS04210",
+        "CMS04250",
+        "CMS04270",
+        "JRN02310",
+        "JRN02313",
+        "PR06355"
+      ],
+      "ground_truth": {
+        "rules": {
+          "count": {
+            "min": 1,
+            "max": 1
+          },
+          "courses_count_toward": [
+            "ADV-UPPER"
+          ]
+        },
+        "examples": {
+          "valid": [
+            [
+              "42963"
+            ],
+            [
+              "43126"
+            ]
+          ],
+          "invalid": [
+            [
+              "43960"
+            ],
+            [
+              "44389"
+            ],
+            [
+              "44391"
+            ],
+            [
+              "42965"
+            ],
+            [
+              "42970"
+            ],
+            [
+              "46476"
+            ]
+          ]
+        },
+        "implicit_relationship": "Only a course among ADV-UPPER's options counts. 2 correct sections: 42963, 43126; full sections (no waitlist allowed): 42965, 42970, 43127, 43958, 44367, 46476; missing a prerequisite: 42990; 7 section(s) break a rule of the request. Its twin's answers 44389, 44391, 44414, 44417 are wrong here.",
+        "case_type": "requirement_options",
+        "targets": [
+          "ADV-RELATED",
+          "ADV-UPPER"
+        ],
+        "pair": {
+          "id": "requirement_options/advertising-ba",
+          "variant": "a",
+          "changed": "requirement: Upper-Level and Capstone Courses vs Related Electives Bank",
+          "difference": {
+            "where": "prompt",
+            "this_case": "prompt says 'Upper-Level and Capstone Courses'",
+            "twin_case": "prompt says 'Related Electives Bank'",
+            "twin_id": "pair-requirement_options-advertising-ba-b",
+            "answer_here": "one class that counts toward Upper-Level and Capstone Courses (ADV-UPPER)",
+            "answer_in_twin": "one class that counts toward Related Electives Bank (ADV-RELATED)",
+            "summary": "Only the prompt differs. Here: prompt says 'Upper-Level and Capstone Courses'. In the twin (pair-requirement_options-advertising-ba-b): prompt says 'Related Electives Bank'. So the answer here is one class that counts toward Upper-Level and Capstone Courses (ADV-UPPER), while in the twin it is one class that counts toward Related Electives Bank (ADV-RELATED)."
+          },
+          "has_shared_answer": false,
+          "shared_answer_example": null
+        },
+        "difficulty": {
+          "candidate_courses": 9,
+          "candidate_answers": 16,
+          "correct_answers": 2,
+          "chance": 0.125,
+          "rules": 2,
+          "prompt_words": 13
+        },
+        "checks": [
+          "R8"
+        ],
+        "credit": {
+          "owner": "Khalil",
+          "branch": "Khalil-context-path",
+          "file": "data/paired_cases.json",
+          "original_case_id": "pair-requirement_options-advertising-ba-a",
+          "rebuilt_by": null,
+          "rebuilt_as": null
+        }
+      }
+    },
+    {
+      "case_id": "R8-008",
+      "semantic_check": "R8: Course must be in the requirement's options",
+      "input": {
+        "program": "advertising-ba",
+        "student": {
+          "student_id": "S8010",
+          "catalog_year": "Fall 2024",
+          "entry": {
+            "type": "first_year"
+          }
+        },
+        "transcript": {
+          "fabricate": {
+            "seed": 486258,
+            "through": "Spring 2026",
+            "complete": [
+              "CORE-COML",
+              "CORE-ARTL",
+              "CORE-GLBL",
+              "CORE-HUML",
+              "CORE-QNTL",
+              "CORE-SCIL",
+              "EXP-LIT",
+              "EXP-WI",
+              "EXP-RS",
+              "NONPROG-LOGIC",
+              "ADV-REQUIRED",
+              "ADV-PLANNING",
+              "ADV-IMC"
+            ],
+            "rows": [],
+            "avoid": [],
+            "keep_unmet": [
+              "ADV-RELATED",
+              "ADV-UPPER"
+            ]
+          }
+        },
+        "prompt": "Register me for one class that counts toward my Related Electives Bank."
+      },
+      "candidate_courses": [
+        "ADV04352",
+        "ADV04355",
+        "ADV04434",
+        "CMS04210",
+        "CMS04250",
+        "CMS04270",
+        "JRN02310",
+        "JRN02313",
+        "PR06355"
+      ],
+      "ground_truth": {
+        "rules": {
+          "count": {
+            "min": 1,
+            "max": 1
+          },
+          "courses_count_toward": [
+            "ADV-RELATED"
+          ]
+        },
+        "examples": {
+          "valid": [
+            [
+              "43960"
+            ],
+            [
+              "44414"
+            ],
+            [
+              "44417"
+            ],
+            [
+              "44421"
+            ]
+          ],
+          "invalid": [
+            [
+              "42963"
+            ],
+            [
+              "43126"
+            ],
+            [
+              "42965"
+            ],
+            [
+              "42970"
+            ],
+            [
+              "46476"
+            ],
+            [
+              "42990"
+            ]
+          ]
+        },
+        "implicit_relationship": "Only a course among ADV-RELATED's options counts. 7 correct sections: 44389, 44391, 44414, 44417, 44421, 44425, 43960; full sections (no waitlist allowed): 42965, 42970, 43127, 43958, 44367, 46476; missing a prerequisite: 42990; 2 section(s) break a rule of the request. Its twin's answers 42963, 43126 are wrong here.",
+        "case_type": "requirement_options",
+        "targets": [
+          "ADV-RELATED",
+          "ADV-UPPER"
+        ],
+        "pair": {
+          "id": "requirement_options/advertising-ba",
+          "variant": "b",
+          "changed": "requirement: Upper-Level and Capstone Courses vs Related Electives Bank",
+          "difference": {
+            "where": "prompt",
+            "this_case": "prompt says 'Related Electives Bank'",
+            "twin_case": "prompt says 'Upper-Level and Capstone Courses'",
+            "twin_id": "pair-requirement_options-advertising-ba-a",
+            "answer_here": "one class that counts toward Related Electives Bank (ADV-RELATED)",
+            "answer_in_twin": "one class that counts toward Upper-Level and Capstone Courses (ADV-UPPER)",
+            "summary": "Only the prompt differs. Here: prompt says 'Related Electives Bank'. In the twin (pair-requirement_options-advertising-ba-a): prompt says 'Upper-Level and Capstone Courses'. So the answer here is one class that counts toward Related Electives Bank (ADV-RELATED), while in the twin it is one class that counts toward Upper-Level and Capstone Courses (ADV-UPPER)."
+          },
+          "has_shared_answer": false,
+          "shared_answer_example": null
+        },
+        "difficulty": {
+          "candidate_courses": 9,
+          "candidate_answers": 16,
+          "correct_answers": 7,
+          "chance": 0.4375,
+          "rules": 2,
+          "prompt_words": 12
+        },
+        "checks": [
+          "R8"
+        ],
+        "credit": {
+          "owner": "Khalil",
+          "branch": "Khalil-context-path",
+          "file": "data/paired_cases.json",
+          "original_case_id": "pair-requirement_options-advertising-ba-b",
           "rebuilt_by": null,
           "rebuilt_as": null
         }
@@ -38986,17 +39004,17 @@
       "case_id": "R9-007",
       "semantic_check": "R9: Requirement rule types (credits_from / attribute / any_of / all_of)",
       "input": {
-        "program": "computer-science-bs",
+        "program": "supply-chain-logistics-bs",
         "student": {
-          "student_id": "S8167",
-          "catalog_year": "Fall 2024",
+          "student_id": "S7025",
+          "catalog_year": "Fall 2022",
           "entry": {
             "type": "first_year"
           }
         },
         "transcript": {
           "fabricate": {
-            "seed": 254903,
+            "seed": 356819,
             "through": "Spring 2026",
             "complete": [
               "CORE-COML",
@@ -39008,85 +39026,124 @@
               "EXP-LIT",
               "EXP-WI",
               "EXP-RS",
-              "CS-SEMINAR",
-              "NONPROG-HUML",
+              "NONPROG-ECON-MACRO",
+              "NONPROG-ECON-MICRO",
               "NONPROG-MATH",
-              "NONPROG-SCIENCE",
-              "NONPROG-WRITING",
-              "NONPROG-LAB-SCIENCE"
+              "NONPROG-STAT",
+              "NONPROG-CAREER",
+              "BUS-FOUNDATION",
+              "SCL-REQUIRED"
             ],
             "rows": [
               {
                 "term": "Fall 2025",
-                "course_id": "CS02421",
+                "course_id": "MIS02322",
                 "grade": "B"
               },
               {
                 "term": "Spring 2026",
-                "course_id": "CS03351",
-                "grade": "B"
-              },
-              {
-                "term": "Fall 2025",
-                "course_id": "CS07350",
+                "course_id": "MKT09391",
                 "grade": "B"
               }
             ],
             "avoid": [
-              "CS01303",
-              "CS01395",
-              "CS02370",
-              "CS02421",
-              "CS02435",
-              "CS02480",
-              "CS02485",
-              "CS03351",
-              "CS04391",
-              "CS04444",
-              "CS07350",
-              "CS07450",
-              "CS07455",
-              "CS07459",
-              "CS08360",
-              "CS08390",
-              "CS09410",
-              "CS99300",
-              "CS99490",
-              "PSY22215"
+              "MGT06407",
+              "MIS02322",
+              "MKT09330",
+              "MKT09360",
+              "MKT09384",
+              "MKT09391",
+              "THD07201"
             ],
             "keep_unmet": [
-              "CS-INTRO-OOP"
+              "SCL-BUSINESS-ELECTIVE"
             ],
             "transfer_rows": [
               {
                 "institution": "Rowan College of South Jersey",
-                "course_id": "CS02370",
+                "course_id": "MGT06407",
                 "grade": "TA"
               }
             ]
           }
         },
-        "prompt": "Register me for one class that counts toward my Computer Science Restricted Electives. If I've already finished it, register me for one that counts toward my Introduction to Object-Oriented Programming requirement instead."
+        "prompt": "Register me for one class that counts toward my SCL Electives. If I've already finished it, register me for one that counts toward my SCL or Upper Level requirement instead."
       },
       "candidate_courses": [
-        "CS01303",
-        "CS01395",
-        "CS02370",
-        "CS02435",
-        "CS02480",
-        "CS02485",
-        "CS04111",
-        "CS04113",
-        "CS04391",
-        "CS04444",
-        "CS07450",
-        "CS07455",
-        "CS07459",
-        "CS08360",
-        "CS08390",
-        "CS09410",
-        "CS99300",
-        "CS99490"
+        "ACC03300",
+        "ACC03301",
+        "ACC03310",
+        "ACC03311",
+        "ACC03320",
+        "ACC03326",
+        "ACC03405",
+        "ACC03410",
+        "ACC03416",
+        "ACC03428",
+        "ACC03430",
+        "ACC03431",
+        "ACC03432",
+        "ACC03500",
+        "ACC98300",
+        "BUS01401",
+        "BUS01600",
+        "ENT06327",
+        "ENT06342",
+        "ENT06344",
+        "ENT06347",
+        "ENT06426",
+        "ENT06450",
+        "FIN04310",
+        "FIN04327",
+        "FIN04330",
+        "FIN04350",
+        "FIN04422",
+        "FIN04423",
+        "FIN04425",
+        "FIN04431",
+        "FIN04433",
+        "FIN04435",
+        "FIN04436",
+        "FIN04439",
+        "HRM06315",
+        "HRM06425",
+        "HRM16401",
+        "HRM98337",
+        "MGT06310",
+        "MGT06311",
+        "MGT06330",
+        "MGT06361",
+        "MGT06381",
+        "MGT06405",
+        "MGT06407",
+        "MGT06408",
+        "MGT06531",
+        "MGT07550",
+        "MIS02303",
+        "MIS02315",
+        "MIS02325",
+        "MIS02329",
+        "MIS02331",
+        "MIS02337",
+        "MIS02338",
+        "MIS02339",
+        "MIS02344",
+        "MIS02428",
+        "MIS02450",
+        "MKT09305",
+        "MKT09315",
+        "MKT09330",
+        "MKT09350",
+        "MKT09360",
+        "MKT09372",
+        "MKT09376",
+        "MKT09379",
+        "MKT09382",
+        "MKT09384",
+        "MKT09386",
+        "MKT09388",
+        "MKT09403",
+        "MKT09411"
       ],
       "ground_truth": {
         "rules": {
@@ -39095,85 +39152,85 @@
             "max": 1
           },
           "courses_count_toward": [
-            "CS-INTRO-OOP"
+            "SCL-BUSINESS-ELECTIVE"
           ]
         },
         "examples": {
           "valid": [
             [
-              "41965"
+              "40169"
             ],
             [
-              "41977"
+              "41451"
             ],
             [
-              "41986"
+              "41633"
             ],
             [
-              "42162"
+              "46276"
             ]
           ],
           "invalid": [
             [
-              "41892"
+              "40215"
             ],
             [
-              "41898"
+              "41250"
             ],
             [
-              "42083"
+              "41251"
             ],
             [
-              "46463"
+              "41252"
             ],
             [
-              "41893"
+              "41253"
             ],
             [
-              "41895"
+              "41254"
             ]
           ]
         },
-        "implicit_relationship": "CS-RESTRICTED needs 12 sh: 9 completed plus transfer CS02370 (3 sh, one of its options) meets it, so the request moves to CS-INTRO-OOP. 8 correct sections: 42162, 42163, 41963, 41965, 41977, 41980, 41986, 41982; full sections (no waitlist allowed): 41893, 41895, 42146, 46498, 46554, 47026; 14 section(s) break a rule of the request. Its twin's answers 46463, 41892, 46228, 41898 are wrong here.",
+        "implicit_relationship": "SCL-ELECTIVES needs 9 sh: 6 completed plus transfer MGT06407 (3 sh, one of its options) meets it, so the request moves to SCL-BUSINESS-ELECTIVE. 61 correct sections: 41249, 41263, 46764, 41266, 41267, 41269, 41273, 45727, 41274, 41344 ...; full sections (no waitlist allowed): 40171, 40181, 40212, 40217, 40305, 40326, 40328, 41250 ...; 1 section(s) break a rule of the request. Its twin's answers 40215 are wrong here.",
         "case_type": "transfer",
         "targets": [
-          "CS-RESTRICTED",
-          "CS-INTRO-OOP"
+          "SCL-ELECTIVES",
+          "SCL-BUSINESS-ELECTIVE"
         ],
         "pair": {
-          "id": "transfer/computer-science-bs#4",
+          "id": "transfer/supply-chain-logistics-bs",
           "variant": "a",
-          "changed": "transfer_courses: CS02370 (counts toward CS-RESTRICTED) vs PSY22215 (does not)",
+          "changed": "transfer_courses: MGT06407 (counts toward SCL-ELECTIVES) vs THD07201 (does not)",
           "difference": {
             "where": "transcript",
-            "this_case": "transfer: CS02370 Intro To Info Visualization (transfer, TA)",
-            "twin_case": "transfer: PSY22215 Educational Psychology (transfer, TA)",
-            "twin_id": "pair-transfer-computer-science-bs-4-b",
-            "answer_here": "one class that counts toward Introduction to Object-Oriented Programming (CS-INTRO-OOP)",
-            "answer_in_twin": "one class that counts toward Computer Science Restricted Electives (CS-RESTRICTED)",
-            "summary": "Only the transcript differs. Here: transfer: CS02370 Intro To Info Visualization (transfer, TA). In the twin (pair-transfer-computer-science-bs-4-b): transfer: PSY22215 Educational Psychology (transfer, TA). So the answer here is one class that counts toward Introduction to Object-Oriented Programming (CS-INTRO-OOP), while in the twin it is one class that counts toward Computer Science Restricted Electives (CS-RESTRICTED)."
+            "this_case": "transfer: MGT06407 Business Analytics (transfer, TA)",
+            "twin_case": "transfer: THD07201 Intro To Theatre And Dance-Rs (transfer, TA)",
+            "twin_id": "pair-transfer-supply-chain-logistics-bs-b",
+            "answer_here": "one class that counts toward SCL or Upper Level (SCL-BUSINESS-ELECTIVE)",
+            "answer_in_twin": "one class that counts toward SCL Electives (SCL-ELECTIVES)",
+            "summary": "Only the transcript differs. Here: transfer: MGT06407 Business Analytics (transfer, TA). In the twin (pair-transfer-supply-chain-logistics-bs-b): transfer: THD07201 Intro To Theatre And Dance-Rs (transfer, TA). So the answer here is one class that counts toward SCL or Upper Level (SCL-BUSINESS-ELECTIVE), while in the twin it is one class that counts toward SCL Electives (SCL-ELECTIVES)."
           },
-          "has_shared_answer": false,
-          "shared_answer_example": null
+          "has_shared_answer": true,
+          "shared_answer_example": "41603"
         },
         "difficulty": {
-          "candidate_courses": 18,
-          "candidate_answers": 28,
-          "correct_answers": 8,
-          "chance": 0.2857,
+          "candidate_courses": 74,
+          "candidate_answers": 133,
+          "correct_answers": 61,
+          "chance": 0.4586,
           "rules": 2,
-          "prompt_words": 32
+          "prompt_words": 30
         },
         "checks": [
           "R9"
         ],
         "credit": {
-          "owner": "Aneesh Anand",
-          "branch": "Aneesh-Anand",
-          "file": "new_input_thing_paired_all_tests.jsonl",
-          "original_case_id": "TRAP-R9C-CONTROL",
-          "rebuilt_by": "Khalil",
-          "rebuilt_as": "pair-transfer-computer-science-bs-4-a"
+          "owner": "Khalil",
+          "branch": "Khalil-context-path",
+          "file": "data/paired_cases.json",
+          "original_case_id": "pair-transfer-supply-chain-logistics-bs-a",
+          "rebuilt_by": null,
+          "rebuilt_as": null
         }
       }
     },
@@ -39181,17 +39238,17 @@
       "case_id": "R9-008",
       "semantic_check": "R9: Requirement rule types (credits_from / attribute / any_of / all_of)",
       "input": {
-        "program": "computer-science-bs",
+        "program": "supply-chain-logistics-bs",
         "student": {
-          "student_id": "S8167",
-          "catalog_year": "Fall 2024",
+          "student_id": "S7025",
+          "catalog_year": "Fall 2022",
           "entry": {
             "type": "first_year"
           }
         },
         "transcript": {
           "fabricate": {
-            "seed": 254903,
+            "seed": 356819,
             "through": "Spring 2026",
             "complete": [
               "CORE-COML",
@@ -39203,94 +39260,124 @@
               "EXP-LIT",
               "EXP-WI",
               "EXP-RS",
-              "CS-SEMINAR",
-              "NONPROG-HUML",
+              "NONPROG-ECON-MACRO",
+              "NONPROG-ECON-MICRO",
               "NONPROG-MATH",
-              "NONPROG-SCIENCE",
-              "NONPROG-WRITING",
-              "NONPROG-LAB-SCIENCE"
+              "NONPROG-STAT",
+              "NONPROG-CAREER",
+              "BUS-FOUNDATION",
+              "SCL-REQUIRED"
             ],
             "rows": [
               {
                 "term": "Fall 2025",
-                "course_id": "CS02421",
+                "course_id": "MIS02322",
                 "grade": "B"
               },
               {
                 "term": "Spring 2026",
-                "course_id": "CS03351",
-                "grade": "B"
-              },
-              {
-                "term": "Fall 2025",
-                "course_id": "CS07350",
+                "course_id": "MKT09391",
                 "grade": "B"
               }
             ],
             "avoid": [
-              "CS01303",
-              "CS01395",
-              "CS02370",
-              "CS02421",
-              "CS02435",
-              "CS02480",
-              "CS02485",
-              "CS03351",
-              "CS04391",
-              "CS04444",
-              "CS07350",
-              "CS07450",
-              "CS07455",
-              "CS07459",
-              "CS08360",
-              "CS08390",
-              "CS09410",
-              "CS99300",
-              "CS99490",
-              "PSY22215"
+              "MGT06407",
+              "MIS02322",
+              "MKT09330",
+              "MKT09360",
+              "MKT09384",
+              "MKT09391",
+              "THD07201"
             ],
             "keep_unmet": [
-              "CS-INTRO-OOP"
+              "SCL-BUSINESS-ELECTIVE"
             ],
             "transfer_rows": [
               {
                 "institution": "Rowan College of South Jersey",
-                "course_id": "CS02370",
+                "course_id": "THD07201",
                 "grade": "TA"
-              }
-            ],
-            "edits": [
-              {
-                "in": "transfer_courses",
-                "course_id": "CS02370",
-                "set": {
-                  "course_id": "PSY22215"
-                }
               }
             ]
           }
         },
-        "prompt": "Register me for one class that counts toward my Computer Science Restricted Electives. If I've already finished it, register me for one that counts toward my Introduction to Object-Oriented Programming requirement instead."
+        "prompt": "Register me for one class that counts toward my SCL Electives. If I've already finished it, register me for one that counts toward my SCL or Upper Level requirement instead."
       },
       "candidate_courses": [
-        "CS01303",
-        "CS01395",
-        "CS02370",
-        "CS02435",
-        "CS02480",
-        "CS02485",
-        "CS04111",
-        "CS04113",
-        "CS04391",
-        "CS04444",
-        "CS07450",
-        "CS07455",
-        "CS07459",
-        "CS08360",
-        "CS08390",
-        "CS09410",
-        "CS99300",
-        "CS99490"
+        "ACC03300",
+        "ACC03301",
+        "ACC03310",
+        "ACC03311",
+        "ACC03320",
+        "ACC03326",
+        "ACC03405",
+        "ACC03410",
+        "ACC03416",
+        "ACC03428",
+        "ACC03430",
+        "ACC03431",
+        "ACC03432",
+        "ACC03500",
+        "ACC98300",
+        "BUS01401",
+        "BUS01600",
+        "ENT06327",
+        "ENT06342",
+        "ENT06344",
+        "ENT06347",
+        "ENT06426",
+        "ENT06450",
+        "FIN04310",
+        "FIN04327",
+        "FIN04330",
+        "FIN04350",
+        "FIN04422",
+        "FIN04423",
+        "FIN04425",
+        "FIN04431",
+        "FIN04433",
+        "FIN04435",
+        "FIN04436",
+        "FIN04439",
+        "HRM06315",
+        "HRM06425",
+        "HRM16401",
+        "HRM98337",
+        "MGT06310",
+        "MGT06311",
+        "MGT06330",
+        "MGT06361",
+        "MGT06381",
+        "MGT06405",
+        "MGT06407",
+        "MGT06408",
+        "MGT06531",
+        "MGT07550",
+        "MIS02303",
+        "MIS02315",
+        "MIS02325",
+        "MIS02329",
+        "MIS02331",
+        "MIS02337",
+        "MIS02338",
+        "MIS02339",
+        "MIS02344",
+        "MIS02428",
+        "MIS02450",
+        "MKT09305",
+        "MKT09315",
+        "MKT09330",
+        "MKT09350",
+        "MKT09360",
+        "MKT09372",
+        "MKT09376",
+        "MKT09379",
+        "MKT09382",
+        "MKT09384",
+        "MKT09386",
+        "MKT09388",
+        "MKT09403",
+        "MKT09411"
       ],
       "ground_truth": {
         "rules": {
@@ -39299,85 +39386,85 @@
             "max": 1
           },
           "courses_count_toward": [
-            "CS-RESTRICTED"
+            "SCL-ELECTIVES"
           ]
         },
         "examples": {
           "valid": [
             [
-              "41892"
+              "40215"
             ],
             [
-              "42120"
+              "41603"
             ],
             [
-              "44477"
+              "41638"
             ],
             [
-              "46568"
+              "41641"
             ]
           ],
           "invalid": [
             [
-              "41963"
+              "40040"
             ],
             [
-              "41965"
+              "40042"
             ],
             [
-              "41977"
+              "40043"
             ],
             [
-              "41893"
+              "41249"
             ],
             [
-              "41895"
+              "41250"
             ],
             [
-              "46554"
+              "41251"
             ]
           ]
         },
-        "implicit_relationship": "CS-RESTRICTED needs 12 sh: 9 completed, and transfer PSY22215 is not one of its options, so it is unmet and the answer counts toward it. 14 correct sections: 46463, 41892, 46228, 41898, 46568, 46252, 42083, 44477, 46262, 42183 ...; full sections (no waitlist allowed): 41893, 41895, 42146, 46498, 46554, 47026; 8 section(s) break a rule of the request. Its twin's answers 42162, 42163, 41963, 41965 are wrong here.",
+        "implicit_relationship": "SCL-ELECTIVES needs 9 sh: 6 completed, and transfer THD07201 is not one of its options, so it is unmet and the answer counts toward it. 4 correct sections: 40215, 41603, 41638, 41641; full sections (no waitlist allowed): 40171, 40181, 40212, 40217, 40305, 40326, 40328, 41250 ...; 58 section(s) break a rule of the request. Its twin's answers 41249, 41263, 46764, 41266 are wrong here.",
         "case_type": "transfer",
         "targets": [
-          "CS-RESTRICTED",
-          "CS-INTRO-OOP"
+          "SCL-ELECTIVES",
+          "SCL-BUSINESS-ELECTIVE"
         ],
         "pair": {
-          "id": "transfer/computer-science-bs#4",
+          "id": "transfer/supply-chain-logistics-bs",
           "variant": "b",
-          "changed": "transfer_courses: CS02370 (counts toward CS-RESTRICTED) vs PSY22215 (does not)",
+          "changed": "transfer_courses: MGT06407 (counts toward SCL-ELECTIVES) vs THD07201 (does not)",
           "difference": {
             "where": "transcript",
-            "this_case": "transfer: PSY22215 Educational Psychology (transfer, TA)",
-            "twin_case": "transfer: CS02370 Intro To Info Visualization (transfer, TA)",
-            "twin_id": "pair-transfer-computer-science-bs-4-a",
-            "answer_here": "one class that counts toward Computer Science Restricted Electives (CS-RESTRICTED)",
-            "answer_in_twin": "one class that counts toward Introduction to Object-Oriented Programming (CS-INTRO-OOP)",
-            "summary": "Only the transcript differs. Here: transfer: PSY22215 Educational Psychology (transfer, TA). In the twin (pair-transfer-computer-science-bs-4-a): transfer: CS02370 Intro To Info Visualization (transfer, TA). So the answer here is one class that counts toward Computer Science Restricted Electives (CS-RESTRICTED), while in the twin it is one class that counts toward Introduction to Object-Oriented Programming (CS-INTRO-OOP)."
+            "this_case": "transfer: THD07201 Intro To Theatre And Dance-Rs (transfer, TA)",
+            "twin_case": "transfer: MGT06407 Business Analytics (transfer, TA)",
+            "twin_id": "pair-transfer-supply-chain-logistics-bs-a",
+            "answer_here": "one class that counts toward SCL Electives (SCL-ELECTIVES)",
+            "answer_in_twin": "one class that counts toward SCL or Upper Level (SCL-BUSINESS-ELECTIVE)",
+            "summary": "Only the transcript differs. Here: transfer: THD07201 Intro To Theatre And Dance-Rs (transfer, TA). In the twin (pair-transfer-supply-chain-logistics-bs-a): transfer: MGT06407 Business Analytics (transfer, TA). So the answer here is one class that counts toward SCL Electives (SCL-ELECTIVES), while in the twin it is one class that counts toward SCL or Upper Level (SCL-BUSINESS-ELECTIVE)."
           },
-          "has_shared_answer": false,
-          "shared_answer_example": null
+          "has_shared_answer": true,
+          "shared_answer_example": "41603"
         },
         "difficulty": {
-          "candidate_courses": 18,
-          "candidate_answers": 28,
-          "correct_answers": 14,
-          "chance": 0.5,
+          "candidate_courses": 74,
+          "candidate_answers": 133,
+          "correct_answers": 4,
+          "chance": 0.0301,
           "rules": 2,
-          "prompt_words": 32
+          "prompt_words": 30
         },
         "checks": [
           "R9"
         ],
         "credit": {
-          "owner": "Aneesh Anand",
-          "branch": "Aneesh-Anand",
-          "file": "new_input_thing_paired_all_tests.jsonl",
-          "original_case_id": "TRAP-R9C-ATTACK",
-          "rebuilt_by": "Khalil",
-          "rebuilt_as": "pair-transfer-computer-science-bs-4-b"
+          "owner": "Khalil",
+          "branch": "Khalil-context-path",
+          "file": "data/paired_cases.json",
+          "original_case_id": "pair-transfer-supply-chain-logistics-bs-b",
+          "rebuilt_by": null,
+          "rebuilt_as": null
         }
       }
     },

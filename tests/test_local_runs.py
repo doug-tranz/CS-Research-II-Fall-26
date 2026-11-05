@@ -267,6 +267,16 @@ class EndToEndTests(unittest.TestCase):
         self.assertEqual(len(data["results"]), 4)
         self.assertTrue(data["sessions"][1]["session_id"].endswith("-002"))
 
+    def test_a_course_with_an_unchecked_condition_is_found_and_left_out(self):
+        from pipeline.finalize import restricted_courses
+        self.assertEqual(restricted_courses({"notes": "PR06310 needs 60 sh; JRN02317 needs 45 sh. "
+                                                      "Four courses (12 sh): CMS04210"}), {"PR06310", "JRN02317"})
+        self.assertEqual(restricted_courses([{"notes": "they need COMP01112 and 90 sh overall"},
+                                             {"notes": "CS99300 and CS99310 need the instructor's permission"}]),
+                         {"CS99300", "CS99310"})
+        for c in read_cases():                                          # none of them is a case's course
+            self.assertNotIn("PR06310", c["candidate_courses"] if c["input"].get("program") == "advertising-ba" else [])
+
     def test_pairs_spread_over_the_checks(self):
         from collections import Counter
         from pipeline.batch import spread_pairs
