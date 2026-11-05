@@ -58,7 +58,7 @@ CASES = [
     ("sections as bare strings", json.dumps(body(sections=["41836", "41909"])), "schema_error"),
     ("no term_code", json.dumps(variant(body={"student_id": "S001", "sections": [entry("41836")]})), "schema_error"),
     ("term_code as a number", json.dumps(body(term_code=202640)), "schema_error"),
-    ("empty cart", json.dumps(body(sections=[])), "schema_error"),
+    ("empty cart (nothing satisfies the request)", json.dumps(body(sections=[])), "schema_ok"),
     ("same crn twice", json.dumps(body(sections=[entry("41836"), entry("41836", waitlist=True)])), "schema_error"),
     ("crn only (the earlier entry)", json.dumps(body(sections=[{"crn": "41836"}])), "schema_error"),
     ("section entry without crn", json.dumps(body(sections=[entry(None, section_id="41836")])), "schema_error"),

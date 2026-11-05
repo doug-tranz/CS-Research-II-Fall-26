@@ -6,6 +6,7 @@ OpenRouter's prices are given rather than fetched.
     python -m unittest discover tests
 """
 import contextlib
+import csv
 import io
 import json
 import sys
@@ -18,15 +19,17 @@ from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from pipeline import backends, cli, pricing, results                            # noqa: E402
-from pipeline.cases import expected_message, load_test_cases                    # noqa: E402
+from pipeline import backends, cli, paths, pricing, results                     # noqa: E402
+from pipeline.cases import expected_message, load_test_cases, read_cases        # noqa: E402
 from pipeline.energy import PowerMeter                                          # noqa: E402
 from pipeline.harness import TaskSpec, build_messages, cached_chars             # noqa: E402
 
 SONNET = {"prompt": "0.000002", "completion": "0.00001", "input_cache_read": "0.0000002",
           "input_cache_write": "0.0000025"}
 NO_CACHE = {"prompt": "0.000001", "completion": "0.000002"}
-PAIR = ("pair-modality-marketing-bs-a", "pair-modality-marketing-bs-b")
+# the first modality (K1) pair in the finalized case file, variant a then b
+PAIR = tuple(c["case_id"] for c in sorted([c for c in read_cases() if c["case_id"].startswith("K1-")][:2],
+                                          key=lambda c: c["ground_truth"]["pair"]["variant"]))
 
 
 class StubLMStudio:
@@ -264,12 +267,17 @@ class EndToEndTests(unittest.TestCase):
         self.assertEqual(len(data["results"]), 4)
         self.assertTrue(data["sessions"][1]["session_id"].endswith("-002"))
 
-    def test_pairs_spread_over_the_families(self):
+    def test_pairs_spread_over_the_checks(self):
+        from collections import Counter
         from pipeline.batch import spread_pairs
-        from pipeline.cases import read_cases
-        ids = spread_pairs(read_cases(), 10)
-        self.assertEqual(len(ids), 20)
-        self.assertEqual(len({cid.split("-")[1] for cid in ids}), 10)      # all ten families
+        code = {c["case_id"]: c["ground_truth"]["checks"][0] for c in read_cases()}
+        ten = spread_pairs(read_cases(), 10)
+        self.assertEqual(len({code[cid] for cid in ten}), 10)                # ten checks, one pair each
+        self.assertEqual(len({code[cid][0] for cid in ten}), 7)              # reaching all seven groups
+        hundred = spread_pairs(read_cases(), 100)
+        self.assertEqual(len(hundred), 200)
+        self.assertEqual(set(Counter(code[cid] for cid in hundred).values()), {4, 6})   # 100 pairs over 43 checks
+        self.assertEqual(hundred[:20], ten)                                  # a smaller n is a subset
 
     def test_cloud_rows_have_no_local_fields(self):
         row = results.slim_row({"task_id": "t", "energy_wh": None, "avg_watts": None, "energy_usd": None,
@@ -278,6 +286,63 @@ class EndToEndTests(unittest.TestCase):
 
 
 class ResultsFileTests(unittest.TestCase):
+    def test_analysis_breaks_down_by_check_change_and_samples(self):
+        truth = lambda variant: {"checks": ["T1", "O1"], "difficulty": {"chance": 0.5}, "credit": {"owner": "Tyler Henry"},
+                                 "pair": {"id": "p/1", "variant": variant, "difference": {"where": "prompt"}}}
+        cases = {"A-a": {"ground_truth": truth("a")}, "A-b": {"ground_truth": truth("b")}}
+        row = lambda cid, run, ok, crn: {"task_id": cid, "run_index": run, "error": None, "transcript_courses": 12,
+                                         "verdict": {"outcome": "semantic_ok" if ok else "semantic_error"},
+                                         "parsed_output": {"body": {"sections": [{"crn": crn}]}}}
+        rows = [row("A-a", 0, True, "1"), row("A-a", 1, False, "2"), row("A-b", 0, True, "3"), row("A-b", 1, True, "3")]
+        got = results.analysis(rows, {"p/1": {"a": "A-a", "b": "A-b"}}, cases)
+        t1 = got["semantic_ok_by_check"]["T1"]
+        self.assertEqual((t1["count"], t1["mean_chance"], t1["lift_over_chance"]), ("3/4", 0.5, 0.25))
+        self.assertEqual(got["semantic_ok_by_group"]["Temporal reasoning"]["count"], "3/4")
+        self.assertEqual(got["semantic_ok_by_owner"]["Tyler Henry"]["count"], "3/4")
+        self.assertEqual(list(got["semantic_ok_by_transcript_size"]), ["11-20 courses"])
+        self.assertEqual(got["paired_by_change"]["prompt"]["passed"], 1)       # run 0 both right, run 1 not
+        stable = got["stability"]
+        self.assertEqual(stable["same_answer_every_sample"]["count"], "1/2")   # A-b answered 3 twice; A-a changed
+        self.assertEqual(stable["flip_rate_by_check"]["T1"]["count"], "1/2")
+        self.assertEqual(got["errors_by_check"]["T1"], {"semantic_error": 1})
+        self.assertEqual(got["ignored_change_by_check"]["T1"]["count"], "0/2")       # the twins never answered alike
+        self.assertEqual(got["empty_cart"]["registered_nothing_when_wrong"]["count"], "0/4")
+
+    def test_analysis_flags_same_answer_empty_carts_and_cart_size(self):
+        gt = lambda v, mx: {"checks": ["K7"], "rules": {"count": {"min": 0 if mx == 0 else 1, "max": mx}},
+                            "pair": {"id": "p", "variant": v}}
+        cases = {"a": {"ground_truth": gt("a", 1)}, "b": {"ground_truth": gt("b", 0)}}
+        row = lambda cid, crns, ok, think: {"task_id": cid, "run_index": 0, "error": None, "reasoning_tokens": think,
+                                            "verdict": {"outcome": "semantic_ok" if ok else "semantic_error",
+                                                        "error_type": None if ok else "registered_anyway"},
+                                            "parsed_output": {"body": {"sections": [{"crn": c} for c in crns]}}}
+        got = results.analysis([row("a", ["1"], True, 100), row("b", ["1"], False, 300)], {"p": {"a": "a", "b": "b"}}, cases)
+        self.assertEqual(got["ignored_change_by_check"]["K7"]["count"], "1/1")       # same cart for both twins
+        self.assertEqual(got["errors_by_check"]["K7"], {"registered_anyway": 1})
+        self.assertEqual(got["empty_cart"]["registered_nothing_when_right"]["count"], "0/1")
+        self.assertEqual(got["sections_vs_requested_by_check"]["K7"], {"fewer": 0, "as_requested": 1, "more": 1})
+        self.assertEqual(got["reasoning_tokens_by_outcome"]["wrong"]["mean"], 300)
+
+    def test_export_csv_writes_one_flat_row_per_call(self):
+        out = Path(tempfile.mkdtemp()) / "all.csv"
+        res = Path(out.parent) / "r.json"
+        cid = PAIR[0]
+        results.save_results(str(res), [{"session_id": "s", "model": "m",
+                                         "generation_settings": {"reasoning": {"effort": "low"}}}],
+                             [{"task_id": cid, "session_id": "s", "run_index": 0, "ts": "2026-11-05T00:00:00Z", "error": None, "usd_cost": 0.01,
+                               "verdict": {"outcome": "semantic_ok"}, "parsed_output": {"body": {"sections": []}}}])
+        from pipeline.reports import CSV_COLUMNS, export_csv
+        self.assertEqual(export_csv(str(paths.CASES), str(out), [str(res)]), (1, 1))
+        with open(out, encoding="utf-8") as f:
+            rows = list(csv.DictReader(f))
+        self.assertEqual(tuple(rows[0]), CSV_COLUMNS)
+        self.assertEqual((rows[0]["check"], rows[0]["effort"], rows[0]["semantic_ok"], rows[0]["registered_nothing"]),
+                         ("K1", "low", "1", "1"))
+        with open(out.with_name("all_sessions.csv"), encoding="utf-8") as f:
+            session = next(csv.DictReader(f))
+        self.assertEqual((session["model"], session["effort"], session["semantic_ok_rate"], session["ok_K1"]),
+                         ("m", "low", "1.0", "1.0"))
+
     def test_save_is_atomic_and_leaves_no_temp_file(self):
         path = Path(tempfile.mkdtemp()) / "r.json"
         results.save_results(str(path), [{"session_id": "s"}], [])

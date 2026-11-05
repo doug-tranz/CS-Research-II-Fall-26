@@ -4,9 +4,11 @@ cases.py
 Test cases: loading a case file, filling in each case's full input object, and the answer key
 format.
 
-The case file (data/paired_cases.json, written by generate_pairs.py) is an indented JSON array of
-counterfactual pairs of cases. Each case names its degree program, fabricates its transcript
-(fabricate.py), and carries a rules answer key and its pair:
+Runs use data/FINALIZED_TEST_CASES.json (finalize.py builds it): every semantic test case, named
+by checklist code (T1-001...), with where it came from. Its runnable cases are the counterfactual
+pairs generate_pairs.py writes to data/paired_cases.json (an indented JSON array, also a valid
+--test-file). Each case names its degree program, fabricates its transcript (fabricate.py), and
+carries a rules answer key and its pair:
 
     {"case_id": "pair-transfer-philosophy-ba-a",
      "input": {"program": "philosophy-ba", "student": {...}, "transcript": {"fabricate": {...}},
@@ -42,6 +44,7 @@ RULES = {
     "modality_in": "allowed modalities",
     "must_include_courses": "course ids the cart must contain",
     "courses_in": "course ids: every section's course must be one of these",
+    "crns_in": "crns: every section must be one of these (the request singles them out)",
     "busy": "the student's fixed commitments, [{days, start_time, end_time}]: no meeting may overlap one",
 }
 
@@ -68,8 +71,10 @@ def resolve_case(case: dict) -> dict:
 
 
 def read_cases(path=CASES) -> list:
-    """The cases in a file as written (not resolved): cheap, for ids, pairs and metadata."""
-    return json.loads(Path(path).read_text(encoding="utf-8"))
+    """The cases in a file as written (not resolved): cheap, for ids, pairs and metadata. A file
+    is a list of cases (paired_cases.json), or {"about", "checklist", "cases"} (the finalized file)."""
+    data = json.loads(Path(path).read_text(encoding="utf-8"))
+    return data["cases"] if isinstance(data, dict) else data
 
 
 def load_test_cases(path=CASES, task_ids=None) -> list:
@@ -143,9 +148,10 @@ def validate_case(case) -> list:
     if not examples.get("valid"):
         problems.append("a rules answer key needs at least one valid example cart")
     carts = [[_item(entry) for entry in cart] for cart in examples.get("valid", []) + examples.get("invalid", [])]
+    nothing = truth["rules"].get("count", {}).get("max") == 0      # the right answer registers nothing: []
+    if any(not cart for cart in examples.get("valid", [])) and not nothing:
+        problems.append("ground_truth has an empty valid cart, but its rules ask for a section")
     for cart in carts:
-        if not cart:
-            problems.append("ground_truth has an empty cart")
         for item in cart:
             if item["crn"] not in offered:
                 problems.append(f"ground_truth names crn {item['crn']}, which is not in the schedule")

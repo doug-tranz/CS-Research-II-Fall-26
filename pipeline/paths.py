@@ -13,7 +13,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 
 DATA = ROOT / "data"
-CASES = DATA / "paired_cases.json"                    # the test cases (generate_pairs.py writes it)
+CASES = DATA / "FINALIZED_TEST_CASES.json"            # the test cases every run uses (finalize.py builds it)
+PAIRS = DATA / "paired_cases.json"                    # the generated pairs (generate_pairs.py writes it)
 PROGRAMS = DATA / "degree_requirements.json"          # 50 Rowan degree programs
 TALLY_CSV = DATA / "section_tally_fall2026.csv"       # the registrar's Section Tally, as downloaded
 

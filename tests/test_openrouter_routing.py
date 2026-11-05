@@ -19,8 +19,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from pipeline import backends, cli, pricing                                     # noqa: E402
 from pipeline.backends import OpenRouterBackend, RawCall                        # noqa: E402
+from pipeline.cases import read_cases                                          # noqa: E402
 
-PAIR = ("pair-modality-marketing-bs-a", "pair-modality-marketing-bs-b")
+# the first modality (K1) pair in the finalized case file, variant a then b
+PAIR = tuple(c["case_id"] for c in sorted([c for c in read_cases() if c["case_id"].startswith("K1-")][:2],
+                                          key=lambda c: c["ground_truth"]["pair"]["variant"]))
 ENDPOINTS = {"data": {"endpoints": [
     {"tag": "deepinfra/fp8", "pricing": {"prompt": "0.00000014", "completion": "0.00000042",
                                          "input_cache_read": "0.0000000042"}},

@@ -16,7 +16,7 @@ batch_report() adds those sessions up (calls, accuracy, paired accuracy, money b
 electricity, projected OpenRouter cost) at the end of the run, or later with --batch-report.
 
     pair_groups()    the cases split into sessions: both halves of a pair together
-    spread_pairs()   --pairs N: N pairs spread evenly over the file (it is grouped by family)
+    spread_pairs()   --pairs N: N pairs spread evenly over the checklist codes (else the families)
 """
 from .cases import read_cases
 from .pairs import pair_stats, pairs_of
@@ -40,16 +40,27 @@ def pair_groups(cases: list) -> list:
 
 
 def spread_pairs(raw_cases: list, n: int) -> list:
-    """The case ids of n pairs spread over the families. The file is grouped by family, so the
-    first n pairs would cover only a few; instead the families take turns (the first pair of
-    each family, then the second of each, ...), so any n of 10 or more covers all ten."""
+    """The case ids of n pairs spread over the checklist codes (ground_truth.checks[0]; a file
+    without codes: the pair families). The file is grouped by code, so the first n pairs would
+    cover only a few; instead the codes take turns (the first pair of each code, then the second
+    of each, ...), so every code gets n // codes pairs or one more. Within a turn the codes go
+    across the groups (T1, D1, C1, I1, K1, R1, O1, T2, D2, ...), so a small n such as the
+    stability check's 10 still reaches every group. The same n always gives the same pairs, and
+    a smaller n gives a subset of a larger one."""
     pairs = pairs_of(raw_cases)
     if not 0 < n <= len(pairs):
         raise ValueError(f"--pairs must be between 1 and {len(pairs)} (the pairs in the file)")
-    families = {}
+    code_of = {c["case_id"]: (c.get("ground_truth") or {}).get("checks", [None])[0] for c in raw_cases}
+    groups = {}
     for pair_id, variants in pairs.items():                 # pair ids are "<family>/<program>"
-        families.setdefault(pair_id.split("/")[0], []).append(variants)
-    turns = [fam[k] for k in range(max(map(len, families.values()))) for fam in families.values() if k < len(fam)]
+        key = code_of.get(next(iter(variants.values()))) or pair_id.split("/")[0]
+        groups.setdefault(key, []).append(variants)
+    letters = list(dict.fromkeys(k[0] for k in groups))     # group letters in file order
+    rank = {}
+    for key in groups:                                      # position of each code within its letter
+        rank[key] = sum(k[0] == key[0] for k in rank)
+    order = sorted(groups, key=lambda k: (rank[k], letters.index(k[0]))) if all(code_of.values()) else list(groups)
+    turns = [groups[k][i] for i in range(max(map(len, groups.values()))) for k in order if i < len(groups[k])]
     return [cid for variants in turns[:n] for cid in variants.values()]
 
 

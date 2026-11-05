@@ -1,0 +1,507 @@
+{
+ "base": [
+  "back_to_back/advertising-ba",
+  "back_to_back/bioinformatics-bs",
+  "back_to_back/biomedical-engineering-bs",
+  "back_to_back/civil-engineering-bs",
+  "back_to_back/computing-informatics-ba",
+  "back_to_back/electrical-computer-engineering-bs",
+  "back_to_back/entrepreneurship-bs",
+  "back_to_back/environmental-science-bs",
+  "back_to_back/journalism-ba",
+  "back_to_back/sports-communication-media-ba",
+  "boundary_time/africana-studies-ba",
+  "boundary_time/computer-science-bs",
+  "boundary_time/computing-informatics-ba",
+  "boundary_time/data-science-bs",
+  "boundary_time/exercise-science-bs",
+  "boundary_time/management-bs",
+  "boundary_time/political-science-ba",
+  "boundary_time/sociology-ba",
+  "boundary_time/sports-communication-media-ba",
+  "boundary_time/theatre-ba",
+  "busy_block/accounting-bs",
+  "busy_block/anthropology-ba",
+  "busy_block/biochemistry-bs",
+  "busy_block/bioinformatics-bs",
+  "busy_block/chemistry-bs",
+  "busy_block/computing-informatics-ba",
+  "busy_block/dance-ba",
+  "busy_block/entrepreneurship-bs",
+  "busy_block/environmental-science-bs",
+  "busy_block/exercise-science-bs",
+  "busy_block/finance-bs",
+  "busy_block/journalism-ba",
+  "busy_block/management-bs",
+  "busy_block/marketing-bs",
+  "busy_block/mechanical-engineering-bs",
+  "busy_block/political-science-ba",
+  "busy_block/psychological-science-bs",
+  "busy_block/public-health-wellness-bs",
+  "busy_block/sports-communication-media-ba",
+  "busy_block/theatre-ba",
+  "busy_block/writing-arts-ba",
+  "chained_conflict/computer-science-bs",
+  "chained_conflict/computer-science-bs#2",
+  "chained_conflict/computing-informatics-ba",
+  "credit_limit/africana-studies-ba",
+  "credit_limit/anthropology-ba",
+  "credit_limit/bioinformatics-bs",
+  "credit_limit/chemistry-bs",
+  "credit_limit/civil-engineering-bs",
+  "credit_limit/communication-studies-ba",
+  "credit_limit/data-science-bs",
+  "credit_limit/electrical-computer-engineering-bs",
+  "credit_limit/environmental-sustainability-studies-ba",
+  "credit_limit/human-resource-management-bs",
+  "credit_limit/human-services-ba",
+  "credit_limit/marketing-bs",
+  "credit_limit/mathematics-bs",
+  "credit_limit/music-industry-bs",
+  "credit_limit/nutrition-bs",
+  "credit_limit/philosophy-ba",
+  "credit_limit/radio-television-film-ba",
+  "credit_limit/sociology-ba",
+  "credit_limit/supply-chain-logistics-bs",
+  "credit_limit/theatre-ba",
+  "credit_limit/writing-arts-ba",
+  "days/bioinformatics-bs",
+  "days/biomedical-engineering-bs",
+  "days/chemistry-bs",
+  "days/civil-engineering-bs",
+  "days/computer-science-bs",
+  "days/computing-informatics-ba",
+  "days/electrical-computer-engineering-bs",
+  "days/english-ba",
+  "days/environmental-sustainability-studies-ba",
+  "days/exercise-science-bs",
+  "days/human-services-ba",
+  "days/journalism-ba",
+  "days/management-bs",
+  "days/marketing-bs",
+  "days/mathematics-bs",
+  "days/mechanical-engineering-bs",
+  "days/psychological-science-bs",
+  "days/psychology-ba",
+  "days/public-relations-ba",
+  "days/sports-communication-media-ba",
+  "days/supply-chain-logistics-bs",
+  "full_fallback/anthropology-ba",
+  "full_fallback/biochemistry-bs",
+  "full_fallback/bioinformatics-bs",
+  "full_fallback/biomedical-engineering-bs",
+  "full_fallback/civil-engineering-bs",
+  "full_fallback/dance-ba",
+  "full_fallback/data-science-bs",
+  "full_fallback/electrical-computer-engineering-bs",
+  "full_fallback/entrepreneurship-bs",
+  "full_fallback/environmental-sustainability-studies-ba",
+  "full_fallback/history-ba",
+  "full_fallback/human-services-ba",
+  "full_fallback/marketing-bs",
+  "full_fallback/mathematics-bs",
+  "full_fallback/molecular-cellular-biology-bs",
+  "full_fallback/music-industry-bs",
+  "full_fallback/nutrition-bs",
+  "full_fallback/philosophy-ba",
+  "full_fallback/political-science-ba",
+  "full_fallback/public-health-wellness-bs",
+  "full_fallback/sociology-ba",
+  "grade_threshold/africana-studies-ba",
+  "grade_threshold/biochemistry-bs",
+  "grade_threshold/biomedical-engineering-bs",
+  "grade_threshold/data-science-bs",
+  "grade_threshold/english-ba",
+  "grade_threshold/environmental-science-bs",
+  "grade_threshold/environmental-sustainability-studies-ba",
+  "grade_threshold/exercise-science-bs",
+  "grade_threshold/human-services-ba",
+  "grade_threshold/journalism-ba",
+  "grade_threshold/law-justice-studies-ba",
+  "grade_threshold/mathematics-bs",
+  "grade_threshold/molecular-cellular-biology-bs",
+  "grade_threshold/music-industry-bs",
+  "grade_threshold/nutrition-bs",
+  "grade_threshold/political-science-ba",
+  "grade_threshold/public-relations-ba",
+  "grade_threshold/sociology-ba",
+  "grade_threshold/spanish-ba",
+  "grade_threshold/writing-arts-ba",
+  "in_progress/africana-studies-ba",
+  "in_progress/anthropology-ba",
+  "in_progress/chemistry-bs",
+  "in_progress/civil-engineering-bs",
+  "in_progress/computer-science-bs",
+  "in_progress/computing-informatics-ba",
+  "in_progress/dance-ba",
+  "in_progress/english-ba",
+  "in_progress/entrepreneurship-bs",
+  "in_progress/environmental-sustainability-studies-ba",
+  "in_progress/information-systems-analytics-bs",
+  "in_progress/journalism-ba",
+  "in_progress/management-bs",
+  "in_progress/marketing-bs",
+  "in_progress/mathematics-bs",
+  "in_progress/political-science-ba",
+  "in_progress/psychological-science-bs",
+  "in_progress/public-health-wellness-bs",
+  "in_progress/public-relations-ba",
+  "in_progress/spanish-ba",
+  "in_progress/supply-chain-logistics-bs",
+  "modality/accounting-bs",
+  "modality/anthropology-ba",
+  "modality/biomedical-engineering-bs",
+  "modality/communication-studies-ba",
+  "modality/computing-informatics-ba",
+  "modality/data-science-bs",
+  "modality/entrepreneurship-bs",
+  "modality/environmental-science-bs",
+  "modality/finance-bs",
+  "modality/human-services-ba",
+  "modality/information-systems-analytics-bs",
+  "modality/management-bs",
+  "modality/marketing-bs",
+  "modality/mechanical-engineering-bs",
+  "modality/molecular-cellular-biology-bs",
+  "modality/nutrition-bs",
+  "modality/philosophy-ba",
+  "modality/political-science-ba",
+  "modality/psychological-science-bs",
+  "modality/sociology-ba",
+  "modality/translational-biomedical-sciences-bs",
+  "multi_meeting/accounting-bs",
+  "multi_meeting/biochemistry-bs",
+  "multi_meeting/bioinformatics-bs",
+  "multi_meeting/biomedical-engineering-bs",
+  "multi_meeting/biophysics-bs",
+  "multi_meeting/exercise-science-bs",
+  "multi_meeting/law-justice-studies-ba",
+  "multi_meeting/physics-bs",
+  "multi_meeting/radio-television-film-ba",
+  "multi_meeting/translational-biomedical-sciences-bs",
+  "nested_groups/accounting-bs",
+  "nested_groups/accounting-bs#3",
+  "nested_groups/entrepreneurship-bs",
+  "nested_groups/entrepreneurship-bs#2",
+  "nested_groups/finance-bs",
+  "nested_groups/human-resource-management-bs",
+  "nested_groups/human-resource-management-bs#2",
+  "nested_groups/information-systems-analytics-bs",
+  "nested_groups/information-systems-analytics-bs#2",
+  "nested_groups/management-bs",
+  "nested_groups/management-bs#2",
+  "nested_groups/marketing-bs",
+  "nested_groups/supply-chain-logistics-bs",
+  "noon/africana-studies-ba",
+  "noon/bioinformatics-bs",
+  "noon/chemistry-bs",
+  "noon/computer-science-bs",
+  "noon/computing-informatics-ba",
+  "noon/data-science-bs",
+  "noon/environmental-science-bs",
+  "noon/environmental-sustainability-studies-ba",
+  "noon/journalism-ba",
+  "noon/mathematics-bs",
+  "relative_time/advertising-ba",
+  "relative_time/biochemistry-bs",
+  "relative_time/bioinformatics-bs",
+  "relative_time/biomedical-engineering-bs",
+  "relative_time/chemistry-bs",
+  "relative_time/english-ba",
+  "relative_time/journalism-ba",
+  "relative_time/music-industry-bs",
+  "relative_time/philosophy-ba",
+  "relative_time/public-relations-ba",
+  "time_cutoff/biophysics-bs",
+  "time_cutoff/chemistry-bs",
+  "time_cutoff/civil-engineering-bs",
+  "time_cutoff/journalism-ba",
+  "time_cutoff/management-bs",
+  "time_cutoff/marketing-bs",
+  "time_cutoff/political-science-ba",
+  "time_cutoff/public-relations-ba",
+  "time_cutoff/spanish-ba",
+  "time_cutoff/sports-communication-media-ba",
+  "time_of_day/biochemistry-bs",
+  "time_of_day/chemistry-bs",
+  "time_of_day/communication-studies-ba",
+  "time_of_day/computing-informatics-ba",
+  "time_of_day/data-science-bs",
+  "time_of_day/environmental-sustainability-studies-ba",
+  "time_of_day/journalism-ba",
+  "time_of_day/mathematics-bs",
+  "time_of_day/political-science-ba",
+  "time_of_day/public-relations-ba",
+  "transfer/africana-studies-ba",
+  "transfer/africana-studies-ba#2",
+  "transfer/africana-studies-ba#3",
+  "transfer/africana-studies-ba#4",
+  "transfer/communication-studies-ba",
+  "transfer/communication-studies-ba#2",
+  "transfer/communication-studies-ba#3",
+  "transfer/computer-science-bs",
+  "transfer/computer-science-bs#2",
+  "transfer/computer-science-bs#3",
+  "transfer/computing-informatics-ba",
+  "transfer/computing-informatics-ba#2",
+  "transfer/finance-bs#3",
+  "transfer/philosophy-ba",
+  "transfer/philosophy-ba#2",
+  "transfer/philosophy-ba#3",
+  "transfer/philosophy-ba#4",
+  "transfer/sociology-ba",
+  "transfer/sociology-ba#2",
+  "transfer/sociology-ba#3",
+  "transfer/supply-chain-logistics-bs",
+  "withdrawal/bioinformatics-bs",
+  "withdrawal/biomedical-engineering-bs",
+  "withdrawal/chemistry-bs",
+  "withdrawal/computer-science-bs",
+  "withdrawal/dance-ba",
+  "withdrawal/data-science-bs",
+  "withdrawal/electrical-computer-engineering-bs",
+  "withdrawal/english-ba",
+  "withdrawal/environmental-science-bs",
+  "withdrawal/environmental-sustainability-studies-ba",
+  "withdrawal/exercise-science-bs",
+  "withdrawal/human-services-ba",
+  "withdrawal/journalism-ba",
+  "withdrawal/law-justice-studies-ba",
+  "withdrawal/molecular-cellular-biology-bs",
+  "withdrawal/nutrition-bs",
+  "withdrawal/public-relations-ba",
+  "withdrawal/sociology-ba",
+  "withdrawal/sports-communication-media-ba",
+  "withdrawal/writing-arts-ba"
+ ],
+ "added": {
+  "T1/time_of_day": [
+   "time_of_day/advertising-ba",
+   "time_of_day/bioinformatics-bs",
+   "time_of_day/exercise-science-bs",
+   "time_of_day/philosophy-ba",
+   "time_of_day/sports-communication-media-ba"
+  ],
+  "T2/relative_time": [
+   "relative_time/africana-studies-ba",
+   "relative_time/exercise-science-bs",
+   "relative_time/molecular-cellular-biology-bs"
+  ],
+  "T3/time_cutoff": [
+   "time_cutoff/bioinformatics-bs",
+   "time_cutoff/entrepreneurship-bs"
+  ],
+  "T4/busy_block": [
+   "busy_block/biomedical-engineering-bs",
+   "busy_block/nutrition-bs",
+   "busy_block/public-relations-ba"
+  ],
+  "T5/chained_conflict": [
+   "chained_conflict/data-science-bs"
+  ],
+  "T6/boundary_time": [
+   "boundary_time/human-resource-management-bs"
+  ],
+  "T7/back_to_back": [
+   "back_to_back/theatre-ba"
+  ],
+  "T8/multi_meeting": [
+   "multi_meeting/electrical-computer-engineering-bs"
+  ],
+  "T9/noon": [
+   "noon/data-science-bs#2"
+  ],
+  "D1/days": [
+   "days/accounting-bs",
+   "days/advertising-ba",
+   "days/communication-studies-ba",
+   "days/environmental-science-bs",
+   "days/molecular-cellular-biology-bs",
+   "days/radio-television-film-ba",
+   "days/translational-biomedical-sciences-bs"
+  ],
+  "D2/shared_day_pattern": [
+   "shared_day_pattern/biochemistry-bs",
+   "shared_day_pattern/biophysics-bs",
+   "shared_day_pattern/molecular-cellular-biology-bs"
+  ],
+  "D3/day_exclusion": [
+   "day_exclusion/africana-studies-ba",
+   "day_exclusion/communication-studies-ba",
+   "day_exclusion/environmental-sustainability-studies-ba"
+  ],
+  "C1/full_fallback": [
+   "full_fallback/accounting-bs",
+   "full_fallback/computing-informatics-ba",
+   "full_fallback/environmental-science-bs",
+   "full_fallback/mechanical-engineering-bs",
+   "full_fallback/supply-chain-logistics-bs"
+  ],
+  "C2/last_seat": [
+   "last_seat/bioinformatics-bs",
+   "last_seat/electrical-computer-engineering-bs",
+   "last_seat/mathematics-bs"
+  ],
+  "C3/open_seats": [
+   "open_seats/data-science-bs",
+   "open_seats/history-ba",
+   "open_seats/information-systems-analytics-bs"
+  ],
+  "C4/not_first_listed": [
+   "not_first_listed/chemistry-bs",
+   "not_first_listed/civil-engineering-bs",
+   "not_first_listed/dance-ba"
+  ],
+  "I1/lookalike_id": [
+   "lookalike_id/africana-studies-ba",
+   "lookalike_id/theatre-ba"
+  ],
+  "I2/section_number": [
+   "section_number/sociology-ba"
+  ],
+  "I3/same_title": [
+   "same_title/journalism-ba"
+  ],
+  "I4/course_a_not_b": [
+   "course_a_not_b/advertising-ba",
+   "course_a_not_b/english-ba",
+   "course_a_not_b/sports-communication-media-ba"
+  ],
+  "I5/negation": [
+   "negation/electrical-computer-engineering-bs",
+   "negation/environmental-sustainability-studies-ba",
+   "negation/human-services-ba"
+  ],
+  "K1/modality": [
+   "modality/africana-studies-ba",
+   "modality/environmental-sustainability-studies-ba",
+   "modality/human-resource-management-bs",
+   "modality/psychology-ba",
+   "modality/public-health-wellness-bs"
+  ],
+  "K3/campus_residence": [
+   "campus_residence/accounting-bs",
+   "campus_residence/biochemistry-bs",
+   "campus_residence/marketing-bs"
+  ],
+  "K4/several_constraints": [
+   "several_constraints/electrical-computer-engineering-bs",
+   "several_constraints/environmental-sustainability-studies-ba",
+   "several_constraints/exercise-science-bs",
+   "several_constraints/marketing-bs"
+  ],
+  "K5/hard_soft": [
+   "hard_soft/computing-informatics-ba",
+   "hard_soft/environmental-sustainability-studies-ba",
+   "hard_soft/human-resource-management-bs"
+  ],
+  "K6/quantity": [
+   "quantity/biophysics-bs",
+   "quantity/civil-engineering-bs"
+  ],
+  "K8/ambiguous": [
+   "ambiguous/mechanical-engineering-bs"
+  ],
+  "R1/passed_retake": [
+   "passed_retake/exercise-science-bs",
+   "passed_retake/public-health-wellness-bs",
+   "passed_retake/spanish-ba"
+  ],
+  "R2/withdrawal": [
+   "withdrawal/biochemistry-bs"
+  ],
+  "R2/grade_threshold": [
+   "grade_threshold/electrical-computer-engineering-bs"
+  ],
+  "R3/repeatable": [
+   "repeatable/dance-ba"
+  ],
+  "R4/prereq_completed": [
+   "prereq_completed/psychology-ba"
+  ],
+  "R5/prereq_in_progress": [
+   "prereq_in_progress/advertising-ba"
+  ],
+  "R6/prereq_transfer": [
+   "prereq_transfer/environmental-sustainability-studies-ba"
+  ],
+  "R7/prereq_min_grade": [
+   "prereq_min_grade/psychological-science-bs"
+  ],
+  "R8/requirement_options": [
+   "requirement_options/chemistry-bs",
+   "requirement_options/psychology-ba"
+  ],
+  "R9/transfer": [
+   "transfer/communication-studies-ba#4",
+   "transfer/sociology-ba#4",
+   "transfer/computer-science-bs#4",
+   "transfer/marketing-bs#4"
+  ],
+  "R9/nested_groups": [],
+  "R10/credit_limit": [
+   "credit_limit/computing-informatics-ba",
+   "credit_limit/political-science-ba"
+  ],
+  "R11/requirement_satisfied": [
+   "requirement_satisfied/sociology-ba"
+  ],
+  "R12/department": [
+   "department/mathematics-bs"
+  ],
+  "O1/complete_cart": [
+   "complete_cart/finance-bs"
+  ],
+  "O3/any_correct": [
+   "any_correct/environmental-sustainability-studies-ba"
+  ],
+  "K7/impossible_days": [
+   "impossible_days/mathematics-bs"
+  ],
+  "K7/impossible_full": [
+   "impossible_full/music-industry-bs"
+  ]
+ },
+ "dropped": [
+  {
+   "original_case_id": "reg-sem-011",
+   "owner": "Tyler Henry",
+   "branch": "ben-test-branch",
+   "file": "semantic_test_cases.jsonl",
+   "checks": [
+    "K2"
+   ],
+   "why": "the compact Section Tally every case shares leaves out instructors (adding them to every call, about +16% tokens, was declined), so a request by instructor cannot be answered on the tally"
+  },
+  {
+   "original_case_id": "reg-sem-012",
+   "owner": "Tyler Henry",
+   "branch": "ben-test-branch",
+   "file": "semantic_test_cases.jsonl",
+   "checks": [
+    "K2"
+   ],
+   "why": "the compact Section Tally every case shares leaves out instructors (adding them to every call, about +16% tokens, was declined), so a request by instructor cannot be answered on the tally"
+  },
+  {
+   "original_case_id": "TRAP-K2-CONTROL",
+   "owner": "Aneesh Anand",
+   "branch": "Aneesh-Anand",
+   "file": "new_input_thing_paired_all_tests.jsonl",
+   "checks": [
+    "K2"
+   ],
+   "why": "the compact Section Tally every case shares leaves out instructors (adding them to every call, about +16% tokens, was declined), so a request by instructor cannot be answered on the tally"
+  },
+  {
+   "original_case_id": "TRAP-K2-ATTACK",
+   "owner": "Aneesh Anand",
+   "branch": "Aneesh-Anand",
+   "file": "new_input_thing_paired_all_tests.jsonl",
+   "checks": [
+    "K2"
+   ],
+   "why": "the compact Section Tally every case shares leaves out instructors (adding them to every call, about +16% tokens, was declined), so a request by instructor cannot be answered on the tally"
+  }
+ ]
+}

@@ -55,7 +55,7 @@ from .pairs import pair_summary, pairs_of, relate_pairs
 from .paths import CASES, DEFAULT_OUTPUT, shown
 from .pricing import Projection, confirm_spend, estimate_cost, lookup_price, opening_tokens
 from .render import RENDERINGS, TALLY_VARIANTS, render_opening, session_contract, to_task
-from .reports import compare, pair_report, rescore
+from .reports import _sessions_path, compare, effort_report, export_csv, pair_report, rescore
 from .results import append_row, file_hash, load_results, log_row, rebuild_summaries, save_results
 from .scoring import failed_call_verdict, score_answer
 from .selfcheck import check_cases
@@ -70,7 +70,7 @@ def build_parser() -> argparse.ArgumentParser:
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     run = parser.add_argument_group("what to run")
     run.add_argument("--model", help="required unless --check; an OpenRouter id, or an LM Studio model id")
-    run.add_argument("--test-file", default=str(CASES), help="the case file (default data/paired_cases.json)")
+    run.add_argument("--test-file", default=str(CASES), help="the case file (default data/FINALIZED_TEST_CASES.json; data/paired_cases.json also works)")
     run.add_argument("--output", default=str(DEFAULT_OUTPUT),
                      help="the results file runs are appended to (default results/semantic_eval_results.json)")
     run.add_argument("--task-ids", nargs="+", help="run only these cases (give both halves of a pair)")
@@ -159,6 +159,12 @@ def build_parser() -> argparse.ArgumentParser:
     other.add_argument("--rescore", action="store_true",
                        help="re-grade the saved answers in --output with the current scorer and rewrite their "
                             "verdicts; no model call")
+    other.add_argument("--effort-report", action="store_true",
+                       help="print one line per session in --output (model, effort, accuracy, paired accuracy, cost "
+                            "per correct answer, thinking tokens, latency) and exit; no model call")
+    other.add_argument("--export-csv", nargs="+", metavar="PATH",
+                       help="OUT [RESULTS ...]: write one flat row per call (for pandas / EDA) to OUT from the results "
+                            "files after it (default: --output) and exit; no model call")
     other.add_argument("--compare", nargs=2, metavar=("A", "B"),
                        help="compare two results files on the cases and runs both have (McNemar's test); "
                             "no model call")
@@ -414,7 +420,10 @@ def run_cases(cases: list, backend, args, session: TallySession, meta: dict, pro
             runs += 1
             cost += result.usd_cost
             print(f"{label}: {verdict['outcome']:20s} | {verdict.get('detail', '')}{call_note(result, projected)}")
-            extra = {"case_hashes": hashes}
+            transcript = case["input"]["transcript"]
+            extra = {"case_hashes": hashes,     # and the record's size, for analysis by transcript length
+                     "transcript_courses": sum(len(transcript[k]) for k in
+                                               ("completed_courses", "transfer_courses", "courses_in_progress"))}
             if projected is not None:
                 extra["projected_openrouter_usd"] = projected
             log_row(result, verdict, args.output, meta, extra)
@@ -544,8 +553,16 @@ def main():
     if args.rescore:
         rescore(args.test_file, args.output)
         return
+    if args.effort_report:
+        effort_report(args.test_file, args.output)
+        return
     if args.compare:
         compare(args.test_file, *args.compare)
+        return
+    if args.export_csv:
+        out, files = args.export_csv[0], args.export_csv[1:] or [args.output]
+        calls, sessions = export_csv(args.test_file, out, files)
+        print(f"{calls} calls -> {out}; {sessions} sessions -> {_sessions_path(out)}")
         return
     if args.pairs:
         if args.task_ids:

@@ -37,6 +37,9 @@ real, so a pair cannot make a section full; it flips what the student asked or h
                   the other starts
   multi_meeting   a commitment over one section's lab vs another's   T8 check every meeting
   noon            "done by noon" vs "can't start until noon"         T9 AM/PM and noon traps
+  ...and one family per remaining checklist item (D2-D3, C2-C4, I1-I5, K3-K6, K8, R1, R3-R8, R11-R12,
+  O1-O3; see FAMILIES and the README's family table), rebuilt on the real tally from the team's cases
+  that carried their own schedule.
 
 Not built: campus (all but 30 of 5,129 sections are in Glassboro, online or off-campus).
 
@@ -68,10 +71,10 @@ from . import section_tally
 from .cases import expected_message, resolve_case
 from .harness import parse_didcomm
 from .input_format import minutes
-from .paths import CASES
+from .paths import PAIRS
 from .scoring import _busy_overlap, check_rules
 
-PAIR_FILE = CASES
+PAIR_FILE = PAIRS
 ONE = {"count": {"min": 1, "max": 1}}
 TRANSFER_SCHOOL = "Rowan College of South Jersey"
 
@@ -253,7 +256,12 @@ def judge(c, candidates, rules, size):
     """Accepted carts of `size` sections drawn from `candidates`, and the rejected singles."""
     from itertools import combinations, product
     accepted, rejected = [], []
-    if size == 1:
+    if size == 0:           # the right answer registers nothing; every single section is wrong
+        outcome, detail = c.score([], rules)
+        if outcome == "semantic_ok":
+            accepted.append(([], outcome, detail))
+        rejected = [([s["crn"]], *c.score([s], rules)) for s in candidates]
+    elif size == 1:
         for s in candidates:
             outcome, detail = c.score([s], rules)
             (accepted if outcome == "semantic_ok" else rejected).append(([s["crn"]], outcome, detail))
@@ -295,7 +303,7 @@ def summarize(acc, rej, size):
     conflict = [cart for cart, o, d in rej if "time conflict" in d]
     broke = [cart for cart, o, d in rej if o == "semantic_error"]
     parts = [f"{len(acc)} correct {'section' if size == 1 else 'cart'}{'s' if len(acc) != 1 else ''}: "
-             + ", ".join("+".join(x[0]) for x in acc[:10]) + (" ..." if len(acc) > 10 else "")]
+             + ", ".join("+".join(x[0]) for x in acc[:10]) + (" ..." if len(acc) > 10 else "")] if size else         ["The only correct answer registers nothing (an empty sections list)"]
     if full:
         parts.append(f"full sections (no waitlist allowed): {', '.join(full[:8])}{' ...' if len(full) > 8 else ''}")
     if prereq:
@@ -334,6 +342,10 @@ def difficulty(case, c=None):
     rules = case["ground_truth"]["rules"]
     courses = case.get("candidate_courses", [])
     size = rules.get("count", {}).get("max", 1)
+    if size == 0:           # one right answer (nothing) among every section and the empty cart
+        total = sum(len(by_course().get(cid, [])) for cid in courses) + 1
+        return {"candidate_courses": len(courses), "candidate_answers": total, "correct_answers": 1,
+                "chance": round(1 / total, 4), "rules": len(rules), "prompt_words": len(case["input"]["prompt"].split())}
     if size == 2 and len(rules.get("must_include_courses", [])) == 2:
         a, b = rules["must_include_courses"]
         candidates = (by_course().get(a, []), by_course().get(b, []))
@@ -734,8 +746,10 @@ def f_days(key, prog, rng, sid):
     return _constraint_pair("days", key, prog, rng, sid, "mon_wed", "tue_thu", "days: Mon/Wed vs Tue/Thu")
 
 
-def _grade_pair(family, key, prog, rng, sid, grades, prompt_of, changed_of):
-    """The transcript holds <X> with grade grades[0] (a: retake X) or grades[1] (b: take Y)."""
+def _grade_pair(family, key, prog, rng, sid, grades, prompt_of, changed_of, toward=False):
+    """The transcript holds <X> with grade grades[0] (a: retake X) or grades[1] (b: take Y).
+    toward: the prompt names X's requirement and Y's instead (prompt_of is not used), and the
+    answer is any class toward the unfinished one."""
     choices = []
     for r in prog["program_requirements"]:
         if r["minimum_grade"] in BELOW and r["rule"] in ("all_of", "any_of") and r["guide_section"] in ("major", "non_program"):
@@ -749,19 +763,28 @@ def _grade_pair(family, key, prog, rng, sid, grades, prompt_of, changed_of):
         for ry, y in [o for o in others if o[1] != x][:3]:
             targets = sorted({r["req_id"], ry})
             seed = rng.randrange(10 ** 6)
+            req_y = next(q for q in prog["program_requirements"] if q["req_id"] == ry)
+            if toward and (ry == r["req_id"] or not (unique_label(prog, r) and unique_label(prog, req_y))):
+                continue
+            prompt = (f"If I haven't finished {phrase(label_of(r))}, register me for one class toward it. If I have, "
+                      f"register me for one class toward {phrase(label_of(req_y))}.") if toward else prompt_of(x, y)
             # b is a's transcript with only x's grade edited, so nothing else can differ
             fab = plan_transcript(prog, targets, [x, y], seed, rows=[{"term": THROUGH, "course_id": x, "grade": low}])
             twin = {**fab, "edits": [{"in": "completed_courses", "course_id": x, "set": {"grade": high}}]}
-            built = [build(key, prog, f, prompt_of(x, y), sid) for f in (fab, twin)]
+            built = [build(key, prog, f, prompt, sid) for f in (fab, twin)]
             if not all(built):
                 continue
             (case_a, ca), (case_b, cb) = built
             cands = [s for cid in (x, y) for s in by_course()[cid]]
+            rule_a = {"courses_count_toward": [r["req_id"]]} if toward else {"courses_in": [x]}
+            rule_b = {"courses_count_toward": [ry]} if toward else {"courses_in": [y]}
             got = pair(family, key,
-                       (case_a, ca, {**ONE, "courses_in": [x]}, cands, 1,
-                        f"{x} at {low} does not count toward {r['req_id']} (minimum {r['minimum_grade']}), so retake it."),
-                       (case_b, cb, {**ONE, "courses_in": [y]}, cands, 1,
-                        f"{x} at {high} counts toward {r['req_id']} (minimum {r['minimum_grade']}), so the answer is {y}."),
+                       (case_a, ca, {**ONE, **rule_a}, cands, 1,
+                        f"{x} at {low} does not count toward {r['req_id']} (minimum {r['minimum_grade']}), so "
+                        + (f"{r['req_id']} is unfinished." if toward else "retake it.")),
+                       (case_b, cb, {**ONE, **rule_b}, cands, 1,
+                        f"{x} at {high} counts toward {r['req_id']} (minimum {r['minimum_grade']}), so the answer is "
+                        + (f"a class toward {ry}." if toward else f"{y}.")),
                        changed_of(x, low, high), targets, [x, y], rng)
             if got:
                 return got
@@ -809,10 +832,11 @@ def hour_up(t):
     return -(-t // 60) * 60
 
 
-def _time_pair(family, key, prog, rng, sid, options, needs=one_time):
+def _course_pair(family, key, prog, rng, sid, options, needs=one_time, prefix=True):
     """One named course whose sections all pass `needs`, under two prompts. options(open sections)
     yields ((text, rules, why) for a, (text, rules, why) for b, changed); pair() keeps the first
-    whose answers really differ."""
+    whose answers really differ. prefix: each prompt starts 'Register me for <course>.' (else the
+    text is the whole prompt)."""
     pool = [(r, c) for r, c in major_pool(prog) if len(open_secs(c)) >= 2 and all(needs(s) for s in by_course()[c])]
     rng.shuffle(pool)
     for rx, x in pool[:6]:
@@ -824,8 +848,10 @@ def _time_pair(family, key, prog, rng, sid, options, needs=one_time):
             continue
         case, c = built
         for a, b, changed in tries:
-            got = pair(family, key, *[(reprompt(case, f"Register me for {named(x, prog)}. {text}"), c,
-                                       {**ONE, "must_include_courses": [x], **rules}, by_course()[x], 1, why)
+            nothing = lambda rules: rules.get("count", {}).get("max") == 0
+            got = pair(family, key, *[(reprompt(case, f"Register me for {named(x, prog)}. {text}" if prefix else text), c,
+                                       rules if nothing(rules) else {**ONE, "must_include_courses": [x], **rules},
+                                       by_course()[x], 0 if nothing(rules) else 1, why)
                                       for text, rules, why in (a, b)], changed, [rx], [x], rng)
             if got:
                 return got
@@ -846,7 +872,7 @@ def f_time_of_day(key, prog, rng, sid):
             yield (("I want a morning class.", {"starts_before": "12:00 PM"}, "A morning class starts before noon."),
                    ("I want an afternoon class.", {"starts_at_or_after": "12:00 PM", "starts_before": "5:00 PM"},
                     "An afternoon class starts between noon and 5 PM."), "time of day: morning vs afternoon")
-    return _time_pair("time_of_day", key, prog, rng, sid, options)
+    return _course_pair("time_of_day", key, prog, rng, sid, options)
 
 
 def f_relative_time(key, prog, rng, sid):
@@ -860,7 +886,7 @@ def f_relative_time(key, prog, rng, sid):
                    ("I want the section with an open seat that starts latest in the day.",
                     {"starts_at_or_after": clock(starts[-1])}, f"Open sections start at {listed}; the latest is {clock(starts[-1])}."),
                    "relative time: earliest vs latest")
-    return _time_pair("relative_time", key, prog, rng, sid, options)
+    return _course_pair("relative_time", key, prog, rng, sid, options)
 
 
 def f_time_cutoff(key, prog, rng, sid):
@@ -872,7 +898,7 @@ def f_time_cutoff(key, prog, rng, sid):
                 f"Only a section starting at {late} or later is allowed."),
                (f"Everything has to be over by {done}.", {"ends_by": done}, f"Only a section ending by {done} is allowed."),
                f"cutoff: no start before {late} vs over by {done}")
-    return _time_pair("time_cutoff", key, prog, rng, sid, options)
+    return _course_pair("time_cutoff", key, prog, rng, sid, options)
 
 
 def f_boundary_time(key, prog, rng, sid):
@@ -887,7 +913,7 @@ def f_boundary_time(key, prog, rng, sid):
                              f"boundary is inside the window.")
             yield (text(w1), rules(w1), why(w1)), (text(w2), rules(w2), why(w2)), \
                 f"free window: {clock(w1[0])}-{clock(w1[1])} vs {clock(w2[0])}-{clock(w2[1])}"
-    return _time_pair("boundary_time", key, prog, rng, sid, options)
+    return _course_pair("boundary_time", key, prog, rng, sid, options)
 
 
 def f_back_to_back(key, prog, rng, sid):
@@ -905,7 +931,7 @@ def f_back_to_back(key, prog, rng, sid):
                    (work_text(before), {"busy": [before]},
                     f"The commitment ends at {clock(t0)}, the minute section {t['crn']} starts: back to back, not a conflict."),
                    f"commitment: {clock(s1)}-{clock(t1)} vs {clock(s0)}-{clock(t0)}")
-    return _time_pair("back_to_back", key, prog, rng, sid, options)
+    return _course_pair("back_to_back", key, prog, rng, sid, options)
 
 
 def two_times(s):
@@ -923,7 +949,7 @@ def f_multi_meeting(key, prog, rng, sid):
                 yield ((work_text(bs), {"busy": [bs]}, f"The commitment overlaps only the last meeting of section {s['crn']}."),
                        (work_text(bt), {"busy": [bt]}, f"The commitment overlaps only the last meeting of section {t['crn']}."),
                        f"commitment over the second meeting of {s['crn']} vs {t['crn']}")
-    return _time_pair("multi_meeting", key, prog, rng, sid, options,
+    return _course_pair("multi_meeting", key, prog, rng, sid, options,
                       needs=lambda s: two_times(s) or one_time(s))
 
 
@@ -936,7 +962,7 @@ def f_noon(key, prog, rng, sid):
             yield (("I have to be done by noon.", {"ends_by": "12:00 PM"}, "Every meeting must end by 12:00 PM."),
                    ("I can't start until noon.", {"starts_at_or_after": "12:00 PM"}, "Every meeting must start at 12:00 PM or later."),
                    "noon: done by vs starting from")
-    return _time_pair("noon", key, prog, rng, sid, options)
+    return _course_pair("noon", key, prog, rng, sid, options)
 
 
 def f_chained_conflict(key, prog, rng, sid):
@@ -944,8 +970,8 @@ def f_chained_conflict(key, prog, rng, sid):
     that section's times rule out some sections of B, so the first choice forces the second."""
     pool = [(r, c) for r, c in major_pool(prog, most=12) if len(open_secs(c)) >= 2 and all(one_time(s) for s in by_course()[c])]
     rng.shuffle(pool)
-    # A has 2-3 open sections: a commitment over each but one leaves that one
-    for (ra, a), (rb, b) in [(p, q) for p in pool if len(open_secs(p[1])) <= 3 for q in pool if q[1] != p[1]][:30]:
+    # A has 2-4 open sections: a commitment over each but one leaves that one
+    for (ra, a), (rb, b) in [(p, q) for p in pool if len(open_secs(p[1])) <= 4 for q in pool if q[1] != p[1]][:60]:
         targets = sorted({ra, rb})
         built = build(key, prog, plan_transcript(prog, targets, [a, b], rng.randrange(10 ** 6)), "", sid)
         if not built or audit.missing_prerequisites(built[1].data, a) or audit.missing_prerequisites(built[1].data, b):
@@ -977,10 +1003,524 @@ def f_chained_conflict(key, prog, rng, sid):
     return None
 
 
+# ── the rest of the semantic checklist (D2-D3, C2-C4, I1-I5, K3-K8, R1-R12, O1-O3), rebuilt on the real tally ──
+
+def crns(secs):
+    """{"crns_in": [...]}: the sections a request singles out."""
+    return {"crns_in": sorted(s["crn"] for s in secs)}
+
+
+def slot(s):
+    """'Tuesdays and Thursdays at 9:30 AM' (a section with one set time)."""
+    return f"{plural_days(days_of(s))} at {clock(one_time(s)[0])}"
+
+
+def same_slot(s):
+    """Every section of s's course that meets on s's days at s's start time."""
+    return [x for x in by_course()[s["course_id"]] if one_time(x) and days_of(x) == days_of(s)
+            and one_time(x)[0] == one_time(s)[0]]
+
+
+def free(s):
+    return s["seats_total"] - s["seats_taken"]
+
+
+def f_shared_day_pattern(key, prog, rng, sid):
+    """D2 'I can only come <Mon/Wed>.' vs 'I want the section that meets <Mon/Wed/Fri>.': the two
+    patterns share days, so sharing a day does not make them the same."""
+    def options(secs):
+        for s, t in combinations(secs, 2):
+            for few, many in ((s, t), (t, s)):
+                df, dm = days_of(few), days_of(many)
+                if df and set(df) < set(dm):
+                    exact = [x for x in by_course()[s["course_id"]] if days_of(x) == dm]
+                    yield ((f"I can only come to campus on {plural_days(df)}.", {"no_days": [d for d in DAYS if d not in df]},
+                            f"Only a section meeting on {plural_days(df)} alone fits; one on {plural_days(dm)} shares those "
+                            f"days but also meets on {plural_days([d for d in dm if d not in df])}."),
+                           (f"I want the section that meets on {plural_days(dm)}.", crns(exact),
+                            f"Only a section meeting on exactly {plural_days(dm)} fits; {plural_days(df)} alone is a "
+                            f"different pattern."),
+                           f"days: only {plural_days(df)} vs exactly {plural_days(dm)}")
+    return _course_pair("shared_day_pattern", key, prog, rng, sid, options, needs=lambda s: bool(days_of(s)))
+
+
+def f_day_exclusion(key, prog, rng, sid):
+    """D3 'No <day> classes.' vs 'I can only come on <day>s.'"""
+    def options(secs):
+        for d in DAYS[:5]:
+            if 0 < len([s for s in secs if d in days_of(s)]) < len(secs):
+                yield ((f"No {d} classes.", {"no_days": [d]}, f"A section meeting on {d} is ruled out."),
+                       (f"I can only come to campus on {d}s.", {"no_days": [x for x in DAYS if x != d]},
+                        f"Only a section meeting on {d} alone fits."), f"days: no {d} vs only {d}")
+    return _course_pair("day_exclusion", key, prog, rng, sid, options, needs=lambda s: bool(days_of(s)))
+
+
+def f_last_seat(key, prog, rng, sid):
+    """C2 'I want the section that meets <slot>.', where that section has exactly one seat left
+    (29/30 is still open), vs another section's slot."""
+    def options(secs):
+        for s in [x for x in secs if free(x) == 1 and one_time(x)]:
+            for t in [x for x in secs if one_time(x) and x is not s and slot(x) != slot(s)][:3]:
+                yield ((f"I want the section that meets {slot(s)}.", crns(same_slot(s)),
+                        f"Section {s['crn']} has {s['seats_taken']} of {s['seats_total']} seats taken: one seat is left, so it is open."),
+                       (f"I want the section that meets {slot(t)}.", crns(same_slot(t)), f"Section {t['crn']} meets {slot(t)}."),
+                       f"slot: {slot(s)} (one seat left) vs {slot(t)}")
+    return _course_pair("last_seat", key, prog, rng, sid, options, needs=lambda s: True)
+
+
+def f_open_seats(key, prog, rng, sid):
+    """C3 'the section with the most open seats' vs 'the biggest section that still has a seat':
+    open seats are seats_total - seats_taken, not the class size."""
+    def options(secs):
+        most, big = max(map(free, secs)), max(s["seats_total"] for s in secs)
+        a, b = [s for s in secs if free(s) == most], [s for s in secs if s["seats_total"] == big]
+        if not {s["crn"] for s in a} & {s["crn"] for s in b}:
+            yield (("I want the section with the most open seats.", crns(a),
+                    f"Open seats are seats_total - seats_taken; the most is {most}."),
+                   ("I want the biggest section that still has a seat (the most seats in total).", crns(b),
+                    f"The biggest section with a seat has {big} seats in all."), "most open seats vs most seats in total")
+    return _course_pair("open_seats", key, prog, rng, sid, options, needs=lambda s: True)
+
+
+def f_section_number(key, prog, rng, sid):
+    """I2 'I want section <n>.' (the section number, not a CRN or the course number) vs another number."""
+    def options(secs):
+        for s, t in combinations(secs, 2):
+            if s["section"] != t["section"]:
+                pick = lambda x: [y for y in by_course()[x["course_id"]] if y["section"] == x["section"]]
+                yield ((f"I want section {s['section']}.", crns(pick(s)), f"Section {s['section']} is CRN {s['crn']}."),
+                       (f"I want section {t['section']}.", crns(pick(t)), f"Section {t['section']} is CRN {t['crn']}."),
+                       f"section number: {s['section']} vs {t['section']}")
+    return _course_pair("section_number", key, prog, rng, sid, options, needs=lambda s: True)
+
+
+def f_negation(key, prog, rng, sid):
+    """I5 '..., but not the section with CRN <a>.' vs '... <b>.'"""
+    def options(secs):
+        if len(secs) >= 3:
+            for s, t in combinations(secs, 2):
+                yield ((f"But not the section with CRN {s['crn']}.", crns([x for x in secs if x is not s]),
+                        f"Any open section except {s['crn']}."),
+                       (f"But not the section with CRN {t['crn']}.", crns([x for x in secs if x is not t]),
+                        f"Any open section except {t['crn']}."), f"excluded crn: {s['crn']} vs {t['crn']}")
+    return _course_pair("negation", key, prog, rng, sid, options, needs=lambda s: True)
+
+
+ONLINE_CAMPUSES = ("Online", "Remote", "Off-campus")
+
+
+def f_campus_residence(key, prog, rng, sid):
+    """K3 'I live in <campus town>.' vs another: the campus is implied, never asked for."""
+    def options(secs):
+        on = {}
+        for s in secs:
+            if s["modality"] != "online" and s["campus"] not in ONLINE_CAMPUSES:
+                on.setdefault(s["campus"], []).append(s)
+        for p, q in combinations(sorted(on), 2):
+            live = lambda c: f"I live in {c}." if c in ("Glassboro", "Camden") else f"I live right by {c}."
+            yield ((live(p), crns(on[p]), f"The student lives at the {p} campus, so its section is the answer."),
+                   (live(q), crns(on[q]), f"The student lives at the {q} campus, so its section is the answer."),
+                   f"home: {p} vs {q}")
+    return _course_pair("campus_residence", key, prog, rng, sid, options, needs=lambda s: True)
+
+
+def f_several_constraints(key, prog, rng, sid):
+    """K4 three constraints at once: days, modality and time, vs three others."""
+    def options(secs):
+        yield (("I can only come Mondays and Wednesdays, I want it in person, and I have to be done by 5 PM.",
+                {"no_days": [d for d in DAYS if d not in ("Monday", "Wednesday")], "modality_in": ["in-person"],
+                 "ends_by": "5:00 PM"}, "All three must hold: Mon/Wed only, in person, ending by 5 PM."),
+               ("I can only come Tuesdays and Thursdays, I want it in person, and not before noon.",
+                {"no_days": [d for d in DAYS if d not in ("Tuesday", "Thursday")], "modality_in": ["in-person"],
+                 "starts_at_or_after": "12:00 PM"}, "All three must hold: Tue/Thu only, in person, starting at noon or later."),
+               "constraints: Mon/Wed, in person, by 5 PM vs Tue/Thu, in person, from noon")
+    return _course_pair("several_constraints", key, prog, rng, sid, options, needs=lambda s: True)
+
+
+TRAITS = [  # (kind, words, test): what a request can require or prefer of a section
+    ("modality", "in person", lambda s: s["modality"] == "in-person"),
+    ("modality", "online", lambda s: s["modality"] == "online"),
+    ("time", "in the morning", lambda s: bool(one_time(s)) and one_time(s)[0] < NOON),
+    ("time", "in the afternoon", lambda s: bool(one_time(s)) and one_time(s)[0] >= NOON),
+    ("days", "on Mondays and Wednesdays", lambda s: days_of(s) == ["Monday", "Wednesday"]),
+    ("days", "on Tuesdays and Thursdays", lambda s: days_of(s) == ["Tuesday", "Thursday"]),
+]
+
+
+def f_hard_soft(key, prog, rng, sid):
+    """K5 'It must be <p>; <q> would be nice.' vs 'It must be <q>; <p> would be nice.', on a course
+    where no section is both, so only the must decides."""
+    def options(secs):
+        for (k1, p, has_p), (k2, q, has_q) in combinations(TRAITS, 2):
+            a, b = [s for s in secs if has_p(s)], [s for s in secs if has_q(s)]
+            if k1 != k2 and a and b and not {s["crn"] for s in a} & {s["crn"] for s in b}:
+                yield ((f"It must be {p}; {q} would be nice if there is one.", crns(a),
+                        f"'{p}' is required; no section is also {q}, so any section {p}."),
+                       (f"It must be {q}; {p} would be nice if there is one.", crns(b),
+                        f"'{q}' is required; no section is also {p}, so any section {q}."),
+                       f"must: {p} (prefer {q}) vs must: {q} (prefer {p})")
+    return _course_pair("hard_soft", key, prog, rng, sid, options, needs=lambda s: True)
+
+
+def f_ambiguous(key, prog, rng, sid):
+    """K8 'on <days>' where two or more sections qualify (either is right) vs other days."""
+    def options(secs):
+        pats = {}
+        for s in secs:
+            if days_of(s):
+                pats.setdefault(tuple(days_of(s)), []).append(s)
+        for p, q in combinations([p for p in pats if len(pats[p]) >= 2], 2):
+            rules = lambda p: {"no_days": [d for d in DAYS if d not in p]}
+            yield ((f"I want it on {plural_days(p)}.", rules(p), f"{len(pats[p])} sections meet on {plural_days(p)}: any is right."),
+                   (f"I want it on {plural_days(q)}.", rules(q), f"{len(pats[q])} sections meet on {plural_days(q)}: any is right."),
+                   f"days: {plural_days(p)} vs {plural_days(q)} (several sections each)")
+    return _course_pair("ambiguous", key, prog, rng, sid, options, needs=lambda s: bool(days_of(s)))
+
+
+def f_any_correct(key, prog, rng, sid):
+    """O3 'Any section that starts before noon is fine.' vs '... at noon or later': several right answers each."""
+    def options(secs):
+        am = [s for s in secs if one_time(s)[0] < NOON]
+        if len(am) >= 2 and len(secs) - len(am) >= 2:
+            yield (("Any section that starts before noon is fine.", {"starts_before": "12:00 PM"},
+                    f"{len(am)} open sections start before noon; each is right."),
+                   ("Any section that starts at noon or later is fine.", {"starts_at_or_after": "12:00 PM"},
+                    f"{len(secs) - len(am)} open sections start at noon or later; each is right."), "any morning vs any afternoon")
+    return _course_pair("any_correct", key, prog, rng, sid, options)
+
+
+def _two_course_pair(family, key, prog, rng, sid, couples, variants):
+    """Two courses. couples(pool) lists ((req, x), (req or None, y)); variants(x, y) yields
+    ((prompt, rules, candidates, size, why) for a, (...) for b, changed)."""
+    pool = [(r, c) for r, c in major_pool(prog) if open_secs(c)]
+    rng.shuffle(pool)
+    for (rx, x), (ry, y) in couples(pool)[:8]:
+        targets = sorted({r for r in (rx, ry) if r})
+        built = build(key, prog, plan_transcript(prog, targets, [x, y], rng.randrange(10 ** 6)), "", sid)
+        if not built or any(audit.missing_prerequisites(built[1].data, z) for z in (x, y)):
+            continue
+        case, c = built
+        for a, b, changed in list(variants(x, y))[:4]:
+            got = pair(family, key, *[(reprompt(case, text), c, rules, cands, size, why)
+                                      for text, rules, cands, size, why in (a, b)], changed, targets, [x, y], rng)
+            if got:
+                return got
+    return None
+
+
+def _both(x, y):
+    return by_course()[x] + by_course()[y]
+
+
+def f_lookalike_id(key, prog, rng, sid):
+    """I1 'Register me for <X>.' vs '... <Y>.', two course ids that differ only in the last digit."""
+    def couples(pool):
+        return [((r, x), (None, y)) for r, x in pool for y in sorted(by_course())
+                if y != x and y[:-1] == x[:-1] and open_secs(y)]
+    def variants(x, y):
+        yield ((f"Register me for {x}.", {**ONE, "must_include_courses": [x]}, _both(x, y), 1, f"{x}, not the look-alike {y}."),
+               (f"Register me for {y}.", {**ONE, "must_include_courses": [y]}, _both(x, y), 1, f"{y}, not the look-alike {x}."),
+               f"course id: {x} vs {y}")
+    return _two_course_pair("lookalike_id", key, prog, rng, sid, couples, variants)
+
+
+@lru_cache(maxsize=None)
+def by_title():
+    """Section title -> the course ids that use it (two or more)."""
+    out = {}
+    for cid, secs in by_course().items():
+        for s in secs:
+            out.setdefault((s.get("title") or "").strip().upper(), set()).add(cid)
+    return {t: sorted(c) for t, c in out.items() if t and len(c) >= 2}
+
+
+def f_same_title(key, prog, rng, sid):
+    """I3 '<Title> (<X>)' vs '<Title> (<Y>)': two courses with the same title, told apart by id."""
+    def couples(pool):
+        mine = {c for _, c in pool}
+        return [((pool[0][0], x), (None, y)) for ids in by_title().values() for x in ids for y in ids
+                if x != y and open_secs(x) and open_secs(y) and (x in mine or y in mine)]
+    def variants(x, y):
+        title = title_of(x, prog)
+        yield ((f"Register me for {title} ({x}).", {**ONE, "must_include_courses": [x]}, _both(x, y), 1,
+                f"{y} has the same title; the id decides."),
+               (f"Register me for {title} ({y}).", {**ONE, "must_include_courses": [y]}, _both(x, y), 1,
+                f"{x} has the same title; the id decides."), f"course id with title {title}: {x} vs {y}")
+    return _two_course_pair("same_title", key, prog, rng, sid, couples, variants)
+
+
+def _program_couples(pool):
+    return [(p, q) for p, q in combinations(pool, 2) if p[1] != q[1]]
+
+
+def f_course_a_not_b(key, prog, rng, sid):
+    """I4 'Register me for <A>, not <B>.' vs the reverse."""
+    def variants(x, y):
+        yield ((f"Register me for {named(x, prog)}, not {named(y, prog)}.", {**ONE, "must_include_courses": [x], "courses_in": [x]},
+                _both(x, y), 1, f"{x} is asked for and {y} is ruled out."),
+               (f"Register me for {named(y, prog)}, not {named(x, prog)}.", {**ONE, "must_include_courses": [y], "courses_in": [y]},
+                _both(x, y), 1, f"{y} is asked for and {x} is ruled out."), f"course: {x} not {y} vs {y} not {x}")
+    return _two_course_pair("course_a_not_b", key, prog, rng, sid, _program_couples, variants)
+
+
+def f_quantity(key, prog, rng, sid):
+    """K6 'one class: <A> or <B>' vs 'both <A> and <B>'."""
+    def variants(x, y):
+        yield ((f"Register me for one class: {named(x, prog)} or {named(y, prog)}, either is fine.",
+                {**ONE, "courses_in": [x, y]}, _both(x, y), 1, "One class, either course."),
+               (f"Register me for both {named(x, prog)} and {named(y, prog)}.",
+                {"count": {"min": 2, "max": 2}, "must_include_courses": [x, y]}, (by_course()[x], by_course()[y]), 2,
+                "Two classes: one section of each, not overlapping."), "quantity: one of the two vs both")
+    return _two_course_pair("quantity", key, prog, rng, sid, _program_couples, variants)
+
+
+def f_complete_cart(key, prog, rng, sid):
+    """O1/O2 'Register me for <A> and <B>.' (both, nothing else) vs 'Register me for <A> only.'"""
+    def variants(x, y):
+        yield ((f"Register me for {named(x, prog)} and {named(y, prog)}.",
+                {"count": {"min": 2, "max": 2}, "must_include_courses": [x, y]}, (by_course()[x], by_course()[y]), 2,
+                "Both courses, one section each, and nothing else."),
+               (f"Register me for {named(x, prog)} only.", {**ONE, "must_include_courses": [x], "courses_in": [x]},
+                by_course()[x], 1, f"Only {x}; adding anything else is wrong."), "courses asked for: both vs the first only")
+    return _two_course_pair("complete_cart", key, prog, rng, sid, _program_couples, variants)
+
+
+def f_not_first_listed(key, prog, rng, sid):
+    """C4 'Register me for <X>.' where X's first listed section is full (a later one is right) vs
+    <Y>, whose first listed section is open."""
+    def couples(pool):
+        first_full = [p for p in pool if not is_open(by_course()[p[1]][0])]
+        first_open = [p for p in pool if is_open(by_course()[p[1]][0])]
+        return [(p, q) for p in first_full for q in first_open]
+    def variants(x, y):
+        yield ((f"Register me for {named(x, prog)}.", {**ONE, "must_include_courses": [x]}, _both(x, y), 1,
+                f"{x}'s first listed section ({by_course()[x][0]['crn']}) is full; a later one is right."),
+               (f"Register me for {named(y, prog)}.", {**ONE, "must_include_courses": [y]}, _both(x, y), 1,
+                f"{y}'s first listed section is open."), f"course: {x} (first listed full) vs {y}")
+    return _two_course_pair("not_first_listed", key, prog, rng, sid, couples, variants)
+
+
+def f_passed_retake(key, prog, rng, sid):
+    """R1 'Register me for <X> unless I've already passed it; if I have, <Y>.' F vs a passing grade."""
+    return _grade_pair("passed_retake", key, prog, rng, sid, lambda m: ("F", "B" if audit.meets_minimum("B", m) else "A"),
+                       lambda x, y: (f"Register me for {named(x, prog)} unless I've already passed it. If I have, "
+                                     f"register me for {named(y, prog)} instead."),
+                       lambda x, lo, hi: f"grade in {x}: {lo} vs {hi}")
+
+
+def f_requirement_satisfied(key, prog, rng, sid):
+    """R11 'If I haven't finished <requirement A>, one class toward it; if I have, one toward <B>.'
+    The transcript's grade in X, A's course, leaves A unfinished (W) or finished (B)."""
+    return _grade_pair("requirement_satisfied", key, prog, rng, sid, lambda m: ("W", "B" if audit.meets_minimum("B", m) else "A"),
+                       None, lambda x, lo, hi: f"grade in {x}: {lo} (requirement unfinished) vs {hi} (finished)",
+                       toward=True)
+
+
+def f_repeatable(key, prog, rng, sid):
+    """R3 'Register me for <R> again if it would count toward my degree again; otherwise <Z>.' R is
+    repeatable (it counts again) vs <N>, already passed and not repeatable."""
+    reqs = [r for r in prog["program_requirements"] if r.get("repeatable")]
+    pool = [(r, c) for r, c in major_pool(prog) if open_secs(c)]
+    rng.shuffle(pool)
+    for r in reqs:
+        for rep in [c for c in r["repeatable"] if open_secs(c)]:
+            for (rn, n), (rz, z) in [(p, q) for p, q in combinations(pool, 2) if rep not in (p[1], q[1])][:6]:
+                rows = [{"term": THROUGH, "course_id": rep, "grade": "B"}, {"term": THROUGH, "course_id": n, "grade": "B"}]
+                built = build(key, prog, plan_transcript(prog, sorted({r["req_id"], rz}), [rep, n, z], rng.randrange(10 ** 6),
+                                                         rows=rows, skip=[rn]), "", sid)
+                if not built:
+                    continue
+                case, c = built
+                if r["req_id"] not in c.counts_toward(rep) or c.counts_toward(n) or not c.counts_toward(z) \
+                        or any(audit.missing_prerequisites(c.data, k) for k in (rep, n, z)):
+                    continue
+                text = lambda k: (f"Register me for {named(k, prog)} again if taking it again would count toward my "
+                                  f"degree. Otherwise, register me for {named(z, prog)}.")
+                cands = _both(rep, z) + by_course()[n]
+                got = pair("repeatable", key,
+                           (reprompt(case, text(rep)), c, {**ONE, "courses_in": [rep]}, cands, 1,
+                            f"{rep} is repeatable for {r['req_id']}, so taking it again counts."),
+                           (reprompt(case, text(n)), c, {**ONE, "courses_in": [z]}, cands, 1,
+                            f"{n} is passed and not repeatable, so it would not count again: {z} instead."),
+                           f"course asked about: {rep} (repeatable) vs {n} (not repeatable)", sorted({r["req_id"], rz}),
+                           [rep, n, z], rng)
+                if got:
+                    return got
+    return None
+
+
+def _prereq_pair(family, key, prog, rng, sid, setup, changed_of):
+    """'Register me for <Y> if I meet its prerequisites; otherwise <Z>.' The transcript row that
+    meets Y's one prerequisite X (a) is changed so it doesn't (b). setup(x, grade, other) gives
+    (spec additions, the twin's edit), or None when this prerequisite cannot be used."""
+    pool = [(r, c) for r, c in major_pool(prog) if open_secs(c)]
+    gated = {p["course_id"] for p in prog.get("prerequisites", [])}
+    prereqs = [p for p in prog.get("prerequisites", []) if len(p["requires"]) == 1 and open_secs(p["course_id"])]
+    rng.shuffle(prereqs)
+    for p in prereqs[:8]:
+        y, x = p["course_id"], p["requires"][0]
+        ry = next((r for r, c in pool if c == y), None)
+        others = [(r, c) for r, c in pool if c not in (x, y) and c not in gated]
+        if not ry or len(others) < 2:
+            continue
+        (rz, z), (_, w) = others[0], others[1]
+        got = setup(x, p["minimum_grade"], w)
+        if got is None:
+            continue
+        extra, edit = got
+        fab = {**plan_transcript(prog, sorted({ry, rz}), [x, y, z, w], rng.randrange(10 ** 6)), **extra}
+        prompt = (f"Register me for {named(y, prog)} if I meet its prerequisites. If I don't, register me for "
+                  f"{named(z, prog)} instead.")
+        built = [build(key, prog, f, prompt, sid) for f in (fab, {**fab, "edits": [edit]})]
+        if not all(built):
+            continue
+        (case_a, ca), (case_b, cb) = built
+        if audit.missing_prerequisites(ca.data, y) or not audit.missing_prerequisites(cb.data, y) \
+                or audit.missing_prerequisites(ca.data, z):
+            continue
+        cands = _both(y, z)
+        got = pair(family, key,
+                   (case_a, ca, {**ONE, "courses_in": [y]}, cands, 1, f"{x} meets {y}'s prerequisite, so {y}."),
+                   (case_b, cb, {**ONE, "courses_in": [z]}, cands, 1, f"{y}'s prerequisite {x} is not met, so {z}."),
+                   changed_of(x, w), sorted({ry, rz}), [y, z], rng)
+        if got:
+            return got
+    return None
+
+
+def f_prereq_completed(key, prog, rng, sid):
+    """R4 the prerequisite is a completed course (a) vs another course in that row (b)."""
+    return _prereq_pair("prereq_completed", key, prog, rng, sid,
+                        lambda x, m, w: ({"rows": [{"term": THROUGH, "course_id": x, "grade": "A"}]},
+                                         {"in": "completed_courses", "course_id": x, "set": {"course_id": w}}),
+                        lambda x, w: f"completed: {x} vs {w}")
+
+
+def f_prereq_in_progress(key, prog, rng, sid):
+    """R5 the prerequisite completed (a) vs still in progress (b): an in-progress course has no grade yet."""
+    return _prereq_pair("prereq_in_progress", key, prog, rng, sid,
+                        lambda x, m, w: ({"rows": [{"term": THROUGH, "course_id": x, "grade": "A"}]},
+                                         {"in": "completed_courses", "course_id": x, "move_to": "courses_in_progress",
+                                          "set": {"term": THROUGH}}),
+                        lambda x, w: f"{x}: completed vs in progress")
+
+
+def f_prereq_transfer(key, prog, rng, sid):
+    """R6 the prerequisite came in as transfer credit (a) vs another transfer course (b)."""
+    return _prereq_pair("prereq_transfer", key, prog, rng, sid,
+                        lambda x, m, w: ({"transfer_rows": [{"institution": TRANSFER_SCHOOL, "course_id": x, "grade": "TA"}]},
+                                         {"in": "transfer_courses", "course_id": x, "set": {"course_id": w}}),
+                        lambda x, w: f"transfer: {x} vs {w}")
+
+
+def f_prereq_min_grade(key, prog, rng, sid):
+    """R7 the prerequisite passed at its minimum grade (a) vs one step below it (b)."""
+    return _prereq_pair("prereq_min_grade", key, prog, rng, sid,
+                        lambda x, m, w: None if m not in BELOW else
+                        ({"rows": [{"term": THROUGH, "course_id": x, "grade": m}]},
+                         {"in": "completed_courses", "course_id": x, "set": {"grade": BELOW[m]}}),
+                        lambda x, w: f"grade in {x}: at the prerequisite minimum vs one step below")
+
+
+def f_requirement_options(key, prog, rng, sid):
+    """R8 'one class that counts toward <requirement A>' vs '<requirement B>': the course must be
+    one of that requirement's options."""
+    reqs = [r for r in prog["program_requirements"] if r["guide_section"] in ("major", "non_program")
+            and r["rule"] in ("all_of", "any_of", "credits_from") and unique_label(prog, r)]
+    rng.shuffle(reqs)
+    for ra, rb in list(combinations(reqs, 2))[:6]:
+        built = build(key, prog, plan_transcript(prog, sorted({ra["req_id"], rb["req_id"]}), [], rng.randrange(10 ** 6)), "", sid)
+        if not built:
+            continue
+        case, c = built
+        courses = {r["req_id"]: candidate_courses(c, r["req_id"])[:6] for r in (ra, rb)}
+        if not all(courses.values()):
+            continue
+        cands = [s for cid in sorted(set(courses[ra["req_id"]] + courses[rb["req_id"]])) for s in by_course()[cid]]
+        text = lambda r: f"Register me for one class that counts toward {phrase(label_of(r))}."
+        got = pair("requirement_options", key,
+                   (reprompt(case, text(ra)), c, {**ONE, "courses_count_toward": [ra["req_id"]]}, cands, 1,
+                    f"Only a course among {ra['req_id']}'s options counts."),
+                   (reprompt(case, text(rb)), c, {**ONE, "courses_count_toward": [rb["req_id"]]}, cands, 1,
+                    f"Only a course among {rb['req_id']}'s options counts."),
+                   f"requirement: {label_of(ra)} vs {label_of(rb)}", sorted({ra["req_id"], rb["req_id"]}),
+                   sorted(set(courses[ra["req_id"]] + courses[rb["req_id"]])), rng)
+        if got:
+            return got
+    return None
+
+
+def f_department(key, prog, rng, sid):
+    """R12 'one <SUBJ> class that counts toward my degree' vs another subject."""
+    pool = [(r, c) for r, c in major_pool(prog) if open_secs(c)]
+    subjects = sorted({re.match(r"[A-Z]+", c).group() for _, c in pool})
+    rng.shuffle(subjects)
+    for s1, s2 in list(combinations(subjects, 2))[:4]:
+        targets = sorted({r for r, c in pool if re.match(r"[A-Z]+", c).group() in (s1, s2)})
+        built = build(key, prog, plan_transcript(prog, targets, [], rng.randrange(10 ** 6)), "", sid)
+        if not built:
+            continue
+        case, c = built
+        counting = {s: [cid for _, cid in pool if cid.startswith(s) and re.match(r"[A-Z]+", cid).group() == s
+                        and c.counts_toward(cid) and not audit.missing_prerequisites(c.data, cid)][:6] for s in (s1, s2)}
+        if not all(counting.values()):
+            continue
+        cands = [x for cid in counting[s1] + counting[s2] for x in by_course()[cid]]
+        text = lambda s: f"Register me for one {s} class that counts toward my degree."
+        got = pair("department", key,
+                   (reprompt(case, text(s1)), c, {**ONE, "courses_in": counting[s1]}, cands, 1, f"A {s1} course that counts."),
+                   (reprompt(case, text(s2)), c, {**ONE, "courses_in": counting[s2]}, cands, 1, f"A {s2} course that counts."),
+                   f"subject: {s1} vs {s2}", targets, counting[s1] + counting[s2], rng)
+        if got:
+            return got
+    return None
+
+
+NOTHING = {"count": {"min": 0, "max": 0}}
+
+
+def f_impossible_days(key, prog, rng, sid):
+    """K7 'I can only take classes on <days a section meets>.' vs '<a day no section meets>.': the
+    second has no right section, so the right answer registers nothing (an empty cart)."""
+    def options(secs):
+        met = {d for s in by_course()[secs[0]["course_id"]] for d in days_of(s)}
+        for p in sorted({tuple(days_of(s)) for s in secs})[:2]:
+            for d in [d for d in DAYS[:6] if d not in met][:2]:
+                yield ((f"I can only take classes on {plural_days(p)}.", {"no_days": [x for x in DAYS if x not in p]},
+                        f"A section meeting on {plural_days(p)} alone fits."),
+                       (f"I can only take classes on {d}s.", NOTHING,
+                        f"No section of the course meets on {d}, so nothing satisfies the request: register nothing."),
+                       f"days: {plural_days(p)} vs {d} (no section meets then)")
+    return _course_pair("impossible_days", key, prog, rng, sid, options, needs=lambda s: bool(days_of(s)))
+
+
+def f_impossible_full(key, prog, rng, sid):
+    """K7 'Register me for <X>. Don't put me on a waitlist.' where X has a seat vs <Y>, where every
+    section is full: nothing satisfies the request, so the right answer registers nothing."""
+    def couples(pool):
+        full = [(r, c) for r, c in major_pool(prog) if not open_secs(c)]
+        return [(p, q) for p in pool for q in full]
+    def variants(x, y):
+        text = lambda k: f"Register me for {named(k, prog)}. Don't put me on a waitlist."
+        yield ((text(x), {**ONE, "must_include_courses": [x]}, _both(x, y), 1, f"{x} has an open section."),
+               (text(y), NOTHING, by_course()[y], 0,
+                f"Every section of {y} is full and the student refuses a waitlist: register nothing."),
+               f"course: {x} (open seats) vs {y} (every section full)")
+    return _two_course_pair("impossible_full", key, prog, rng, sid, couples, variants)
+
+
 FAMILIES = {f.__name__[2:]: f for f in (f_full_fallback, f_in_progress, f_transfer, f_busy_block, f_nested_groups,
                                          f_credit_limit, f_modality, f_days, f_grade_threshold, f_withdrawal,
                                          f_time_of_day, f_relative_time, f_time_cutoff, f_chained_conflict,
-                                         f_boundary_time, f_back_to_back, f_multi_meeting, f_noon)}
+                                         f_boundary_time, f_back_to_back, f_multi_meeting, f_noon,
+                                         f_shared_day_pattern, f_day_exclusion, f_last_seat, f_open_seats,
+                                         f_not_first_listed, f_lookalike_id, f_section_number, f_same_title,
+                                         f_course_a_not_b, f_negation, f_campus_residence, f_several_constraints,
+                                         f_hard_soft, f_quantity, f_ambiguous, f_passed_retake, f_repeatable,
+                                         f_prereq_completed, f_prereq_in_progress, f_prereq_transfer,
+                                         f_prereq_min_grade, f_requirement_options, f_requirement_satisfied,
+                                         f_department, f_complete_cart, f_any_correct, f_impossible_days,
+                                         f_impossible_full)}
 
 
 # ── ground_truth.pair.difference: what differs between a pair's two cases, in words ──
@@ -1018,6 +1558,8 @@ def _transcript_part(here, twin):
 def answer_text(rules, prog):
     """A correct cart under these rules, in words."""
     names = lambda courses: [named(c, prog) for c in courses]
+    if rules.get("count", {}).get("max") == 0:
+        return "nothing: no offered section satisfies the request"
     if "must_include_courses" in rules:
         text = "one section each of " + " and ".join(names(rules["must_include_courses"])) \
             if len(rules["must_include_courses"]) > 1 else "a section of " + names(rules["must_include_courses"])[0]
@@ -1032,6 +1574,8 @@ def answer_text(rules, prog):
     if "no_days" in rules:
         allowed = [d for d in DAYS if d not in rules["no_days"]]
         text += f", meeting only on {plural_days(allowed)}" if len(allowed) <= 3 else f", with nothing on {plural_days(rules['no_days'])}"
+    if "crns_in" in rules:
+        text += f", section{'s' if len(rules['crns_in']) > 1 else ''} {' or '.join(rules['crns_in'])}"
     if "starts_at_or_after" in rules:
         text += f", starting at {rules['starts_at_or_after']} or later"
     if "starts_before" in rules:

@@ -10,10 +10,8 @@ getting one right by luck (or by ignoring the detail) does not count.
     pair_stats()     paired accuracy for a session summary (with 95% intervals)
     relate_pairs()   each result row's pair_result: how it relates to its twin's in the same run
 """
-import json
-from pathlib import Path
 
-from .cases import PAIR_VARIANTS, expected_message
+from .cases import PAIR_VARIANTS, expected_message, read_cases
 from .checker import seed_db
 from .scoring import evaluate_case
 from .stats import rate, wilson
@@ -162,7 +160,7 @@ def _relation(here: dict, twin: dict | None, pair: dict, twin_id: str) -> dict:
 def relate_pairs(case_file: str, results: list) -> int:
     """Sets pair_result on every row of a pair case (in place): related to its twin's row in the
     same session and run. Returns how many rows it set."""
-    meta = {c["case_id"]: c["ground_truth"]["pair"] for c in json.loads(Path(case_file).read_text(encoding="utf-8"))
+    meta = {c["case_id"]: c["ground_truth"]["pair"] for c in read_cases(case_file)
             if c.get("ground_truth", {}).get("pair")}
     members = {}
     for cid, p in meta.items():

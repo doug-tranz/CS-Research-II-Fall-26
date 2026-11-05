@@ -386,6 +386,11 @@ def _edit(transcript: dict, edits: list, prog: dict) -> dict:
         rows = [r for r in transcript[e["in"]] if r["course_id"] == e["course_id"]]
         if len(rows) != 1:
             raise ValueError(f"fabricate: edit needs one {e['course_id']} row in {e['in']}, found {len(rows)}")
+        if "move_to" in e:      # the same course in another list, e.g. completed -> in progress (no grade)
+            transcript[e["in"]].remove(rows[0])
+            moved = {k: v for k, v in rows[0].items() if k in ("term", "course_id", "title", "credit_hours")}
+            transcript[e["move_to"]].append({**moved, **e.get("set", {})})
+            continue
         rows[0].update(e["set"])
         if "course_id" in e["set"]:
             rows[0].pop("title", None)

@@ -22,7 +22,7 @@ Contents: [What's here](#whats-here) · [Setup](#setup) · [Run](#run) · [Local
 run_semantic_eval.py     the evaluation (python run_semantic_eval.py --help)
 generate_pairs.py        writes the test cases (python generate_pairs.py --help)
 pipeline/                all the code, one job per file (below)
-data/                    paired_cases.json, degree_requirements.json, section_tally_fall2026.csv
+data/                    FINALIZED_TEST_CASES.json, paired_cases.json, degree_requirements.json, section_tally_fall2026.csv
 schemas/                 registration_input.schema.json, registration_message.schema.json
 results/                 new runs (results/semantic_eval_results.json by default)
 results/past_runs/       earlier results: Claude Sonnet 5.5 on 3 pairs, one file per tally version
@@ -71,7 +71,8 @@ tests/                   python -m unittest discover tests (no model, no network
 
 | File | Role |
 |---|---|
-| `data/paired_cases.json` (400) | The test cases (the default `--test-file`): each names its program, fabricates its transcript, and carries an answer key and its pair. Its sections are the whole Section Tally, sent once per session in the cached opening. |
+| `data/FINALIZED_TEST_CASES.json` | The test cases every run uses (the default `--test-file`): every team case in the `paired_cases.json` format, named by checklist code, crediting its owner. See [The finalized case file](#the-finalized-case-file-finalized_test_casesjson). Built by `finalize_cases.py`. |
+| `data/paired_cases.json` | The generated counterfactual pairs (`generate_pairs.py`): each names its program, fabricates its transcript, and carries an answer key and its pair. Its sections are the whole Section Tally, sent once per session in the cached opening. |
 | `data/degree_requirements.json` (50) | Degree requirements for 50 Rowan programs, parsed from their Academic Program Guides: requirements, program guide, course attributes, graduation rules, and guide-stated prerequisites. A case names its program instead of writing these out. See [Degree programs and fabricated transcripts](#degree-programs-and-fabricated-transcripts). |
 | `data/section_tally_fall2026.csv` | The Fall 2026 Section Tally export, as downloaded (renamed). The pipeline reads this one file. |
 | `schemas/registration_input.schema.json` | The input format rules, as JSON Schema: student, transcript, program requirements, schedule, prompt, and the optional Rowan program-guide fields. See [The input format](#the-input-format). |
@@ -176,7 +177,7 @@ asked and gives neither `--max-cost` nor `--yes` does not start, so nothing is s
 | Option | Meaning | Default |
 |---|---|---|
 | `--model` | One model ID (required unless `--check`) | |
-| `--test-file` | Which case file to run | `data/paired_cases.json` |
+| `--test-file` | Which case file to run | `data/FINALIZED_TEST_CASES.json` |
 | `--task-ids` | Run only these cases (give both halves of a pair) | all cases in the file |
 | `-n` | Samples per case (3 or more to compare sessions) | `1` |
 | `--tally` | Which version of the Section Tally opens the session: `raw`, `trimmed`, `compact`, `raw-open`, `trimmed-open` (see below) | `trimmed` |
@@ -189,7 +190,7 @@ asked and gives neither `--max-cost` nor `--yes` does not start, so nothing is s
 | `--backend` | `openrouter` (cloud, paid) or `lmstudio` (a local model on this machine, see [Local runs](#local-runs-lm-studio)) | `openrouter` |
 | `--resume` | With several `--effort`: skip the efforts `--output` already has a whole session of. With `--session-per-pair`: continue the last batch in `--output`, skipping pairs already done | off |
 | `--reuse-from FILE` | Answers `FILE` already has for exactly these calls (same model, effort, provider, tally, rendering and prompt; the case unchanged) count as this run's first samples, and only the missing samples are called. See [The -n 3 check without paying twice](#the--n-3-check-without-paying-twice) | off |
-| `--pairs N` | Run N pairs (2N cases), the families taking turns, instead of `--task-ids` | |
+| `--pairs N` | Run N pairs (2N cases), the checklist codes taking turns across the groups (T1, D1, C1, ..., then T2, ...), instead of `--task-ids`. `--pairs 100` gives every check 4 or 6 cases; `--pairs 10` reaches all seven groups and is the first 10 of `--pairs 100` | |
 | `--session-per-pair` | Each pair in its own session, its opening only that pair's subjects; ends with the batch's totals. See [Local runs](#local-runs-lm-studio) | off |
 | `--batch-report` | Print the grand totals of every `--session-per-pair` batch in `--output`, and exit. No model call | off |
 | `--subjects` | **Dev runs only.** Keep only these subjects' sections in the opening (`CS MATH`), or `auto` for the subjects the chosen cases need. The opening then fits a local model and costs a fraction; results are not comparable with whole-tally runs, and the summary records `tally_subjects` | the whole tally |
@@ -200,7 +201,9 @@ asked and gives neither `--max-cost` nor `--yes` does not start, so nothing is s
 | `--output` | Results file (runs are appended; name a new file for a fresh run) | `results/semantic_eval_results.json` |
 | `--check` | Score each case's own answer key and every pair, and exit. No model call | off |
 | `--pair-report` | Print paired accuracy per session from `--output`, and exit. No model call | off |
-| `--rescore` | Re-grade the saved answers in `--output` with the current scorer and rewrite their verdicts. No model call | off |
+| `--rescore` | Re-grade the saved answers in `--output` with the current scorer and rewrite their verdicts (and refresh the summaries' `analysis`). No model call | off |
+| `--effort-report` | Print one line per session in `--output`: model, effort, accuracy, paired accuracy, cost per correct answer, thinking tokens (per call, and on right / wrong answers), latency; then accuracy per check, one column per session. No model call | off |
+| `--export-csv OUT [RESULTS ...]` | Write one flat row per call from the results files (default `--output`) to the CSV `OUT`, for pandas or a spreadsheet; see [EDA export](#eda-export---export-csv). No model call | |
 | `--compare A B` | McNemar's test between two results files, per case and per pair. No model call | |
 | `--lmstudio-url`, `--price-as`, `--kwh-price`, `--watts`, `--extra-watts` | Local runs only; see [Local runs](#local-runs-lm-studio) | |
 
@@ -396,8 +399,8 @@ does not fit.
 **Run many cases: one session per pair.** The subjects of 200 cases (48 of them) still make a
 ~250k-token opening, so `--session-per-pair` runs each pair as its own session whose opening
 holds only that pair's subjects: a median of ~22k tokens per call, 55k at most. `--pairs N`
-picks N pairs with the ten families taking turns (`--pairs 100` is 10 pairs of each family,
-200 cases).
+picks N pairs with the checklist codes taking turns (`--pairs 100`: 200 cases, 4 or 6 per
+check).
 ```bash
 python run_semantic_eval.py --backend lmstudio --model qwen/qwen3-4b --price-as anthropic/claude-sonnet-5.5 \
     --tally compact --pairs 100 --session-per-pair --kwh-price 0.20 --output results/local_qwen3-4b.json
@@ -527,6 +530,32 @@ except `deviation_score` (per row, and averaged in the summary).
   `paired_accuracy` when the session ran pairs (`passed`, `scored`, `rate`, `ci95`,
   `strong_pairs_only` with its own interval, `weak_pairs_scored`, `incomplete`, `by_family`).
   With fewer than 3 samples per case, a `sampling_note` warns that differences may be chance.
+- **Analysis (`analysis`):** where the model goes wrong, from the rows and the case file (no model
+  call; `--rescore` adds it to older files):
+  - `semantic_ok_by_check` (per checklist code, T1...O3) and `semantic_ok_by_group` (Temporal
+    reasoning, Days, Capacity, ...): each a rate with its 95% interval, the `mean_chance` of its
+    cases and `lift_over_chance` (accuracy minus chance), so checks with few or many plausible
+    answers compare fairly;
+  - `semantic_ok_by_owner` (whose cases) and `semantic_ok_by_transcript_size` (1-10, 11-20, 21-30,
+    over 30 courses on the student's record, from each row's `transcript_courses`);
+  - `paired_by_change`: paired accuracy when the twins differ in the `prompt` vs the `transcript`;
+  - `errors_by_check`: per check, how many wrong answers had each `error_type` (else the outcome),
+    most common first: *how* the model fails each check;
+  - `ignored_change_by_check`: per check, of the strong pairs (right answers differ) with both
+    twins answered in the same run, how often the model gave both the same cart. That is the
+    model ignoring the detail the pair changes, separated from ordinary mistakes;
+  - `empty_cart`: `registered_nothing_when_right` (cases whose right answer is an empty cart, K7:
+    how often the model registered nothing) and `registered_nothing_when_wrong` (every other case:
+    how often it gave up although an answer exists);
+  - `sections_vs_requested_by_check`: per check, carts with `fewer`, `as_requested` or `more`
+    sections than the request's `count` rule (over- and under-registering, for O1, O2, K6);
+  - `reasoning_tokens_by_outcome`: thinking tokens (calls, mean, median) on `correct` and `wrong`
+    answers;
+  - `stability`, with `-n` 2 or more: of the cases sampled, how many got the same answer every
+    time (`same_answer_every_sample`), the same outcome every time, and `flip_rate_by_check`.
+
+  The check, group and owner breakdowns need the finalized case file (their codes and owners are
+  in its `ground_truth`).
 - **The calls:** `finish_reasons` (stop reasons counted, e.g. `stop (end_turn)`: 6),
   `served_by` (model and provider OpenRouter actually used, counted), `tokens` (prompt, cached,
   cache-write, completion, `reasoning_tokens`, `cache_read_share`), and `latency`
@@ -546,7 +575,7 @@ except `deviation_score` (per row, and averaged in the summary).
 **`results[]`, one row per call:**
 - **Identity:** `task_id`, `session_id`, `run_index`, `ts`, `case_hashes` (`input`: a hash of
   what the model saw; `rules`: a hash of the answer key's rules), so a result can be tied to the
-  exact case version it ran on.
+  exact case version it ran on; `transcript_courses`, how many courses the student's record lists.
 - **What was sent:** `prompt_readable`, the case's own turn as `known_state` and `intent`; the
   output instructions are in the cached opening (the summary's `output_contract`).
 - **What came back:** `parsed_output`, the model's message. `raw_output` (the verbatim text) is
@@ -576,6 +605,46 @@ except `deviation_score` (per row, and averaged in the summary).
   `malformed_section_entry`, and so on.
 - **From the call itself:** `truncated_at_max_tokens` (a format error from an answer cut off at
   `max_tokens`), `refused`, and `call_failed`.
+
+**Model x effort:** `python run_semantic_eval.py --effort-report --output results/<file>.json`
+prints one line per session: model, effort, provider, calls, accuracy, paired accuracy (all and
+strong pairs only), cost, cost per correct answer, thinking tokens per call (and the mean on right
+/ wrong answers) and latency. Below it, a table of `semantic_ok` per checklist code with one column
+per session: which checks more effort helps. No model call.
+
+#### EDA export (`--export-csv`)
+
+`python run_semantic_eval.py --export-csv results/all.csv results/*.json` writes one row per call
+from every results file named (default: `--output`) into one CSV, each row joined with its
+session's settings and its case's ground truth, so a whole study loads with `pd.read_csv` and
+groups by any column (`df.groupby(["check", "effort"]).semantic_ok.mean()`). Flags are `1`/`0`;
+empty means unknown or not applicable. An older file's case ids are found through the pair a
+finalized case was rebuilt from, else in `data/paired_cases.json`. No model call.
+
+It also writes `<OUT>_sessions.csv` (e.g. `results/all_sessions.csv`): one row per session, i.e.
+per model x effort, across every file. Its summary is recomputed on the same cases: `model`,
+`effort`, `provider`, `tally_variant`, `samples_per_case`, `batch_api`, `cases`, `calls`,
+`generation_failures`, `semantic_ok_rate` with `semantic_ok_ci_low`/`_high`, `mean_chance`,
+`pairs_scored`, `paired_rate`, `strong_pairs_rate`, `ignored_change_rate`, `empty_when_right_rate`,
+`empty_when_wrong_rate`, `top_error_type` and its count, the token totals, `think_mean_correct`
+and `think_mean_wrong`, `cost_usd`, `setup_usd_est`, `per_case_marginal_usd_est`,
+`per_correct_answer_usd`, `mean_latency_ms`, `mean_first_token_ms`, then `ok_T1` ... `ok_O3`
+(semantic_ok per checklist code; empty where the session ran no case of it).
+
+| Columns | What they are |
+|---|---|
+| `session_id`, `model`, `effort`, `provider`, `tally_variant` | The session: who answered, at what reasoning effort, on which endpoint and tally |
+| `task_id`, `run_index` | The case and which sample of it (`-n`) |
+| `check`, `check_name`, `group` | Its checklist code, the code's name, and its group (Temporal reasoning, Days, ...) |
+| `case_type`, `owner`, `rebuilt` | Its pair family, who wrote it, and `1` if it was rebuilt on the real tally from a team case |
+| `pair_id`, `variant`, `pair_changes`, `weak_pair` | Its pair, which twin (`a`/`b`), where the twins differ (`prompt`/`transcript`), and `1` if one answer is right in both |
+| `chance`, `candidate_answers`, `correct_answers`, `n_rules`, `prompt_words` | How hard it is: the chance a random valid cart is right, how many carts are possible and right, the rules it checks, the prompt's length |
+| `transcript_courses`, `expected_min`, `expected_max` | Courses on the student's record; how many sections the request asks for |
+| `outcome`, `semantic_ok`, `error_type`, `tier1_ok` ... `tier4_ok` | The verdict, `1` if right, what went wrong, and whether each tier's checks all passed (empty when that tier was not reached) |
+| `sections_registered`, `registered_nothing` | How many sections the cart holds; `1` for an empty cart |
+| `pair_passed`, `same_answer_as_twin` | `1` if both twins were right; `1` if the model gave both twins the same cart |
+| `prompt_tokens`, `cached_tokens`, `cache_write_tokens`, `completion_tokens`, `reasoning_tokens` | Tokens of the call |
+| `usd_cost`, `first_token_ms`, `latency_ms`, `finish_reason`, `reused` | Its cost and timing, why generation stopped, `1` if the answer was reused from another session (`--reuse-from`) |
 
 **Comparing sessions:** `python run_semantic_eval.py --test-file <cases> --compare A.json B.json`
 runs McNemar's exact test on the case runs both files have, per case and per pair. It prints
@@ -959,6 +1028,49 @@ model knows to be, say, Global Literacy counts only if the input designates it; 
 prerequisites are checked only where a guide states them; and some guides are several years old
 (effective Fall 2018 to Fall 2026).
 
+### The finalized case file (`FINALIZED_TEST_CASES.json`)
+
+Every run uses `data/FINALIZED_TEST_CASES.json` (the default `--test-file`): 8 cases (4
+counterfactual pairs) for every checklist code, 344 in all (K2 has none), all run on the whole Fall
+2026 Section Tally. The team's cases are kept first; generated pairs fill the rest, and extra pairs
+are left out (`PER_CHECK` in `pipeline/finalize.py`; T5 sets the number, since the tally has only 4
+chained-conflict pairs). The file starts with `about`
+(what it is, where the cases came from, cases per check, what was left out, created or rebuilt)
+and `checklist` (per checklist code: its name, group, how many cases, their ids, and for K2 the
+dropped cases with their owners), then `cases`, each in the format of `data/paired_cases.json`
+(`case_id`, `input`, `candidate_courses`, `ground_truth`). A case is named by the semantic checklist code it tests (`T1-001`, `K5-003`, ...), and the
+line after its id says which check that is (`"semantic_check": "T1: Time-of-day words (morning /
+afternoon)"`). Neither is sent to the model. `ground_truth` (never sent either) also holds:
+
+- `checks`: the case's one checklist code (`T1`...`O3`), the same as its name; a case counts only toward its own code;
+- `credit`: who wrote it (`owner`), and where (`branch`, `file`, `original_case_id`). The team's
+  cases that came with their own made-up schedule (Tyler Henry's, Ben P's, Aneesh Anand's,
+  Daquan's, Daquan's and Aneesh's SEM cases, and Khalil's early ones) were rebuilt on real sections
+  for the same check: they keep their owner's credit, with `rebuilt_by` and `rebuilt_as` (the
+  generated pair, in `data/paired_cases.json`). A rebuilt case tests the same check, not the
+  original's exact scenario.
+
+Only K2 (instructor) has no case: the compact tally leaves instructors out, and adding them to
+every call (about +16% tokens) was declined. Its four cases (Tyler Henry's `reg-sem-011`/`012`,
+Aneesh Anand's `TRAP-K2-*`) are credited under `dropped` in `data/rebuild_manifest.json`. K7
+(impossible request) runs: when no offered section satisfies the request, the right answer is a
+message with an empty `sections` list (the output instructions say so, and the answer key's
+`count` is 0).
+
+Nothing in a case's `input` says it is a trap: `finalize.py` renames `SYNTH-TRAP` student ids,
+removes prompt sentences that point at the trap, and refuses to write the file if an input still
+mentions a trap, decoy or lure, or if any two cases differ in shape. After adding pairs, rebuild it:
+
+```bash
+git fetch --all                 # the team's cases are read from the origin/ branches
+python generate_pairs.py ...    # new pairs go to data/paired_cases.json
+python finalize_cases.py        # data/FINALIZED_TEST_CASES.json from the branches + paired_cases.json
+python run_semantic_eval.py --check
+```
+
+`data/rebuild_manifest.json` lists the pairs that stand in for the team's cases (`added`, by
+checklist code and family) and the cases left out (`dropped`, with owner and reason).
+
 ### Counterfactual pairs (`paired_cases.json`)
 
 A pair is two cases that are the same except for one detail, chosen so the detail flips the
@@ -1001,7 +1113,38 @@ python run_semantic_eval.py --output results/pair_results.json --pair-report
 | `multi_meeting` | Prompt: a commitment that overlaps only the second meeting (the lab) of one section vs another's | T8 check every meeting | (new) |
 | `noon` | Prompt: "I have to be done by noon" vs "I can't start until noon", on a course with a time in the 12 o'clock hour | T9 AM/PM and noon traps | (new) |
 
-The last eight are the temporal checks T1-T9 (T4, partial overlap with a different start time,
+| `shared_day_pattern` | Prompt: "only Mondays and Wednesdays" vs "the section that meets Mondays, Wednesdays and Fridays" | D2 shared days are not the same pattern | (rebuilt) |
+| `day_exclusion` | Prompt: "No Friday classes" vs "I can only come on Fridays" | D3 | (rebuilt) |
+| `last_seat` | Prompt: a section by its days and time, one with 1 seat left (29/30 is open) vs another | C2 | (rebuilt) |
+| `open_seats` | Prompt: the most open seats vs the most seats in total | C3 open = total - taken | (rebuilt) |
+| `not_first_listed` | Prompt: a course whose first listed section is full vs one whose first is open | C4 | (rebuilt) |
+| `lookalike_id` | Prompt: course id only, two ids that differ in the last digit | I1 | (rebuilt) |
+| `section_number` | Prompt: "I want section 1" vs "section 2" (a section number, not a crn) | I2 | (rebuilt) |
+| `same_title` | Prompt: one title, two course ids | I3 | (rebuilt) |
+| `course_a_not_b` | Prompt: "A, not B" vs "B, not A" | I4 | (rebuilt) |
+| `negation` | Prompt: "but not the section with CRN x" vs crn y | I5 | (rebuilt) |
+| `campus_residence` | Prompt: "I live in Glassboro" vs another campus town (the campus is implied) | K3 | (rebuilt) |
+| `several_constraints` | Prompt: days + modality + time, vs three others | K4 | (rebuilt) |
+| `hard_soft` | Prompt: "must be p; q would be nice" vs the reverse, where no section is both | K5 | (rebuilt) |
+| `quantity` | Prompt: "one class: A or B" vs "both A and B" | K6 | (rebuilt) |
+| `ambiguous` | Prompt: days that two or more sections share (any is right) vs other days | K8 | (rebuilt) |
+| `passed_retake` | Transcript: X failed (F) vs passed; "X unless I've passed it, else Y" | R1 | (rebuilt) |
+| `repeatable` | Prompt: retake a repeatable course (counts again) vs a passed, non-repeatable one | R3 | (rebuilt) |
+| `prereq_completed` / `prereq_in_progress` / `prereq_transfer` / `prereq_min_grade` | Transcript: Y's prerequisite completed vs another course; completed vs in progress (a `move_to` edit); transfer credit vs another; at the minimum grade vs one below. "Y if I meet its prerequisites, else Z" | R4 / R5 / R6 / R7 | (rebuilt) |
+| `requirement_options` | Prompt: one class toward requirement A vs B | R8 | (rebuilt) |
+| `requirement_satisfied` | Transcript: A's course W (unfinished) vs B (finished); "toward A if unfinished, else B" | R11 | (rebuilt) |
+| `department` | Prompt: "one CS class that counts" vs another subject | R12 | (rebuilt) |
+| `complete_cart` | Prompt: "A and B" vs "A only" | O2, O1 | (rebuilt) |
+| `any_correct` | Prompt: any section before noon vs any at noon or later (several right answers each) | O3 | (rebuilt) |
+| `impossible_days` | Prompt: days some section meets vs a day none meets (register nothing: an empty cart) | K7 | (rebuilt) |
+| `impossible_full` | Prompt: a course with a seat vs one with every section full, no waitlist (register nothing) | K7 | (rebuilt) |
+
+The `(rebuilt)` families recreate, on real Fall 2026 sections, the cases in
+`data/FINALIZED_TEST_CASES.json` that carried their own made-up schedule and so could not run here.
+Not rebuilt: K2 (the compact tally has no instructors). K7 is `impossible_days` and
+`impossible_full`: the right answer registers nothing (an empty `sections` list).
+
+The last eight before them are the temporal checks T1-T9 (T4, partial overlap with a different start time,
 is `busy_block`). They are built only on courses whose sections each meet at one set time (no
 online sections without times, which would pass any time rule), except `multi_meeting`, which
 needs a lecture and a lab at different times. `starts_at_or_after` is the only rule they added.
@@ -1011,7 +1154,7 @@ remaining one clashes with some section of a second course): it stops at 3 pairs
 **273 pairs (546 cases):** the first 200 below, then 73 temporal pairs (10 per family, 3 for
 `chained_conflict`), added with `python generate_pairs.py --total 273 --families time_of_day
 relative_time time_cutoff chained_conflict boundary_time back_to_back multi_meeting noon`.
-`--pairs N` still spreads a run over every family. **The first 200 pairs (400 cases):** families take turns adding one pair each, so they stay even: 21 each
+`--pairs N` spreads a run over every checklist code of the finalized file. **The first 200 pairs (400 cases):** families take turns adding one pair each, so they stay even: 21 each
 for `full_fallback`, `in_progress`, `transfer`, `busy_block`, `credit_limit`, `modality` and
 `days`, 20 each for `grade_threshold` and `withdrawal`, and 13 for `nested_groups`, which runs
 out first. The generator goes through every program once, then goes round again with a new seed
@@ -1128,6 +1271,7 @@ Four tiers, stopping at the first failure:
   | `courses_count_toward` | have only courses that move one of these unmet requirements forward (from the degree audit, so passed courses don't count unless repeatable) |
   | `no_days` | have no meeting on these days |
   | `starts_before`, `starts_at_or_after`, `ends_by` | have every meeting start before / start at or after / end by this time |
+  | `crns_in` | have every section be one of these crns: the request singles them out (most open seats, a section number, the home campus, a preference) |
   | `modality_in` | use only these modalities |
   | `must_include_courses` | contain these courses |
   | `courses_in` | have only courses from this list |
@@ -1457,6 +1601,7 @@ backends × models × domains × tasks × samples
 
 | Version | Date | Changes |
 |---|---|---|
+| 3.9 | 2026-11-05 | Finalized case file: 8 cases (4 pairs) per checklist code, 344 in all (K2 none); each case carries only its own code; `cases_by_owner` removed. Analysis adds `errors_by_check`, `ignored_change_by_check`, `empty_cart`, `sections_vs_requested_by_check` and `reasoning_tokens_by_outcome`; `--effort-report` adds thinking tokens on right / wrong answers and a per-check table; `--export-csv` writes one flat row per call for EDA, and `<OUT>_sessions.csv` one row per session (model x effort). |
 | 3.7 | 2026-10-26 | `--provider TAG`: every call to one OpenRouter endpoint (`provider.only`, no fallback), and the estimate at that endpoint's prices instead of the most expensive one's. `--batch-api`: one live call writes the cache (1h), the session's other calls go through OpenRouter's Batch API at about half price; batch rows have `latency_ms: null` and the summary records `batch_api`. Corrected: the `:batch` ids are price listings, not models a live call can use. Estimates use the 1-hour cache-write price under `--cache-ttl 1h`. `tests/test_openrouter_routing.py`. `--batch-api` splits a session into batches of at most 150 MB (OpenRouter takes 200 MB; 400 cases are ~246 MB) and keeps `<output>.pending-batch.json`, so running a stopped command again collects its batches instead of paying twice. `--effort` takes several efforts (one session each, back to back, approved together); `--resume` skips those already finished. `--reuse-from FILE`: answers already made with exactly the same calls count as a run's first samples (the `-n 3` check after the main runs makes 40 calls instead of 60); the summary's tokens and cost count only the calls made, `reused_answers` the rest. Live OpenRouter calls refused with 429/502/503 are tried again (15 s to 4 min apart), for flex endpoints. Removed: the live dashboard (`dashboard.py`, `dashboard.html`, `--dashboard`). |
 | 3.6 | 2026-10-22 | The pipeline split into single-purpose modules (`cases`, `render`, `session`, `backends`, `pricing`, `energy`, `scoring`, `checker`, `degree_audit`, `input_format`, `pairs`, `results`, `reports`, `selfcheck`, `stats`); `run_semantic_eval.py` is the command line. Tier 4 is one function per rule (`scoring.RULE_CHECKS`); `generate_pairs.py` passes its cached `counts_toward` to `check_rules()` instead of swapping `registration.counts_toward`. Prompts, verdicts, `--check`, rescored results and generated pairs are unchanged (compared before and after). New: `--backend lmstudio` for local runs, with GPU energy from `nvidia-smi` (`energy.py`) and the projected OpenRouter cost of every call (`--price-as`, `--kwh-price`, `--watts`, `--extra-watts`); `--subjects` (dev runs, a smaller opening; Aneesh's subject-limited tally); `--estimate-only`; a paid run starts only with `--max-cost`, a typed `y` or `--yes` (Ben's confirmation); the results file is saved atomically (Ben's fix). Faster: the Section Tally is converted once per run and validated once, and the checker looks up prerequisites only for courses that have them (`--check` 10 min → 1 min). Estimates no longer assume caching for a model with no cache price. `tests/`. Then the folders: the code in `pipeline/` (a package; `run_semantic_eval.py` and `generate_pairs.py` at the root are its two commands), `data/`, `schemas/`, `results/` (past runs in `results/past_runs/`), all paths in `pipeline/paths.py`; `registration.py` (old-name re-exports) removed; `--session-per-pair`, `--pairs N` and `--batch-report` (`pipeline/batch.py`): 200 cases on a local model in one command, with grand totals; `didcomm_schema.py`'s self-test moved to `tests/test_message_schema.py`; `section_tally.py check` is `python -m pipeline.section_tally check`. |
 | 3.5 | 2026-10-21 | `code_version` removed from session summaries (and from the five Sonnet results files), with the git lookup that built it. `--max-cost` reads each provider's prices, including long-prompt rates (Claude Haiku 5.5 costs five times as much from 100k prompt tokens). `pairs_sonnet_compact.json`: Sonnet 5.5, medium effort, on the same 3 pairs with the `compact` tally. |

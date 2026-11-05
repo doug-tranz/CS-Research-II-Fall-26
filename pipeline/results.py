@@ -198,6 +198,151 @@ def _local_breakdown(rows: list, correct: int, meta: dict) -> dict | None:
     return out
 
 
+# ── Analysis: where models go wrong, from a session's rows and the case file ──
+
+GROUPS = {"T": "Temporal reasoning", "D": "Days", "C": "Capacity", "I": "Course and section identity",
+          "K": "Request constraints", "R": "Student record", "O": "Completeness of the answer"}
+SIZES = ((10, "1-10 courses"), (20, "11-20 courses"), (30, "21-30 courses"), (10 ** 6, "over 30 courses"))
+
+
+def _code_order(code: str) -> tuple:
+    """'T10' after 'T9': checklist codes in checklist order."""
+    return list(GROUPS).index(code[0]) if code[0] in GROUPS else 99, int(code[1:]) if code[1:].isdigit() else 0
+
+
+def _by(rows: list, keys_of, chance_of) -> dict:
+    """semantic_ok per key (a row can count under several), each with a 95% interval, the mean
+    chance baseline of its cases and the accuracy above it (lift_over_chance)."""
+    tally = {}
+    for r in rows:
+        for key in keys_of(r):
+            t = tally.setdefault(key, [0, 0, 0.0, 0])
+            t[0] += r["verdict"]["outcome"] == "semantic_ok"
+            t[1] += 1
+            if chance_of(r) is not None:
+                t[2] += chance_of(r)
+                t[3] += 1
+    out = {}
+    for key, (ok, n, chance, counted) in tally.items():
+        base = chance / counted if counted else None
+        out[key] = {**rate(ok, n), "mean_chance": round(base, 3) if base is not None else None,
+                    "lift_over_chance": round(ok / n - base, 3) if base is not None else None}
+    return out
+
+
+def _answer(row: dict):
+    """A row's answer, comparable across samples: its sorted crns, else its raw text."""
+    body = (row.get("parsed_output") or {}).get("body") if isinstance(row.get("parsed_output"), dict) else None
+    if isinstance(body, dict) and isinstance(body.get("sections"), list):
+        return tuple(sorted(str(s.get("crn")) for s in body["sections"] if isinstance(s, dict)))
+    return answer_text(row)
+
+
+def analysis(rows: list, pairs: dict, cases: dict) -> dict:
+    """The session's breakdowns for analysis (all from its rows and the case file, no model call):
+    semantic_ok by checklist code, group, case owner and transcript size, each against chance;
+    paired accuracy by what the pair changes (prompt or transcript); per check, the kinds of
+    mistake, how often both twins got the same answer though their right answers differ (the
+    change was ignored) and cart size against the request; empty carts when nothing (or
+    something) was right; thinking tokens on right and wrong answers; and, with -n 2 or more,
+    how stable the model's answers are across samples of one case."""
+    truth = lambda r: cases.get(r["task_id"], {}).get("ground_truth") or {}
+    chance = lambda r: (truth(r).get("difficulty") or {}).get("chance")
+    ok = [r for r in rows if r.get("error") is None]
+    size = lambda r: [next(label for top, label in SIZES if r["transcript_courses"] <= top)] \
+        if r.get("transcript_courses") is not None else []
+    out = {
+        "semantic_ok_by_check": dict(sorted(_by(ok, lambda r: truth(r).get("checks", []), chance).items(),
+                                            key=lambda x: _code_order(x[0]))),
+        "semantic_ok_by_group": {g: v for g, v in sorted(
+            _by(ok, lambda r: sorted({GROUPS[c[0]] for c in truth(r).get("checks", []) if c[0] in GROUPS}), chance).items(),
+            key=lambda x: list(GROUPS.values()).index(x[0]))},
+        "semantic_ok_by_owner": _by(ok, lambda r: [(truth(r).get("credit") or {}).get("owner")] if truth(r).get("credit") else [],
+                                    chance),
+        "semantic_ok_by_transcript_size": {k: v for k, v in sorted(_by(ok, size, chance).items(),
+                                                                   key=lambda x: [l for _, l in SIZES].index(x[0]))},
+    }
+    # paired accuracy by where the twins differ (pair.difference.where: prompt or transcript)
+    outcomes = {(r["task_id"], r["run_index"]): r["verdict"]["outcome"] for r in rows}
+    where = {}
+    for pid, variants in pairs.items():
+        first = cases.get(next(iter(variants.values())), {})
+        w = (((first.get("ground_truth") or {}).get("pair") or {}).get("difference") or {}).get("where")
+        if w:
+            where.setdefault(w, {})[pid] = variants
+    out["paired_by_change"] = {w: {k: s[k] for k in ("passed", "scored", "rate", "ci95")}
+                               for w, group in sorted(where.items()) if (s := pair_stats(group, outcomes))}
+    by_code = lambda r: sorted(truth(r).get("checks", []), key=_code_order)
+    # what kind of mistake, per check: error_type (else the outcome) of every wrong answer
+    errors = {}
+    for r in ok:
+        if r["verdict"]["outcome"] != "semantic_ok":
+            for code in by_code(r):
+                e = errors.setdefault(code, {})
+                kind = r["verdict"].get("error_type") or r["verdict"]["outcome"]
+                e[kind] = e.get(kind, 0) + 1
+    out["errors_by_check"] = {c: dict(sorted(e.items(), key=lambda x: -x[1]))
+                              for c, e in sorted(errors.items(), key=lambda x: _code_order(x[0]))}
+    # ignored the change: the same answer to both twins of a pair whose right answers differ
+    answered = {(r["task_id"], r["run_index"]): r for r in ok}
+    ignored, runs = {}, sorted({run for _, run in answered})
+    for variants in pairs.values():
+        ids = list(variants.values())
+        gts = [cases.get(cid, {}).get("ground_truth") or {} for cid in ids]
+        if len(ids) != 2 or any((g.get("pair") or {}).get("has_shared_answer") for g in gts):
+            continue                            # a weak pair: one answer is right in both
+        for run in runs:
+            a, b = answered.get((ids[0], run)), answered.get((ids[1], run))
+            if a and b:
+                for code in sorted(gts[0].get("checks", []), key=_code_order):
+                    t = ignored.setdefault(code, [0, 0])
+                    t[0] += _answer(a) == _answer(b)
+                    t[1] += 1
+    out["ignored_change_by_check"] = {c: rate(*t) for c, t in sorted(ignored.items(), key=lambda x: _code_order(x[0]))}
+    # empty carts and cart size against the request's count rule (answers that parsed into sections only)
+    counted = [(r, len(_answer(r))) for r in ok if isinstance(_answer(r), tuple)]
+    count = lambda r: (truth(r).get("rules") or {}).get("count") or {}
+    nothing = [n == 0 for r, n in counted if count(r).get("max") == 0]
+    something = [n == 0 for r, n in counted if count(r).get("max") != 0]
+    out["empty_cart"] = {"registered_nothing_when_right": rate(sum(nothing), len(nothing)),
+                         "registered_nothing_when_wrong": rate(sum(something), len(something))}
+    sizes = {}
+    for r, n in counted:
+        c = count(r)
+        if c:
+            side = "fewer" if n < c.get("min", 0) else "more" if "max" in c and n > c["max"] else "as_requested"
+            for code in by_code(r):
+                t = sizes.setdefault(code, {"fewer": 0, "as_requested": 0, "more": 0})
+                t[side] += 1
+    out["sections_vs_requested_by_check"] = dict(sorted(sizes.items(), key=lambda x: _code_order(x[0])))
+    # thinking tokens on right and on wrong answers
+    think = {}
+    for r in ok:
+        if isinstance(r.get("reasoning_tokens"), int):
+            think.setdefault("correct" if r["verdict"]["outcome"] == "semantic_ok" else "wrong", []).append(r["reasoning_tokens"])
+    out["reasoning_tokens_by_outcome"] = {k: {"calls": len(v), "mean": round(sum(v) / len(v)), "median": sorted(v)[len(v) // 2]}
+                                          for k, v in sorted(think.items())}
+    # stability across samples of one case
+    samples = {}
+    for r in ok:
+        samples.setdefault(r["task_id"], []).append(r)
+    many = {cid: rs for cid, rs in samples.items() if len(rs) >= 2}
+    if many:
+        same_answer = sum(len({_answer(r) for r in rs}) == 1 for rs in many.values())
+        same_outcome = {cid: len({r["verdict"]["outcome"] for r in rs}) == 1 for cid, rs in many.items()}
+        flips = {}
+        for cid, steady in same_outcome.items():
+            for code in (cases.get(cid, {}).get("ground_truth") or {}).get("checks", []):
+                f = flips.setdefault(code, [0, 0])
+                f[0] += not steady
+                f[1] += 1
+        out["stability"] = {"cases_sampled": len(many), "samples_per_case": round(sum(map(len, many.values())) / len(many), 2),
+                            "same_answer_every_sample": rate(same_answer, len(many)),
+                            "same_outcome_every_sample": rate(sum(same_outcome.values()), len(many)),
+                            "flip_rate_by_check": {c: rate(*f) for c, f in sorted(flips.items(), key=lambda x: _code_order(x[0]))}}
+    return out
+
+
 def summarize_session(meta: dict, rows: list, pairs: dict, cases: dict | None = None) -> dict:
     """A session's summary: its shared settings (meta) and what its rows add up to. cases: the
     case file's raw cases by id, for pair flags, case types and chance baselines."""
@@ -267,6 +412,7 @@ def summarize_session(meta: dict, rows: list, pairs: dict, cases: dict | None = 
         summary["local_cost"] = local
     if stats:
         summary["paired_accuracy"] = stats
+    summary["analysis"] = analysis(rows, pairs, cases)
     if sampling is not None and sampling < 3:
         summary["sampling_note"] = (f"{sampling} sample(s) per case: intervals are wide, and a difference between "
                                     f"sessions can be chance. Use -n 3 or more, and --compare for a paired test.")
@@ -277,12 +423,14 @@ def summarize_session(meta: dict, rows: list, pairs: dict, cases: dict | None = 
 SUMMARY_TOTALS = ("started", "ended", "cases", "calls", "generation_failures", "outcomes", "semantic_ok",
                   "semantic_ok_by_case_type", "mean_chance_baseline", "mean_deviation_score", "error_types",
                   "finish_reasons", "served_by", "tokens", "cost", "latency", "local_cost", "paired_accuracy",
-                  "sampling_note", "reused_answers")
+                  "sampling_note", "reused_answers", "analysis")
 
 
-def rebuild_summaries(case_file: str, sessions: list, results: list) -> list:
-    """Every session's summary recomputed from its rows (settings kept, totals refreshed)."""
-    raw = read_cases(case_file) if Path(case_file).exists() else []
+def rebuild_summaries(case_file: str, sessions: list, results: list, raw: list | None = None) -> list:
+    """Every session's summary recomputed from its rows (settings kept, totals refreshed). raw:
+    the cases to use instead of reading case_file."""
+    if raw is None:
+        raw = read_cases(case_file) if Path(case_file).exists() else []
     pairs, cases = pairs_of(raw), {c["case_id"]: c for c in raw}
     out = []
     for s in sessions:

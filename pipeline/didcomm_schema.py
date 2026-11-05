@@ -68,7 +68,8 @@ OUTPUT_CONTRACT = (
     f'"type" MUST be exactly "{MESSAGE_TYPE}". '
     '"id" MUST be a unique string such as a UUID. '
     'The body MUST have exactly these fields: {"student_id": <string>, "term_code": <string>, '
-    '"sections": [<section entry>, ...]}, with at least one section and no crn twice. '
+    '"sections": [<section entry>, ...]}, with no crn twice. If no offered section satisfies the request, '
+    '"sections" MUST be the empty list []: register nothing rather than a section that breaks the request. '
     'Each section entry MUST have exactly these fields, copied from the offered section: '
     '"crn", "course_id", "section", "seats_total", "seats_taken", "campus", "modality", '
     '"meetings" (each meeting\'s "days", and its "start_time" and "end_time" when it has them; '
@@ -102,7 +103,7 @@ def _check(requires: str, errors: list, found_ok: str) -> dict:
 _REGISTER_PARTS = (
     ("type", f'"type" is exactly "{MESSAGE_TYPE}"',
      lambda path: path == "type"),
-    ("body", 'the body has exactly "student_id" (string), "term_code" (string) and "sections" (a non-empty list)',
+    ("body", 'the body has exactly "student_id" (string), "term_code" (string) and "sections" (a list)',
      lambda path: path.startswith("body") and not path.startswith("body/sections/")),
     ("sections", "every section entry has exactly the copied fields (crn, course_id, section, credit_hours, "
                  "seats, campus, modality, meetings), each well-formed (full day names, 12-hour times)",

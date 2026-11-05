@@ -318,6 +318,18 @@ def _check_courses_in(cart: _Cart, check) -> None:
           f"condition that rules it out here.")
 
 
+def _check_crns_in(cart: _Cart, check) -> None:
+    """crns_in: every section is one of these (the request singles them out: by seats, section
+    number, campus, a preference...)."""
+    allowed = cart.rules["crns_in"]
+    extra = [s for item, s in cart.chosen if item["crn"] not in allowed]
+    check("crns_in", f"every section is one of {', '.join(allowed)}",
+          "; ".join(_section_name(s) for _, s in cart.chosen) or "none",
+          f"{[s['crn'] for s in extra]} are not among {allowed}" if extra else None,
+          f"The cart takes {_names(_section_name(s) for s in extra)}, but the request singles out section(s) "
+          f"{', '.join(allowed)} (see why_wrong for the reason).")
+
+
 def _check_busy(cart: _Cart, check) -> None:
     """busy: no meeting overlaps one of the student's fixed commitments. An overlap is a shared
     day with intersecting time ranges; touching end to start is not one."""
@@ -347,6 +359,7 @@ RULE_CHECKS = (
     (None, _check_waitlist),
     ("must_include_courses", _check_must_include_courses),
     ("courses_in", _check_courses_in),
+    ("crns_in", _check_crns_in),
     ("busy", _check_busy),
 )
 ALWAYS_CHECKED = 3          # student_id, term_code and waitlist
@@ -431,7 +444,18 @@ FAMILY_ERRORS = {"full_fallback": "fallback_not_applied", "in_progress": "in_pro
                  "time_of_day": "time_of_day_misread", "relative_time": "relative_time_misread",
                  "time_cutoff": "time_limit_ignored", "chained_conflict": "chained_conflict_missed",
                  "boundary_time": "time_boundary_misread", "back_to_back": "back_to_back_misread",
-                 "multi_meeting": "second_meeting_ignored", "noon": "noon_misread"}
+                 "multi_meeting": "second_meeting_ignored", "noon": "noon_misread",
+                 "shared_day_pattern": "meeting_days_ignored", "day_exclusion": "meeting_days_ignored",
+                 "last_seat": "open_seat_misread", "open_seats": "open_seat_arithmetic", "not_first_listed": "first_listed_taken",
+                 "lookalike_id": "lookalike_course_id", "section_number": "section_crn_mixup", "same_title": "same_title_mixup",
+                 "course_a_not_b": "wrong_course", "negation": "negation_ignored", "campus_residence": "campus_ignored",
+                 "several_constraints": "constraint_dropped", "hard_soft": "preference_priority_misread",
+                 "quantity": "quantity_misread", "ambiguous": "ambiguity_misread", "passed_retake": "passed_course_retaken",
+                 "repeatable": "repeatable_course_misread", "prereq_completed": "prerequisite_misread",
+                 "prereq_in_progress": "in_progress_counted_as_prerequisite", "prereq_transfer": "transfer_prerequisite_misread",
+                 "prereq_min_grade": "prerequisite_grade_misread", "requirement_options": "requirement_mismatch",
+                 "requirement_satisfied": "satisfied_requirement_ignored", "department": "department_ignored",
+                 "complete_cart": "incomplete_or_extra_course", "any_correct": "valid_answer_rejected"}
 # Otherwise a semantic error is named by its first failed rule, a consistency error by its first
 # failed Tier 3 check, and a format error by its first failed Tier 1-2 check.
 RULE_ERRORS = {"student_id": "wrong_student", "term_code": "wrong_term", "count": "wrong_number_of_sections",
@@ -439,7 +463,8 @@ RULE_ERRORS = {"student_id": "wrong_student", "term_code": "wrong_term", "count"
                "no_days": "meeting_days_ignored", "starts_before": "time_limit_ignored",
                "starts_at_or_after": "time_limit_ignored",
                "ends_by": "time_limit_ignored", "modality_in": "modality_ignored", "waitlist": "unrequested_waitlist",
-               "must_include_courses": "named_course_missing", "courses_in": "wrong_course", "busy": "time_overlap_missed"}
+               "must_include_courses": "named_course_missing", "courses_in": "wrong_course", "crns_in": "wrong_section",
+               "busy": "time_overlap_missed"}
 CHECK_ERRORS = {"term": "wrong_term", "exists": "nonexistent_section", "copied_fields": "section_details_miscopied",
                 "not_cancelled": "cancelled_section", "seat": "full_section", "waitlist": "invalid_waitlist",
                 "credits": "invalid_credit_hours", "prerequisites": "prerequisite_missing",

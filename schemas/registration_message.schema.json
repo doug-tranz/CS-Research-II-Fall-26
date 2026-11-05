@@ -157,9 +157,8 @@
           "pattern": "^\\d{6}$"
         },
         "sections": {
-          "description": "At least one section; no crn twice (checked in didcomm_schema.py).",
+          "description": "The sections to register; no crn twice (checked in didcomm_schema.py). Empty when no offered section satisfies the request.",
           "type": "array",
-          "minItems": 1,
           "items": {
             "$ref": "#/$defs/cart_item"
           }
