@@ -9,6 +9,7 @@ import contextlib
 import csv
 import io
 import json
+import os
 import sys
 import tempfile
 import threading
@@ -405,6 +406,22 @@ class ResultsFileTests(unittest.TestCase):
         self.assertIn("analysis", s)
         final = results.rebuild_summaries(str(paths.CASES), [s], [row])[0]     # the end-of-session rebuild
         self.assertNotIn("in_progress", final)
+
+    def test_a_save_waits_out_a_file_another_program_holds_open(self):
+        path = Path(tempfile.mkdtemp()) / "r.json"
+        real = os.replace
+        refusals = iter([PermissionError("WinError 5"), PermissionError("WinError 5")])
+
+        def locked_twice(src, dst):
+            err = next(refusals, None)
+            if err:
+                raise err
+            real(src, dst)
+        with mock.patch("pipeline.results.os.replace", side_effect=locked_twice), \
+                mock.patch("pipeline.results.time.sleep") as sleep:
+            results.save_results(str(path), [{"session_id": "s"}], [])
+        self.assertEqual(json.loads(path.read_text())["sessions"], [{"session_id": "s"}])
+        self.assertEqual(sleep.call_count, 2)
 
     def test_save_is_atomic_and_leaves_no_temp_file(self):
         path = Path(tempfile.mkdtemp()) / "r.json"

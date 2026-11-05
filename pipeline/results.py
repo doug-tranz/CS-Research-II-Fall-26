@@ -14,6 +14,7 @@ DURING a write cannot destroy the rows already paid for.
 import hashlib
 import json
 import os
+import time
 from dataclasses import asdict
 from pathlib import Path
 
@@ -114,11 +115,20 @@ def load_results(path: str) -> tuple:
 
 def save_results(path: str, sessions: list, results: list) -> None:
     """Writes the results file, every row slimmed. Written to <path>.tmp first and then swapped
-    in (os.replace is atomic), so the old file stays whole until the new one is complete."""
+    in (os.replace is atomic), so the old file stays whole until the new one is complete. On
+    Windows the swap is refused while another program (OneDrive, an editor, a reader) has the
+    file open, so it is tried again for up to a minute before giving up."""
     rows = [slim_row(row) for row in results]
     tmp = Path(f"{path}.tmp")
     tmp.write_text(json.dumps({"sessions": sessions, "results": rows}, indent=2) + "\n", encoding="utf-8")
-    os.replace(tmp, path)
+    for wait in (0.2, 0.5, 1, 2, 4, 8, 15, 30, None):
+        try:
+            os.replace(tmp, path)
+            return
+        except PermissionError:
+            if wait is None:
+                raise               # the paid-for rows stay in <path>.tmp
+            time.sleep(wait)
 
 
 def log_row(result, verdict: dict, path: str, meta: dict, extra: dict | None = None) -> None:
