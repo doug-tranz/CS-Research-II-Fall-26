@@ -99,7 +99,7 @@ case "${1:-}" in
   free)    # the three free Nemotron models at once, each with its own log; run again daily until all finish
     mkdir -p "$OUT/logs"
     for n in lightning super ultra; do
-      run_model "$n" > "$OUT/logs/$n.log" 2>&1 &
+      run_model "$n" >> "$OUT/logs/$n.log" 2>&1 &
       echo "started $n (log: $OUT/logs/$n.log)"
     done
     failed=0
