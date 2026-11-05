@@ -104,9 +104,9 @@ def build_parser() -> argparse.ArgumentParser:
     model = parser.add_argument_group("the model call")
     model.add_argument("--backend", choices=["openrouter", "lmstudio"], default="openrouter",
                        help="openrouter (cloud, paid) or lmstudio (a local model on this machine)")
-    model.add_argument("--max-tokens", type=int, default=16000,
-                       help="cap on output tokens per call, thinking included (well above the ~500-1,000 a "
-                            "call uses; it only stops a runaway answer)")
+    model.add_argument("--max-tokens", type=int, default=32000,
+                       help="cap on output tokens per call, thinking included (well above what a call uses, "
+                            "~500-17,000 with thinking; it only stops a runaway answer)")
     model.add_argument("--effort", nargs="+", choices=["minimal", "low", "medium", "high", "xhigh"],
                        help="reasoning effort sent to the model (default: the model's own; recorded either way). "
                             "Several: one session each, back to back, approved together, so a session can read "
