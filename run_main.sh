@@ -5,6 +5,8 @@
 #   bash run_main.sh credits       what is left on the OpenRouter key (free)
 #   bash run_main.sh luna          one model: its main run, then its stability check
 #   bash run_main.sh paid          the eight paid models one after another (logs in results/FINALIZED_RESULTS/logs/)
+#   bash run_main.sh parallel flash argon ...   the named models at once, logs <name>.parallel.log (a model already
+#                                  running elsewhere is skipped: its results file is locked)
 #   bash run_main.sh free          the three free Nemotron models at once (logs in results/FINALIZED_RESULTS/logs/);
 #                                  run it again each day after 00:00 UTC until all three finish
 #
@@ -57,6 +59,7 @@ print(f\"OpenRouter key: \${d['limit_remaining']:.2f} left of \${d['limit']:g} (
 }
 
 DAILY_LIMIT_EXIT=3     # a run stopped by OpenRouter's daily free-model limit exits with this (pipeline/cli.py)
+LOCKED_EXIT=4          # another run is writing that model's results file: this one did not start
 
 run_model() {  # one model: its main run, then (once the main run is whole) its stability check
   local row name model provider cap check_cap _ status
@@ -75,16 +78,22 @@ run_model() {  # one model: its main run, then (once the main run is whole) its 
     echo "=== $name: stopped at the daily free-model limit; run this again after 00:00 UTC to continue"
     return "$status"
   fi
+  if [ "$status" = "$LOCKED_EXIT" ]; then
+    echo "=== $name: already running in another process (its own log has it); skipped here"
+    return 0
+  fi
   [ "$status" = 0 ] || return "$status"
   echo "=== $name: stability check, 10 pairs x 3 samples at medium -> $OUT/check_$name.json"
   "$PYTHON" run_semantic_eval.py "${common[@]}" --pairs 10 -n 3 --effort medium \
     --reuse-from "$OUT/main_$name.json" --output "$OUT/check_$name.json" --max-cost "$check_cap" || status=$?
   [ "$status" = "$DAILY_LIMIT_EXIT" ] && echo "=== $name: check stopped at the daily limit; run this again after 00:00 UTC"
+  [ "$status" = "$LOCKED_EXIT" ] && { echo "=== $name: check already running in another process; skipped here"; status=0; }
+  [ "$status" = 0 ] && echo "=== $name: finished"
   return "$status"
 }
 
 case "${1:-}" in
-  ""|-h|--help) sed -n '2,23p' "$0"; exit 0 ;;
+  ""|-h|--help) sed -n '2,25p' "$0"; exit 0 ;;
   list) echo "run order (name, model, endpoint, --max-cost main / check, estimate):"; echo "$MODELS" | sed '/^$/d'; exit 0 ;;
   credits) credits; exit 0 ;;
   free)    # the three free Nemotron models at once, each with its own log; run again daily until all finish
@@ -99,6 +108,20 @@ case "${1:-}" in
     done
     for n in lightning super ultra; do echo "--- $n: $(grep -E '^=== ' "$OUT/logs/$n.log" | tail -1)"; done
     [ "$failed" = 0 ] && echo "all three finished" || echo "$failed not finished: run 'bash run_main.sh free' again after 00:00 UTC"
+    exit 0 ;;
+  parallel)  # the models named after it at once, each with its own log (e.g. parallel flash argon qwenflash)
+    shift
+    [ "$#" -gt 0 ] || { echo "name the models: bash run_main.sh parallel flashlite flash ..."; exit 1; }
+    mkdir -p "$OUT/logs"
+    credits
+    for n in "$@"; do
+      PYTHONUNBUFFERED=1 run_model "$n" >> "$OUT/logs/$n.parallel.log" 2>&1 &
+      echo "started $n (log: $OUT/logs/$n.parallel.log)"
+    done
+    failed=""
+    for n in "$@"; do wait -n || failed="$failed ?"; done
+    for n in "$@"; do echo "--- $n: $(grep -E '^=== ' "$OUT/logs/$n.parallel.log" | tail -1)"; done
+    credits
     exit 0 ;;
   paid)    # the eight paid models one after another, in run order, the credits printed before each
     mkdir -p "$OUT/logs"

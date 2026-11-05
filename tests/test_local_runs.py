@@ -174,6 +174,50 @@ class BackendTests(unittest.TestCase):
 class EndToEndTests(unittest.TestCase):
     """The command line, run locally against the stand-in server, on one real pair."""
 
+    def test_resume_makes_a_failed_call_again_and_keeps_one_row_for_it(self):
+        from pipeline.backends import LMStudioBackend
+        case = load_test_cases(task_ids={PAIR[0]})[0]
+        stub = StubLMStudio(answer=expected_message(case, case["ground_truth"]["examples"]["valid"][0]),
+                            prompt_tokens=20000, completion_tokens=300, context=200000)
+        out = Path(tempfile.mkdtemp()) / "r.json"
+        argv = ["run_semantic_eval.py", "--backend", "lmstudio", "--model", "stub-model", "--lmstudio-url", stub.url,
+                "--watts", "150", "--subjects", "auto", "--task-ids", *PAIR, "--output", str(out)]
+        real, made = LMStudioBackend.call, []
+
+        def second_call_times_out(self, model, messages):
+            made.append(1)
+            if len(made) == 2:
+                raise RuntimeError("OpenRouter error mid-stream: {'code': 504, 'message': 'A Timeout Occurred'}")
+            return real(self, model, messages)
+        try:
+            with mock.patch.object(sys, "argv", argv), mock.patch.object(LMStudioBackend, "call", second_call_times_out), \
+                    mock.patch("pipeline.cli.lookup_price", return_value=(None, "no price")), \
+                    contextlib.redirect_stdout(io.StringIO()):
+                cli.main()
+            self.assertEqual(sum(r.get("error") is not None for r in json.loads(out.read_text())["results"]), 1)
+            with mock.patch.object(sys, "argv", argv + ["--resume"]), \
+                    mock.patch("pipeline.cli.lookup_price", return_value=(None, "no price")), \
+                    contextlib.redirect_stdout(io.StringIO()) as printed:
+                cli.main()
+        finally:
+            stub.close()
+        data = json.loads(out.read_text())
+        self.assertEqual(len(data["sessions"]), 1, printed.getvalue())
+        self.assertEqual(sorted(r["task_id"] for r in data["results"]), sorted(PAIR))     # one row per call
+        self.assertTrue(all(r.get("error") is None for r in data["results"]))
+        self.assertIn("1 failed call(s) made again", printed.getvalue())
+        self.assertFalse(Path(f"{out}.lock").exists())                                  # released at the end
+
+    def test_a_second_run_on_a_file_another_run_holds_does_not_start(self):
+        out = Path(tempfile.mkdtemp()) / "r.json"
+        Path(f"{out}.lock").write_text(str(os.getppid()))                 # a live process holds it
+        with mock.patch.object(sys, "argv", ["run_semantic_eval.py", "--backend", "lmstudio", "--model", "m",
+                                              "--task-ids", PAIR[0], "--output", str(out)]), \
+                contextlib.redirect_stdout(io.StringIO()) as printed, self.assertRaises(SystemExit) as stop:
+            cli.main()
+        self.assertEqual(stop.exception.code, cli.LOCKED_EXIT, printed.getvalue())
+        self.assertFalse(out.exists())                                     # no call, nothing written
+
     def test_the_daily_limit_stops_a_session_and_resume_continues_it(self):
         from pipeline.backends import DailyLimitReached, LMStudioBackend
         case = load_test_cases(task_ids={PAIR[0]})[0]

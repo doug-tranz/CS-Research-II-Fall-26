@@ -40,8 +40,10 @@ Appends full results to results/semantic_eval_results.json (or --output): {"sess
 "results": [...]}, one summary per run and one row per call.
 """
 import argparse
+import os
 import statistics
 import sys
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 from types import SimpleNamespace
@@ -377,8 +379,9 @@ def call_note(result, projected: float | None) -> str:
 
 def unfinished_session(args, calls: dict, cases: list) -> tuple:
     """--resume: the latest session of --output that made these exact calls (same_calls(), same -n)
-    but not all of them, because it stopped at the daily free-model limit, at --max-cost or in a
-    crash. Returns (its id, the (case id, run) pairs it has rows for), or (None, set())."""
+    but not all of them successfully: it stopped at the daily free-model limit, at --max-cost or in
+    a crash, or some calls failed (timeouts, refusals). Returns (its id, the (case id, run) pairs it
+    has a successful row for), or (None, set()); its failed calls are made again."""
     if not args.resume or not Path(args.output).exists():
         return None, set()
     sessions, results = load_results(args.output)
@@ -387,9 +390,20 @@ def unfinished_session(args, calls: dict, cases: list) -> tuple:
         if s.get("samples_per_case") != args.n or s.get("batch") or not same_calls(s, calls):
             continue
         rows = [r for r in results if r.get("session_id") == s["session_id"]]
-        if rows and {r["task_id"] for r in rows} <= ids and len(rows) < len(cases) * args.n:
-            return s["session_id"], {(r["task_id"], r["run_index"]) for r in rows}
+        good = [r for r in rows if r.get("error") is None]
+        if rows and {r["task_id"] for r in rows} <= ids and len(good) < len(cases) * args.n:
+            return s["session_id"], {(r["task_id"], r["run_index"]) for r in good}
     return None, set()
+
+
+def drop_failed_rows(path: str, session_id: str) -> int:
+    """Removes a session's failed calls (error set) from the results file, so a continued session
+    makes them again and keeps one row per call. Returns how many were removed."""
+    sessions, results = load_results(path)
+    keep = [r for r in results if not (r.get("session_id") == session_id and r.get("error") is not None)]
+    if len(keep) < len(results):
+        save_results(path, sessions, keep)
+    return len(results) - len(keep)
 
 
 def run_cases(cases: list, backend, args, session: TallySession, meta: dict, projection=None,
@@ -509,8 +523,10 @@ def run_session(args, backend, cases: list, subjects, label=None, batch=None, sp
         reuse = reusable(args, calls, cases)
         continued, done = unfinished_session(args, calls, cases)
         if continued:
+            retried = drop_failed_rows(args.output, continued)
             print(f"--resume: continuing session {continued}, which has {len(done)} of "
-                  f"{len(cases) * args.n} calls; only the rest are made")
+                  f"{len(cases) * args.n} calls; only the rest are made"
+                  + (f" ({retried} failed call(s) made again)" if retried else ""))
             extra = {**extra, "session_id": continued}
         if backend.paid:
             estimate = session_estimate(args, args.model, session, tasks, sum(map(len, reuse.values())))
@@ -667,23 +683,67 @@ def main():
         return
     if args.n < 3:
         print(f"note: {args.n} sample(s) per case; use -n 3 or more to compare sessions reliably")
-    if args.session_per_pair:
-        run_batch(args, make_backend(args), cases)
-    elif len(efforts) == 1 and not args.resume:     # --resume: run_efforts() skips a finished session
-        run_session(args, make_backend(args), cases, pick_subjects(args, cases))
-    else:
-        run_efforts(args, efforts, cases, pick_subjects(args, cases))
+    with output_lock(args.output):
+        if args.session_per_pair:
+            run_batch(args, make_backend(args), cases)
+        elif len(efforts) == 1 and not args.resume:     # --resume: run_efforts() skips a finished session
+            run_session(args, make_backend(args), cases, pick_subjects(args, cases))
+        else:
+            run_efforts(args, efforts, cases, pick_subjects(args, cases))
+
+
+LOCKED_EXIT = 4     # exit status when another run is writing --output (run_main.sh reads it)
+
+
+def process_alive(pid: int) -> bool:
+    """Whether process `pid` is running. On Windows os.kill(pid, 0) would END it, so the process is
+    asked for its exit code instead (259 = still active)."""
+    if os.name == "nt":
+        import ctypes
+        k = ctypes.windll.kernel32
+        handle = k.OpenProcess(0x1000, False, pid)      # PROCESS_QUERY_LIMITED_INFORMATION
+        if not handle:
+            return False
+        code = ctypes.c_ulong()
+        ok = k.GetExitCodeProcess(handle, ctypes.byref(code))
+        k.CloseHandle(handle)
+        return bool(ok) and code.value == 259
+    try:
+        os.kill(pid, 0)
+    except OSError:
+        return False
+    return True
+
+
+@contextmanager
+def output_lock(path: str):
+    """Claims --output for this run: <output>.lock holds its process id while it runs. A second
+    run on the same file (a parallel launch and the sequential driver reaching the same model)
+    exits with LOCKED_EXIT before making any call; a lock left by a run that died is taken over."""
+    lock = Path(f"{path}.lock")
+    try:
+        holder = int(lock.read_text())
+    except (OSError, ValueError):
+        holder = None
+    if holder and holder != os.getpid() and process_alive(holder):
+        print(f"{shown(path)} is being written by another run (process {holder}); this one is not started")
+        raise SystemExit(LOCKED_EXIT)
+    lock.write_text(str(os.getpid()))
+    try:
+        yield
+    finally:
+        lock.unlink(missing_ok=True)
 
 
 def finished_efforts(args, cases: list) -> set:
     """The efforts --output already holds a whole session of: this model and tally, these cases,
-    every call made (not stopped at --max-cost). Read by --resume."""
+    every call made and none failed (not stopped at --max-cost). Read by --resume."""
     sessions, _ = load_results(args.output) if Path(args.output).exists() else ([], [])
     ids = sorted(c["case_id"] for c in cases)
     return {(s.get("generation_settings") or {}).get("reasoning", {}).get("effort") for s in sessions
             if s.get("model") == args.model and s.get("tally_variant") == args.tally
             and sorted(s.get("cases") or []) == ids and s.get("calls") == len(cases) * args.n
-            and not s.get("stopped_at_max_cost")}
+            and not s.get("stopped_at_max_cost") and not s.get("generation_failures")}
 
 
 def run_efforts(args, efforts: list, cases: list, subjects) -> None:
