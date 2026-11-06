@@ -26,6 +26,7 @@ data/                    FINALIZED_TEST_CASES.json, paired_cases.json, degree_re
 schemas/                 registration_input.schema.json, registration_message.schema.json
 results/                 new runs (results/semantic_eval_results.json by default)
 results/past_runs/       earlier results: Claude Sonnet 5.5 on 3 pairs, one file per tally version
+results/past_runs/local_runs/   local LM Studio runs: Llama 3.1 8B on 200 cases, Qwen3.5 9B on 1 pair
 tests/                   python -m unittest discover tests (no model, no network, ~7 s)
 ```
 

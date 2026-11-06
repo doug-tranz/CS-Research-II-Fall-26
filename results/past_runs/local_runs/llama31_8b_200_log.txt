@@ -1,0 +1,1318 @@
+dashboard for C:\Users\Khalil\csr2_runs\llama_200.json at http://localhost:8765
+note: 1 sample(s) per case; use -n 3 or more to compare sessions reliably
+--resume: no batch in C:\Users\Khalil\csr2_runs\llama_200.json yet, so starting one
+batch-20261023T042357Z: 100 sessions to run (one per pair), 200 calls
+  the same cases in one whole-compact-tally session on OpenRouter as meta-llama/llama-3.1-8b-instruct: about $16.71
+
+--- session 1/100: pair-full_fallback-music-industry-bs-a, pair-full_fallback-music-industry-bs-b
+session compact-20261023T042357Z-001 started: Section Tally (compact), 334 sections of MUS, 34,286 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-full_fallback-music-industry-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 17,180 in, 330 out, 0.6376 Wh at 105 W, $0.000128; OpenRouter ~$0.0046]
+pair-full_fallback-music-industry-bs-b: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 103 (char 102)) [local: 17,177 in, 2,000 out, 4.1769 Wh at 120 W, $0.000835; OpenRouter ~$0.0044]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T042357Z-001)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    full_fallback      0/1
+session closed: 2 model calls, 34,357 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 4.8145 Wh, $0.000963; on OpenRouter these calls would have cost $0.0090
+
+--- session 2/100: pair-full_fallback-anthropology-ba-a, pair-full_fallback-anthropology-ba-b
+session compact-20261023T042626Z-002 started: Section Tally (compact), 31 sections of ANTH, 3,711 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-full_fallback-anthropology-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 5,820 in, 67 out, 0.5343 Wh at 96 W, $0.000107; OpenRouter ~$0.0014]
+pair-full_fallback-anthropology-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 5,821 in, 61 out, 0.1146 Wh at 97 W, $0.000023; OpenRouter ~$0.0013]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T042626Z-002)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    full_fallback      0/1
+session closed: 2 model calls, 11,641 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.6490 Wh, $0.000130; on OpenRouter these calls would have cost $0.0027
+
+--- session 3/100: pair-full_fallback-environmental-sustainability-studies-ba-a, pair-full_fallback-environmental-sustainability-studies-ba-b
+session compact-20261023T042651Z-003 started: Section Tally (compact), 121 sections of GEOG, STAT, 13,557 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-full_fallback-environmental-sustainability-studies-ba-a: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 115 (char 114)) [local: 9,372 in, 2,000 out, 3.8739 Wh at 130 W, $0.000775; OpenRouter ~$0.0029]
+pair-full_fallback-environmental-sustainability-studies-ba-b: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 103 (char 102)) [local: 9,367 in, 2,000 out, 3.2076 Wh at 140 W, $0.000642; OpenRouter ~$0.0026]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T042651Z-003)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    full_fallback      0/1
+session closed: 2 model calls, 18,739 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 7.0816 Wh, $0.001416; on OpenRouter these calls would have cost $0.0056
+
+--- session 4/100: pair-full_fallback-public-health-wellness-bs-a, pair-full_fallback-public-health-wellness-bs-b
+session compact-20261023T043002Z-004 started: Section Tally (compact), 127 sections of HES, HLT, NUT, 14,944 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-full_fallback-public-health-wellness-bs-a: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 103 (char 102)) [local: 10,374 in, 2,000 out, 4.0787 Wh at 129 W, $0.000816; OpenRouter ~$0.0032]
+pair-full_fallback-public-health-wellness-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 10,375 in, 67 out, 0.1403 Wh at 102 W, $0.000028; OpenRouter ~$0.0023]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T043002Z-004)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    full_fallback      0/1
+session closed: 2 model calls, 20,749 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 4.2190 Wh, $0.000844; on OpenRouter these calls would have cost $0.0055
+
+--- session 5/100: pair-full_fallback-entrepreneurship-bs-a, pair-full_fallback-entrepreneurship-bs-b
+session compact-20261023T043202Z-005 started: Section Tally (compact), 112 sections of FIN, MGT, 13,642 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-full_fallback-entrepreneurship-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 10,022 in, 39 out, 0.8186 Wh at 102 W, $0.000164; OpenRouter ~$0.0025]
+pair-full_fallback-entrepreneurship-bs-b: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 104 (char 103)) [local: 10,020 in, 2,000 out, 3.3229 Wh at 136 W, $0.000665; OpenRouter ~$0.0028]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T043202Z-005)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    full_fallback      0/1
+session closed: 2 model calls, 20,042 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 4.1414 Wh, $0.000828; on OpenRouter these calls would have cost $0.0053
+
+--- session 6/100: pair-full_fallback-nutrition-bs-a, pair-full_fallback-nutrition-bs-b
+session compact-20261023T043400Z-006 started: Section Tally (compact), 88 sections of HES, HPW, NUT, 11,017 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-full_fallback-nutrition-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 8,548 in, 235 out, 0.9836 Wh at 110 W, $0.000197; OpenRouter ~$0.0022]
+pair-full_fallback-nutrition-bs-b: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 103 (char 102)) [local: 8,547 in, 2,000 out, 3.2100 Wh at 140 W, $0.000642; OpenRouter ~$0.0025]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T043400Z-006)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    full_fallback      0/1
+session closed: 2 model calls, 17,095 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 4.1936 Wh, $0.000839; on OpenRouter these calls would have cost $0.0047
+
+--- session 7/100: pair-full_fallback-civil-engineering-bs-a, pair-full_fallback-civil-engineering-bs-b
+session compact-20261023T043556Z-007 started: Section Tally (compact), 358 sections of CEE, ENGR, 39,100 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.02 (estimate; the real projection from the local token counts is printed per call)
+pair-full_fallback-civil-engineering-bs-a: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 103 (char 102)) [local: 19,548 in, 2,000 out, 6.2063 Wh at 114 W, $0.001241; OpenRouter ~$0.0057]
+pair-full_fallback-civil-engineering-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 19,551 in, 277 out, 0.6154 Wh at 114 W, $0.000123; OpenRouter ~$0.0044]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T043556Z-007)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    full_fallback      0/1
+session closed: 2 model calls, 39,099 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 6.8217 Wh, $0.001364; on OpenRouter these calls would have cost $0.0101
+
+--- session 8/100: pair-full_fallback-molecular-cellular-biology-bs-a, pair-full_fallback-molecular-cellular-biology-bs-b
+session compact-20261023T043932Z-008 started: Section Tally (compact), 434 sections of CHEM, MATH, STAT, 51,383 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+WARNING: the opening is about 33,372 tokens but meta-llama-3.1-8b-instruct is loaded with a 32,768-token context; narrow --subjects or load it with a longer context (lms load meta-llama-3.1-8b-instruct --context-length N). Calls that fill it are failed.
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.02 (estimate; the real projection from the local token counts is printed per call)
+pair-full_fallback-molecular-cellular-biology-bs-a: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 5464 (char 5463)) [local: 25,867 in, 2,000 out, 7.7556 Wh at 109 W, $0.001551; OpenRouter ~$0.0074]
+pair-full_fallback-molecular-cellular-biology-bs-b: syntactic_error      | invalid JSON (Expecting value: line 1 column 5380 (char 5379)) [local: 25,868 in, 2,000 out, 5.0287 Wh at 115 W, $0.001006; OpenRouter ~$0.0063]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T043932Z-008)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    full_fallback      0/1
+session closed: 2 model calls, 51,735 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 12.7842 Wh, $0.002557; on OpenRouter these calls would have cost $0.0137
+
+--- session 9/100: pair-full_fallback-human-services-ba-a, pair-full_fallback-human-services-ba-b
+session compact-20261023T044628Z-009 started: Section Tally (compact), 156 sections of ANTH, LAWJ, SOC, 17,187 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-full_fallback-human-services-ba-a: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 103 (char 102)) [local: 11,556 in, 2,000 out, 4.3210 Wh at 126 W, $0.000864; OpenRouter ~$0.0035]
+pair-full_fallback-human-services-ba-b: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 103 (char 102)) [local: 11,558 in, 2,000 out, 3.4737 Wh at 135 W, $0.000695; OpenRouter ~$0.0031]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T044628Z-009)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    full_fallback      0/1
+session closed: 2 model calls, 23,114 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 7.7946 Wh, $0.001559; on OpenRouter these calls would have cost $0.0066
+
+--- session 10/100: pair-full_fallback-sociology-ba-a, pair-full_fallback-sociology-ba-b
+session compact-20261023T045005Z-010 started: Section Tally (compact), 51 sections of SOC, 5,692 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-full_fallback-sociology-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,912 in, 232 out, 0.8988 Wh at 113 W, $0.000180; OpenRouter ~$0.0020]
+pair-full_fallback-sociology-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,912 in, 201 out, 0.3256 Wh at 126 W, $0.000065; OpenRouter ~$0.0018]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T045005Z-010)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    full_fallback      0/1
+session closed: 2 model calls, 15,824 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.2244 Wh, $0.000245; on OpenRouter these calls would have cost $0.0038
+
+--- session 11/100: pair-in_progress-public-health-wellness-bs-a, pair-in_progress-public-health-wellness-bs-b
+session compact-20261023T045044Z-011 started: Section Tally (compact), 55 sections of HLT, HPW, 6,624 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-in_progress-public-health-wellness-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,080 in, 60 out, 0.5697 Wh at 103 W, $0.000114; OpenRouter ~$0.0017]
+pair-in_progress-public-health-wellness-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,084 in, 60 out, 0.3136 Wh at 104 W, $0.000063; OpenRouter ~$0.0016]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T045044Z-011)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    in_progress        0/1
+session closed: 2 model calls, 14,164 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.8833 Wh, $0.000177; on OpenRouter these calls would have cost $0.0033
+
+--- session 12/100: pair-in_progress-computing-informatics-ba-a, pair-in_progress-computing-informatics-ba-b
+session compact-20261023T045115Z-012 started: Section Tally (compact), 190 sections of CS, 21,155 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-in_progress-computing-informatics-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 13,578 in, 66 out, 1.2344 Wh at 104 W, $0.000247; OpenRouter ~$0.0035]
+pair-in_progress-computing-informatics-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 13,577 in, 231 out, 0.7824 Wh at 111 W, $0.000156; OpenRouter ~$0.0031]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T045115Z-012)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    in_progress        0/1
+session closed: 2 model calls, 27,155 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 2.0168 Wh, $0.000403; on OpenRouter these calls would have cost $0.0065
+
+--- session 13/100: pair-in_progress-civil-engineering-bs-a, pair-in_progress-civil-engineering-bs-b
+session compact-20261023T045225Z-013 started: Section Tally (compact), 205 sections of CEE, MATH, 22,928 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-in_progress-civil-engineering-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 13,860 in, 138 out, 1.3934 Wh at 104 W, $0.000279; OpenRouter ~$0.0036]
+pair-in_progress-civil-engineering-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 13,857 in, 81 out, 0.4667 Wh at 102 W, $0.000093; OpenRouter ~$0.0031]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T045225Z-013)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    in_progress        0/1
+session closed: 2 model calls, 27,717 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.8602 Wh, $0.000372; on OpenRouter these calls would have cost $0.0067
+
+--- session 14/100: pair-in_progress-dance-ba-a, pair-in_progress-dance-ba-b
+session compact-20261023T045331Z-014 started: Section Tally (compact), 112 sections of THD, 12,779 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-in_progress-dance-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 9,282 in, 187 out, 0.9522 Wh at 108 W, $0.000190; OpenRouter ~$0.0024]
+pair-in_progress-dance-ba-b: syntactic_error      | invalid JSON (Expecting ':' delimiter: line 1 column 642 (char 641)) [local: 9,279 in, 328 out, 0.7442 Wh at 121 W, $0.000149; OpenRouter ~$0.0021]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T045331Z-014)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    in_progress        0/1
+session closed: 2 model calls, 18,561 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.6964 Wh, $0.000339; on OpenRouter these calls would have cost $0.0045
+
+--- session 15/100: pair-in_progress-africana-studies-ba-a, pair-in_progress-africana-studies-ba-b
+session compact-20261023T045426Z-015 started: Section Tally (compact), 57 sections of AFST, SOC, 6,460 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-in_progress-africana-studies-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,354 in, 66 out, 0.5973 Wh at 101 W, $0.000119; OpenRouter ~$0.0018]
+pair-in_progress-africana-studies-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,348 in, 66 out, 0.3494 Wh at 104 W, $0.000070; OpenRouter ~$0.0016]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T045426Z-015)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    in_progress        0/1
+session closed: 2 model calls, 14,702 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.9467 Wh, $0.000189; on OpenRouter these calls would have cost $0.0034
+
+--- session 16/100: pair-in_progress-psychological-science-bs-a, pair-in_progress-psychological-science-bs-b
+session compact-20261023T045500Z-016 started: Section Tally (compact), 206 sections of PSY, 23,213 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-in_progress-psychological-science-bs-a: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 115 (char 114)) [local: 14,902 in, 2,000 out, 5.0434 Wh at 120 W, $0.001009; OpenRouter ~$0.0044]
+pair-in_progress-psychological-science-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 14,901 in, 108 out, 0.5843 Wh at 104 W, $0.000117; OpenRouter ~$0.0033]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T045500Z-016)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    in_progress        0/1
+session closed: 2 model calls, 29,803 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 5.6278 Wh, $0.001126; on OpenRouter these calls would have cost $0.0077
+
+--- session 17/100: pair-in_progress-entrepreneurship-bs-a, pair-in_progress-entrepreneurship-bs-b
+session compact-20261023T045752Z-017 started: Section Tally (compact), 97 sections of MGT, MIS, 12,120 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-in_progress-entrepreneurship-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 9,352 in, 46 out, 0.7515 Wh at 101 W, $0.000150; OpenRouter ~$0.0023]
+pair-in_progress-entrepreneurship-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 9,350 in, 67 out, 0.3910 Wh at 103 W, $0.000078; OpenRouter ~$0.0021]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T045752Z-017)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    in_progress        0/1
+session closed: 2 model calls, 18,702 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.1426 Wh, $0.000229; on OpenRouter these calls would have cost $0.0044
+
+--- session 18/100: pair-in_progress-spanish-ba-a, pair-in_progress-spanish-ba-b
+session compact-20261023T045834Z-018 started: Section Tally (compact), 16 sections of SPAN, 2,900 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-in_progress-spanish-ba-a: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 1307 (char 1306)) [local: 5,574 in, 489 out, 1.0019 Wh at 127 W, $0.000200; OpenRouter ~$0.0015]
+pair-in_progress-spanish-ba-b: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 748 (char 747)) [local: 5,571 in, 283 out, 0.5902 Wh at 125 W, $0.000118; OpenRouter ~$0.0013]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T045834Z-018)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    in_progress        0/1
+session closed: 2 model calls, 11,145 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.5922 Wh, $0.000318; on OpenRouter these calls would have cost $0.0028
+
+--- session 19/100: pair-in_progress-information-systems-analytics-bs-a, pair-in_progress-information-systems-analytics-bs-b
+session compact-20261023T045920Z-019 started: Section Tally (compact), 99 sections of MIS, WA, 11,312 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-in_progress-information-systems-analytics-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 9,359 in, 67 out, 0.7912 Wh at 104 W, $0.000158; OpenRouter ~$0.0023]
+pair-in_progress-information-systems-analytics-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 9,353 in, 78 out, 0.4070 Wh at 104 W, $0.000081; OpenRouter ~$0.0021]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T045920Z-019)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    in_progress        0/1
+session closed: 2 model calls, 18,712 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.1982 Wh, $0.000240; on OpenRouter these calls would have cost $0.0044
+
+--- session 20/100: pair-in_progress-mathematics-bs-a, pair-in_progress-mathematics-bs-b
+session compact-20261023T050003Z-020 started: Section Tally (compact), 171 sections of MATH, 18,533 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-in_progress-mathematics-bs-a: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 115 (char 114)) [local: 12,076 in, 2,000 out, 4.4166 Wh at 125 W, $0.000883; OpenRouter ~$0.0036]
+pair-in_progress-mathematics-bs-b: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 115 (char 114)) [local: 12,076 in, 2,000 out, 3.7962 Wh at 131 W, $0.000759; OpenRouter ~$0.0032]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T050003Z-020)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    in_progress        0/1
+session closed: 2 model calls, 24,152 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 8.2128 Wh, $0.001643; on OpenRouter these calls would have cost $0.0069
+
+--- session 21/100: pair-transfer-supply-chain-logistics-bs-a, pair-transfer-supply-chain-logistics-bs-b
+session compact-20261023T050355Z-021 started: Section Tally (compact), 333 sections of ACC, BUS, ENT, FIN, HRM, MGT, MIS, MKT, 42,233 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.02 (estimate; the real projection from the local token counts is printed per call)
+pair-transfer-supply-chain-logistics-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,302 in, 37 out, 2.1926 Wh at 101 W, $0.000439; OpenRouter ~$0.0056]
+pair-transfer-supply-chain-logistics-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,308 in, 36 out, 0.5095 Wh at 95 W, $0.000102; OpenRouter ~$0.0047]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T050355Z-021)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    transfer           0/1
+session closed: 2 model calls, 42,610 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 2.7021 Wh, $0.000540; on OpenRouter these calls would have cost $0.0103
+
+--- session 22/100: pair-transfer-africana-studies-ba-a, pair-transfer-africana-studies-ba-b
+session compact-20261023T050534Z-022 started: Section Tally (compact), 531 sections of AFST, ANTH, ECON, ENGL, HIST, MKT, POSC, PSY, SOC, 58,424 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+WARNING: the opening is about 37,738 tokens but meta-llama-3.1-8b-instruct is loaded with a 32,768-token context; narrow --subjects or load it with a longer context (lms load meta-llama-3.1-8b-instruct --context-length N). Calls that fill it are failed.
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.02 (estimate; the real projection from the local token counts is printed per call)
+pair-transfer-africana-studies-ba-a: syntactic_error      | invalid JSON (Expecting property name enclosed in double quotes: line 1 column 5413 (char 5412)) [local: 28,086 in, 2,000 out, 8.3448 Wh at 107 W, $0.001669; OpenRouter ~$0.0080]
+pair-transfer-africana-studies-ba-b: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 5496 (char 5495)) [local: 28,090 in, 2,000 out, 5.7532 Wh at 111 W, $0.001151; OpenRouter ~$0.0068]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T050534Z-022)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    transfer           0/1
+session closed: 2 model calls, 56,176 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 14.0981 Wh, $0.002820; on OpenRouter these calls would have cost $0.0148
+
+--- session 23/100: pair-transfer-philosophy-ba-a, pair-transfer-philosophy-ba-b
+session compact-20261023T051322Z-023 started: Section Tally (compact), 75 sections of PHIL, 8,340 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-transfer-philosophy-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,878 in, 33 out, 0.6027 Wh at 98 W, $0.000121; OpenRouter ~$0.0019]
+pair-transfer-philosophy-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,879 in, 33 out, 0.3107 Wh at 98 W, $0.000062; OpenRouter ~$0.0017]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T051322Z-023)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    transfer           0/1
+session closed: 2 model calls, 15,757 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.9134 Wh, $0.000183; on OpenRouter these calls would have cost $0.0037
+
+--- session 24/100: pair-transfer-sociology-ba-a, pair-transfer-sociology-ba-b
+session compact-20261023T051357Z-024 started: Section Tally (compact), 51 sections of SOC, 5,692 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-transfer-sociology-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,911 in, 38 out, 0.6004 Wh at 100 W, $0.000120; OpenRouter ~$0.0019]
+pair-transfer-sociology-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,910 in, 410 out, 0.8852 Wh at 125 W, $0.000177; OpenRouter ~$0.0019]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T051357Z-024)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    transfer           0/1
+session closed: 2 model calls, 15,821 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.4856 Wh, $0.000297; on OpenRouter these calls would have cost $0.0038
+
+--- session 25/100: pair-transfer-communication-studies-ba-a, pair-transfer-communication-studies-ba-b
+session compact-20261023T051445Z-025 started: Section Tally (compact), 135 sections of CMS, 13,976 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-transfer-communication-studies-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 11,259 in, 35 out, 0.9205 Wh at 101 W, $0.000184; OpenRouter ~$0.0028]
+pair-transfer-communication-studies-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 11,258 in, 35 out, 0.4133 Wh at 98 W, $0.000083; OpenRouter ~$0.0025]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T051445Z-025)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    transfer           0/1
+session closed: 2 model calls, 22,517 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.3338 Wh, $0.000267; on OpenRouter these calls would have cost $0.0053
+
+--- session 26/100: pair-transfer-computer-science-bs-a, pair-transfer-computer-science-bs-b
+session compact-20261023T051534Z-026 started: Section Tally (compact), 190 sections of CS, 21,155 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-transfer-computer-science-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 14,010 in, 42 out, 1.2184 Wh at 101 W, $0.000244; OpenRouter ~$0.0036]
+pair-transfer-computer-science-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 14,011 in, 42 out, 0.4758 Wh at 98 W, $0.000095; OpenRouter ~$0.0031]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T051534Z-026)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    transfer           0/1
+session closed: 2 model calls, 28,021 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.6941 Wh, $0.000339; on OpenRouter these calls would have cost $0.0066
+
+--- session 27/100: pair-transfer-computing-informatics-ba-a, pair-transfer-computing-informatics-ba-b
+session compact-20261023T051636Z-027 started: Section Tally (compact), 304 sections of CS, CST, GEOG, MIS, 33,071 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.02 (estimate; the real projection from the local token counts is printed per call)
+pair-transfer-computing-informatics-ba-a: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 5339 (char 5338)) [local: 18,642 in, 2,000 out, 5.8937 Wh at 115 W, $0.001179; OpenRouter ~$0.0054]
+pair-transfer-computing-informatics-ba-b: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 5354 (char 5353)) [local: 18,643 in, 2,000 out, 4.6634 Wh at 120 W, $0.000933; OpenRouter ~$0.0047]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T051636Z-027)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    transfer           0/1
+session closed: 2 model calls, 37,285 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 10.5570 Wh, $0.002111; on OpenRouter these calls would have cost $0.0101
+
+--- session 28/100: pair-transfer-africana-studies-ba-2-a, pair-transfer-africana-studies-ba-2-b
+session compact-20261023T052202Z-028 started: Section Tally (compact), 574 sections of AFST, ECON, ENGL, HIST, LAWJ, MKT, POSC, PSY, SOC, 63,899 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+WARNING: the opening is about 41,132 tokens but meta-llama-3.1-8b-instruct is loaded with a 32,768-token context; narrow --subjects or load it with a longer context (lms load meta-llama-3.1-8b-instruct --context-length N). Calls that fill it are failed.
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.02 (estimate; the real projection from the local token counts is printed per call)
+pair-transfer-africana-studies-ba-2-a: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 5439 (char 5438)) [local: 30,282 in, 2,000 out, 8.9719 Wh at 106 W, $0.001794; OpenRouter ~$0.0086]
+pair-transfer-africana-studies-ba-2-b: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 5439 (char 5438)) [local: 30,285 in, 2,000 out, 6.0047 Wh at 110 W, $0.001201; OpenRouter ~$0.0072]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T052202Z-028)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    transfer           0/1
+session closed: 2 model calls, 60,567 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 14.9766 Wh, $0.002995; on OpenRouter these calls would have cost $0.0159
+
+--- session 29/100: pair-transfer-philosophy-ba-2-a, pair-transfer-philosophy-ba-2-b
+session compact-20261023T053025Z-029 started: Section Tally (compact), 75 sections of PHIL, 8,340 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-transfer-philosophy-ba-2-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,862 in, 33 out, 0.5986 Wh at 97 W, $0.000120; OpenRouter ~$0.0019]
+pair-transfer-philosophy-ba-2-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,863 in, 33 out, 0.3120 Wh at 99 W, $0.000062; OpenRouter ~$0.0017]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T053025Z-029)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    transfer           0/1
+session closed: 2 model calls, 15,725 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.9106 Wh, $0.000182; on OpenRouter these calls would have cost $0.0037
+
+--- session 30/100: pair-transfer-sociology-ba-2-a, pair-transfer-sociology-ba-2-b
+session compact-20261023T053059Z-030 started: Section Tally (compact), 51 sections of SOC, 5,692 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-transfer-sociology-ba-2-a: syntactic_error      | invalid JSON (Expecting value: line 1 column 5490 (char 5489)) [local: 7,936 in, 2,000 out, 3.5689 Wh at 135 W, $0.000714; OpenRouter ~$0.0025]
+pair-transfer-sociology-ba-2-b: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 5457 (char 5456)) [local: 7,936 in, 2,000 out, 3.3437 Wh at 141 W, $0.000669; OpenRouter ~$0.0023]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T053059Z-030)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    transfer           0/1
+session closed: 2 model calls, 15,872 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 6.9126 Wh, $0.001383; on OpenRouter these calls would have cost $0.0048
+
+--- session 31/100: pair-busy_block-dance-ba-a, pair-busy_block-dance-ba-b
+session compact-20261023T053401Z-031 started: Section Tally (compact), 112 sections of THD, 12,779 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-busy_block-dance-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 10,066 in, 196 out, 1.0729 Wh at 110 W, $0.000215; OpenRouter ~$0.0026]
+pair-busy_block-dance-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 10,070 in, 133 out, 0.2411 Wh at 115 W, $0.000048; OpenRouter ~$0.0023]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T053401Z-031)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    busy_block         0/1
+session closed: 2 model calls, 20,136 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.3140 Wh, $0.000263; on OpenRouter these calls would have cost $0.0048
+
+--- session 32/100: pair-busy_block-journalism-ba-a, pair-busy_block-journalism-ba-b
+session compact-20261023T053445Z-032 started: Section Tally (compact), 35 sections of JRN, 4,192 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-busy_block-journalism-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 6,124 in, 132 out, 0.5822 Wh at 108 W, $0.000116; OpenRouter ~$0.0015]
+pair-busy_block-journalism-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 6,124 in, 139 out, 0.2175 Wh at 120 W, $0.000044; OpenRouter ~$0.0014]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T053445Z-032)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    busy_block         0/1
+session closed: 2 model calls, 12,248 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.7998 Wh, $0.000160; on OpenRouter these calls would have cost $0.0029
+
+--- session 33/100: pair-busy_block-mechanical-engineering-bs-a, pair-busy_block-mechanical-engineering-bs-b
+session compact-20261023T053512Z-033 started: Section Tally (compact), 324 sections of ENGR, 34,705 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-busy_block-mechanical-engineering-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 17,650 in, 130 out, 1.8523 Wh at 103 W, $0.000370; OpenRouter ~$0.0046]
+pair-busy_block-mechanical-engineering-bs-b: syntactic_error      | invalid JSON (Expecting value: line 1 column 504 (char 503)) [local: 17,650 in, 178 out, 0.3809 Wh at 110 W, $0.000076; OpenRouter ~$0.0039]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T053512Z-033)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    busy_block         0/1
+session closed: 2 model calls, 35,300 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 2.2332 Wh, $0.000447; on OpenRouter these calls would have cost $0.0086
+
+--- session 34/100: pair-busy_block-bioinformatics-bs-a, pair-busy_block-bioinformatics-bs-b
+session compact-20261023T053630Z-034 started: Section Tally (compact), 207 sections of CHEM, 27,538 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-busy_block-bioinformatics-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 16,340 in, 185 out, 1.7707 Wh at 104 W, $0.000354; OpenRouter ~$0.0043]
+pair-busy_block-bioinformatics-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 16,340 in, 185 out, 0.3807 Wh at 111 W, $0.000076; OpenRouter ~$0.0036]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T053630Z-034)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    busy_block         0/1
+session closed: 2 model calls, 32,680 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 2.1513 Wh, $0.000430; on OpenRouter these calls would have cost $0.0079
+
+--- session 35/100: pair-busy_block-entrepreneurship-bs-a, pair-busy_block-entrepreneurship-bs-b
+session compact-20261023T053744Z-035 started: Section Tally (compact), 71 sections of MGT, 9,017 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-busy_block-entrepreneurship-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 8,236 in, 39 out, 0.6344 Wh at 99 W, $0.000127; OpenRouter ~$0.0020]
+pair-busy_block-entrepreneurship-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 8,237 in, 39 out, 0.0848 Wh at 85 W, $0.000017; OpenRouter ~$0.0018]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T053744Z-035)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    busy_block         0/1
+session closed: 2 model calls, 16,473 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.7192 Wh, $0.000144; on OpenRouter these calls would have cost $0.0039
+
+--- session 36/100: pair-busy_block-environmental-science-bs-a, pair-busy_block-environmental-science-bs-b
+session compact-20261023T053812Z-036 started: Section Tally (compact), 207 sections of CHEM, 27,538 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-busy_block-environmental-science-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 16,071 in, 187 out, 0.7906 Wh at 101 W, $0.000158; OpenRouter ~$0.0042]
+pair-busy_block-environmental-science-bs-b: syntactic_error      | invalid JSON (Expecting property name enclosed in double quotes: line 1 column 379 (char 378)) [local: 16,071 in, 2,000 out, 3.9308 Wh at 125 W, $0.000786; OpenRouter ~$0.0041]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T053812Z-036)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    busy_block         0/1
+session closed: 2 model calls, 32,142 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 4.7214 Wh, $0.000944; on OpenRouter these calls would have cost $0.0083
+
+--- session 37/100: pair-busy_block-biochemistry-bs-a, pair-busy_block-biochemistry-bs-b
+session compact-20261023T054035Z-037 started: Section Tally (compact), 207 sections of CHEM, 27,538 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-busy_block-biochemistry-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 16,477 in, 39 out, 0.5636 Wh at 95 W, $0.000113; OpenRouter ~$0.0043]
+pair-busy_block-biochemistry-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 16,477 in, 39 out, 0.1056 Wh at 87 W, $0.000021; OpenRouter ~$0.0036]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T054035Z-037)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    busy_block         0/1
+session closed: 2 model calls, 32,954 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.6692 Wh, $0.000134; on OpenRouter these calls would have cost $0.0079
+
+--- session 38/100: pair-busy_block-computing-informatics-ba-a, pair-busy_block-computing-informatics-ba-b
+session compact-20261023T054101Z-038 started: Section Tally (compact), 190 sections of CS, 21,155 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-busy_block-computing-informatics-ba-a: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 115 (char 114)) [local: 13,642 in, 2,000 out, 4.7503 Wh at 122 W, $0.000950; OpenRouter ~$0.0040]
+pair-busy_block-computing-informatics-ba-b: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 115 (char 114)) [local: 13,641 in, 2,000 out, 3.7019 Wh at 130 W, $0.000740; OpenRouter ~$0.0036]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T054101Z-038)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    busy_block         0/1
+session closed: 2 model calls, 27,283 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 8.4522 Wh, $0.001690; on OpenRouter these calls would have cost $0.0076
+
+--- session 39/100: pair-busy_block-management-bs-a, pair-busy_block-management-bs-b
+session compact-20261023T054505Z-039 started: Section Tally (compact), 71 sections of MGT, 9,017 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-busy_block-management-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 8,793 in, 39 out, 0.4515 Wh at 96 W, $0.000090; OpenRouter ~$0.0022]
+pair-busy_block-management-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 8,791 in, 39 out, 0.0880 Wh at 86 W, $0.000018; OpenRouter ~$0.0019]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T054505Z-039)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    busy_block         0/1
+session closed: 2 model calls, 17,584 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.5395 Wh, $0.000108; on OpenRouter these calls would have cost $0.0041
+
+--- session 40/100: pair-busy_block-political-science-ba-a, pair-busy_block-political-science-ba-b
+session compact-20261023T054527Z-040 started: Section Tally (compact), 25 sections of POSC, 3,368 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-busy_block-political-science-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 6,110 in, 39 out, 0.4508 Wh at 99 W, $0.000090; OpenRouter ~$0.0015]
+pair-busy_block-political-science-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 6,110 in, 39 out, 0.0830 Wh at 87 W, $0.000017; OpenRouter ~$0.0014]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T054527Z-040)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    busy_block         0/1
+session closed: 2 model calls, 12,220 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.5338 Wh, $0.000107; on OpenRouter these calls would have cost $0.0028
+
+--- session 41/100: pair-nested_groups-marketing-bs-a, pair-nested_groups-marketing-bs-b
+session compact-20261023T054548Z-041 started: Section Tally (compact), 380 sections of CMS, COMP, 46,669 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.02 (estimate; the real projection from the local token counts is printed per call)
+pair-nested_groups-marketing-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,165 in, 37 out, 2.1403 Wh at 100 W, $0.000428; OpenRouter ~$0.0056]
+pair-nested_groups-marketing-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,167 in, 39 out, 0.5954 Wh at 95 W, $0.000119; OpenRouter ~$0.0047]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T054548Z-041)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    nested_groups      0/1
+session closed: 2 model calls, 42,332 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 2.7356 Wh, $0.000547; on OpenRouter these calls would have cost $0.0103
+
+--- session 42/100: pair-nested_groups-management-bs-a, pair-nested_groups-management-bs-b
+session compact-20261023T054728Z-042 started: Section Tally (compact), 380 sections of CMS, COMP, 46,669 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.02 (estimate; the real projection from the local token counts is printed per call)
+pair-nested_groups-management-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,737 in, 45 out, 0.6800 Wh at 93 W, $0.000136; OpenRouter ~$0.0057]
+pair-nested_groups-management-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,736 in, 45 out, 0.6850 Wh at 96 W, $0.000137; OpenRouter ~$0.0048]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T054728Z-042)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    nested_groups      0/1
+session closed: 2 model calls, 43,473 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.3650 Wh, $0.000273; on OpenRouter these calls would have cost $0.0105
+
+--- session 43/100: pair-nested_groups-information-systems-analytics-bs-a, pair-nested_groups-information-systems-analytics-bs-b
+session compact-20261023T054821Z-043 started: Section Tally (compact), 380 sections of CMS, COMP, 46,669 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.02 (estimate; the real projection from the local token counts is printed per call)
+pair-nested_groups-information-systems-analytics-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,155 in, 37 out, 0.5747 Wh at 92 W, $0.000115; OpenRouter ~$0.0056]
+pair-nested_groups-information-systems-analytics-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,154 in, 37 out, 0.5703 Wh at 94 W, $0.000114; OpenRouter ~$0.0047]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T054821Z-043)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    nested_groups      0/1
+session closed: 2 model calls, 42,309 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.1450 Wh, $0.000229; on OpenRouter these calls would have cost $0.0103
+
+--- session 44/100: pair-nested_groups-entrepreneurship-bs-a, pair-nested_groups-entrepreneurship-bs-b
+session compact-20261023T054907Z-044 started: Section Tally (compact), 380 sections of CMS, COMP, 46,669 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.02 (estimate; the real projection from the local token counts is printed per call)
+pair-nested_groups-entrepreneurship-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,214 in, 39 out, 0.5856 Wh at 92 W, $0.000117; OpenRouter ~$0.0056]
+pair-nested_groups-entrepreneurship-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,213 in, 39 out, 0.5916 Wh at 94 W, $0.000118; OpenRouter ~$0.0047]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T054907Z-044)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    nested_groups      0/1
+session closed: 2 model calls, 42,427 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.1772 Wh, $0.000235; on OpenRouter these calls would have cost $0.0103
+
+--- session 45/100: pair-nested_groups-accounting-bs-a, pair-nested_groups-accounting-bs-b
+session compact-20261023T054954Z-045 started: Section Tally (compact), 380 sections of CMS, COMP, 46,669 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.02 (estimate; the real projection from the local token counts is printed per call)
+pair-nested_groups-accounting-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,149 in, 45 out, 0.5895 Wh at 92 W, $0.000118; OpenRouter ~$0.0056]
+pair-nested_groups-accounting-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,148 in, 39 out, 0.5856 Wh at 95 W, $0.000117; OpenRouter ~$0.0047]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T054954Z-045)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    nested_groups      0/1
+session closed: 2 model calls, 42,297 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.1750 Wh, $0.000235; on OpenRouter these calls would have cost $0.0103
+
+--- session 46/100: pair-nested_groups-supply-chain-logistics-bs-a, pair-nested_groups-supply-chain-logistics-bs-b
+session compact-20261023T055040Z-046 started: Section Tally (compact), 380 sections of CMS, COMP, 46,669 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.02 (estimate; the real projection from the local token counts is printed per call)
+pair-nested_groups-supply-chain-logistics-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,131 in, 37 out, 0.5708 Wh at 92 W, $0.000114; OpenRouter ~$0.0056]
+pair-nested_groups-supply-chain-logistics-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,133 in, 37 out, 0.5764 Wh at 95 W, $0.000115; OpenRouter ~$0.0047]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T055040Z-046)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    nested_groups      0/1
+session closed: 2 model calls, 42,264 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.1472 Wh, $0.000229; on OpenRouter these calls would have cost $0.0102
+
+--- session 47/100: pair-nested_groups-finance-bs-a, pair-nested_groups-finance-bs-b
+session compact-20261023T055126Z-047 started: Section Tally (compact), 380 sections of CMS, COMP, 46,669 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.02 (estimate; the real projection from the local token counts is printed per call)
+pair-nested_groups-finance-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,359 in, 39 out, 0.6028 Wh at 92 W, $0.000121; OpenRouter ~$0.0056]
+pair-nested_groups-finance-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,358 in, 39 out, 0.6022 Wh at 94 W, $0.000120; OpenRouter ~$0.0047]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T055126Z-047)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    nested_groups      0/1
+session closed: 2 model calls, 42,717 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.2051 Wh, $0.000241; on OpenRouter these calls would have cost $0.0103
+
+--- session 48/100: pair-nested_groups-human-resource-management-bs-a, pair-nested_groups-human-resource-management-bs-b
+session compact-20261023T055213Z-048 started: Section Tally (compact), 380 sections of CMS, COMP, 46,669 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.02 (estimate; the real projection from the local token counts is printed per call)
+pair-nested_groups-human-resource-management-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,064 in, 37 out, 0.5554 Wh at 91 W, $0.000111; OpenRouter ~$0.0056]
+pair-nested_groups-human-resource-management-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,066 in, 39 out, 0.5619 Wh at 95 W, $0.000112; OpenRouter ~$0.0046]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T055213Z-048)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    nested_groups      0/1
+session closed: 2 model calls, 42,130 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.1173 Wh, $0.000223; on OpenRouter these calls would have cost $0.0102
+
+--- session 49/100: pair-nested_groups-management-bs-2-a, pair-nested_groups-management-bs-2-b
+session compact-20261023T055258Z-049 started: Section Tally (compact), 380 sections of CMS, COMP, 46,669 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.02 (estimate; the real projection from the local token counts is printed per call)
+pair-nested_groups-management-bs-2-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,711 in, 45 out, 0.6705 Wh at 93 W, $0.000134; OpenRouter ~$0.0057]
+pair-nested_groups-management-bs-2-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,713 in, 45 out, 0.6607 Wh at 95 W, $0.000132; OpenRouter ~$0.0048]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T055258Z-049)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    nested_groups      0/1
+session closed: 2 model calls, 43,424 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.3312 Wh, $0.000266; on OpenRouter these calls would have cost $0.0105
+
+--- session 50/100: pair-nested_groups-information-systems-analytics-bs-2-a, pair-nested_groups-information-systems-analytics-bs-2-b
+session compact-20261023T055350Z-050 started: Section Tally (compact), 380 sections of CMS, COMP, 46,669 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.02 (estimate; the real projection from the local token counts is printed per call)
+pair-nested_groups-information-systems-analytics-bs-2-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,174 in, 47 out, 0.5945 Wh at 92 W, $0.000119; OpenRouter ~$0.0056]
+pair-nested_groups-information-systems-analytics-bs-2-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 21,176 in, 39 out, 0.5848 Wh at 94 W, $0.000117; OpenRouter ~$0.0047]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T055350Z-050)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    nested_groups      0/1
+session closed: 2 model calls, 42,350 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.1793 Wh, $0.000236; on OpenRouter these calls would have cost $0.0103
+
+--- session 51/100: pair-credit_limit-africana-studies-ba-a, pair-credit_limit-africana-studies-ba-b
+session compact-20261023T055437Z-051 started: Section Tally (compact), 56 sections of AFST, HIST, 7,166 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-credit_limit-africana-studies-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,686 in, 240 out, 0.8601 Wh at 109 W, $0.000172; OpenRouter ~$0.0019]
+pair-credit_limit-africana-studies-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,686 in, 240 out, 0.3696 Wh at 126 W, $0.000074; OpenRouter ~$0.0018]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T055437Z-051)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    credit_limit       0/1
+session closed: 2 model calls, 15,372 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.2297 Wh, $0.000246; on OpenRouter these calls would have cost $0.0037
+
+--- session 52/100: pair-credit_limit-philosophy-ba-a, pair-credit_limit-philosophy-ba-b
+session compact-20261023T055517Z-052 started: Section Tally (compact), 75 sections of PHIL, 8,340 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-credit_limit-philosophy-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 8,032 in, 240 out, 0.8998 Wh at 111 W, $0.000180; OpenRouter ~$0.0020]
+pair-credit_limit-philosophy-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 8,032 in, 246 out, 0.3847 Wh at 127 W, $0.000077; OpenRouter ~$0.0018]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T055517Z-052)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    credit_limit       0/1
+session closed: 2 model calls, 16,064 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.2845 Wh, $0.000257; on OpenRouter these calls would have cost $0.0039
+
+--- session 53/100: pair-credit_limit-sociology-ba-a, pair-credit_limit-sociology-ba-b
+session compact-20261023T055558Z-053 started: Section Tally (compact), 51 sections of SOC, 5,692 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-credit_limit-sociology-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,693 in, 225 out, 0.8492 Wh at 112 W, $0.000170; OpenRouter ~$0.0019]
+pair-credit_limit-sociology-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,693 in, 225 out, 0.3505 Wh at 126 W, $0.000070; OpenRouter ~$0.0018]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T055558Z-053)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    credit_limit       0/1
+session closed: 2 model calls, 15,386 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.1996 Wh, $0.000240; on OpenRouter these calls would have cost $0.0037
+
+--- session 54/100: pair-credit_limit-nutrition-bs-a, pair-credit_limit-nutrition-bs-b
+session compact-20261023T055637Z-054 started: Section Tally (compact), 53 sections of HES, 7,306 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-credit_limit-nutrition-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,823 in, 228 out, 0.8651 Wh at 111 W, $0.000173; OpenRouter ~$0.0020]
+pair-credit_limit-nutrition-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,823 in, 228 out, 0.3555 Wh at 125 W, $0.000071; OpenRouter ~$0.0018]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T055637Z-054)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    credit_limit       0/1
+session closed: 2 model calls, 15,646 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.2206 Wh, $0.000244; on OpenRouter these calls would have cost $0.0038
+
+--- session 55/100: pair-credit_limit-marketing-bs-a, pair-credit_limit-marketing-bs-b
+session compact-20261023T055716Z-055 started: Section Tally (compact), 102 sections of FIN, MKT, 12,753 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-credit_limit-marketing-bs-a: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 103 (char 102)) [local: 9,601 in, 2,000 out, 3.8934 Wh at 131 W, $0.000779; OpenRouter ~$0.0030]
+pair-credit_limit-marketing-bs-b: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 103 (char 102)) [local: 9,601 in, 2,000 out, 3.2553 Wh at 140 W, $0.000651; OpenRouter ~$0.0027]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T055716Z-055)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    credit_limit       0/1
+session closed: 2 model calls, 19,202 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 7.1487 Wh, $0.001430; on OpenRouter these calls would have cost $0.0057
+
+--- session 56/100: pair-credit_limit-electrical-computer-engineering-bs-a, pair-credit_limit-electrical-computer-engineering-bs-b
+session compact-20261023T060029Z-056 started: Section Tally (compact), 193 sections of ENT, MATH, 21,886 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-credit_limit-electrical-computer-engineering-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 13,308 in, 230 out, 1.4948 Wh at 108 W, $0.000299; OpenRouter ~$0.0035]
+pair-credit_limit-electrical-computer-engineering-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 13,308 in, 230 out, 0.4337 Wh at 118 W, $0.000087; OpenRouter ~$0.0030]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T060029Z-056)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    credit_limit       0/1
+session closed: 2 model calls, 26,616 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.9285 Wh, $0.000386; on OpenRouter these calls would have cost $0.0065
+
+--- session 57/100: pair-credit_limit-mathematics-bs-a, pair-credit_limit-mathematics-bs-b
+session compact-20261023T060133Z-057 started: Section Tally (compact), 171 sections of MATH, 18,533 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-credit_limit-mathematics-bs-a: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 103 (char 102)) [local: 12,036 in, 2,000 out, 4.4218 Wh at 125 W, $0.000884; OpenRouter ~$0.0036]
+pair-credit_limit-mathematics-bs-b: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 103 (char 102)) [local: 12,036 in, 2,000 out, 3.5247 Wh at 134 W, $0.000705; OpenRouter ~$0.0032]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T060133Z-057)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    credit_limit       0/1
+session closed: 2 model calls, 24,072 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 7.9465 Wh, $0.001589; on OpenRouter these calls would have cost $0.0069
+
+--- session 58/100: pair-credit_limit-radio-television-film-ba-a, pair-credit_limit-radio-television-film-ba-b
+session compact-20261023T060516Z-058 started: Section Tally (compact), 68 sections of RTF, 8,781 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-credit_limit-radio-television-film-ba-a: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 103 (char 102)) [local: 7,601 in, 2,000 out, 3.5299 Wh at 138 W, $0.000706; OpenRouter ~$0.0025]
+pair-credit_limit-radio-television-film-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,601 in, 286 out, 0.4432 Wh at 132 W, $0.000089; OpenRouter ~$0.0018]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T060516Z-058)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    credit_limit       0/1
+session closed: 2 model calls, 15,202 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 3.9731 Wh, $0.000795; on OpenRouter these calls would have cost $0.0042
+
+--- session 59/100: pair-credit_limit-anthropology-ba-a, pair-credit_limit-anthropology-ba-b
+session compact-20261023T060701Z-059 started: Section Tally (compact), 106 sections of ANTH, PHIL, 11,352 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-credit_limit-anthropology-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 8,841 in, 228 out, 0.9872 Wh at 112 W, $0.000197; OpenRouter ~$0.0023]
+pair-credit_limit-anthropology-ba-b: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 103 (char 102)) [local: 8,841 in, 2,000 out, 3.1793 Wh at 142 W, $0.000636; OpenRouter ~$0.0025]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T060701Z-059)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    credit_limit       0/1
+session closed: 2 model calls, 17,682 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 4.1665 Wh, $0.000833; on OpenRouter these calls would have cost $0.0048
+
+--- session 60/100: pair-credit_limit-environmental-sustainability-studies-ba-a, pair-credit_limit-environmental-sustainability-studies-ba-b
+session compact-20261023T060854Z-060 started: Section Tally (compact), 51 sections of CEE, PLAN, 6,968 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-credit_limit-environmental-sustainability-studies-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,583 in, 249 out, 0.8962 Wh at 115 W, $0.000179; OpenRouter ~$0.0019]
+pair-credit_limit-environmental-sustainability-studies-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,583 in, 249 out, 0.3889 Wh at 129 W, $0.000078; OpenRouter ~$0.0017]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T060854Z-060)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    credit_limit       0/1
+session closed: 2 model calls, 15,166 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.2851 Wh, $0.000257; on OpenRouter these calls would have cost $0.0037
+
+--- session 61/100: pair-modality-marketing-bs-a, pair-modality-marketing-bs-b
+session compact-20261023T060935Z-061 started: Section Tally (compact), 61 sections of MKT, 8,128 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-modality-marketing-bs-a: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 115 (char 114)) [local: 8,592 in, 2,000 out, 3.7386 Wh at 135 W, $0.000748; OpenRouter ~$0.0027]
+pair-modality-marketing-bs-b: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 115 (char 114)) [local: 8,592 in, 2,000 out, 3.1602 Wh at 144 W, $0.000632; OpenRouter ~$0.0025]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T060935Z-061)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    modality           0/1
+session closed: 2 model calls, 17,184 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 6.8987 Wh, $0.001380; on OpenRouter these calls would have cost $0.0051
+
+--- session 62/100: pair-modality-molecular-cellular-biology-bs-a, pair-modality-molecular-cellular-biology-bs-b
+session compact-20261023T061235Z-062 started: Section Tally (compact), 206 sections of PSY, 23,213 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-modality-molecular-cellular-biology-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 15,101 in, 103 out, 1.5024 Wh at 106 W, $0.000300; OpenRouter ~$0.0039]
+pair-modality-molecular-cellular-biology-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 15,101 in, 124 out, 0.2586 Wh at 109 W, $0.000052; OpenRouter ~$0.0034]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T061235Z-062)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    modality           0/1
+session closed: 2 model calls, 30,202 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.7610 Wh, $0.000352; on OpenRouter these calls would have cost $0.0072
+
+--- session 63/100: pair-modality-accounting-bs-a, pair-modality-accounting-bs-b
+session compact-20261023T061336Z-063 started: Section Tally (compact), 71 sections of MGT, 9,017 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-modality-accounting-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 8,264 in, 38 out, 0.6416 Wh at 100 W, $0.000128; OpenRouter ~$0.0020]
+pair-modality-accounting-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 8,264 in, 47 out, 0.0968 Wh at 91 W, $0.000019; OpenRouter ~$0.0018]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T061336Z-063)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    modality           0/1
+session closed: 2 model calls, 16,528 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.7384 Wh, $0.000148; on OpenRouter these calls would have cost $0.0039
+
+--- session 64/100: pair-modality-mechanical-engineering-bs-a, pair-modality-mechanical-engineering-bs-b
+session compact-20261023T061404Z-064 started: Section Tally (compact), 190 sections of CS, 21,155 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-modality-mechanical-engineering-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 12,861 in, 186 out, 1.3569 Wh at 107 W, $0.000271; OpenRouter ~$0.0033]
+pair-modality-mechanical-engineering-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 12,861 in, 131 out, 0.2538 Wh at 111 W, $0.000051; OpenRouter ~$0.0029]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T061404Z-064)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    modality           0/1
+session closed: 2 model calls, 25,722 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.6107 Wh, $0.000322; on OpenRouter these calls would have cost $0.0062
+
+--- session 65/100: pair-modality-human-services-ba-a, pair-modality-human-services-ba-b
+session compact-20261023T061459Z-065 started: Section Tally (compact), 51 sections of SOC, 5,692 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-modality-human-services-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 6,859 in, 128 out, 0.6371 Wh at 106 W, $0.000127; OpenRouter ~$0.0017]
+pair-modality-human-services-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 6,859 in, 171 out, 0.2632 Wh at 122 W, $0.000053; OpenRouter ~$0.0016]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T061459Z-065)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    modality           0/1
+session closed: 2 model calls, 13,718 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.9003 Wh, $0.000180; on OpenRouter these calls would have cost $0.0033
+
+--- session 66/100: pair-modality-translational-biomedical-sciences-bs-a, pair-modality-translational-biomedical-sciences-bs-b
+session compact-20261023T061529Z-066 started: Section Tally (compact), 206 sections of PSY, 23,213 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-modality-translational-biomedical-sciences-bs-a: syntactic_error      | invalid JSON (Expecting property name enclosed in double quotes: line 1 column 381 (char 380)) [local: 15,266 in, 2,000 out, 4.3951 Wh at 122 W, $0.000879; OpenRouter ~$0.0045]
+pair-modality-translational-biomedical-sciences-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 15,266 in, 56 out, 0.1327 Wh at 94 W, $0.000027; OpenRouter ~$0.0034]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T061529Z-066)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    modality           0/1
+session closed: 2 model calls, 30,532 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 4.5278 Wh, $0.000906; on OpenRouter these calls would have cost $0.0078
+
+--- session 67/100: pair-modality-nutrition-bs-a, pair-modality-nutrition-bs-b
+session compact-20261023T061745Z-067 started: Section Tally (compact), 47 sections of HLT, 5,625 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-modality-nutrition-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,029 in, 38 out, 0.5330 Wh at 100 W, $0.000107; OpenRouter ~$0.0017]
+pair-modality-nutrition-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,029 in, 54 out, 0.0977 Wh at 89 W, $0.000020; OpenRouter ~$0.0016]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T061745Z-067)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    modality           0/1
+session closed: 2 model calls, 14,058 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.6307 Wh, $0.000126; on OpenRouter these calls would have cost $0.0033
+
+--- session 68/100: pair-modality-finance-bs-a, pair-modality-finance-bs-b
+session compact-20261023T061809Z-068 started: Section Tally (compact), 41 sections of FIN, 5,324 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-modality-finance-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,144 in, 50 out, 0.5501 Wh at 100 W, $0.000110; OpenRouter ~$0.0017]
+pair-modality-finance-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,144 in, 53 out, 0.1029 Wh at 94 W, $0.000021; OpenRouter ~$0.0016]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T061809Z-068)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    modality           0/1
+session closed: 2 model calls, 14,288 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.6531 Wh, $0.000131; on OpenRouter these calls would have cost $0.0033
+
+--- session 69/100: pair-modality-anthropology-ba-a, pair-modality-anthropology-ba-b
+session compact-20261023T061834Z-069 started: Section Tally (compact), 31 sections of ANTH, 3,711 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-modality-anthropology-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 5,814 in, 108 out, 0.5122 Wh at 104 W, $0.000102; OpenRouter ~$0.0014]
+pair-modality-anthropology-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 5,814 in, 55 out, 0.0964 Wh at 90 W, $0.000019; OpenRouter ~$0.0013]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T061834Z-069)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    modality           0/1
+session closed: 2 model calls, 11,628 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.6086 Wh, $0.000122; on OpenRouter these calls would have cost $0.0027
+
+--- session 70/100: pair-modality-communication-studies-ba-a, pair-modality-communication-studies-ba-b
+session compact-20261023T061857Z-070 started: Section Tally (compact), 135 sections of CMS, 13,976 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-modality-communication-studies-ba-a: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 104 (char 103)) [local: 11,270 in, 2,000 out, 4.2394 Wh at 127 W, $0.000848; OpenRouter ~$0.0034]
+pair-modality-communication-studies-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 11,270 in, 128 out, 0.2385 Wh at 112 W, $0.000048; OpenRouter ~$0.0025]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T061857Z-070)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    modality           0/1
+session closed: 2 model calls, 22,540 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 4.4779 Wh, $0.000896; on OpenRouter these calls would have cost $0.0059
+
+--- session 71/100: pair-days-computing-informatics-ba-a, pair-days-computing-informatics-ba-b
+session compact-20261023T062106Z-071 started: Section Tally (compact), 190 sections of CS, 21,155 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-days-computing-informatics-ba-a: syntactic_error      | invalid JSON (Extra data: line 1 column 366 (char 365)) [local: 14,095 in, 129 out, 1.4268 Wh at 104 W, $0.000285; OpenRouter ~$0.0036]
+pair-days-computing-informatics-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 14,095 in, 122 out, 0.2448 Wh at 107 W, $0.000049; OpenRouter ~$0.0031]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T062106Z-071)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    days               0/1
+session closed: 2 model calls, 28,190 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.6716 Wh, $0.000334; on OpenRouter these calls would have cost $0.0067
+
+--- session 72/100: pair-days-psychology-ba-a, pair-days-psychology-ba-b
+session compact-20261023T062205Z-072 started: Section Tally (compact), 206 sections of PSY, 23,213 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-days-psychology-ba-a: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 4583 (char 4582)) [local: 14,603 in, 1,598 out, 3.4624 Wh at 122 W, $0.000692; OpenRouter ~$0.0042]
+pair-days-psychology-ba-b: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 4583 (char 4582)) [local: 14,603 in, 1,629 out, 3.0806 Wh at 128 W, $0.000616; OpenRouter ~$0.0037]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T062205Z-072)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    days               0/1
+session closed: 2 model calls, 29,206 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 6.5430 Wh, $0.001309; on OpenRouter these calls would have cost $0.0079
+
+--- session 73/100: pair-days-electrical-computer-engineering-bs-a, pair-days-electrical-computer-engineering-bs-b
+session compact-20261023T062515Z-073 started: Section Tally (compact), 224 sections of BIOL, 26,780 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-days-electrical-computer-engineering-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 16,697 in, 122 out, 1.7185 Wh at 103 W, $0.000344; OpenRouter ~$0.0043]
+pair-days-electrical-computer-engineering-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 16,697 in, 170 out, 0.3570 Wh at 111 W, $0.000071; OpenRouter ~$0.0037]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T062515Z-073)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    days               0/1
+session closed: 2 model calls, 33,394 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 2.0755 Wh, $0.000415; on OpenRouter these calls would have cost $0.0080
+
+--- session 74/100: pair-days-biomedical-engineering-bs-a, pair-days-biomedical-engineering-bs-b
+session compact-20261023T062628Z-074 started: Section Tally (compact), 324 sections of ENGR, 34,705 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.02 (estimate; the real projection from the local token counts is printed per call)
+pair-days-biomedical-engineering-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 17,755 in, 162 out, 1.9226 Wh at 103 W, $0.000385; OpenRouter ~$0.0047]
+pair-days-biomedical-engineering-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 17,755 in, 117 out, 0.2603 Wh at 105 W, $0.000052; OpenRouter ~$0.0039]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T062628Z-074)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    days               0/1
+session closed: 2 model calls, 35,510 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 2.1828 Wh, $0.000437; on OpenRouter these calls would have cost $0.0086
+
+--- session 75/100: pair-days-chemistry-bs-a, pair-days-chemistry-bs-b
+session compact-20261023T062746Z-075 started: Section Tally (compact), 207 sections of CHEM, 27,538 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-days-chemistry-bs-a: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 380 (char 379)) [local: 16,013 in, 133 out, 1.6292 Wh at 102 W, $0.000326; OpenRouter ~$0.0042]
+pair-days-chemistry-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 16,013 in, 187 out, 0.3791 Wh at 111 W, $0.000076; OpenRouter ~$0.0036]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T062746Z-075)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    days               0/1
+session closed: 2 model calls, 32,026 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 2.0083 Wh, $0.000402; on OpenRouter these calls would have cost $0.0078
+
+--- session 76/100: pair-days-psychological-science-bs-a, pair-days-psychological-science-bs-b
+session compact-20261023T062856Z-076 started: Section Tally (compact), 206 sections of PSY, 23,213 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-days-psychological-science-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 14,454 in, 74 out, 1.3314 Wh at 101 W, $0.000266; OpenRouter ~$0.0037]
+pair-days-psychological-science-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 14,454 in, 149 out, 0.2936 Wh at 110 W, $0.000059; OpenRouter ~$0.0032]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T062856Z-076)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    days               0/1
+session closed: 2 model calls, 28,908 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.6249 Wh, $0.000325; on OpenRouter these calls would have cost $0.0069
+
+--- session 77/100: pair-days-sports-communication-media-ba-a, pair-days-sports-communication-media-ba-b
+session compact-20261023T062955Z-077 started: Section Tally (compact), 44 sections of PR, 5,408 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-days-sports-communication-media-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 6,659 in, 131 out, 0.6186 Wh at 105 W, $0.000124; OpenRouter ~$0.0016]
+pair-days-sports-communication-media-ba-b: syntactic_error      | invalid JSON (Extra data: line 1 column 378 (char 377)) [local: 6,659 in, 131 out, 0.2041 Wh at 114 W, $0.000041; OpenRouter ~$0.0015]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T062955Z-077)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    days               0/1
+session closed: 2 model calls, 13,318 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.8226 Wh, $0.000165; on OpenRouter these calls would have cost $0.0032
+
+--- session 78/100: pair-days-computer-science-bs-a, pair-days-computer-science-bs-b
+session compact-20261023T063024Z-078 started: Section Tally (compact), 171 sections of MATH, 18,533 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-days-computer-science-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 12,905 in, 83 out, 1.1650 Wh at 102 W, $0.000233; OpenRouter ~$0.0033]
+pair-days-computer-science-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 12,905 in, 73 out, 0.1527 Wh at 98 W, $0.000031; OpenRouter ~$0.0029]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T063024Z-078)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    days               0/1
+session closed: 2 model calls, 25,810 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.3177 Wh, $0.000264; on OpenRouter these calls would have cost $0.0061
+
+--- session 79/100: pair-days-bioinformatics-bs-a, pair-days-bioinformatics-bs-b
+session compact-20261023T063111Z-079 started: Section Tally (compact), 207 sections of CHEM, 27,538 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-days-bioinformatics-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 16,069 in, 133 out, 0.6884 Wh at 98 W, $0.000138; OpenRouter ~$0.0042]
+pair-days-bioinformatics-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 16,069 in, 124 out, 0.2606 Wh at 105 W, $0.000052; OpenRouter ~$0.0036]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T063111Z-079)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    days               0/1
+session closed: 2 model calls, 32,138 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.9491 Wh, $0.000190; on OpenRouter these calls would have cost $0.0078
+
+--- session 80/100: pair-days-civil-engineering-bs-a, pair-days-civil-engineering-bs-b
+session compact-20261023T063147Z-080 started: Section Tally (compact), 324 sections of ENGR, 34,705 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-days-civil-engineering-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 17,753 in, 160 out, 1.9054 Wh at 102 W, $0.000381; OpenRouter ~$0.0047]
+pair-days-civil-engineering-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 17,753 in, 122 out, 0.2679 Wh at 104 W, $0.000054; OpenRouter ~$0.0039]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T063147Z-080)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    days               0/1
+session closed: 2 model calls, 35,506 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 2.1733 Wh, $0.000435; on OpenRouter these calls would have cost $0.0086
+
+--- session 81/100: pair-grade_threshold-environmental-sustainability-studies-ba-a, pair-grade_threshold-environmental-sustainability-studies-ba-b
+session compact-20261023T063305Z-081 started: Section Tally (compact), 101 sections of ECON, ENGL, 11,368 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-grade_threshold-environmental-sustainability-studies-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 8,724 in, 185 out, 0.8780 Wh at 105 W, $0.000176; OpenRouter ~$0.0022]
+pair-grade_threshold-environmental-sustainability-studies-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 8,724 in, 185 out, 0.5363 Wh at 113 W, $0.000107; OpenRouter ~$0.0020]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T063305Z-081)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    grade_threshold    0/1
+session closed: 2 model calls, 17,448 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.4143 Wh, $0.000283; on OpenRouter these calls would have cost $0.0042
+
+--- session 82/100: pair-grade_threshold-political-science-ba-a, pair-grade_threshold-political-science-ba-b
+session compact-20261023T063354Z-082 started: Section Tally (compact), 25 sections of POSC, 3,368 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-grade_threshold-political-science-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 6,163 in, 39 out, 0.4504 Wh at 98 W, $0.000090; OpenRouter ~$0.0015]
+pair-grade_threshold-political-science-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 6,163 in, 39 out, 0.2950 Wh at 99 W, $0.000059; OpenRouter ~$0.0014]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T063354Z-082)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    grade_threshold    0/1
+session closed: 2 model calls, 12,326 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.7454 Wh, $0.000149; on OpenRouter these calls would have cost $0.0028
+
+--- session 83/100: pair-grade_threshold-public-relations-ba-a, pair-grade_threshold-public-relations-ba-b
+session compact-20261023T063423Z-083 started: Section Tally (compact), 44 sections of PR, 5,408 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-grade_threshold-public-relations-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 6,174 in, 38 out, 0.4500 Wh at 97 W, $0.000090; OpenRouter ~$0.0015]
+pair-grade_threshold-public-relations-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 6,174 in, 38 out, 0.2609 Wh at 98 W, $0.000052; OpenRouter ~$0.0014]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T063423Z-083)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    grade_threshold    0/1
+session closed: 2 model calls, 12,348 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.7109 Wh, $0.000142; on OpenRouter these calls would have cost $0.0029
+
+--- session 84/100: pair-grade_threshold-biochemistry-bs-a, pair-grade_threshold-biochemistry-bs-b
+session compact-20261023T063450Z-084 started: Section Tally (compact), 207 sections of CHEM, 27,538 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-grade_threshold-biochemistry-bs-a: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 633 (char 632)) [local: 16,548 in, 228 out, 0.9239 Wh at 102 W, $0.000185; OpenRouter ~$0.0043]
+pair-grade_threshold-biochemistry-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 16,548 in, 172 out, 0.8070 Wh at 104 W, $0.000161; OpenRouter ~$0.0037]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T063450Z-084)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    grade_threshold    0/1
+session closed: 2 model calls, 33,096 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.7309 Wh, $0.000346; on OpenRouter these calls would have cost $0.0080
+
+--- session 85/100: pair-grade_threshold-english-ba-a, pair-grade_threshold-english-ba-b
+session compact-20261023T063552Z-085 started: Section Tally (compact), 53 sections of ENGL, 6,503 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-grade_threshold-english-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,008 in, 39 out, 0.5165 Wh at 97 W, $0.000103; OpenRouter ~$0.0017]
+pair-grade_threshold-english-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,008 in, 39 out, 0.3070 Wh at 98 W, $0.000061; OpenRouter ~$0.0016]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T063552Z-085)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    grade_threshold    0/1
+session closed: 2 model calls, 14,016 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.8235 Wh, $0.000165; on OpenRouter these calls would have cost $0.0033
+
+--- session 86/100: pair-grade_threshold-sociology-ba-a, pair-grade_threshold-sociology-ba-b
+session compact-20261023T063624Z-086 started: Section Tally (compact), 51 sections of SOC, 5,692 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-grade_threshold-sociology-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,674 in, 42 out, 0.5747 Wh at 99 W, $0.000115; OpenRouter ~$0.0019]
+pair-grade_threshold-sociology-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,674 in, 42 out, 0.3558 Wh at 100 W, $0.000071; OpenRouter ~$0.0017]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T063624Z-086)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    grade_threshold    0/1
+session closed: 2 model calls, 15,348 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.9305 Wh, $0.000186; on OpenRouter these calls would have cost $0.0036
+
+--- session 87/100: pair-grade_threshold-africana-studies-ba-a, pair-grade_threshold-africana-studies-ba-b
+session compact-20261023T063659Z-087 started: Section Tally (compact), 6 sections of AFST, 1,467 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.00 (estimate; the real projection from the local token counts is printed per call)
+pair-grade_threshold-africana-studies-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 5,225 in, 262 out, 0.6430 Wh at 112 W, $0.000129; OpenRouter ~$0.0013]
+pair-grade_threshold-africana-studies-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 5,225 in, 262 out, 0.6100 Wh at 122 W, $0.000122; OpenRouter ~$0.0012]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T063659Z-087)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    grade_threshold    0/1
+session closed: 2 model calls, 10,450 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.2530 Wh, $0.000251; on OpenRouter these calls would have cost $0.0025
+
+--- session 88/100: pair-grade_threshold-environmental-science-bs-a, pair-grade_threshold-environmental-science-bs-b
+session compact-20261023T063740Z-088 started: Section Tally (compact), 257 sections of BIOL, EVSC, 30,521 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-grade_threshold-environmental-science-bs-a: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 496 (char 495)) [local: 17,002 in, 174 out, 1.8321 Wh at 103 W, $0.000366; OpenRouter ~$0.0045]
+pair-grade_threshold-environmental-science-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 17,002 in, 223 out, 0.8558 Wh at 106 W, $0.000171; OpenRouter ~$0.0038]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T063740Z-088)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    grade_threshold    0/1
+session closed: 2 model calls, 34,004 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 2.6879 Wh, $0.000538; on OpenRouter these calls would have cost $0.0083
+
+--- session 89/100: pair-grade_threshold-nutrition-bs-a, pair-grade_threshold-nutrition-bs-b
+session compact-20261023T063915Z-089 started: Section Tally (compact), 61 sections of HES, HPW, 8,305 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-grade_threshold-nutrition-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,551 in, 223 out, 0.8283 Wh at 109 W, $0.000166; OpenRouter ~$0.0019]
+pair-grade_threshold-nutrition-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,551 in, 223 out, 0.5461 Wh at 116 W, $0.000109; OpenRouter ~$0.0017]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T063915Z-089)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    grade_threshold    0/1
+session closed: 2 model calls, 15,102 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.3744 Wh, $0.000275; on OpenRouter these calls would have cost $0.0037
+
+--- session 90/100: pair-grade_threshold-human-services-ba-a, pair-grade_threshold-human-services-ba-b
+session compact-20261023T064000Z-090 started: Section Tally (compact), 51 sections of SOC, 5,692 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-grade_threshold-human-services-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 6,934 in, 38 out, 0.3408 Wh at 92 W, $0.000068; OpenRouter ~$0.0017]
+pair-grade_threshold-human-services-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 6,934 in, 38 out, 0.2993 Wh at 99 W, $0.000060; OpenRouter ~$0.0015]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T064000Z-090)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    grade_threshold    0/1
+session closed: 2 model calls, 13,868 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.6401 Wh, $0.000128; on OpenRouter these calls would have cost $0.0032
+
+--- session 91/100: pair-withdrawal-exercise-science-bs-a, pair-withdrawal-exercise-science-bs-b
+session compact-20261023T064026Z-091 started: Section Tally (compact), 80 sections of HES, NUT, 10,021 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-withdrawal-exercise-science-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 8,325 in, 53 out, 0.6505 Wh at 100 W, $0.000130; OpenRouter ~$0.0021]
+pair-withdrawal-exercise-science-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 8,325 in, 53 out, 0.3212 Wh at 99 W, $0.000064; OpenRouter ~$0.0018]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T064026Z-091)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    withdrawal         0/1
+session closed: 2 model calls, 16,650 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.9717 Wh, $0.000194; on OpenRouter these calls would have cost $0.0039
+
+--- session 92/100: pair-withdrawal-chemistry-bs-a, pair-withdrawal-chemistry-bs-b
+session compact-20261023T064102Z-092 started: Section Tally (compact), 207 sections of CHEM, 27,538 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-withdrawal-chemistry-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 16,079 in, 70 out, 1.5061 Wh at 101 W, $0.000301; OpenRouter ~$0.0042]
+pair-withdrawal-chemistry-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 16,079 in, 70 out, 0.5631 Wh at 98 W, $0.000113; OpenRouter ~$0.0036]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T064102Z-092)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    withdrawal         0/1
+session closed: 2 model calls, 32,158 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 2.0693 Wh, $0.000414; on OpenRouter these calls would have cost $0.0077
+
+--- session 93/100: pair-withdrawal-molecular-cellular-biology-bs-a, pair-withdrawal-molecular-cellular-biology-bs-b
+session compact-20261023T064218Z-093 started: Section Tally (compact), 24 sections of MCB, 3,515 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-withdrawal-molecular-cellular-biology-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 6,482 in, 50 out, 0.4867 Wh at 97 W, $0.000097; OpenRouter ~$0.0016]
+pair-withdrawal-molecular-cellular-biology-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 6,482 in, 50 out, 0.3451 Wh at 100 W, $0.000069; OpenRouter ~$0.0014]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T064218Z-093)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    withdrawal         0/1
+session closed: 2 model calls, 12,964 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.8319 Wh, $0.000166; on OpenRouter these calls would have cost $0.0030
+
+--- session 94/100: pair-withdrawal-sociology-ba-a, pair-withdrawal-sociology-ba-b
+session compact-20261023T064250Z-094 started: Section Tally (compact), 51 sections of SOC, 5,692 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-withdrawal-sociology-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,671 in, 38 out, 0.4015 Wh at 93 W, $0.000080; OpenRouter ~$0.0018]
+pair-withdrawal-sociology-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,671 in, 38 out, 0.3427 Wh at 99 W, $0.000069; OpenRouter ~$0.0017]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T064250Z-094)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    withdrawal         0/1
+session closed: 2 model calls, 15,342 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.7442 Wh, $0.000149; on OpenRouter these calls would have cost $0.0035
+
+--- session 95/100: pair-withdrawal-computer-science-bs-a, pair-withdrawal-computer-science-bs-b
+session compact-20261023T064319Z-095 started: Section Tally (compact), 190 sections of CS, 21,155 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-withdrawal-computer-science-bs-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 13,877 in, 39 out, 1.1886 Wh at 100 W, $0.000238; OpenRouter ~$0.0035]
+pair-withdrawal-computer-science-bs-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 13,877 in, 39 out, 0.5323 Wh at 97 W, $0.000106; OpenRouter ~$0.0031]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T064319Z-095)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    withdrawal         0/1
+session closed: 2 model calls, 27,754 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.7209 Wh, $0.000344; on OpenRouter these calls would have cost $0.0066
+
+--- session 96/100: pair-withdrawal-journalism-ba-a, pair-withdrawal-journalism-ba-b
+session compact-20261023T064423Z-096 started: Section Tally (compact), 35 sections of JRN, 4,192 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-withdrawal-journalism-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 5,678 in, 39 out, 0.4074 Wh at 95 W, $0.000081; OpenRouter ~$0.0014]
+pair-withdrawal-journalism-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 5,678 in, 39 out, 0.2615 Wh at 98 W, $0.000052; OpenRouter ~$0.0013]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T064423Z-096)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    withdrawal         0/1
+session closed: 2 model calls, 11,356 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.6688 Wh, $0.000134; on OpenRouter these calls would have cost $0.0026
+
+--- session 97/100: pair-withdrawal-electrical-computer-engineering-bs-a, pair-withdrawal-electrical-computer-engineering-bs-b
+session compact-20261023T064450Z-097 started: Section Tally (compact), 495 sections of ENGR, MATH, 52,537 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+WARNING: the opening is about 34,088 tokens but meta-llama-3.1-8b-instruct is loaded with a 32,768-token context; narrow --subjects or load it with a longer context (lms load meta-llama-3.1-8b-instruct --context-length N). Calls that fill it are failed.
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.02 (estimate; the real projection from the local token counts is printed per call)
+pair-withdrawal-electrical-computer-engineering-bs-a: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 5470 (char 5469)) [local: 25,384 in, 2,000 out, 7.5566 Wh at 108 W, $0.001511; OpenRouter ~$0.0073]
+pair-withdrawal-electrical-computer-engineering-bs-b: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 916 (char 915)) [local: 25,384 in, 345 out, 1.4101 Wh at 104 W, $0.000282; OpenRouter ~$0.0057]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T064450Z-097)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    withdrawal         0/1
+session closed: 2 model calls, 50,768 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 8.9667 Wh, $0.001793; on OpenRouter these calls would have cost $0.0129
+
+--- session 98/100: pair-withdrawal-writing-arts-ba-a, pair-withdrawal-writing-arts-ba-b
+session compact-20261023T064951Z-098 started: Section Tally (compact), 73 sections of WA, 8,209 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-withdrawal-writing-arts-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,431 in, 67 out, 0.5954 Wh at 98 W, $0.000119; OpenRouter ~$0.0019]
+pair-withdrawal-writing-arts-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 7,431 in, 67 out, 0.3147 Wh at 103 W, $0.000063; OpenRouter ~$0.0017]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T064951Z-098)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    withdrawal         0/1
+session closed: 2 model calls, 14,862 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 0.9101 Wh, $0.000182; on OpenRouter these calls would have cost $0.0035
+
+--- session 99/100: pair-withdrawal-dance-ba-a, pair-withdrawal-dance-ba-b
+session compact-20261023T065025Z-099 started: Section Tally (compact), 112 sections of THD, 12,779 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-withdrawal-dance-ba-a: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 9,348 in, 82 out, 0.7922 Wh at 102 W, $0.000158; OpenRouter ~$0.0024]
+pair-withdrawal-dance-ba-b: syntactic_error      | not a DIDComm plaintext message: ["<message>: 'id' is a required property", "<message>: 'type' is a required property", "<message>: 'body' is a required property"] [local: 9,348 in, 82 out, 0.3582 Wh at 103 W, $0.000072; OpenRouter ~$0.0021]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T065025Z-099)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    withdrawal         0/1
+session closed: 2 model calls, 18,696 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 1.1505 Wh, $0.000230; on OpenRouter these calls would have cost $0.0045
+
+--- session 100/100: pair-withdrawal-biomedical-engineering-bs-a, pair-withdrawal-biomedical-engineering-bs-b
+session compact-20261023T065107Z-100 started: Section Tally (compact), 344 sections of BME, ENGR, 37,001 characters, cache ttl 5m
+local run on meta-llama-3.1-8b-instruct via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as meta-llama/llama-3.1-8b-instruct, this session would cost about $0.02 (estimate; the real projection from the local token counts is printed per call)
+pair-withdrawal-biomedical-engineering-bs-a: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 103 (char 102)) [local: 18,746 in, 2,000 out, 5.8983 Wh at 114 W, $0.001180; OpenRouter ~$0.0055]
+pair-withdrawal-biomedical-engineering-bs-b: syntactic_error      | invalid JSON (Unterminated string starting at: line 1 column 103 (char 102)) [local: 18,746 in, 2,000 out, 4.7091 Wh at 119 W, $0.000942; OpenRouter ~$0.0047]
+
+0/2 semantic_ok on meta-llama-3.1-8b-instruct. Cost $0.0000. Full results in C:\Users\Khalil\csr2_runs\llama_200.json (session compact-20261023T065107Z-100)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    withdrawal         0/1
+session closed: 2 model calls, 37,492 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 10.6074 Wh, $0.002121; on OpenRouter these calls would have cost $0.0102
+
+=== batch totals
+batch-20261023T042357Z (meta-llama-3.1-8b-instruct via lmstudio): 100 sessions, 200 calls
+  semantic_ok: 0/200
+  paired accuracy: 0/100 pairs (0%, 95% CI 0.00-0.04)
+  billed by OpenRouter: $0.0000
+  electricity: 286.707 Wh = 0.2867 kWh, $0.0573 at $0.2/kWh
+  projected on OpenRouter as meta-llama/llama-3.1-8b-instruct: $0.6262 as sent (each pair with its own small opening, written to the cache once)
+  the same cases in one whole-tally session on OpenRouter: about $16.71 (estimate; the real experiment)

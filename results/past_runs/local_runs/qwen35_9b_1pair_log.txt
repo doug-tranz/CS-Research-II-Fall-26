@@ -1,0 +1,26 @@
+note: 1 sample(s) per case; use -n 3 or more to compare sessions reliably
+batch-20261023T191113Z: 1 sessions to run (one per pair), 2 calls
+  the same cases in one whole-compact-tally session on OpenRouter as qwen/qwen3.5-9b: about $0.10
+
+--- session 1/1: pair-full_fallback-music-industry-bs-a, pair-full_fallback-music-industry-bs-b
+session compact-20261023T191113Z-001 started: Section Tally (compact), 334 sections of MUS, 34,286 characters, cache ttl 5m
+local run on qwen/qwen3.5-9b via LM Studio: electricity measured (nvidia-smi) at $0.2/kWh
+on OpenRouter as qwen/qwen3.5-9b, this session would cost about $0.01 (estimate; the real projection from the local token counts is printed per call)
+pair-full_fallback-music-industry-bs-a: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [local: 20,854 in, 8,000 out, 10.9826 Wh at 73 W, $0.002197; OpenRouter ~$0.0062]
+pair-full_fallback-music-industry-bs-b: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 1050 (char 1049)) [local: 20,851 in, 1,681 out, 2.1757 Wh at 73 W, $0.000435; OpenRouter ~$0.0019]
+
+0/2 semantic_ok on qwen/qwen3.5-9b. Cost $0.0000. Full results in C:/Users/Khalil/csr2_runs/qwen35_9b_1pair.json (session compact-20261023T191113Z-001)
+Paired accuracy: 0/1 pairs with both variants semantic_ok (0%)
+    full_fallback      0/1
+session closed: 2 model calls, 41,705 input tokens (0 written to the cache, 0 read from it: 0%), $0.0000 in all, $0.0000 per prompt
+  electricity: 13.1583 Wh, $0.002632; on OpenRouter these calls would have cost $0.0081
+
+=== batch totals
+batch-20261023T191113Z (qwen/qwen3.5-9b via lmstudio): 1 sessions, 2 calls
+  semantic_ok: 0/2
+  paired accuracy: 0/1 pairs (0%, 95% CI 0.00-0.79)
+  billed by OpenRouter: $0.0000
+  electricity: 13.158 Wh = 0.0132 kWh, $0.0026 at $0.2/kWh
+  projected on OpenRouter as qwen/qwen3.5-9b: $0.0081 as sent (each pair with its own small opening, written to the cache once)
+  the same cases in one whole-tally session on OpenRouter: about $0.10 (estimate; the real experiment)
+exit 0
