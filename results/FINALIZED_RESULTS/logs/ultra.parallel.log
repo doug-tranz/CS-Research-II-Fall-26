@@ -1,0 +1,136 @@
+=== ultra: main run, 200 cases x low/medium/high -> results/FINALIZED_RESULTS/main_ultra.json
+note: 1 sample(s) per case; use -n 3 or more to compare sessions reliably
+--resume: effort low already finished in results/FINALIZED_RESULTS/main_ultra.json; skipped
+--resume: effort medium already finished in results/FINALIZED_RESULTS/main_ultra.json; skipped
+1 efforts (high), one session each: about $0.00 in all (high: estimated cost: $0.00 for 200 call(s) on nvidia/nemotron-3-ultra-550b-a55b:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side))
+
+=== effort high
+session compact-20261106T035822Z-high started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+--resume: continuing session compact-20261106T001704Z-high, which has 106 of 200 calls; only the rest are made (94 failed call(s) made again)
+estimated cost: $0.00 for 200 call(s) on nvidia/nemotron-3-ultra-550b-a55b:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side)
+K1-006: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+K3-002: consistency_error    | section 46518: meetings do not match the offered section's: a meeting's type or location differs [cache: 315,648 read, 0 written, $0.0000]
+K3-003: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K3-004: consistency_error    | section 46195: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+K3-005: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+K3-006: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['MGT06305']"} [cache: 311,264 read, 0 written, $0.0000]
+K4-001: consistency_error    | section 44078: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+K4-002: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K4-003: consistency_error    | section 41298 is full and has no waitlist [cache: 311,264 read, 0 written, $0.0000]
+K4-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 315,648 read, 0 written, $0.0000]
+K5-001: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K5-002: semantic_error       | rules broken: {'crns_in': "['45043'] are not among ['46445']"} [cache: 315,648 read, 0 written, $0.0000]
+K5-003: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K5-004: semantic_error       | rules broken: {'crns_in': "['45279'] are not among ['41148', '41151']"} [cache: 311,264 read, 0 written, $0.0000]
+K6-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty", "body/sections/0/meetings/2/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+K6-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty", "body/sections/0/meetings/2/location: '' should be non-empty", "body/sections/1/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+K6-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+K6-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty", "body/sections/1/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+K7-001: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K7-002: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K7-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+K7-004: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K8-001: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K8-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+K8-003: consistency_error    | section 41298 is full and has no waitlist [cache: 311,264 read, 0 written, $0.0000]
+K8-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 315,648 read, 0 written, $0.0000]
+R1-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+R1-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+R1-003: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+R1-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R1-005: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+R1-006: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R2-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty", "body/sections/0/meetings/1/type: '' should be non-empty", "body/sections/0/meetings/2/location: '' should be non-empty", "body/sections/0/meetings/2/type: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R2-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R2-003: consistency_error    | section 43382: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+R2-004: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+R2-005: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R2-006: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R3-001: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.0000]
+R3-002: consistency_error    | section 40619: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+R3-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R3-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+R4-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R4-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R4-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R4-004: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+R5-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R5-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R5-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R5-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R6-001: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+R6-002: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+R6-003: consistency_error    | section 40303: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+R6-004: consistency_error    | section 40304: PSY03200 needs prerequisite PSY01107 (D- or better), which the transcript does not show [cache: 311,264 read, 0 written, $0.0000]
+R7-001: consistency_error    | section 40335: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+R7-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R7-003: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 311,264 read, 0 written, $0.0000]
+R7-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R8-001: consistency_error    | section 42017: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+R8-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R8-003: consistency_error    | section 41980: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+R8-004: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+R9-001: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+R9-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R9-003: consistency_error    | section 41602: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+R9-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R10-001: consistency_error    | section 44276: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+R10-002: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+R10-003: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+R10-004: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+R11-001: consistency_error    | section 42740: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+R11-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R11-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R11-004: semantic_error       | rules broken: {'courses_count_toward': "['40610'] do not move ['DANCE-TECHNIQUE'] forward"} [cache: 311,264 read, 0 written, $0.0000]
+R12-001: consistency_error    | section 42101: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+R12-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty", "body/sections/0/meetings/2/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+R12-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R12-004: consistency_error    | section 41565: meetings do not match the offered section's: a meeting's type or location differs [cache: 315,648 read, 0 written, $0.0000]
+O1-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/1/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+O1-002: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+O1-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 2, 'max': 2}", 'must_include_courses': "missing ['HIST05120', 'HIST05306']"} [cache: 311,264 read, 0 written, $0.0000]
+O1-004: consistency_error    | section 42508: meetings do not match the offered section's: a meeting's type or location differs [cache: 315,648 read, 0 written, $0.0000]
+O1-005: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty", "body/sections/1/meetings/0/location: '' should be non-empty", "body/sections/1/meetings/0/type: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+O1-006: consistency_error    | section 41181: meetings do not match the offered section's: a meeting's type or location differs [cache: 315,648 read, 0 written, $0.0000]
+O2-001: schema_error         | not a valid register message: ["body/sections/1/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+O2-002: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+O2-003: consistency_error    | section 41277: meetings do not match the offered section's: days or times differ [cache: 311,264 read, 0 written, $0.0000]
+O2-004: consistency_error    | section 41277: meetings do not match the offered section's: a meeting's type or location differs [cache: 315,648 read, 0 written, $0.0000]
+O2-005: consistency_error    | section 43079: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+O2-006: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+O3-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 311,264 read, 0 written, $0.0000]
+O3-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 0 read, 0 written, $0.0000]
+O3-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 289,344 read, 0 written, $0.0000]
+O3-004: consistency_error    | two sections of MATH01210 in the cart: 41051 and 41055 [cache: 315,648 read, 0 written, $0.0000]
+OpenRouter's records: 95 of 200 calls
+
+22/94 semantic_ok on nvidia/nemotron-3-ultra-550b-a55b:free. Cost $0.0000. Full results in results/FINALIZED_RESULTS/main_ultra.json (session compact-20261106T001704Z-high)
+Paired accuracy: 3/46 pairs with both variants semantic_ok (6%); 2 incomplete (a call failed or a variant was not run), not scored
+    ambiguous          0/2
+    any_correct        0/2
+    campus_residence   0/2
+    complete_cart      0/4
+    credit_limit       1/2
+    department         0/2
+    grade_threshold    0/2
+    hard_soft          0/2
+    impossible_days    0/1
+    impossible_full    1/1
+    o1_shared_rule     0/1
+    o2_stacked_rules   0/1
+    passed_retake      0/3
+    prereq_completed   0/2
+    prereq_in_progress 0/2
+    prereq_min_grade   0/2
+    prereq_transfer    1/2
+    quantity           0/2
+    repeatable         0/2
+    requirement_options 0/2
+    requirement_satisfied 0/2
+    several_constraints 0/2
+    transfer           0/2
+    withdrawal         0/1
+session closed: 94 model calls, 29,744,302 input tokens (0 written to the cache, 28,702,048 read from it: 96%), $0.0000 in all, $0.0000 per prompt
+=== ultra: stability check, 10 pairs x 3 samples at medium -> results/FINALIZED_RESULTS/check_ultra.json
+--resume: effort medium already finished in results/FINALIZED_RESULTS/check_ultra.json; skipped
+=== ultra: finished

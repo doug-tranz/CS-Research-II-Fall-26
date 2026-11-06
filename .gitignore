@@ -22,3 +22,6 @@ __pycache__/
 
 # --batch-api's record of a run still waiting on its batches (deleted when the run finishes)
 *.pending-batch.json
+
+# a running results file (cli.output_lock): holds the writer's process id
+*.lock

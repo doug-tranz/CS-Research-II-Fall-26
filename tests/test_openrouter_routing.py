@@ -118,6 +118,27 @@ class RetryTests(unittest.TestCase):
         self.assertEqual(post.call_count, 3)
         self.assertEqual([c.args[0] for c in sleep.call_args_list], list(b.RETRY_SECONDS[:2]))
 
+    def test_a_lost_connection_waits_for_the_network_then_tries_again(self):
+        b = OpenRouterBackend(api_key="k", provider="openai/flex")
+        down = backends.requests.ConnectionError("Max retries exceeded")
+        with self.post(200) as post, mock.patch("pipeline.backends.time.sleep") as sleep, \
+                mock.patch("pipeline.backends.requests.head", side_effect=[down, down, None]) as head, \
+                contextlib.redirect_stdout(io.StringIO()):
+            post.side_effect = [down, *post.side_effect]
+            self.assertEqual(b._stream("m", []).content, "ok")
+        self.assertEqual(post.call_count, 2)
+        self.assertEqual(head.call_count, 3)            # down, down, back
+        self.assertEqual(sleep.call_count, 2)
+
+    def test_a_connection_that_keeps_breaking_still_fails(self):
+        b = OpenRouterBackend(api_key="k", provider="openai/flex")
+        down = backends.requests.ConnectionError("reset")
+        with mock.patch("pipeline.backends.requests.post", side_effect=down) as post, \
+                mock.patch("pipeline.backends.requests.head"), contextlib.redirect_stdout(io.StringIO()):
+            with self.assertRaises(backends.requests.ConnectionError):
+                b._stream("m", [])
+        self.assertEqual(post.call_count, b.DROPS + 1)
+
     def test_a_refusal_inside_the_stream_is_tried_again(self):
         busy = mock.MagicMock(status_code=200)
         busy.iter_lines.return_value = iter(['data: {"error": {"code": 502, "message": "Flex processing is '

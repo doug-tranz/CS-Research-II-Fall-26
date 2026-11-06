@@ -1,0 +1,851 @@
+=== qwen27b: main run, 200 cases x low/medium/high -> results/FINALIZED_RESULTS/main_qwen27b.json
+note: 1 sample(s) per case; use -n 3 or more to compare sessions reliably
+3 efforts (low, medium, high), one session each: about $11.48 in all (low: estimated cost: $3.29 for 200 call(s) on qwen/qwen3.8-27b via phala, from 1 measured session(s) in results/test_qwen38_27b.json (setup $0.04, then $0.0162 per call))
+
+=== effort low
+session compact-20261105T221641Z-low started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+estimated cost: $3.29 for 200 call(s) on qwen/qwen3.8-27b via phala, from 1 measured session(s) in results/test_qwen38_27b.json (setup $0.04, then $0.0162 per call)
+T1-001: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.0610]
+T1-002: semantic_ok          | satisfies every rule [cache: 301,632 read, 0 written, $0.0157]
+T1-003: consistency_error    | two sections of HES00346 in the cart: 43016 and 43017 [cache: 294,912 read, 0 written, $0.0170]
+T1-004: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0163]
+T1-005: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0164]
+T1-006: semantic_ok          | satisfies every rule [cache: 301,504 read, 0 written, $0.0157]
+T2-001: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0164]
+T2-002: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0164]
+T2-003: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0163]
+T2-004: semantic_ok          | satisfies every rule [cache: 301,248 read, 0 written, $0.0157]
+T2-005: syntactic_error      | invalid JSON (Expecting value: line 3 column 1 (char 2)) [cache: 297,216 read, 0 written, $0.0166]
+T2-006: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 302,656 read, 0 written, $0.0172]
+T3-001: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0167]
+T3-002: semantic_ok          | satisfies every rule [cache: 302,528 read, 0 written, $0.0157]
+T3-003: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0166]
+T3-004: semantic_error       | rules broken: {'ends_by': "['43897'] end after 2:00 PM"} [cache: 302,656 read, 0 written, $0.0158]
+T4-001: syntactic_error      | invalid JSON (Expecting value: line 3 column 1163 (char 1164)) [cache: 297,216 read, 0 written, $0.0171]
+T4-002: consistency_error    | section 41058 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0164]
+T4-003: consistency_error    | two sections of NUT00415 in the cart: 43115 and 43117 [cache: 297,216 read, 0 written, $0.0168]
+T4-004: consistency_error    | two sections of NUT00415 in the cart: 43115 and 43117 [cache: 300,800 read, 0 written, $0.0163]
+T5-001: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0163]
+T5-002: semantic_error       | rules broken: {'busy': "['41046'] overlap the student's fixed commitments"} [cache: 297,216 read, 0 written, $0.0164]
+T5-003: consistency_error    | section 41132 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0168]
+T5-004: consistency_error    | section 41132 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0168]
+T6-001: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0166]
+T6-002: consistency_error    | two sections of SPAN05212 in the cart: 42476 and 42926 [cache: 297,216 read, 0 written, $0.0168]
+T6-003: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0164]
+T6-004: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0164]
+T7-001: consistency_error    | two sections of THD07240 in the cart: 40508 and 40510 [cache: 297,216 read, 0 written, $0.0170]
+T7-002: consistency_error    | two sections of THD07240 in the cart: 40508 and 40510 [cache: 300,288 read, 0 written, $0.0165]
+T7-003: consistency_error    | two sections of MATH03150 in the cart: 41131 and 41134 [cache: 297,216 read, 0 written, $0.0173]
+T7-004: consistency_error    | section 41132 is full and has no waitlist [cache: 302,080 read, 0 written, $0.0166]
+T8-001: semantic_error       | rules broken: {'busy': "['43399'] overlap the student's fixed commitments"} [cache: 297,216 read, 0 written, $0.0169]
+T8-002: consistency_error    | two sections of ECE09414 in the cart: 43399 and 43400 [cache: 297,216 read, 0 written, $0.0173]
+T8-003: consistency_error    | section 40299 is full (32/32) [cache: 297,216 read, 0 written, $0.0176]
+T8-004: consistency_error    | two sections of PSY01301 in the cart: 44846 and 40300 [cache: 297,216 read, 0 written, $0.0187]
+T9-001: consistency_error    | section 41132 is full (30/30) [cache: 297,216 read, 0 written, $0.0175]
+T9-002: consistency_error    | two sections of MATH03150 in the cart: 41134 and 41135 [cache: 300,416 read, 0 written, $0.0162]
+T9-003: consistency_error    | section 41298 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0164]
+T9-004: consistency_error    | section 41298 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0164]
+D1-001: consistency_error    | section 40202 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0164]
+D1-002: consistency_error    | section 40204 is full and has no waitlist [cache: 301,632 read, 0 written, $0.0158]
+D1-003: consistency_error    | section 40056 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0176]
+D1-004: consistency_error    | section 40069 is full and has no waitlist [cache: 301,440 read, 0 written, $0.0158]
+D1-005: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0166]
+D1-006: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0166]
+D2-001: semantic_error       | rules broken: {'count': "2 sections, wanted {'min': 1, 'max': 1}"} [cache: 297,216 read, 0 written, $0.0167]
+D2-002: syntactic_error      | invalid JSON (Expecting value: line 3 column 2986 (char 2987)) [cache: 301,824 read, 0 written, $0.0183]
+D2-003: consistency_error    | section 41065 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0166]
+D2-004: semantic_ok          | satisfies every rule [cache: 301,056 read, 0 written, $0.0156]
+D2-005: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0165]
+D2-006: semantic_error       | rules broken: {'waitlist': "['43562'] waitlisted, but the student did not ask to be waitlisted"} [cache: 301,952 read, 0 written, $0.0158]
+D3-001: consistency_error    | two sections of AFST11350 in the cart: 42420 and 45795 [cache: 297,216 read, 0 written, $0.0166]
+D3-002: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0165]
+D3-003: consistency_error    | two sections of CMS04250 in the cart: 44417 and 44421 [cache: 297,216 read, 0 written, $0.0170]
+D3-004: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0165]
+C1-001: consistency_error    | section 41264 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0166]
+C1-002: consistency_error    | two sections of FIN04300 in the cart: 41277 and 41279 [cache: 297,216 read, 0 written, $0.0191]
+C1-003: semantic_error       | rules broken: {'waitlist': "['44829'] waitlisted, but the student did not ask to be waitlisted", 'courses_in': "['CST09310'] are not among ['CS04103']"} [cache: 297,216 read, 0 written, $0.0165]
+C1-004: consistency_error    | section 41887: course_id 'CS01211' is not the offered section's ('CS01104') [cache: 302,208 read, 0 written, $0.0158]
+C1-005: consistency_error    | section 42033: section '2' is not the offered section's ('1') [cache: 297,216 read, 0 written, $0.0172]
+C1-006: consistency_error    | two sections of BIOL01204 in the cart: 44148 and 44149 [cache: 301,312 read, 0 written, $0.0176]
+C2-001: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0165]
+C2-002: semantic_ok          | satisfies every rule [cache: 301,632 read, 0 written, $0.0158]
+C2-003: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0166]
+C2-004: semantic_ok          | satisfies every rule [cache: 302,528 read, 0 written, $0.0158]
+C2-005: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0164]
+C2-006: semantic_ok          | satisfies every rule [cache: 301,376 read, 0 written, $0.0157]
+C3-001: consistency_error    | section 41881: section '7' is not the offered section's ('6') [cache: 297,216 read, 0 written, $0.0162]
+C3-002: semantic_ok          | satisfies every rule [cache: 300,416 read, 0 written, $0.0156]
+C3-003: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0163]
+C3-004: semantic_error       | rules broken: {'crns_in': "['44473'] are not among ['42484']"} [cache: 301,248 read, 0 written, $0.0157]
+C4-001: consistency_error    | section 41089 is full (30/30) [cache: 297,216 read, 0 written, $0.0169]
+C4-002: semantic_ok          | satisfies every rule [cache: 302,336 read, 0 written, $0.0159]
+C4-003: consistency_error    | section 40378 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0234]
+C4-004: consistency_error    | two sections of CEE08481 in the cart: 40434 and 46593 [cache: 297,216 read, 0 written, $0.0168]
+I1-001: consistency_error    | section 45835: seats_total 26 is not the offered section's (24) [cache: 297,216 read, 0 written, $0.0165]
+I1-002: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0165]
+I1-003: consistency_error    | two sections of THD07440 in the cart: 40553 and 40555 [cache: 297,216 read, 0 written, $0.0180]
+I1-004: semantic_ok          | satisfies every rule [cache: 301,376 read, 0 written, $0.0156]
+I1-005: consistency_error    | two sections of ENST94101 in the cart: 44086 and 44093 [cache: 297,216 read, 0 written, $0.0168]
+I1-006: consistency_error    | two sections of ENST94102 in the cart: 44095 and 44099 [cache: 297,216 read, 0 written, $0.0168]
+I2-001: consistency_error    | section 45887: campus 'Glassboro' is not the offered section's ('Online') [cache: 297,216 read, 0 written, $0.0165]
+I2-002: consistency_error    | section 45887: campus 'Glassboro' is not the offered section's ('Online') [cache: 302,464 read, 0 written, $0.0157]
+I2-003: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0163]
+I2-004: semantic_error       | rules broken: {'crns_in': "['42476'] are not among ['42926']"} [cache: 297,216 read, 0 written, $0.0163]
+I2-005: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0164]
+I2-006: semantic_ok          | satisfies every rule [cache: 300,992 read, 0 written, $0.0158]
+I3-001: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0163]
+I3-002: consistency_error    | section 43969: course_id 'RTF03397' is not the offered section's ('JRN02327') [cache: 300,608 read, 0 written, $0.0158]
+I3-003: consistency_error    | section 43977: course_id 'JRN02327' is not the offered section's ('JRN02362') [cache: 297,216 read, 0 written, $0.0162]
+I3-004: semantic_ok          | satisfies every rule [cache: 300,800 read, 0 written, $0.0158]
+I4-001: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0164]
+I4-002: consistency_error    | section 42971 is full and has no waitlist [cache: 298,560 read, 0 written, $0.0163]
+I4-003: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0162]
+I4-004: consistency_error    | section 41175 is full (20/20) [cache: 297,216 read, 0 written, $0.0168]
+I5-001: consistency_error    | section 40378 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0223]
+I5-002: consistency_error    | section 40378 is full and has no waitlist [cache: 301,824 read, 0 written, $0.0223]
+I5-003: consistency_error    | section 41298 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0164]
+I5-004: consistency_error    | two sections of ENGL02123 in the cart: 45910 and 41272 [cache: 301,376 read, 0 written, $0.0181]
+K1-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['SOC08120']"} [cache: 297,216 read, 0 written, $0.0161]
+K1-002: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['SOC08120']"} [cache: 301,696 read, 0 written, $0.0155]
+K1-003: consistency_error    | section 44915 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0165]
+K1-004: consistency_error    | section 41149 is full and has no waitlist [cache: 300,672 read, 0 written, $0.0195]
+K1-005: consistency_error    | two sections of PHIL09222 in the cart: 41049 and 41050 [cache: 297,216 read, 0 written, $0.0172]
+K1-006: semantic_ok          | satisfies every rule [cache: 302,400 read, 0 written, $0.0158]
+K3-001: consistency_error    | section 40085 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0164]
+K3-002: semantic_ok          | satisfies every rule [cache: 301,632 read, 0 written, $0.0158]
+K3-003: consistency_error    | two sections of BIOL01430 in the cart: 44165 and 46195 [cache: 297,216 read, 0 written, $0.0170]
+K3-004: semantic_ok          | satisfies every rule [cache: 302,464 read, 0 written, $0.0159]
+K3-005: consistency_error    | section 40085 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0164]
+K3-006: semantic_ok          | satisfies every rule [cache: 301,568 read, 0 written, $0.0158]
+K4-001: consistency_error    | two sections of BIOL01113 in the cart: 44078 and 44081 [cache: 297,216 read, 0 written, $0.0179]
+K4-002: syntactic_error      | invalid JSON (Expecting value: line 3 column 1 (char 2)) [cache: 302,528 read, 0 written, $0.0184]
+K4-003: consistency_error    | section 41298 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0164]
+K4-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 301,376 read, 0 written, $0.0155]
+K5-001: semantic_error       | rules broken: {'waitlist': "['44479'] waitlisted, but the student did not ask to be waitlisted", 'crns_in': "['44479'] are not among ['45043']"} [cache: 297,216 read, 0 written, $0.0164]
+K5-002: semantic_error       | rules broken: {'waitlist': "['44479'] waitlisted, but the student did not ask to be waitlisted", 'crns_in': "['44479'] are not among ['46445']"} [cache: 297,280 read, 0 written, $0.0164]
+K5-003: semantic_error       | rules broken: {'crns_in': "['41148'] are not among ['45279']"} [cache: 0 read, 0 written, $0.0608]
+K5-004: consistency_error    | section 41149 is full (35/35) [cache: 300,672 read, 0 written, $0.0211]
+K6-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0165]
+K6-002: consistency_error    | section 42015: seats_total 24 is not the offered section's (23) [cache: 297,216 read, 0 written, $0.0167]
+K6-003: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0164]
+K6-004: consistency_error    | section 41089 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0167]
+K7-001: generation_failed    | ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host')) [cache: 0 read, 0 written, $0.0000]
+K7-002: consistency_error    | section 43926 is full (15/15) [cache: 297,216 read, 0 written, $0.0167]
+K7-003: semantic_error       | rules broken: {'no_days': "['41046'] meet on ['Tuesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']"} [cache: 297,216 read, 0 written, $0.0164]
+K7-004: semantic_ok          | satisfies every rule [cache: 301,376 read, 0 written, $0.0155]
+K8-001: consistency_error    | section 40378 is full (20/20) [cache: 297,216 read, 0 written, $0.0164]
+K8-002: syntactic_error      | invalid JSON (Unterminated string starting at: line 3 column 9691 (char 9692)) [cache: 301,248 read, 0 written, $0.0252]
+K8-003: consistency_error    | section 41298 is full (32/32) [cache: 297,216 read, 0 written, $0.0164]
+K8-004: consistency_error    | section 41298 is full and has no waitlist [cache: 301,376 read, 0 written, $0.0157]
+R1-001: syntactic_error      | invalid JSON (Extra data: line 3 column 5 (char 6)) [cache: 297,216 read, 0 written, $0.0175]
+R1-002: consistency_error    | section 42972 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0163]
+R1-003: syntactic_error      | invalid JSON (Expecting value: line 3 column 1 (char 2)) [cache: 297,216 read, 0 written, $0.0179]
+R1-004: semantic_error       | rules broken: {'courses_in': "['HLT00415'] are not among ['HLT00200']"} [cache: 297,216 read, 0 written, $0.0162]
+R1-005: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0163]
+R1-006: syntactic_error      | invalid JSON (Extra data: line 1 column 5 (char 4)) [cache: 297,216 read, 0 written, $0.0179]
+R2-001: consistency_error    | two sections of CHEM07348 in the cart: 43584 and 43585 [cache: 297,216 read, 0 written, $0.0197]
+R2-002: syntactic_error      | invalid JSON (Extra data: line 4 column 1 (char 2634)) [cache: 297,216 read, 0 written, $0.0187]
+R2-003: consistency_error    | section 43383: course_id 'ECE09203' is not the offered section's ('ECE09101') [cache: 297,216 read, 0 written, $0.0167]
+R2-004: consistency_error    | section 43383: meetings do not match the offered section's: days or times differ [cache: 297,216 read, 0 written, $0.0165]
+R2-005: semantic_error       | rules broken: {'courses_in': "['ECON04102'] are not among ['ENGL02123']"} [cache: 297,216 read, 0 written, $0.0162]
+R2-006: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0161]
+R3-001: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0163]
+R3-002: consistency_error    | section 43758: course_id 'THD08378' is not the offered section's ('MUS97118') [cache: 300,672 read, 0 written, $0.0157]
+R3-003: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0166]
+R3-004: consistency_error    | two sections of CS06205 in the cart: 42086 and 42087 [cache: 297,216 read, 0 written, $0.0172]
+R4-001: consistency_error    | section 40300: section '1' is not the offered section's ('3') [cache: 297,216 read, 0 written, $0.0168]
+R4-002: consistency_error    | section 40300: section '1' is not the offered section's ('3') [cache: 297,216 read, 0 written, $0.0163]
+R4-003: consistency_error    | section 40319 is full (20/20) [cache: 297,216 read, 0 written, $0.0188]
+R4-004: consistency_error    | section 40319 is full (20/20) [cache: 297,216 read, 0 written, $0.0178]
+R5-001: syntactic_error      | invalid JSON (Extra data: line 5 column 1 (char 78)) [cache: 297,216 read, 0 written, $0.0173]
+R5-002: consistency_error    | section 42976: ADV04375 needs prerequisite ADV04330 (D- or better), which the transcript does not show [cache: 297,216 read, 0 written, $0.0162]
+R5-003: consistency_error    | section 40331 is full (25/25) [cache: 297,216 read, 0 written, $0.0188]
+R5-004: consistency_error    | section 40331: PSY07301 needs prerequisite PSY01301 (B or better), which the transcript does not show [cache: 297,216 read, 0 written, $0.0164]
+R6-001: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0161]
+R6-002: consistency_error    | section 44258: ENST94401 needs prerequisite ENST94202 (D- or better), which the transcript does not show [cache: 297,216 read, 0 written, $0.0162]
+R6-003: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0164]
+R6-004: consistency_error    | section 40304: PSY03200 needs prerequisite PSY01107 (D- or better), which the transcript does not show [cache: 297,216 read, 0 written, $0.0163]
+R7-001: semantic_error       | rules broken: {'waitlist': "['40331'] waitlisted, but the student did not ask to be waitlisted"} [cache: 297,216 read, 0 written, $0.0164]
+R7-002: consistency_error    | section 40331 is full (25/25) [cache: 297,216 read, 0 written, $0.0188]
+R7-003: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0161]
+R7-004: consistency_error    | section 43083: PR06305 needs prerequisite PR06301 (B- or better), which the transcript does not show [cache: 297,216 read, 0 written, $0.0161]
+R8-001: consistency_error    | section 41881: section '7' is not the offered section's ('6') [cache: 297,216 read, 0 written, $0.0162]
+R8-002: consistency_error    | section 43509 is full (0/0) [cache: 297,216 read, 0 written, $0.0162]
+R8-003: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0165]
+R8-004: consistency_error    | section 42074 is full (30/30) [cache: 302,336 read, 0 written, $0.0158]
+R9-001: consistency_error    | section 44395: section '2' is not the offered section's ('1') [cache: 297,216 read, 0 written, $0.0166]
+R9-002: consistency_error    | section 44395: section '2' is not the offered section's ('1') [cache: 297,216 read, 0 written, $0.0166]
+R9-003: consistency_error    | section 41612 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0166]
+R9-004: consistency_error    | section 41550 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0166]
+R10-001: consistency_error    | section 44828: campus 'Glassboro' is not the offered section's ('Online') [cache: 297,216 read, 0 written, $0.0165]
+R10-002: consistency_error    | section 44828: campus 'Glassboro' is not the offered section's ('Online') [cache: 302,144 read, 0 written, $0.0160]
+R10-003: semantic_error       | rules broken: {'count': "1 sections, wanted {'min': 2, 'max': 2}", 'must_include_courses': "missing ['GEOG16140']"} [cache: 297,216 read, 0 written, $0.0162]
+R10-004: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0161]
+R11-001: semantic_error       | rules broken: {'courses_count_toward': "['42708'] do not move ['SOC-SEMINAR'] forward"} [cache: 297,216 read, 0 written, $0.0165]
+R11-002: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0165]
+R11-003: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0163]
+R11-004: semantic_error       | rules broken: {'courses_count_toward': "['40610'] do not move ['DANCE-TECHNIQUE'] forward"} [cache: 297,216 read, 0 written, $0.0163]
+R12-001: semantic_error       | rules broken: {'waitlist': "['42105'] waitlisted, but the student did not ask to be waitlisted"} [cache: 297,216 read, 0 written, $0.0165]
+R12-002: consistency_error    | section 42050: course_id 'PHYS00221' is not the offered section's ('PHYS00222') [cache: 302,144 read, 0 written, $0.0159]
+R12-003: consistency_error    | section 40056 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0164]
+R12-004: consistency_error    | section 41550 is full and has no waitlist [cache: 301,632 read, 0 written, $0.0158]
+O1-001: consistency_error    | section 40056 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0167]
+O1-002: consistency_error    | section 40056 is full and has no waitlist [cache: 301,824 read, 0 written, $0.0190]
+O1-003: consistency_error    | section 45005 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0166]
+O1-004: semantic_ok          | satisfies every rule [cache: 301,312 read, 0 written, $0.0158]
+O1-005: semantic_error       | rules broken: {'no_days': "['41986'] meet on ['Tuesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']"} [cache: 297,216 read, 0 written, $0.0168]
+O1-006: consistency_error    | section 41189: course_id 'STAT02284' is not the offered section's ('STAT02360') [cache: 297,216 read, 0 written, $0.0167]
+O2-001: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0168]
+O2-002: semantic_ok          | satisfies every rule [cache: 302,720 read, 0 written, $0.0156]
+O2-003: consistency_error    | section 40085 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0167]
+O2-004: consistency_error    | two sections of FIN04300 in the cart: 41277 and 41279 [cache: 301,632 read, 0 written, $0.0192]
+O2-005: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0166]
+O2-006: consistency_error    | two sections of HLT00262 in the cart: 43077 and 43079 [cache: 297,216 read, 0 written, $0.0167]
+O3-001: consistency_error    | section 41298 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0164]
+O3-002: consistency_error    | section 41298 is full and has no waitlist [cache: 301,376 read, 0 written, $0.0157]
+O3-003: consistency_error    | two sections of MATH01210 in the cart: 41046 and 41048 [cache: 297,216 read, 0 written, $0.0177]
+O3-004: consistency_error    | two sections of MATH01210 in the cart: 41046 and 41048 [cache: 302,656 read, 0 written, $0.0169]
+OpenRouter's records: 199 of 200 calls
+
+62/200 semantic_ok on qwen/qwen3.8-27b. Cost $3.4247. Full results in results/FINALIZED_RESULTS/main_qwen27b.json (session compact-20261105T221641Z-low)
+Paired accuracy: 12/99 pairs with both variants semantic_ok (12%); 1 incomplete (a call failed or a variant was not run), not scored
+    ambiguous          0/2
+    any_correct        0/2
+    back_to_back       0/2
+    boundary_time      1/2
+    busy_block         0/2
+    campus_residence   0/3
+    chained_conflict   0/2
+    complete_cart      1/4
+    course_a_not_b     0/2
+    credit_limit       0/2
+    day_exclusion      0/2
+    days               1/3
+    department         0/2
+    full_fallback      0/3
+    grade_threshold    0/2
+    hard_soft          0/2
+    impossible_days    0/1
+    last_seat          3/3
+    late_meeting       0/1
+    lookalike_id       0/3
+    modality           0/3
+    multi_meeting      0/1
+    negation           0/2
+    noon               0/2
+    not_first_listed   0/2
+    o1_shared_rule     0/1
+    o2_stacked_rules   0/1
+    open_seats         0/2
+    passed_retake      0/3
+    prereq_completed   0/2
+    prereq_in_progress 0/2
+    prereq_min_grade   0/2
+    prereq_transfer    0/2
+    quantity           0/2
+    relative_time      2/3
+    repeatable         0/2
+    requirement_options 0/2
+    requirement_satisfied 0/2
+    same_title         0/2
+    section_number     1/3
+    several_constraints 0/2
+    shared_day_pattern 0/3
+    time_cutoff        1/2
+    time_of_day        2/3
+    transfer           0/2
+    withdrawal         0/1
+session closed: 200 model calls, 60,023,913 input tokens (0 written to the cache, 58,783,808 read from it: 98%), $3.4247 in all, $0.0171 per prompt
+
+=== effort medium
+session compact-20261105T225043Z-medium started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+estimated cost: $4.50 for 200 call(s) on qwen/qwen3.8-27b via phala, from 1 measured session(s) in results/test_qwen38_27b.json (setup $0.04, then $0.0223 per call)
+T1-001: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.0620]
+T1-002: semantic_ok          | satisfies every rule [cache: 301,568 read, 0 written, $0.0171]
+T1-003: semantic_ok          | satisfies every rule [cache: 292,864 read, 0 written, $0.0212]
+T1-004: semantic_ok          | satisfies every rule [cache: 301,184 read, 0 written, $0.0172]
+T1-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0189]
+T1-006: semantic_ok          | satisfies every rule [cache: 301,440 read, 0 written, $0.0172]
+T2-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0176]
+T2-002: semantic_ok          | satisfies every rule [cache: 301,376 read, 0 written, $0.0172]
+T2-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0177]
+T2-004: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0177]
+T2-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0181]
+T2-006: semantic_ok          | satisfies every rule [cache: 302,592 read, 0 written, $0.0174]
+T3-001: consistency_error    | two sections of CS04113 in the cart: 41986 and 41982 [cache: 297,152 read, 0 written, $0.0195]
+T3-002: consistency_error    | two sections of CS04113 in the cart: 41977 and 41980 [cache: 297,216 read, 0 written, $0.0203]
+T3-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0193]
+T3-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['MUS40111']"} [cache: 297,152 read, 0 written, $0.0190]
+T4-001: consistency_error    | two sections of MATH01230 in the cart: 41066 and 45804 [cache: 297,152 read, 0 written, $0.0266]
+T4-002: consistency_error    | section 41056 is full and has no waitlist [cache: 301,568 read, 0 written, $0.0282]
+T4-003: consistency_error    | two sections of NUT00415 in the cart: 43117 and 43119 [cache: 297,152 read, 0 written, $0.0201]
+T4-004: consistency_error    | two sections of NUT00415 in the cart: 43115 and 43119 [cache: 300,736 read, 0 written, $0.0193]
+T5-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0215]
+T5-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0213]
+T5-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0219]
+T5-004: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0236]
+T6-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0179]
+T6-002: semantic_ok          | satisfies every rule [cache: 302,400 read, 0 written, $0.0170]
+T6-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0226]
+T6-004: consistency_error    | two sections of CS04215 in the cart: 42004 and 42008 [cache: 301,440 read, 0 written, $0.0259]
+T7-001: syntactic_error      | invalid JSON (Unterminated string starting at: line 3 column 25469 (char 25470)) [cache: 297,152 read, 0 written, $0.0476]
+T7-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0217]
+T7-003: consistency_error    | two sections of MATH03150 in the cart: 41131 and 41133 [cache: 297,152 read, 0 written, $0.0226]
+T7-004: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0232]
+T8-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0184]
+T8-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0185]
+T8-003: consistency_error    | section 40300: section '1' is not the offered section's ('3') [cache: 297,152 read, 0 written, $0.0344]
+T8-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['PSY01301']"} [cache: 297,152 read, 0 written, $0.0263]
+T9-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0200]
+T9-002: consistency_error    | section 41132 is full and has no waitlist [cache: 300,416 read, 0 written, $0.0234]
+T9-003: consistency_error    | section 41298 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0199]
+T9-004: consistency_error    | section 41298 is full and has no waitlist [cache: 301,312 read, 0 written, $0.0211]
+D1-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0192]
+D1-002: consistency_error    | section 40204 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0230]
+D1-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0219]
+D1-004: consistency_error    | section 40063: seats_total 35 is not the offered section's (30) [cache: 297,152 read, 0 written, $0.0210]
+D1-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0181]
+D1-006: semantic_ok          | satisfies every rule [cache: 302,464 read, 0 written, $0.0173]
+D2-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 297,152 read, 0 written, $0.0262]
+D2-002: semantic_ok          | satisfies every rule [cache: 301,760 read, 0 written, $0.0218]
+D2-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0188]
+D2-004: semantic_ok          | satisfies every rule [cache: 300,992 read, 0 written, $0.0197]
+D2-005: generation_failed    | ("Connection broken: ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)", ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)) [cache: 0 read, 0 written, $0.0000]
+D2-006: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 301,888 read, 0 written, $0.0210]
+D3-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['AFST11350']"} [cache: 297,152 read, 0 written, $0.0182]
+D3-002: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['AFST11350']"} [cache: 301,568 read, 0 written, $0.0176]
+D3-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0182]
+D3-004: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0202]
+C1-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0218]
+C1-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0207]
+C1-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0225]
+C1-004: consistency_error    | section 41887: course_id 'CS01211' is not the offered section's ('CS01104') [cache: 297,152 read, 0 written, $0.0180]
+C1-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0263]
+C1-006: consistency_error    | two sections of BIOL01204 in the cart: 44149 and 44150 [cache: 297,152 read, 0 written, $0.0274]
+C2-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0195]
+C2-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0196]
+C2-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0207]
+C2-004: consistency_error    | two sections of BIOL01113 in the cart: 44078 and 44081 [cache: 302,464 read, 0 written, $0.0219]
+C2-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0184]
+C2-006: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0183]
+C3-001: semantic_error       | rules broken: {'crns_in': "['41881'] are not among ['46723']"} [cache: 297,152 read, 0 written, $0.0211]
+C3-002: semantic_ok          | satisfies every rule [cache: 300,416 read, 0 written, $0.0205]
+C3-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0176]
+C3-004: semantic_ok          | satisfies every rule [cache: 301,248 read, 0 written, $0.0191]
+C4-001: consistency_error    | section 41089 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0225]
+C4-002: generation_failed    | ("Connection broken: ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)", ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)) [cache: 0 read, 0 written, $0.0000]
+C4-003: generation_failed    | ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host')) [cache: 0 read, 0 written, $0.0000]
+C4-004: consistency_error    | two sections of CEE08481 in the cart: 40434 and 46593 [cache: 297,152 read, 0 written, $0.0185]
+I1-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0179]
+I1-002: semantic_ok          | satisfies every rule [cache: 301,888 read, 0 written, $0.0164]
+I1-003: consistency_error    | two sections of THD07440 in the cart: 40553 and 40555 [cache: 297,152 read, 0 written, $0.0277]
+I1-004: semantic_ok          | satisfies every rule [cache: 301,312 read, 0 written, $0.0179]
+I1-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0214]
+I1-006: semantic_ok          | satisfies every rule [cache: 300,608 read, 0 written, $0.0191]
+I2-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0172]
+I2-002: semantic_ok          | satisfies every rule [cache: 302,400 read, 0 written, $0.0165]
+I2-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0172]
+I2-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['SPAN05212']"} [cache: 301,184 read, 0 written, $0.0170]
+I2-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0190]
+I2-006: semantic_ok          | satisfies every rule [cache: 300,992 read, 0 written, $0.0185]
+I3-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0177]
+I3-002: semantic_ok          | satisfies every rule [cache: 300,544 read, 0 written, $0.0174]
+I3-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0193]
+I3-004: semantic_ok          | satisfies every rule [cache: 300,736 read, 0 written, $0.0181]
+I4-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0178]
+I4-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0194]
+I4-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0253]
+I4-004: semantic_ok          | satisfies every rule [cache: 300,864 read, 0 written, $0.0191]
+I5-001: consistency_error    | section 40378 is full (20/20) [cache: 297,152 read, 0 written, $0.0313]
+I5-002: consistency_error    | section 40378 is full and has no waitlist [cache: 301,760 read, 0 written, $0.0307]
+I5-003: consistency_error    | section 41298 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0202]
+I5-004: consistency_error    | section 41298 is full and has no waitlist [cache: 301,312 read, 0 written, $0.0205]
+K1-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0202]
+K1-002: consistency_error    | section 42709 is full and has no waitlist [cache: 301,632 read, 0 written, $0.0237]
+K1-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0214]
+K1-004: consistency_error    | section 41149 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0301]
+K1-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0191]
+K1-006: semantic_ok          | satisfies every rule [cache: 302,336 read, 0 written, $0.0171]
+K3-001: consistency_error    | section 40085 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0264]
+K3-002: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 301,632 read, 0 written, $0.0276]
+K3-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0191]
+K3-004: semantic_error       | rules broken: {'crns_in': "['46195'] are not among ['44167']"} [cache: 302,464 read, 0 written, $0.0188]
+K3-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0218]
+K3-006: semantic_error       | rules broken: {'crns_in': "['40092'] are not among ['46518']"} [cache: 301,504 read, 0 written, $0.0235]
+K4-001: consistency_error    | two sections of BIOL01113 in the cart: 44078 and 44081 [cache: 297,152 read, 0 written, $0.0250]
+K4-002: consistency_error    | two sections of BIOL01113 in the cart: 44089 and 44090 [cache: 297,216 read, 0 written, $0.0251]
+K4-003: consistency_error    | section 41298 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0200]
+K4-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 301,312 read, 0 written, $0.0193]
+K5-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0185]
+K5-002: semantic_error       | rules broken: {'crns_in': "['45043'] are not among ['46445']"} [cache: 302,144 read, 0 written, $0.0257]
+K5-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0213]
+K5-004: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0228]
+K6-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0199]
+K6-002: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 3 column 787 (char 788)) [cache: 297,152 read, 0 written, $0.0249]
+K6-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0215]
+K6-004: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0190]
+K7-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0174]
+K7-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0169]
+K7-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0196]
+K7-004: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0179]
+K8-001: consistency_error    | section 40378 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0289]
+K8-002: consistency_error    | section 40382 is full and has no waitlist [cache: 301,184 read, 0 written, $0.0277]
+K8-003: consistency_error    | section 41298 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0206]
+K8-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 301,312 read, 0 written, $0.0184]
+R1-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0184]
+R1-002: consistency_error    | section 42972 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0238]
+R1-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0186]
+R1-004: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0225]
+R1-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0197]
+R1-006: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0176]
+R2-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Read timed out. [cache: 0 read, 0 written, $0.0000]
+R2-002: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.0666]
+R2-003: semantic_ok          | satisfies every rule [cache: 294,976 read, 0 written, $0.0210]
+R2-004: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0265]
+R2-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0239]
+R2-006: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0249]
+R3-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0228]
+R3-002: generation_failed    | ("Connection broken: ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)", ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)) [cache: 0 read, 0 written, $0.0000]
+R3-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0201]
+R3-004: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0208]
+R4-001: consistency_error    | two sections of PSY01301 in the cart: 44846 and 40300 [cache: 297,152 read, 0 written, $0.0278]
+R4-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0215]
+R4-003: consistency_error    | section 41091: course_id 'PSY07303' is not the offered section's ('MATH01235') [cache: 297,152 read, 0 written, $0.0264]
+R4-004: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0238]
+R5-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0195]
+R5-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0235]
+R5-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0232]
+R5-004: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0259]
+R6-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0184]
+R6-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0243]
+R6-003: consistency_error    | section 40306 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0277]
+R6-004: consistency_error    | section 40051 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0250]
+R7-001: consistency_error    | two sections of PSY07301 in the cart: 40335 and 40334 [cache: 297,152 read, 0 written, $0.0273]
+R7-002: consistency_error    | two sections of PSY01107 in the cart: 40337 and 40338 [cache: 297,152 read, 0 written, $0.0332]
+R7-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0212]
+R7-004: consistency_error    | two sections of PR06350 in the cart: 43118 and 43120 [cache: 297,152 read, 0 written, $0.0268]
+R8-001: consistency_error    | section 41881: section '7' is not the offered section's ('6') [cache: 297,152 read, 0 written, $0.0262]
+R8-002: semantic_ok          | satisfies every rule [cache: 300,800 read, 0 written, $0.0254]
+R8-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0219]
+R8-004: semantic_ok          | satisfies every rule [cache: 302,336 read, 0 written, $0.0213]
+R9-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0225]
+R9-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0266]
+R9-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0267]
+R9-004: consistency_error    | section 41603: course_id 'MKT09350' is not the offered section's ('MKT09360') [cache: 297,152 read, 0 written, $0.0237]
+R10-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0189]
+R10-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0196]
+R10-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0203]
+R10-004: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0198]
+R11-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0181]
+R11-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0204]
+R11-003: consistency_error    | section 40610: meetings do not match the offered section's: days or times differ [cache: 297,152 read, 0 written, $0.0203]
+R11-004: semantic_error       | rules broken: {'courses_count_toward': "['40610'] do not move ['DANCE-TECHNIQUE'] forward"} [cache: 297,152 read, 0 written, $0.0195]
+R12-001: syntactic_error      | invalid JSON (Expecting value: line 3 column 1 (char 2)) [cache: 297,152 read, 0 written, $0.0421]
+R12-002: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}"} [cache: 302,080 read, 0 written, $0.0180]
+R12-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0264]
+R12-004: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0213]
+O1-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0267]
+O1-002: consistency_error    | section 40056 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0279]
+O1-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0243]
+O1-004: semantic_ok          | satisfies every rule [cache: 301,248 read, 0 written, $0.0256]
+O1-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0212]
+O1-006: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0224]
+O2-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0187]
+O2-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0177]
+O2-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0247]
+O2-004: semantic_ok          | satisfies every rule [cache: 301,568 read, 0 written, $0.0217]
+O2-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0231]
+O2-006: consistency_error    | two sections of HLT00262 in the cart: 43077 and 43079 [cache: 301,120 read, 0 written, $0.0245]
+O3-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 297,152 read, 0 written, $0.0197]
+O3-002: consistency_error    | section 41298 is full and has no waitlist [cache: 301,312 read, 0 written, $0.0197]
+O3-003: consistency_error    | two sections of MATH01210 in the cart: 41046 and 41048 [cache: 297,152 read, 0 written, $0.0242]
+O3-004: consistency_error    | two sections of MATH01210 in the cart: 41051 and 41055 [cache: 302,656 read, 0 written, $0.0229]
+OpenRouter's records: 195 of 200 calls
+
+126/200 semantic_ok on qwen/qwen3.8-27b. Cost $4.3259. Full results in results/FINALIZED_RESULTS/main_qwen27b.json (session compact-20261105T225043Z-medium)
+Paired accuracy: 48/95 pairs with both variants semantic_ok (50%); 5 incomplete (a call failed or a variant was not run), not scored
+    ambiguous          0/2
+    any_correct        0/2
+    back_to_back       0/2
+    boundary_time      1/2
+    busy_block         0/2
+    campus_residence   0/3
+    chained_conflict   2/2
+    complete_cart      2/4
+    course_a_not_b     2/2
+    credit_limit       2/2
+    day_exclusion      1/2
+    days               1/3
+    department         1/2
+    full_fallback      1/3
+    grade_threshold    2/2
+    hard_soft          1/2
+    impossible_days    1/1
+    impossible_full    1/1
+    last_seat          2/3
+    late_meeting       0/1
+    lookalike_id       2/3
+    modality           1/3
+    multi_meeting      1/1
+    negation           0/2
+    noon               0/2
+    o1_shared_rule     1/1
+    o2_stacked_rules   1/1
+    open_seats         1/2
+    passed_retake      2/3
+    prereq_completed   0/2
+    prereq_in_progress 2/2
+    prereq_min_grade   0/2
+    prereq_transfer    1/2
+    quantity           1/2
+    relative_time      3/3
+    repeatable         1/1
+    requirement_options 1/2
+    requirement_satisfied 1/2
+    same_title         2/2
+    section_number     2/3
+    several_constraints 0/2
+    shared_day_pattern 1/2
+    time_cutoff        0/2
+    time_of_day        3/3
+    transfer           1/2
+session closed: 200 model calls, 58,807,946 input tokens (0 written to the cache, 57,549,312 read from it: 98%), $4.3259 in all, $0.0216 per prompt
+
+=== effort high
+session compact-20261106T000744Z-high started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+estimated cost: $3.69 for 200 call(s) on qwen/qwen3.8-27b via phala, from 1 measured session(s) in results/test_qwen38_27b.json (setup $0.04, then $0.0182 per call)
+T1-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0179]
+T1-002: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0187]
+T1-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0196]
+T1-004: semantic_ok          | satisfies every rule [cache: 301,184 read, 0 written, $0.0181]
+T1-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0175]
+T1-006: semantic_ok          | satisfies every rule [cache: 301,440 read, 0 written, $0.0172]
+T2-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0180]
+T2-002: semantic_ok          | satisfies every rule [cache: 301,376 read, 0 written, $0.0176]
+T2-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0182]
+T2-004: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0175]
+T2-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0182]
+T2-006: semantic_ok          | satisfies every rule [cache: 302,592 read, 0 written, $0.0180]
+T3-001: consistency_error    | two sections of CS04113 in the cart: 41986 and 41982 [cache: 297,152 read, 0 written, $0.0198]
+T3-002: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0225]
+T3-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['MUS40111']"} [cache: 297,152 read, 0 written, $0.0175]
+T3-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['MUS40111']"} [cache: 297,152 read, 0 written, $0.0182]
+T4-001: consistency_error    | section 41056 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0280]
+T4-002: semantic_ok          | satisfies every rule [cache: 301,568 read, 0 written, $0.0213]
+T4-003: consistency_error    | two sections of NUT00415 in the cart: 43117 and 43119 [cache: 297,152 read, 0 written, $0.0213]
+T4-004: consistency_error    | two sections of NUT00415 in the cart: 43115 and 43119 [cache: 300,736 read, 0 written, $0.0200]
+T5-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0208]
+T5-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0216]
+T5-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0209]
+T5-004: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0240]
+T6-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0188]
+T6-002: semantic_ok          | satisfies every rule [cache: 302,400 read, 0 written, $0.0179]
+T6-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0219]
+T6-004: consistency_error    | two sections of CS04215 in the cart: 42004 and 42008 [cache: 301,440 read, 0 written, $0.0221]
+T7-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0198]
+T7-002: consistency_error    | section 40508: section '1' is not the offered section's ('3') [cache: 297,152 read, 0 written, $0.0213]
+T7-003: consistency_error    | two sections of MATH03150 in the cart: 41131 and 41133 [cache: 297,216 read, 0 written, $0.0269]
+T7-004: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0230]
+T8-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0187]
+T8-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0220]
+T8-003: consistency_error    | section 40300: section '1' is not the offered section's ('3') [cache: 297,152 read, 0 written, $0.0268]
+T8-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['PSY01301']"} [cache: 297,152 read, 0 written, $0.0262]
+T9-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0211]
+T9-002: consistency_error    | section 41132 is full and has no waitlist [cache: 300,416 read, 0 written, $0.0263]
+T9-003: consistency_error    | section 41298 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0223]
+T9-004: consistency_error    | section 41298 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0232]
+D1-001: consistency_error    | two sections of MGT06402 in the cart: 40198 and 40201 [cache: 297,152 read, 0 written, $0.0234]
+D1-002: consistency_error    | section 40204 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0239]
+D1-003: syntactic_error      | invalid JSON (Extra data: line 1 column 44 (char 43)) [cache: 297,152 read, 0 written, $0.0281]
+D1-004: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0264]
+D1-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0182]
+D1-006: semantic_ok          | satisfies every rule [cache: 302,464 read, 0 written, $0.0185]
+D2-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 297,152 read, 0 written, $0.0262]
+D2-002: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 301,760 read, 0 written, $0.0255]
+D2-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0183]
+D2-004: semantic_ok          | satisfies every rule [cache: 300,992 read, 0 written, $0.0190]
+D2-005: consistency_error    | two sections of CHEM07200 in the cart: 43571 and 45958 [cache: 297,152 read, 0 written, $0.0225]
+D2-006: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0265]
+D3-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['AFST11350']"} [cache: 297,152 read, 0 written, $0.0185]
+D3-002: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['AFST11350']"} [cache: 297,216 read, 0 written, $0.0208]
+D3-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0179]
+D3-004: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0222]
+C1-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0265]
+C1-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0194]
+C1-003: consistency_error    | two sections of CS04103 in the cart: 41937 and 41944 [cache: 297,152 read, 0 written, $0.0276]
+C1-004: consistency_error    | section 41887: course_id 'CS01211' is not the offered section's ('CS01104') [cache: 297,216 read, 0 written, $0.0178]
+C1-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0263]
+C1-006: consistency_error    | two sections of BIOL01204 in the cart: 44148 and 44149 [cache: 297,152 read, 0 written, $0.0278]
+C2-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0197]
+C2-002: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0190]
+C2-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0201]
+C2-004: semantic_ok          | satisfies every rule [cache: 302,464 read, 0 written, $0.0213]
+C2-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0184]
+C2-006: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0183]
+C3-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0205]
+C3-002: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0262]
+C3-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0204]
+C3-004: semantic_ok          | satisfies every rule [cache: 301,248 read, 0 written, $0.0212]
+C4-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0195]
+C4-002: semantic_ok          | satisfies every rule [cache: 302,272 read, 0 written, $0.0166]
+C4-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0241]
+C4-004: consistency_error    | two sections of CEE08481 in the cart: 40434 and 46593 [cache: 301,376 read, 0 written, $0.0196]
+I1-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0172]
+I1-002: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0170]
+I1-003: consistency_error    | two sections of THD07440 in the cart: 40553 and 40555 [cache: 297,152 read, 0 written, $0.0277]
+I1-004: semantic_ok          | satisfies every rule [cache: 301,312 read, 0 written, $0.0162]
+I1-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0205]
+I1-006: consistency_error    | two sections of ENST94102 in the cart: 44095 and 44099 [cache: 297,216 read, 0 written, $0.0212]
+I2-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0168]
+I2-002: semantic_ok          | satisfies every rule [cache: 302,400 read, 0 written, $0.0164]
+I2-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0172]
+I2-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['SPAN05212']"} [cache: 301,184 read, 0 written, $0.0163]
+I2-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0190]
+I2-006: semantic_ok          | satisfies every rule [cache: 300,992 read, 0 written, $0.0183]
+I3-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0184]
+I3-002: semantic_ok          | satisfies every rule [cache: 300,544 read, 0 written, $0.0165]
+I3-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0180]
+I3-004: semantic_ok          | satisfies every rule [cache: 300,736 read, 0 written, $0.0191]
+I4-001: consistency_error    | section 42965 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0206]
+I4-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0191]
+I4-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0188]
+I4-004: semantic_ok          | satisfies every rule [cache: 300,864 read, 0 written, $0.0182]
+I5-001: consistency_error    | section 40378 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0323]
+I5-002: consistency_error    | section 40378 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0307]
+I5-003: consistency_error    | section 41298 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0238]
+I5-004: consistency_error    | section 41298 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0212]
+K1-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0214]
+K1-002: consistency_error    | section 42709 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0238]
+K1-003: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0209]
+K1-004: consistency_error    | section 41149 is full and has no waitlist [cache: 300,608 read, 0 written, $0.0296]
+K1-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0186]
+K1-006: semantic_ok          | satisfies every rule [cache: 302,336 read, 0 written, $0.0171]
+K3-001: consistency_error    | two sections of MGT06305 in the cart: 40092 and 40094 [cache: 297,152 read, 0 written, $0.0267]
+K3-002: semantic_error       | rules broken: {'crns_in': "['40092'] are not among ['46518']"} [cache: 301,632 read, 0 written, $0.0253]
+K3-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0197]
+K3-004: semantic_error       | rules broken: {'crns_in': "['46195'] are not among ['44167']"} [cache: 302,464 read, 0 written, $0.0189]
+K3-005: consistency_error    | two sections of MGT06305 in the cart: 40092 and 40094 [cache: 297,152 read, 0 written, $0.0267]
+K3-006: semantic_error       | rules broken: {'crns_in': "['40092'] are not among ['46518']"} [cache: 301,504 read, 0 written, $0.0257]
+K4-001: consistency_error    | two sections of BIOL01113 in the cart: 44078 and 44081 [cache: 297,152 read, 0 written, $0.0234]
+K4-002: consistency_error    | two sections of BIOL01113 in the cart: 44089 and 44090 [cache: 297,216 read, 0 written, $0.0223]
+K4-003: consistency_error    | section 41298 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0195]
+K4-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 297,216 read, 0 written, $0.0199]
+K5-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0190]
+K5-002: semantic_ok          | satisfies every rule [cache: 302,144 read, 0 written, $0.0186]
+K5-003: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0212]
+K5-004: semantic_error       | rules broken: {'crns_in': "['45279'] are not among ['41148', '41151']"} [cache: 300,608 read, 0 written, $0.0221]
+K6-001: consistency_error    | section 42022: seats_total 26 is not the offered section's (24) [cache: 297,152 read, 0 written, $0.0264]
+K6-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0229]
+K6-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0211]
+K6-004: consistency_error    | section 41091: meetings do not match the offered section's: days or times differ [cache: 297,152 read, 0 written, $0.0253]
+K7-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0183]
+K7-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0168]
+K7-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0251]
+K7-004: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0183]
+K8-001: consistency_error    | section 40378 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0289]
+K8-002: consistency_error    | section 40382 is full and has no waitlist [cache: 301,184 read, 0 written, $0.0277]
+K8-003: consistency_error    | section 41298 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0193]
+K8-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 301,312 read, 0 written, $0.0190]
+R1-001: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0188]
+R1-002: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0212]
+R1-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0185]
+R1-004: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0199]
+R1-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0181]
+R1-006: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0173]
+R2-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0215]
+R2-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0265]
+R2-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0219]
+R2-004: consistency_error    | section 40378 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0315]
+R2-005: consistency_error    | section 41298 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0263]
+R2-006: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0255]
+R3-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0238]
+R3-002: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}"} [cache: 297,152 read, 0 written, $0.0260]
+R3-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0198]
+R3-004: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0208]
+R4-001: consistency_error    | section 40300: section '1' is not the offered section's ('3') [cache: 297,152 read, 0 written, $0.0194]
+R4-002: consistency_error    | section 40051: section '1' is not the offered section's ('2') [cache: 297,152 read, 0 written, $0.0340]
+R4-003: consistency_error    | two sections of PSY07303 in the cart: 40319 and 40321 [cache: 297,152 read, 0 written, $0.0287]
+R4-004: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.0694]
+R5-001: consistency_error    | section 42977 is full and has no waitlist [cache: 294,912 read, 0 written, $0.0217]
+R5-002: consistency_error    | two sections of PR06350 in the cart: 43118 and 43120 [cache: 297,152 read, 0 written, $0.0268]
+R5-003: consistency_error    | two sections of PSY07301 in the cart: 40331 and 40335 [cache: 297,152 read, 0 written, $0.0280]
+R5-004: semantic_error       | rules broken: {'waitlist': "['40337'] waitlisted, but the student did not ask to be waitlisted"} [cache: 297,152 read, 0 written, $0.0264]
+R6-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0190]
+R6-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0226]
+R6-003: consistency_error    | section 40306 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0377]
+R6-004: consistency_error    | section 40051: section '1' is not the offered section's ('2') [cache: 297,152 read, 0 written, $0.0274]
+R7-001: consistency_error    | section 40331: seats_taken 22 is not the offered section's (25) [cache: 297,152 read, 0 written, $0.0292]
+R7-002: consistency_error    | two sections of PSY01107 in the cart: 40337 and 40338 [cache: 297,152 read, 0 written, $0.0345]
+R7-003: consistency_error    | section 43076: course_id 'PR06305' is not the offered section's ('PR06301') [cache: 297,152 read, 0 written, $0.0264]
+R7-004: consistency_error    | section 43069: course_id 'PR06350' is not the offered section's ('PR05350') [cache: 297,152 read, 0 written, $0.0197]
+R8-001: syntactic_error      | invalid JSON (Extra data: line 1 column 6 (char 5)) [cache: 297,152 read, 0 written, $0.0281]
+R8-002: semantic_ok          | satisfies every rule [cache: 300,800 read, 0 written, $0.0202]
+R8-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0212]
+R8-004: semantic_ok          | satisfies every rule [cache: 302,336 read, 0 written, $0.0231]
+R9-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0265]
+R9-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0266]
+R9-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0266]
+R9-004: consistency_error    | section 41603: course_id 'MKT09350' is not the offered section's ('MKT09360') [cache: 297,152 read, 0 written, $0.0241]
+R10-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0190]
+R10-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0201]
+R10-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0260]
+R10-004: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0200]
+R11-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0189]
+R11-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0207]
+R11-003: consistency_error    | section 40610: meetings do not match the offered section's: days or times differ [cache: 297,152 read, 0 written, $0.0202]
+R11-004: consistency_error    | section 40610: meetings do not match the offered section's: days or times differ [cache: 297,152 read, 0 written, $0.0199]
+R12-001: semantic_error       | rules broken: {'courses_in': "['CS04113'] are not among ['CS07340']"} [cache: 297,152 read, 0 written, $0.0263]
+R12-002: semantic_error       | rules broken: {'courses_in': "['PHYS00150'] are not among ['PHYS00310', 'PHYS00410', 'PHYS00300', 'PHYS00320']"} [cache: 302,080 read, 0 written, $0.0257]
+R12-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0261]
+R12-004: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0213]
+O1-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0272]
+O1-002: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0239]
+O1-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0241]
+O1-004: consistency_error    | section 45005 is full and has no waitlist [cache: 301,248 read, 0 written, $0.0266]
+O1-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0240]
+O1-006: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0222]
+O2-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0268]
+O2-002: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0176]
+O2-003: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0266]
+O2-004: semantic_ok          | satisfies every rule [cache: 301,568 read, 0 written, $0.0257]
+O2-005: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0246]
+O2-006: semantic_ok          | satisfies every rule [cache: 301,120 read, 0 written, $0.0257]
+O3-001: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0264]
+O3-002: consistency_error    | section 41298 is full and has no waitlist [cache: 297,216 read, 0 written, $0.0247]
+O3-003: consistency_error    | two sections of MATH01210 in the cart: 41046 and 41048 [cache: 297,152 read, 0 written, $0.0220]
+O3-004: consistency_error    | two sections of MATH01210 in the cart: 41051 and 41055 [cache: 302,656 read, 0 written, $0.0188]
+OpenRouter's records: 200 of 200 calls
+
+122/200 semantic_ok on qwen/qwen3.8-27b. Cost $4.4838. Full results in results/FINALIZED_RESULTS/main_qwen27b.json (session compact-20261106T000744Z-high)
+Paired accuracy: 47/100 pairs with both variants semantic_ok (47%)
+    ambiguous          0/2
+    any_correct        0/2
+    back_to_back       0/2
+    boundary_time      1/2
+    busy_block         0/2
+    campus_residence   0/3
+    chained_conflict   2/2
+    complete_cart      4/4
+    course_a_not_b     1/2
+    credit_limit       2/2
+    day_exclusion      1/2
+    days               1/3
+    department         1/2
+    full_fallback      1/3
+    grade_threshold    0/2
+    hard_soft          1/2
+    impossible_days    1/1
+    impossible_full    1/1
+    last_seat          3/3
+    late_meeting       0/1
+    lookalike_id       1/3
+    modality           1/3
+    multi_meeting      1/1
+    negation           0/2
+    noon               0/2
+    not_first_listed   1/2
+    o1_shared_rule     0/1
+    o2_stacked_rules   1/1
+    open_seats         2/2
+    passed_retake      3/3
+    prereq_completed   0/2
+    prereq_in_progress 0/2
+    prereq_min_grade   0/2
+    prereq_transfer    1/2
+    quantity           0/2
+    relative_time      3/3
+    repeatable         1/2
+    requirement_options 1/2
+    requirement_satisfied 1/2
+    same_title         2/2
+    section_number     2/3
+    several_constraints 0/2
+    shared_day_pattern 1/3
+    time_cutoff        0/2
+    time_of_day        3/3
+    transfer           1/2
+    withdrawal         1/1
+session closed: 200 model calls, 60,316,239 input tokens (0 written to the cache, 59,303,232 read from it: 98%), $4.4838 in all, $0.0224 per prompt
+=== qwen27b: stability check, 10 pairs x 3 samples at medium -> results/FINALIZED_RESULTS/check_qwen27b.json
+1 efforts (medium), one session each: about $0.93 in all (medium: estimated cost: $0.93 for 40 call(s) on qwen/qwen3.8-27b via phala, from 1 measured session(s) in results/test_qwen38_27b.json (setup $0.04, then $0.0223 per call))
+
+=== effort medium
+session compact-20261106T011451Z-medium started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+estimated cost: $0.93 for 40 call(s) on qwen/qwen3.8-27b via phala, from 1 measured session(s) in results/test_qwen38_27b.json (setup $0.04, then $0.0223 per call)
+T1-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_qwen27b.json
+T1-001 run 1: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0179]
+T1-001 run 2: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0174]
+T1-002 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_qwen27b.json
+T1-002 run 1: semantic_ok          | satisfies every rule [cache: 301,568 read, 0 written, $0.0177]
+T1-002 run 2: semantic_ok          | satisfies every rule [cache: 301,568 read, 0 written, $0.0177]
+T2-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_qwen27b.json
+T2-001 run 1: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0176]
+T2-001 run 2: semantic_ok          | satisfies every rule [cache: 301,376 read, 0 written, $0.0175]
+T2-002 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_qwen27b.json
+T2-002 run 1: semantic_ok          | satisfies every rule [cache: 301,376 read, 0 written, $0.0170]
+T2-002 run 2: semantic_ok          | satisfies every rule [cache: 301,376 read, 0 written, $0.0170]
+D1-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_qwen27b.json
+D1-001 run 1: consistency_error    | two sections of MGT06402 in the cart: 40198 and 40201 [cache: 297,152 read, 0 written, $0.0274]
+D1-001 run 2: consistency_error    | two sections of MGT06402 in the cart: 40198 and 40201 [cache: 301,632 read, 0 written, $0.0229]
+D1-002 run 0: consistency_error    | reused from results/FINALIZED_RESULTS/main_qwen27b.json
+D1-002 run 1: consistency_error    | section 40204 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0279]
+D1-002 run 2: consistency_error    | section 40204 is full and has no waitlist [cache: 301,568 read, 0 written, $0.0234]
+D2-001 run 0: semantic_error       | reused from results/FINALIZED_RESULTS/main_qwen27b.json
+D2-001 run 1: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 297,152 read, 0 written, $0.0262]
+D2-001 run 2: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 301,760 read, 0 written, $0.0255]
+D2-002 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_qwen27b.json
+D2-002 run 1: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 301,760 read, 0 written, $0.0255]
+D2-002 run 2: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 301,760 read, 0 written, $0.0255]
+C1-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_qwen27b.json
+C1-001 run 1: consistency_error    | section 41247 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0267]
+C1-001 run 2: semantic_ok          | satisfies every rule [cache: 301,632 read, 0 written, $0.0219]
+C1-002 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_qwen27b.json
+C1-002 run 1: consistency_error    | two sections of FIN04300 in the cart: 41277 and 41282 [cache: 297,152 read, 0 written, $0.0272]
+C1-002 run 2: semantic_ok          | satisfies every rule [cache: 301,568 read, 0 written, $0.0258]
+C2-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_qwen27b.json
+C2-001 run 1: consistency_error    | two sections of CS04103 in the cart: 41937 and 42160 [cache: 297,216 read, 0 written, $0.0243]
+C2-001 run 2: semantic_ok          | satisfies every rule [cache: 301,632 read, 0 written, $0.0258]
+C2-002 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_qwen27b.json
+C2-002 run 1: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0221]
+C2-002 run 2: semantic_ok          | satisfies every rule [cache: 301,568 read, 0 written, $0.0213]
+I1-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_qwen27b.json
+I1-001 run 1: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0201]
+I1-001 run 2: semantic_ok          | satisfies every rule [cache: 297,216 read, 0 written, $0.0185]
+I1-002 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_qwen27b.json
+I1-002 run 1: semantic_ok          | satisfies every rule [cache: 301,888 read, 0 written, $0.0165]
+I1-002 run 2: semantic_ok          | satisfies every rule [cache: 301,888 read, 0 written, $0.0163]
+K1-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_qwen27b.json
+K1-001 run 1: consistency_error    | two sections of SOC08120 in the cart: 42676 and 42714 [cache: 297,216 read, 0 written, $0.0212]
+K1-001 run 2: consistency_error    | two sections of SOC08120 in the cart: 42676 and 42714 [cache: 301,632 read, 0 written, $0.0262]
+K1-002 run 0: consistency_error    | reused from results/FINALIZED_RESULTS/main_qwen27b.json
+K1-002 run 1: consistency_error    | section 42709 is full and has no waitlist [cache: 301,632 read, 0 written, $0.0245]
+K1-002 run 2: consistency_error    | section 42709 is full and has no waitlist [cache: 301,632 read, 0 written, $0.0245]
+R1-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_qwen27b.json
+R1-001 run 1: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0205]
+R1-001 run 2: consistency_error    | two sections of ATR00347 in the cart: 42941 and 42943 [cache: 300,928 read, 0 written, $0.0260]
+R1-002 run 0: consistency_error    | reused from results/FINALIZED_RESULTS/main_qwen27b.json
+R1-002 run 1: semantic_ok          | satisfies every rule [cache: 297,152 read, 0 written, $0.0202]
+R1-002 run 2: semantic_ok          | satisfies every rule [cache: 297,344 read, 0 written, $0.0198]
+O1-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_qwen27b.json
+O1-001 run 1: consistency_error    | section 41325 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0267]
+O1-001 run 2: semantic_ok          | satisfies every rule [cache: 301,824 read, 0 written, $0.0260]
+O1-002 run 0: consistency_error    | reused from results/FINALIZED_RESULTS/main_qwen27b.json
+O1-002 run 1: consistency_error    | section 40056 is full and has no waitlist [cache: 297,152 read, 0 written, $0.0286]
+O1-002 run 2: semantic_ok          | satisfies every rule [cache: 301,760 read, 0 written, $0.0258]
+20 answer(s) reused from results/FINALIZED_RESULTS/main_qwen27b.json: no new call, no cost
+OpenRouter's records: 40 of 60 calls
+
+37/60 semantic_ok on qwen/qwen3.8-27b. Cost $0.9006. Full results in results/FINALIZED_RESULTS/check_qwen27b.json (session compact-20261106T011451Z-medium)
+Paired accuracy: 15/30 pairs with both variants semantic_ok (50%)
+    complete_cart      1/3
+    days               0/3
+    full_fallback      2/3
+    last_seat          2/3
+    lookalike_id       3/3
+    modality           0/3
+    passed_retake      1/3
+    relative_time      3/3
+    shared_day_pattern 0/3
+    time_of_day        3/3
+session closed: 40 model calls, 12,064,656 input tokens (0 written to the cache, 11,984,576 read from it: 99%), $0.9006 in all, $0.0225 per prompt
+=== qwen27b: finished

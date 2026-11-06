@@ -265,6 +265,10 @@ class OpenRouterBackend:        # One key, many models (§4.2).
     # unavailable" (502) mid-stream when it has no capacity.
     RETRY_STATUS = (429, 502, 503)
     RETRY_SECONDS = (15, 30, 60, 120, 240)
+    # A lost connection (Wi-Fi drop) waits for the network to come back, then makes the same call
+    # again, instead of failing every call of the outage; DROPS caps it when the network is up
+    # but connections keep breaking.
+    NETWORK_POLL_SECONDS, NETWORK_WAIT_SECONDS, DROPS = 15, 6 * 3600, 5
     name, paid = "openrouter", True
 
     def __init__(self, api_key: str | None = None, max_tokens: int | None = None, effort: str | None = None,
@@ -388,6 +392,27 @@ class OpenRouterBackend:        # One key, many models (§4.2).
         return result
 
     def _stream(self, model, messages) -> RawCall:
+        for drop in range(self.DROPS + 1):
+            try:
+                return self._stream_once(model, messages)
+            except (requests.ConnectionError, requests.exceptions.ChunkedEncodingError) as e:
+                if drop == self.DROPS:
+                    raise
+                print(f"  connection lost ({type(e).__name__}); waiting for the network, then trying again")
+                if not self._wait_for_network():
+                    raise
+
+    def _wait_for_network(self) -> bool:
+        """Polls OpenRouter until it answers at all; False after NETWORK_WAIT_SECONDS."""
+        for _ in range(self.NETWORK_WAIT_SECONDS // self.NETWORK_POLL_SECONDS):
+            try:
+                requests.head("https://openrouter.ai", timeout=10)
+                return True
+            except requests.RequestException:
+                time.sleep(self.NETWORK_POLL_SECONDS)
+        return False
+
+    def _stream_once(self, model, messages) -> RawCall:
         # Streamed, so the first token's arrival can be timed; usage (cost, cache, thinking
         # tokens) comes in the last chunk because usage.include is set. The latency is the
         # attempt that answered, not the waits before it.

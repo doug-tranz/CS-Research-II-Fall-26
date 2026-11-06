@@ -1,0 +1,177 @@
+=== lightning: main run, 200 cases x low/medium/high -> results/FINALIZED_RESULTS/main_lightning.json
+note: 1 sample(s) per case; use -n 3 or more to compare sessions reliably
+3 efforts (low, medium, high), one session each: about $0.00 in all (low: estimated cost: $0.00 for 200 call(s) on nvidia/nemotron-3.5-lightning:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side))
+
+=== effort low
+session compact-20261105T222149Z-low started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+--resume: continuing session compact-20261105T190917Z-low, which has 96 of 200 calls; only the rest are made
+estimated cost: $0.00 for 200 call(s) on nvidia/nemotron-3.5-lightning:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side)
+I5-001: semantic_ok          | satisfies every rule [cache: 316,496 read, 0 written, $0.0000]
+I5-002: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 316,496 read, 0 written, $0.0000]
+I5-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 0 read, 0 written, $0.0000]
+I5-004: consistency_error    | section 41298 is full and has no waitlist [cache: 310,208 read, 0 written, $0.0000]
+K1-001: generation_failed    | ("Connection broken: ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)", ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)) [cache: 0 read, 0 written, $0.0000]
+K1-002: generation_failed    | ('Connection aborted.', ConnectionAbortedError(10053, 'An established connection was aborted by the software in your host machine')) [cache: 0 read, 0 written, $0.0000]
+K1-003: generation_failed    | ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host')) [cache: 0 read, 0 written, $0.0000]
+K1-004: consistency_error    | two sections of STAT02260 in the cart: 41148 and 41151 [cache: 310,208 read, 0 written, $0.0000]
+K1-005: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 355 (char 354)) [cache: 0 read, 0 written, $0.0000]
+K1-006: consistency_error    | section 41174: course_id 'PHIL09222' is not the offered section's ('STAT02280') [cache: 316,496 read, 0 written, $0.0000]
+K3-001: semantic_ok          | satisfies every rule [cache: 310,208 read, 0 written, $0.0000]
+K3-002: semantic_error       | rules broken: {'crns_in': "['40092'] are not among ['46518']"} [cache: 314,400 read, 0 written, $0.0000]
+K3-003: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 546 (char 545)) [cache: 310,208 read, 0 written, $0.0000]
+K3-004: semantic_error       | rules broken: {'crns_in': "['46195'] are not among ['44167']"} [cache: 310,208 read, 0 written, $0.0000]
+K3-005: consistency_error    | section 40085 is full (35/35) [cache: 310,208 read, 0 written, $0.0000]
+K3-006: semantic_error       | rules broken: {'crns_in': "['40092'] are not among ['46518']"} [cache: 314,400 read, 0 written, $0.0000]
+K4-001: semantic_ok          | satisfies every rule [cache: 310,208 read, 0 written, $0.0000]
+K4-002: semantic_ok          | satisfies every rule [cache: 310,208 read, 0 written, $0.0000]
+K4-003: consistency_error    | section 41298 is full and has no waitlist [cache: 0 read, 0 written, $0.0000]
+K4-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 314,400 read, 0 written, $0.0000]
+K5-001: not made: OpenRouter 429: {'message': 'Rate limit exceeded: free-models-per-day-high-balance. ', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '1000', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1793923200000'}, 'limit_source': 'openrouter_free_tier_daily', 'remedy_hint': 'Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model daily limit.', 'provider_name': None}}
+stopped: OpenRouter's daily allowance of free-model requests is used up; it resets at 00:00 UTC. Run the same command with --resume then: this session continues where it stopped.
+OpenRouter's records: 113 of 116 calls
+
+4/20 semantic_ok on nvidia/nemotron-3.5-lightning:free. Cost $0.0000. Full results in results/FINALIZED_RESULTS/main_lightning.json (session compact-20261105T190917Z-low)
+Paired accuracy: 1/8 pairs with both variants semantic_ok (12%); 2 incomplete (a call failed or a variant was not run), not scored
+    campus_residence   0/3
+    modality           0/1
+    negation           0/2
+    several_constraints 1/2
+session closed: 20 model calls, 5,383,334 input tokens (0 written to the cache, 4,374,352 read from it: 81%), $0.0000 in all, $0.0000 per prompt
+=== lightning: stopped at the daily free-model limit; run this again after 00:00 UTC to continue
+=== lightning: main run, 200 cases x low/medium/high -> results/FINALIZED_RESULTS/main_lightning.json
+note: 1 sample(s) per case; use -n 3 or more to compare sessions reliably
+3 efforts (low, medium, high), one session each: about $0.00 in all (low: estimated cost: $0.00 for 200 call(s) on nvidia/nemotron-3.5-lightning:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side))
+
+=== effort low
+session compact-20261106T000505Z-low started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+--resume: continuing session compact-20261105T190917Z-low, which has 113 of 200 calls; only the rest are made (3 failed call(s) made again)
+estimated cost: $0.00 for 200 call(s) on nvidia/nemotron-3.5-lightning:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side)
+K1-001: consistency_error    | section 42714: section '7' is not the offered section's ('10') [cache: 0 read, 0 written, $0.0000]
+K1-002: consistency_error    | section 42709 is full (35/35) [cache: 301,824 read, 0 written, $0.0000]
+K1-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['STAT02260']"} [cache: 0 read, 0 written, $0.0000]
+K5-001: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 354 (char 353)) [cache: 134,144 read, 0 written, $0.0000]
+K5-002: semantic_error       | rules broken: {'crns_in': "['45043'] are not among ['46445']"} [cache: 316,496 read, 0 written, $0.0000]
+K5-003: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 373 (char 372)) [cache: 301,824 read, 0 written, $0.0000]
+K5-004: consistency_error    | section 41188: course_id 'STAT02260' is not the offered section's ('STAT02320') [cache: 314,400 read, 0 written, $0.0000]
+K6-001: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 310,208 read, 0 written, $0.0000]
+K6-002: consistency_error    | section 42191: course_id 'PHYS00300' is not the offered section's ('PHYS00371') [cache: 310,208 read, 0 written, $0.0000]
+K6-003: consistency_error    | section 40434: seats_total 30 is not the offered section's (20) [cache: 0 read, 0 written, $0.0000]
+K6-004: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 310,208 read, 0 written, $0.0000]
+K7-001: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 359 (char 358)) [cache: 310,208 read, 0 written, $0.0000]
+K7-002: semantic_ok          | satisfies every rule [cache: 314,400 read, 0 written, $0.0000]
+K7-003: consistency_error    | section 41048: section '4' is not the offered section's ('2') [cache: 310,208 read, 0 written, $0.0000]
+K7-004: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.0000]
+K8-001: consistency_error    | section 46386 does not exist [cache: 301,824 read, 0 written, $0.0000]
+K8-002: schema_error         | not a valid register message: ["body/sections/0: Additional properties are not allowed ('location', 'type' were unexpected)"] [cache: 314,400 read, 0 written, $0.0000]
+K8-003: consistency_error    | section 41298 is full and has no waitlist [cache: 310,208 read, 0 written, $0.0000]
+K8-004: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 314,400 read, 0 written, $0.0000]
+R1-001: semantic_ok          | satisfies every rule [cache: 310,208 read, 0 written, $0.0000]
+R1-002: semantic_ok          | satisfies every rule [cache: 310,208 read, 0 written, $0.0000]
+R1-003: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 310,208 read, 0 written, $0.0000]
+R1-004: semantic_ok          | satisfies every rule [cache: 310,208 read, 0 written, $0.0000]
+R1-005: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 310,208 read, 0 written, $0.0000]
+R1-006: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 310,208 read, 0 written, $0.0000]
+R2-001: consistency_error    | section 43587: meetings do not match the offered section's: days or times differ [cache: 310,208 read, 0 written, $0.0000]
+R2-002: semantic_ok          | satisfies every rule [cache: 310,208 read, 0 written, $0.0000]
+R2-003: consistency_error    | section 43382: meetings do not match the offered section's: a meeting's type or location differs [cache: 310,208 read, 0 written, $0.0000]
+R2-004: consistency_error    | section 40386: section '15' is not the offered section's ('9') [cache: 310,208 read, 0 written, $0.0000]
+R2-005: consistency_error    | section 41298 is full and has no waitlist [cache: 310,208 read, 0 written, $0.0000]
+R2-006: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 445 (char 444)) [cache: 310,208 read, 0 written, $0.0000]
+R3-001: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 310,208 read, 0 written, $0.0000]
+R3-002: consistency_error    | section 40377: course_id 'THD08377' is not the offered section's ('XEED01660') [cache: 310,208 read, 0 written, $0.0000]
+R3-003: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 427 (char 426)) [cache: 310,208 read, 0 written, $0.0000]
+R3-004: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 316,496 read, 0 written, $0.0000]
+R4-001: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 0 read, 0 written, $0.0000]
+R4-002: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 310,208 read, 0 written, $0.0000]
+R4-003: consistency_error    | section 45731: course_id 'PSY07303' is not the offered section's ('ACC03301') [cache: 0 read, 0 written, $0.0000]
+R4-004: consistency_error    | section 41111 does not exist [cache: 310,208 read, 0 written, $0.0000]
+R5-001: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 422 (char 421)) [cache: 310,208 read, 0 written, $0.0000]
+R5-002: consistency_error    | section 42976: ADV04375 needs prerequisite ADV04330 (D- or better), which the transcript does not show [cache: 310,208 read, 0 written, $0.0000]
+R5-003: semantic_error       | rules broken: {'waitlist': "['40337'] waitlisted, but the student did not ask to be waitlisted", 'courses_in': "['PSY01107'] are not among ['PSY07301']"} [cache: 0 read, 0 written, $0.0000]
+R5-004: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 310,208 read, 0 written, $0.0000]
+R6-001: semantic_ok          | satisfies every rule [cache: 310,208 read, 0 written, $0.0000]
+R6-002: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 445 (char 444)) [cache: 310,208 read, 0 written, $0.0000]
+R6-003: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.0000]
+R6-004: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 310,208 read, 0 written, $0.0000]
+R7-001: semantic_error       | rules broken: {'waitlist': "['40337'] waitlisted, but the student did not ask to be waitlisted", 'courses_in': "['PSY01107'] are not among ['PSY07301']"} [cache: 310,208 read, 0 written, $0.0000]
+R7-002: semantic_error       | rules broken: {'waitlist': "['40337'] waitlisted, but the student did not ask to be waitlisted"} [cache: 310,208 read, 0 written, $0.0000]
+R7-003: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 488 (char 487)) [cache: 0 read, 0 written, $0.0000]
+R7-004: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 310,208 read, 0 written, $0.0000]
+R8-001: semantic_ok          | satisfies every rule [cache: 310,208 read, 0 written, $0.0000]
+R8-002: consistency_error    | section 43552: course_id 'CHEM06301' is not the offered section's ('CHEM06101') [cache: 0 read, 0 written, $0.0000]
+R8-003: semantic_ok          | satisfies every rule [cache: 301,824 read, 0 written, $0.0000]
+R8-004: semantic_ok          | satisfies every rule [cache: 310,208 read, 0 written, $0.0000]
+R9-001: semantic_ok          | satisfies every rule [cache: 310,208 read, 0 written, $0.0000]
+R9-002: semantic_ok          | satisfies every rule [cache: 310,208 read, 0 written, $0.0000]
+R9-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 0 read, 0 written, $0.0000]
+R9-004: semantic_error       | rules broken: {'courses_count_toward': "['41525'] do not move ['MKT-ELECTIVES'] forward"} [cache: 310,208 read, 0 written, $0.0000]
+R10-001: consistency_error    | section 44827: course_id 'CST03315' is not the offered section's ('CST03418') [cache: 310,208 read, 0 written, $0.0000]
+R10-002: consistency_error    | section 44827: course_id 'CST03315' is not the offered section's ('CST03418') [cache: 316,496 read, 0 written, $0.0000]
+R10-003: consistency_error    | section 42333: course_id 'LAWJ05357' is not the offered section's ('LAWJ05356') [cache: 310,208 read, 0 written, $0.0000]
+R10-004: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 380 (char 379)) [cache: 314,400 read, 0 written, $0.0000]
+R11-001: generation_failed    | ("Connection broken: ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)", ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)) [cache: 0 read, 0 written, $0.0000]
+R11-002: semantic_ok          | satisfies every rule [cache: 310,208 read, 0 written, $0.0000]
+R11-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R11-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R12-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R12-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R12-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R12-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O1-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O1-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O1-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O1-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O1-005: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O1-006: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O2-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O2-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O2-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O2-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O2-005: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O2-006: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O3-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O3-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O3-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O3-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+OpenRouter's records: 61 of 200 calls
+
+14/87 semantic_ok on nvidia/nemotron-3.5-lightning:free. Cost $0.0000. Full results in results/FINALIZED_RESULTS/main_lightning.json (session compact-20261105T190917Z-low)
+Paired accuracy: 3/31 pairs with both variants semantic_ok (10%); 13 incomplete (a call failed or a variant was not run), not scored
+    ambiguous          0/2
+    credit_limit       0/2
+    grade_threshold    0/2
+    hard_soft          0/2
+    impossible_days    0/1
+    impossible_full    0/1
+    modality           0/1
+    passed_retake      1/3
+    prereq_completed   0/2
+    prereq_in_progress 0/2
+    prereq_min_grade   0/2
+    prereq_transfer    0/2
+    quantity           0/2
+    repeatable         0/2
+    requirement_options 1/2
+    transfer           1/2
+    withdrawal         0/1
+session closed: 87 model calls, 20,243,475 input tokens (0 written to the cache, 16,271,248 read from it: 80%), $0.0000 in all, $0.0000 per prompt
+
+=== effort medium
+session compact-20261106T033445Z-medium started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+estimated cost: $0.00 for 200 call(s) on nvidia/nemotron-3.5-lightning:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side)
+T1-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['STAT02284']"} [cache: 310,208 read, 0 written, $0.0000]
+T1-002: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['STAT02284']"} [cache: 310,208 read, 0 written, $0.0000]
+T1-003: consistency_error    | section 43017: section '1' is not the offered section's ('2') [cache: 310,208 read, 0 written, $0.0000]
+T1-004: consistency_error    | section 43018: course_id 'HES00346' is not the offered section's ('MAPR01620') [cache: 314,400 read, 0 written, $0.0000]
+T1-005: consistency_error    | section 40958: course_id 'PHIL09130' is not the offered section's ('PHIL09120') [cache: 310,208 read, 0 written, $0.0000]
+T1-006: consistency_error    | section 41106: course_id 'PHIL09130' is not the offered section's ('MATH01352') [cache: 314,400 read, 0 written, $0.0000]
+T2-001: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 444 (char 443)) [cache: 310,208 read, 0 written, $0.0000]
+T2-002: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 442 (char 441)) [cache: 310,208 read, 0 written, $0.0000]
+T2-003: semantic_ok          | satisfies every rule [cache: 310,208 read, 0 written, $0.0000]
+T2-004: semantic_ok          | satisfies every rule [cache: 314,400 read, 0 written, $0.0000]
+T2-005: consistency_error    | section 44171: course_id 'BIOL01445' is not the offered section's ('GEOG16100') [cache: 310,208 read, 0 written, $0.0000]
+T2-006: consistency_error    | section 44173: section '4' is not the offered section's ('3') [cache: 316,496 read, 0 written, $0.0000]
+T3-001: semantic_ok          | satisfies every rule [cache: 310,208 read, 0 written, $0.0000]
+T3-002: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CS04113']"} [cache: 0 read, 0 written, $0.0000]
+T3-003: semantic_ok          | satisfies every rule [cache: 301,824 read, 0 written, $0.0000]
+T3-004: consistency_error    | section 46561: course_id 'MUS40111' is not the offered section's ('MUS97229') [cache: 67,072 read, 0 written, $0.0000]

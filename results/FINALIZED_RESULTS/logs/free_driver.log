@@ -1,0 +1,20 @@
+started lightning (log: results/FINALIZED_RESULTS/logs/lightning.log)
+started super (log: results/FINALIZED_RESULTS/logs/super.log)
+started ultra (log: results/FINALIZED_RESULTS/logs/ultra.log)
+--- lightning: === lightning: stopped at the daily free-model limit; run this again after 00:00 UTC to continue
+--- super: === super: stopped at the daily free-model limit; run this again after 00:00 UTC to continue
+--- ultra: === ultra: stopped at the daily free-model limit; run this again after 00:00 UTC to continue
+3 not finished: run 'bash run_main.sh free' again after 00:00 UTC
+process (its own log has it); skipped here
+--- ultra: === ultra: already running in another process (its own log has it); skipped here
+all three finished
+=== restart loop: next restart at 2026-11-06 00:05 UTC
+=== scheduled restart 2026-11-06 00:05 UTC
+started lightning (log: results/FINALIZED_RESULTS/logs/lightning.log)
+started super (log: results/FINALIZED_RESULTS/logs/super.log)
+started ultra (log: results/FINALIZED_RESULTS/logs/ultra.log)
+--- lightning: === effort medium
+--- super: === super: finished
+--- ultra: === ultra: finished
+1 not finished: run 'bash run_main.sh free' again after 00:00 UTC
+=== restart loop: next restart at 2026-11-07 00:05 UTC

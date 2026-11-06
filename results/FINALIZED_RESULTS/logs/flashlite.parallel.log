@@ -1,0 +1,14 @@
+=== flashlite: main run, 200 cases x low/medium/high -> results/FINALIZED_RESULTS/main_flashlite.json
+note: 1 sample(s) per case; use -n 3 or more to compare sessions reliably
+--resume: effort low already finished in results/FINALIZED_RESULTS/main_flashlite.json; skipped
+2 efforts (medium, high), one session each: about $2.99 in all (medium: estimated cost: $1.41 for 200 call(s) on google/gemini-3.5-flash-lite via google-ai-studio/flex, from 1 measured session(s) in results/test_flash_lite.json (setup $0.01, then $0.0070 per call))
+
+=== effort medium
+session compact-20261105T221641Z-medium started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+--resume: continuing session compact-20261105T221213Z-medium, which has 34 of 200 calls; only the rest are made
+estimated cost: $1.41 for 200 call(s) on google/gemini-3.5-flash-lite via google-ai-studio/flex, from 1 measured session(s) in results/test_flash_lite.json (setup $0.01, then $0.0070 per call)
+T8-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0075]
+T8-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0084]
+T9-001: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0074]
+T9-002: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0075]
+T9-003: schema_error         | not a valid register message: ["body/sections/0: Additional properties are not allowed ('title' was unexpected)"] [cache: 300,357 read, 0 written, $0.0074]

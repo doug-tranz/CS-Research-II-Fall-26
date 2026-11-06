@@ -1,0 +1,861 @@
+=== argon: main run, 200 cases x low/medium/high -> results/FINALIZED_RESULTS/main_argon.json
+note: 1 sample(s) per case; use -n 3 or more to compare sessions reliably
+3 efforts (low, medium, high), one session each: about $16.15 in all (low: estimated cost: $5.38 for 200 call(s) on google/gemini-4-argon via google-ai-studio/flex, from 1 measured session(s) at effort high in results/test_argon.json (setup $0.28, then $0.0255 per call))
+
+=== effort low
+session compact-20261105T221641Z-low started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+estimated cost: $5.38 for 200 call(s) on google/gemini-4-argon via google-ai-studio/flex, from 1 measured session(s) at effort high in results/test_argon.json (setup $0.28, then $0.0255 per call)
+T1-001: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3012]
+T1-002: semantic_ok          | satisfies every rule [cache: 298,131 read, 0 written, $0.0180]
+T1-003: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0199]
+T1-004: semantic_ok          | satisfies every rule [cache: 297,694 read, 0 written, $0.0180]
+T1-005: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0201]
+T1-006: semantic_ok          | satisfies every rule [cache: 297,933 read, 0 written, $0.0180]
+T2-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0201]
+T2-002: semantic_ok          | satisfies every rule [cache: 297,892 read, 0 written, $0.0180]
+T2-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0199]
+T2-004: semantic_ok          | satisfies every rule [cache: 297,710 read, 0 written, $0.0180]
+T2-005: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0213]
+T2-006: semantic_ok          | satisfies every rule [cache: 299,124 read, 0 written, $0.0180]
+T3-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0213]
+T3-002: semantic_ok          | satisfies every rule [cache: 299,033 read, 0 written, $0.0180]
+T3-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0213]
+T3-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['MUS40111']"} [cache: 299,171 read, 0 written, $0.0175]
+T4-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0203]
+T4-002: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0203]
+T4-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0194]
+T4-004: semantic_ok          | satisfies every rule [cache: 297,292 read, 0 written, $0.0181]
+T5-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0197]
+T5-002: semantic_ok          | satisfies every rule [cache: 297,024 read, 0 written, $0.0185]
+T5-003: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3022]
+T5-004: semantic_ok          | satisfies every rule [cache: 298,637 read, 0 written, $0.0185]
+T6-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0211]
+T6-002: semantic_ok          | satisfies every rule [cache: 298,938 read, 0 written, $0.0180]
+T6-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0202]
+T6-004: semantic_ok          | satisfies every rule [cache: 297,998 read, 0 written, $0.0180]
+T7-001: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.2999]
+T7-002: semantic_ok          | satisfies every rule [cache: 296,812 read, 0 written, $0.0180]
+T7-003: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0208]
+T7-004: semantic_ok          | satisfies every rule [cache: 298,610 read, 0 written, $0.0180]
+T8-001: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3032]
+T8-002: semantic_ok          | satisfies every rule [cache: 299,774 read, 0 written, $0.0184]
+T8-003: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0206]
+T8-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0207]
+T9-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0191]
+T9-002: semantic_ok          | satisfies every rule [cache: 296,968 read, 0 written, $0.0179]
+T9-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 295,685 read, 0 written, $0.0195]
+T9-004: consistency_error    | section 41298 is full and has no waitlist [cache: 297,826 read, 0 written, $0.0180]
+D1-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0204]
+D1-002: semantic_ok          | satisfies every rule [cache: 298,194 read, 0 written, $0.0180]
+D1-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0203]
+D1-004: semantic_ok          | satisfies every rule [cache: 297,990 read, 0 written, $0.0181]
+D1-005: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0212]
+D1-006: semantic_ok          | satisfies every rule [cache: 299,035 read, 0 written, $0.0180]
+D2-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 295,705 read, 0 written, $0.0199]
+D2-002: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 298,273 read, 0 written, $0.0175]
+D2-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0197]
+D2-004: semantic_ok          | satisfies every rule [cache: 297,538 read, 0 written, $0.0180]
+D2-005: semantic_error       | rules broken: {'count': "2 sections, wanted {'min': 1, 'max': 1}"} [cache: 0 read, 0 written, $0.3024]
+D2-006: semantic_ok          | satisfies every rule [cache: 298,455 read, 0 written, $0.0180]
+D3-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['AFST11350']"} [cache: 295,685 read, 0 written, $0.0197]
+D3-002: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['AFST11350']"} [cache: 298,071 read, 0 written, $0.0174]
+D3-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0208]
+D3-004: semantic_ok          | satisfies every rule [cache: 298,601 read, 0 written, $0.0181]
+C1-001: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3014]
+C1-002: semantic_ok          | satisfies every rule [cache: 298,212 read, 0 written, $0.0180]
+C1-003: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0211]
+C1-004: semantic_ok          | satisfies every rule [cache: 298,736 read, 0 written, $0.0180]
+C1-005: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0200]
+C1-006: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0202]
+C2-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0205]
+C2-002: semantic_ok          | satisfies every rule [cache: 298,153 read, 0 written, $0.0181]
+C2-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0212]
+C2-004: semantic_ok          | satisfies every rule [cache: 299,054 read, 0 written, $0.0180]
+C2-005: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0200]
+C2-006: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0200]
+C3-001: semantic_error       | rules broken: {'crns_in': "['41881'] are not among ['46723']"} [cache: 295,711 read, 0 written, $0.0191]
+C3-002: semantic_error       | rules broken: {'crns_in': "['41676'] are not among ['41876']"} [cache: 296,975 read, 0 written, $0.0179]
+C3-003: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3009]
+C3-004: semantic_ok          | satisfies every rule [cache: 297,793 read, 0 written, $0.0180]
+C4-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0209]
+C4-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0211]
+C4-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGR01101']"} [cache: 295,705 read, 0 written, $0.0196]
+C4-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0202]
+I1-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0205]
+I1-002: semantic_ok          | satisfies every rule [cache: 298,386 read, 0 written, $0.0180]
+I1-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0200]
+I1-004: semantic_ok          | satisfies every rule [cache: 297,836 read, 0 written, $0.0180]
+I1-005: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0193]
+I1-006: semantic_ok          | satisfies every rule [cache: 297,140 read, 0 written, $0.0179]
+I2-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0210]
+I2-002: semantic_ok          | satisfies every rule [cache: 298,977 read, 0 written, $0.0178]
+I2-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0199]
+I2-004: semantic_ok          | satisfies every rule [cache: 297,752 read, 0 written, $0.0180]
+I2-005: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0198]
+I2-006: semantic_ok          | satisfies every rule [cache: 297,531 read, 0 written, $0.0181]
+I3-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0194]
+I3-002: semantic_ok          | satisfies every rule [cache: 297,143 read, 0 written, $0.0181]
+I3-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0196]
+I3-004: semantic_ok          | satisfies every rule [cache: 297,313 read, 0 written, $0.0181]
+I4-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0200]
+I4-002: semantic_ok          | satisfies every rule [cache: 297,678 read, 0 written, $0.0180]
+I4-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02499']"} [cache: 295,711 read, 0 written, $0.0190]
+I4-004: semantic_ok          | satisfies every rule [cache: 297,417 read, 0 written, $0.0179]
+I5-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGR01101']"} [cache: 295,705 read, 0 written, $0.0200]
+I5-002: semantic_ok          | satisfies every rule [cache: 298,356 read, 0 written, $0.0182]
+I5-003: consistency_error    | section 41298 is full and has no waitlist [cache: 295,705 read, 0 written, $0.0200]
+I5-004: consistency_error    | section 41298 is full and has no waitlist [cache: 297,853 read, 0 written, $0.0180]
+K1-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0201]
+K1-002: semantic_ok          | satisfies every rule [cache: 298,148 read, 0 written, $0.0180]
+K1-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0191]
+K1-004: semantic_ok          | satisfies every rule [cache: 297,154 read, 0 written, $0.0179]
+K1-005: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3018]
+K1-006: semantic_ok          | satisfies every rule [cache: 298,905 read, 0 written, $0.0180]
+K3-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0204]
+K3-002: semantic_error       | rules broken: {'crns_in': "['40092'] are not among ['46518']"} [cache: 298,201 read, 0 written, $0.0180]
+K3-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0213]
+K3-004: semantic_error       | rules broken: {'crns_in': "['46195'] are not among ['44167']"} [cache: 298,922 read, 0 written, $0.0182]
+K3-005: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0203]
+K3-006: semantic_error       | rules broken: {'crns_in': "['40092'] are not among ['46518']"} [cache: 298,094 read, 0 written, $0.0180]
+K4-001: generation_failed    | ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)) [cache: 0 read, 0 written, $0.0000]
+K4-002: consistency_error    | time conflict inside the cart: 44089 and 44117 on Tuesday [cache: 295,711 read, 0 written, $0.0219]
+K4-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 0 read, 0 written, $0.3004]
+K4-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 295,685 read, 0 written, $0.0195]
+K5-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0207]
+K5-002: semantic_ok          | satisfies every rule [cache: 298,704 read, 0 written, $0.0181]
+K5-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0191]
+K5-004: semantic_ok          | satisfies every rule [cache: 297,161 read, 0 written, $0.0179]
+K6-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0201]
+K6-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0206]
+K6-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0203]
+K6-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0209]
+K7-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0192]
+K7-002: semantic_ok          | satisfies every rule [cache: 297,210 read, 0 written, $0.0174]
+K7-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0200]
+K7-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0195]
+K8-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGR01101']"} [cache: 295,711 read, 0 written, $0.0194]
+K8-002: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGR01101']"} [cache: 297,776 read, 0 written, $0.0174]
+K8-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 0 read, 0 written, $0.3004]
+K8-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 297,847 read, 0 written, $0.0174]
+R1-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0198]
+R1-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0196]
+R1-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0199]
+R1-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0199]
+R1-005: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3009]
+R1-006: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0200]
+R2-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0209]
+R2-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0207]
+R2-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0211]
+R2-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0208]
+R2-005: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3003]
+R2-006: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0194]
+R3-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0195]
+R3-002: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0193]
+R3-003: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0216]
+R3-004: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0216]
+R4-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0201]
+R4-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0199]
+R4-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0204]
+R4-004: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0203]
+R5-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0196]
+R5-002: consistency_error    | section 42976: ADV04375 needs prerequisite ADV04330 (D- or better), which the transcript does not show [cache: 295,705 read, 0 written, $0.0195]
+R5-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0204]
+R5-004: consistency_error    | section 40335: PSY07301 needs prerequisite PSY01301 (B or better), which the transcript does not show [cache: 295,705 read, 0 written, $0.0204]
+R6-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0194]
+R6-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0194]
+R6-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0201]
+R6-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0199]
+R7-001: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3013]
+R7-002: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0204]
+R7-003: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0194]
+R7-004: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0194]
+R8-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0194]
+R8-002: semantic_ok          | satisfies every rule [cache: 297,288 read, 0 written, $0.0181]
+R8-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0210]
+R8-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0210]
+R9-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0215]
+R9-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0215]
+R9-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0214]
+R9-004: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0214]
+R10-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0219]
+R10-002: semantic_ok          | satisfies every rule [cache: 299,218 read, 0 written, $0.0179]
+R10-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0202]
+R10-004: semantic_ok          | satisfies every rule [cache: 297,605 read, 0 written, $0.0178]
+R11-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0209]
+R11-002: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0209]
+R11-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0194]
+R11-004: semantic_error       | rules broken: {'courses_count_toward': "['40610'] do not move ['DANCE-TECHNIQUE'] forward"} [cache: 295,711 read, 0 written, $0.0194]
+R12-001: semantic_error       | rules broken: {'courses_in': "['CS01101'] are not among ['CS07340']"} [cache: 0 read, 0 written, $0.3015]
+R12-002: semantic_ok          | satisfies every rule [cache: 298,587 read, 0 written, $0.0183]
+R12-003: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0205]
+R12-004: semantic_ok          | satisfies every rule [cache: 298,189 read, 0 written, $0.0180]
+O1-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0212]
+O1-002: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0207]
+O1-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 2, 'max': 2}", 'must_include_courses': "missing ['HIST05120', 'HIST05306']"} [cache: 295,685 read, 0 written, $0.0195]
+O1-004: semantic_ok          | satisfies every rule [cache: 297,823 read, 0 written, $0.0185]
+O1-005: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0209]
+O1-006: semantic_ok          | satisfies every rule [cache: 298,173 read, 0 written, $0.0185]
+O2-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0217]
+O2-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0212]
+O2-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0209]
+O2-004: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0203]
+O2-005: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0204]
+O2-006: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0198]
+O3-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 0 read, 0 written, $0.3004]
+O3-002: consistency_error    | section 41298 is full and has no waitlist [cache: 295,705 read, 0 written, $0.0200]
+O3-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0214]
+O3-004: semantic_ok          | satisfies every rule [cache: 299,196 read, 0 written, $0.0180]
+OpenRouter's records: 199 of 200 calls
+
+167/200 semantic_ok on google/gemini-4-argon. Cost $8.1053. Full results in results/FINALIZED_RESULTS/main_argon.json (session compact-20261105T221641Z-low)
+Paired accuracy: 77/99 pairs with both variants semantic_ok (78%); 1 incomplete (a call failed or a variant was not run), not scored
+    ambiguous          0/2
+    any_correct        1/2
+    back_to_back       2/2
+    boundary_time      2/2
+    busy_block         2/2
+    campus_residence   0/3
+    chained_conflict   2/2
+    complete_cart      4/4
+    course_a_not_b     1/2
+    credit_limit       2/2
+    day_exclusion      1/2
+    days               3/3
+    department         1/2
+    full_fallback      3/3
+    grade_threshold    2/2
+    hard_soft          2/2
+    impossible_days    1/1
+    impossible_full    1/1
+    last_seat          3/3
+    late_meeting       1/1
+    lookalike_id       3/3
+    modality           3/3
+    multi_meeting      1/1
+    negation           0/2
+    noon               1/2
+    not_first_listed   1/2
+    o1_shared_rule     0/1
+    o2_stacked_rules   1/1
+    open_seats         1/2
+    passed_retake      3/3
+    prereq_completed   2/2
+    prereq_in_progress 0/2
+    prereq_min_grade   2/2
+    prereq_transfer    2/2
+    quantity           2/2
+    relative_time      3/3
+    repeatable         2/2
+    requirement_options 2/2
+    requirement_satisfied 1/2
+    same_title         2/2
+    section_number     3/3
+    several_constraints 0/1
+    shared_day_pattern 1/3
+    time_cutoff        1/2
+    time_of_day        3/3
+    transfer           2/2
+    withdrawal         1/1
+session closed: 200 model calls, 59,727,264 input tokens (0 written to the cache, 54,559,333 read from it: 91%), $8.1053 in all, $0.0405 per prompt
+
+=== effort medium
+session compact-20261105T225426Z-medium started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+estimated cost: $5.38 for 200 call(s) on google/gemini-4-argon via google-ai-studio/flex, from 1 measured session(s) at effort high in results/test_argon.json (setup $0.28, then $0.0255 per call)
+T1-001: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3021]
+T1-002: semantic_ok          | satisfies every rule [cache: 298,131 read, 0 written, $0.0189]
+T1-003: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0212]
+T1-004: semantic_ok          | satisfies every rule [cache: 297,694 read, 0 written, $0.0191]
+T1-005: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0209]
+T1-006: semantic_ok          | satisfies every rule [cache: 297,933 read, 0 written, $0.0190]
+T2-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0219]
+T2-002: semantic_ok          | satisfies every rule [cache: 297,892 read, 0 written, $0.0192]
+T2-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0212]
+T2-004: semantic_ok          | satisfies every rule [cache: 297,710 read, 0 written, $0.0195]
+T2-005: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0233]
+T2-006: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3022]
+T3-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0235]
+T3-002: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0237]
+T3-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0213]
+T3-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['MUS40111']"} [cache: 299,171 read, 0 written, $0.0195]
+T4-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0203]
+T4-002: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0252]
+T4-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0194]
+T4-004: semantic_ok          | satisfies every rule [cache: 297,292 read, 0 written, $0.0200]
+T5-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0197]
+T5-002: semantic_ok          | satisfies every rule [cache: 297,024 read, 0 written, $0.0227]
+T5-003: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3077]
+T5-004: semantic_ok          | satisfies every rule [cache: 298,637 read, 0 written, $0.0185]
+T6-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0211]
+T6-002: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0211]
+T6-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0225]
+T6-004: semantic_ok          | satisfies every rule [cache: 297,998 read, 0 written, $0.0196]
+T7-001: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3024]
+T7-002: semantic_ok          | satisfies every rule [cache: 296,812 read, 0 written, $0.0206]
+T7-003: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0230]
+T7-004: semantic_ok          | satisfies every rule [cache: 298,610 read, 0 written, $0.0209]
+T8-001: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3051]
+T8-002: semantic_ok          | satisfies every rule [cache: 299,774 read, 0 written, $0.0184]
+T8-003: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0206]
+T8-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0238]
+T9-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0218]
+T9-002: semantic_ok          | satisfies every rule [cache: 296,968 read, 0 written, $0.0213]
+T9-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 295,685 read, 0 written, $0.0206]
+T9-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 297,826 read, 0 written, $0.0219]
+D1-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0222]
+D1-002: semantic_ok          | satisfies every rule [cache: 298,194 read, 0 written, $0.0213]
+D1-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0238]
+D1-004: semantic_ok          | satisfies every rule [cache: 297,990 read, 0 written, $0.0181]
+D1-005: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0222]
+D1-006: semantic_ok          | satisfies every rule [cache: 299,035 read, 0 written, $0.0180]
+D2-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 295,705 read, 0 written, $0.0223]
+D2-002: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 298,273 read, 0 written, $0.0193]
+D2-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0231]
+D2-004: semantic_ok          | satisfies every rule [cache: 297,538 read, 0 written, $0.0202]
+D2-005: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3043]
+D2-006: generation_failed    | ("Connection broken: ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)", ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)) [cache: 0 read, 0 written, $0.0000]
+D3-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['AFST11350']"} [cache: 295,685 read, 0 written, $0.0212]
+D3-002: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['AFST11350']"} [cache: 298,071 read, 0 written, $0.0188]
+D3-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0223]
+=== argon: main run, 200 cases x low/medium/high -> results/FINALIZED_RESULTS/main_argon.json
+note: 1 sample(s) per case; use -n 3 or more to compare sessions reliably
+3 efforts (low, medium, high), one session each: about $16.15 in all (low: estimated cost: $5.38 for 200 call(s) on google/gemini-4-argon via google-ai-studio/flex, from 1 measured session(s) at effort high in results/test_argon.json (setup $0.28, then $0.0255 per call))
+
+=== effort low
+session compact-20261106T150612Z-low started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+--resume: continuing session compact-20261105T221641Z-low, which has 199 of 200 calls; only the rest are made (1 failed call(s) made again)
+estimated cost: $5.38 for 200 call(s) on google/gemini-4-argon via google-ai-studio/flex, from 1 measured session(s) at effort high in results/test_argon.json (setup $0.28, then $0.0255 per call)
+K4-001: semantic_error       | rules broken: {'count': "2 sections, wanted {'min': 1, 'max': 1}"} [cache: 0 read, 0 written, $0.3028]
+OpenRouter's records: 1 of 200 calls
+
+0/1 semantic_ok on google/gemini-4-argon. Cost $0.3028. Full results in results/FINALIZED_RESULTS/main_argon.json (session compact-20261105T221641Z-low)
+Paired accuracy: no complete pairs; 1 incomplete (a call failed or a variant was not run), not scored
+session closed: 1 model calls, 301,106 input tokens (0 written to the cache, 0 read from it: 0%), $0.3028 in all, $0.3028 per prompt
+
+=== effort medium
+session compact-20261106T150634Z-medium started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+--resume: continuing session compact-20261105T225426Z-medium, which has 54 of 200 calls; only the rest are made (1 failed call(s) made again)
+estimated cost: $5.38 for 200 call(s) on google/gemini-4-argon via google-ai-studio/flex, from 1 measured session(s) at effort high in results/test_argon.json (setup $0.28, then $0.0255 per call)
+D2-006: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3043]
+D3-004: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0209]
+C1-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0237]
+C1-002: semantic_ok          | satisfies every rule [cache: 298,212 read, 0 written, $0.0190]
+C1-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0249]
+C1-004: semantic_ok          | satisfies every rule [cache: 298,736 read, 0 written, $0.0180]
+C1-005: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0254]
+C1-006: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0239]
+C2-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0220]
+C2-002: semantic_ok          | satisfies every rule [cache: 298,153 read, 0 written, $0.0181]
+C2-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0242]
+C2-004: semantic_ok          | satisfies every rule [cache: 299,054 read, 0 written, $0.0192]
+C2-005: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0215]
+C2-006: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0200]
+C3-001: semantic_error       | rules broken: {'crns_in': "['41881'] are not among ['46723']"} [cache: 295,711 read, 0 written, $0.0263]
+C3-002: semantic_error       | rules broken: {'crns_in': "['41676'] are not among ['41876']"} [cache: 296,975 read, 0 written, $0.0258]
+C3-003: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3026]
+C3-004: semantic_ok          | satisfies every rule [cache: 297,793 read, 0 written, $0.0180]
+C4-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0222]
+C4-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0216]
+C4-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0227]
+C4-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0215]
+I1-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0205]
+I1-002: semantic_ok          | satisfies every rule [cache: 298,386 read, 0 written, $0.0180]
+I1-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0225]
+I1-004: semantic_ok          | satisfies every rule [cache: 297,836 read, 0 written, $0.0191]
+I1-005: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0214]
+I1-006: semantic_ok          | satisfies every rule [cache: 297,140 read, 0 written, $0.0198]
+I2-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0210]
+I2-002: semantic_ok          | satisfies every rule [cache: 298,977 read, 0 written, $0.0178]
+I2-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0207]
+I2-004: semantic_ok          | satisfies every rule [cache: 297,752 read, 0 written, $0.0186]
+I2-005: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0198]
+I2-006: semantic_ok          | satisfies every rule [cache: 297,531 read, 0 written, $0.0181]
+I3-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0194]
+I3-002: semantic_ok          | satisfies every rule [cache: 297,143 read, 0 written, $0.0181]
+I3-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0196]
+I3-004: semantic_ok          | satisfies every rule [cache: 297,313 read, 0 written, $0.0181]
+I4-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0200]
+I4-002: semantic_ok          | satisfies every rule [cache: 297,678 read, 0 written, $0.0188]
+I4-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0217]
+I4-004: semantic_ok          | satisfies every rule [cache: 297,417 read, 0 written, $0.0207]
+I5-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0246]
+I5-002: semantic_ok          | satisfies every rule [cache: 298,356 read, 0 written, $0.0210]
+I5-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0291]
+I5-004: semantic_ok          | satisfies every rule [cache: 297,853 read, 0 written, $0.0273]
+K1-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0218]
+K1-002: semantic_ok          | satisfies every rule [cache: 298,148 read, 0 written, $0.0189]
+K1-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0191]
+K1-004: semantic_ok          | satisfies every rule [cache: 297,154 read, 0 written, $0.0186]
+K1-005: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3037]
+K1-006: semantic_ok          | satisfies every rule [cache: 298,905 read, 0 written, $0.0196]
+K3-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0236]
+K3-002: semantic_error       | rules broken: {'crns_in': "['40092'] are not among ['46518']"} [cache: 298,201 read, 0 written, $0.0242]
+K3-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0213]
+K3-004: semantic_error       | rules broken: {'crns_in': "['46195'] are not among ['44167']"} [cache: 298,922 read, 0 written, $0.0207]
+K3-005: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0230]
+K3-006: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['MGT06305']"} [cache: 298,094 read, 0 written, $0.0241]
+K4-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0259]
+K4-002: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0251]
+K4-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 0 read, 0 written, $0.3033]
+K4-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 295,685 read, 0 written, $0.0239]
+K5-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0207]
+K5-002: semantic_ok          | satisfies every rule [cache: 298,704 read, 0 written, $0.0195]
+K5-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0191]
+K5-004: semantic_ok          | satisfies every rule [cache: 297,161 read, 0 written, $0.0212]
+K6-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0212]
+K6-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0236]
+K6-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0243]
+K6-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0230]
+K7-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0203]
+K7-002: semantic_ok          | satisfies every rule [cache: 297,210 read, 0 written, $0.0191]
+K7-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0219]
+K7-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0212]
+K8-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGR01101']"} [cache: 295,711 read, 0 written, $0.0222]
+K8-002: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGR01101']"} [cache: 297,776 read, 0 written, $0.0174]
+K8-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 0 read, 0 written, $0.3004]
+K8-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 297,847 read, 0 written, $0.0221]
+R1-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0198]
+R1-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0230]
+R1-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0199]
+R1-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0199]
+R1-005: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3031]
+R1-006: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0200]
+R2-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0227]
+R2-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0260]
+R2-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0254]
+R2-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}"} [cache: 295,711 read, 0 written, $0.0201]
+R2-005: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}"} [cache: 0 read, 0 written, $0.3081]
+R2-006: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0216]
+R3-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0207]
+R3-002: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0206]
+R3-003: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0233]
+R3-004: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0239]
+R4-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0202]
+R4-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0199]
+R4-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0233]
+R4-004: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0228]
+R5-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0196]
+R5-002: consistency_error    | section 42976: ADV04375 needs prerequisite ADV04330 (D- or better), which the transcript does not show [cache: 295,705 read, 0 written, $0.0195]
+R5-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0204]
+R5-004: consistency_error    | section 40335: PSY07301 needs prerequisite PSY01301 (B or better), which the transcript does not show [cache: 295,705 read, 0 written, $0.0204]
+R6-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0208]
+R6-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0208]
+R6-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0243]
+R6-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0199]
+R7-001: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3039]
+R7-002: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0204]
+R7-003: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0194]
+R7-004: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0194]
+R8-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0214]
+R8-002: semantic_ok          | satisfies every rule [cache: 297,288 read, 0 written, $0.0181]
+R8-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0225]
+R8-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0228]
+R9-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0245]
+R9-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0241]
+R9-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0242]
+R9-004: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0244]
+R10-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0236]
+R10-002: semantic_ok          | satisfies every rule [cache: 299,218 read, 0 written, $0.0196]
+R10-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0228]
+R10-004: semantic_ok          | satisfies every rule [cache: 297,605 read, 0 written, $0.0178]
+R11-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0209]
+R11-002: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3028]
+R11-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0221]
+R11-004: semantic_error       | rules broken: {'courses_count_toward': "['40490'] do not move ['DANCE-TECHNIQUE'] forward"} [cache: 295,711 read, 0 written, $0.0232]
+R12-001: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3033]
+R12-002: semantic_ok          | satisfies every rule [cache: 298,587 read, 0 written, $0.0198]
+R12-003: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0221]
+R12-004: semantic_ok          | satisfies every rule [cache: 298,189 read, 0 written, $0.0198]
+O1-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0234]
+O1-002: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0229]
+O1-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 2, 'max': 2}", 'must_include_courses': "missing ['HIST05120', 'HIST05306']"} [cache: 295,685 read, 0 written, $0.0225]
+O1-004: semantic_ok          | satisfies every rule [cache: 297,823 read, 0 written, $0.0210]
+O1-005: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0251]
+O1-006: semantic_ok          | satisfies every rule [cache: 298,173 read, 0 written, $0.0195]
+O2-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0230]
+O2-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0216]
+O2-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0230]
+O2-004: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0212]
+O2-005: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0236]
+O2-006: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0198]
+O3-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 295,705 read, 0 written, $0.0245]
+O3-002: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 297,836 read, 0 written, $0.0231]
+O3-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0230]
+O3-004: semantic_ok          | satisfies every rule [cache: 299,196 read, 0 written, $0.0200]
+OpenRouter's records: 200 of 200 calls
+
+127/146 semantic_ok on google/gemini-4-argon. Cost $5.9661. Full results in results/FINALIZED_RESULTS/main_argon.json (session compact-20261105T225426Z-medium)
+Paired accuracy: 58/72 pairs with both variants semantic_ok (81%); 2 incomplete (a call failed or a variant was not run), not scored
+    ambiguous          0/2
+    any_correct        1/2
+    campus_residence   0/3
+    complete_cart      4/4
+    course_a_not_b     2/2
+    credit_limit       2/2
+    department         2/2
+    full_fallback      3/3
+    grade_threshold    0/2
+    hard_soft          2/2
+    impossible_days    1/1
+    impossible_full    1/1
+    last_seat          3/3
+    lookalike_id       3/3
+    modality           3/3
+    negation           2/2
+    not_first_listed   2/2
+    o1_shared_rule     0/1
+    o2_stacked_rules   1/1
+    open_seats         1/2
+    passed_retake      3/3
+    prereq_completed   2/2
+    prereq_in_progress 0/2
+    prereq_min_grade   2/2
+    prereq_transfer    2/2
+    quantity           2/2
+    repeatable         2/2
+    requirement_options 2/2
+    requirement_satisfied 1/2
+    same_title         2/2
+    section_number     3/3
+    several_constraints 1/2
+    transfer           2/2
+    withdrawal         1/1
+session closed: 146 model calls, 43,816,298 input tokens (0 written to the cache, 40,303,322 read from it: 92%), $5.9661 in all, $0.0409 per prompt
+
+=== effort high
+session compact-20261106T154224Z-high started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+estimated cost: $5.38 for 200 call(s) on google/gemini-4-argon via google-ai-studio/flex, from 1 measured session(s) in results/test_argon.json (setup $0.28, then $0.0255 per call)
+T1-001: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3037]
+T1-002: semantic_ok          | satisfies every rule [cache: 298,131 read, 0 written, $0.0220]
+T1-003: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0238]
+T1-004: semantic_ok          | satisfies every rule [cache: 297,694 read, 0 written, $0.0221]
+T1-005: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0230]
+T1-006: semantic_ok          | satisfies every rule [cache: 297,933 read, 0 written, $0.0206]
+T2-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0249]
+T2-002: semantic_ok          | satisfies every rule [cache: 297,892 read, 0 written, $0.0232]
+T2-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0241]
+T2-004: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3043]
+T2-005: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0259]
+T2-006: semantic_ok          | satisfies every rule [cache: 299,124 read, 0 written, $0.0236]
+T3-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0248]
+T3-002: semantic_ok          | satisfies every rule [cache: 299,033 read, 0 written, $0.0228]
+T3-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0251]
+T3-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['MUS40111']"} [cache: 299,171 read, 0 written, $0.0224]
+T4-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0274]
+T4-002: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0283]
+T4-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0235]
+T4-004: semantic_ok          | satisfies every rule [cache: 297,292 read, 0 written, $0.0226]
+T5-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0300]
+T5-002: semantic_ok          | satisfies every rule [cache: 297,024 read, 0 written, $0.0282]
+T5-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0310]
+T5-004: semantic_ok          | satisfies every rule [cache: 298,637 read, 0 written, $0.0305]
+T6-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0235]
+T6-002: semantic_ok          | satisfies every rule [cache: 298,938 read, 0 written, $0.0212]
+T6-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0247]
+T6-004: semantic_ok          | satisfies every rule [cache: 297,998 read, 0 written, $0.0221]
+T7-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0238]
+T7-002: semantic_ok          | satisfies every rule [cache: 296,812 read, 0 written, $0.0239]
+T7-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0287]
+T7-004: semantic_ok          | satisfies every rule [cache: 298,610 read, 0 written, $0.0237]
+T8-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0278]
+T8-002: semantic_ok          | satisfies every rule [cache: 299,774 read, 0 written, $0.0217]
+T8-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0288]
+T8-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0280]
+T9-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0249]
+T9-002: semantic_ok          | satisfies every rule [cache: 296,968 read, 0 written, $0.0237]
+T9-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 295,705 read, 0 written, $0.0256]
+T9-004: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 297,826 read, 0 written, $0.1769]
+D1-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0257]
+D1-002: semantic_ok          | satisfies every rule [cache: 298,194 read, 0 written, $0.0248]
+D1-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0293]
+D1-004: semantic_ok          | satisfies every rule [cache: 297,990 read, 0 written, $0.0276]
+D1-005: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0255]
+D1-006: semantic_ok          | satisfies every rule [cache: 299,035 read, 0 written, $0.0220]
+D2-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 295,705 read, 0 written, $0.0293]
+D2-002: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 298,273 read, 0 written, $0.0269]
+D2-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0251]
+D2-004: semantic_ok          | satisfies every rule [cache: 297,538 read, 0 written, $0.0235]
+D2-005: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0405]
+D2-006: semantic_ok          | satisfies every rule [cache: 298,455 read, 0 written, $0.0281]
+D3-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0318]
+D3-002: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['AFST11350']"} [cache: 298,071 read, 0 written, $0.0204]
+D3-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0257]
+D3-004: semantic_ok          | satisfies every rule [cache: 298,601 read, 0 written, $0.0229]
+C1-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0266]
+C1-002: semantic_ok          | satisfies every rule [cache: 298,212 read, 0 written, $0.0261]
+C1-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0281]
+C1-004: semantic_ok          | satisfies every rule [cache: 298,736 read, 0 written, $0.0218]
+C1-005: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0326]
+C1-006: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0309]
+C2-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0269]
+C2-002: semantic_ok          | satisfies every rule [cache: 298,153 read, 0 written, $0.0231]
+C2-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0286]
+C2-004: semantic_ok          | satisfies every rule [cache: 299,054 read, 0 written, $0.0262]
+C2-005: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0252]
+C2-006: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0260]
+C3-001: semantic_error       | rules broken: {'crns_in': "['41881'] are not among ['46723']"} [cache: 295,711 read, 0 written, $0.0300]
+C3-002: semantic_error       | rules broken: {'crns_in': "['41676'] are not among ['41876']"} [cache: 296,975 read, 0 written, $0.0297]
+C3-003: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3050]
+C3-004: semantic_ok          | satisfies every rule [cache: 297,793 read, 0 written, $0.0245]
+C4-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0255]
+C4-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0265]
+C4-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGR01101']"} [cache: 295,705 read, 0 written, $0.0353]
+C4-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0230]
+I1-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0236]
+I1-002: semantic_ok          | satisfies every rule [cache: 298,386 read, 0 written, $0.0215]
+I1-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0236]
+I1-004: semantic_ok          | satisfies every rule [cache: 297,836 read, 0 written, $0.0208]
+I1-005: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0239]
+I1-006: semantic_ok          | satisfies every rule [cache: 297,140 read, 0 written, $0.0235]
+I2-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0222]
+I2-002: semantic_ok          | satisfies every rule [cache: 298,977 read, 0 written, $0.0203]
+I2-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0228]
+I2-004: semantic_ok          | satisfies every rule [cache: 297,752 read, 0 written, $0.0211]
+I2-005: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0219]
+I2-006: semantic_ok          | satisfies every rule [cache: 297,531 read, 0 written, $0.0213]
+I3-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0240]
+I3-002: semantic_ok          | satisfies every rule [cache: 297,143 read, 0 written, $0.0219]
+I3-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0234]
+I3-004: semantic_ok          | satisfies every rule [cache: 297,313 read, 0 written, $0.0207]
+I4-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0239]
+I4-002: semantic_ok          | satisfies every rule [cache: 297,678 read, 0 written, $0.0224]
+I4-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0581]
+I4-004: semantic_ok          | satisfies every rule [cache: 297,417 read, 0 written, $0.0239]
+I5-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0414]
+I5-002: semantic_ok          | satisfies every rule [cache: 298,356 read, 0 written, $0.0345]
+I5-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0413]
+I5-004: semantic_ok          | satisfies every rule [cache: 297,853 read, 0 written, $0.0517]
+K1-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0304]
+K1-002: semantic_ok          | satisfies every rule [cache: 298,148 read, 0 written, $0.0278]
+K1-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0267]
+K1-004: semantic_ok          | satisfies every rule [cache: 297,154 read, 0 written, $0.0255]
+K1-005: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3053]
+K1-006: semantic_ok          | satisfies every rule [cache: 298,905 read, 0 written, $0.0219]
+K3-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0288]
+K3-002: semantic_ok          | satisfies every rule [cache: 298,201 read, 0 written, $0.0761]
+K3-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0263]
+K3-004: semantic_error       | rules broken: {'crns_in': "['46195'] are not among ['44167']"} [cache: 298,922 read, 0 written, $0.0244]
+K3-005: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0296]
+K3-006: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['MGT06305']"} [cache: 298,094 read, 0 written, $0.0400]
+K4-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0398]
+K4-002: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0400]
+K4-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 0 read, 0 written, $0.3892]
+K4-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 295,685 read, 0 written, $0.0258]
+K5-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0247]
+K5-002: semantic_ok          | satisfies every rule [cache: 298,704 read, 0 written, $0.0246]
+K5-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0281]
+K5-004: semantic_ok          | satisfies every rule [cache: 297,161 read, 0 written, $0.0272]
+K6-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0385]
+K6-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0345]
+K6-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0284]
+K6-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0281]
+K7-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0228]
+K7-002: semantic_ok          | satisfies every rule [cache: 297,210 read, 0 written, $0.0215]
+K7-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0247]
+K7-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0216]
+K8-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0464]
+K8-002: semantic_ok          | satisfies every rule [cache: 297,776 read, 0 written, $0.0458]
+K8-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 295,685 read, 0 written, $0.0723]
+K8-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 297,847 read, 0 written, $0.0248]
+R1-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0246]
+R1-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0256]
+R1-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0239]
+R1-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0274]
+R1-005: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0239]
+R1-006: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0240]
+R2-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0317]
+R2-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0302]
+R2-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0297]
+R2-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}"} [cache: 295,711 read, 0 written, $0.0366]
+R2-005: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0562]
+R2-006: semantic_ok          | satisfies every rule [cache: 295,741 read, 0 written, $0.0285]
+R3-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0257]
+R3-002: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0246]
+R3-003: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0273]
+R3-004: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0261]
+R4-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0283]
+R4-002: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0252]
+R4-003: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0299]
+R4-004: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0347]
+R5-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0242]
+R5-002: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 295,711 read, 0 written, $0.1785]
+R5-003: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3126]
+R5-004: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.1259]
+R6-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0244]
+R6-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0279]
+R6-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0271]
+R6-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0252]
+R7-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0293]
+R7-002: semantic_ok          | satisfies every rule [cache: 295,734 read, 0 written, $0.0330]
+R7-003: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0247]
+R7-004: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0244]
+R8-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0299]
+R8-002: semantic_ok          | satisfies every rule [cache: 297,288 read, 0 written, $0.0261]
+R8-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0263]
+R8-004: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0297]
+R9-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0592]
+R9-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0325]
+R9-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0392]
+R9-004: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0336]
+R10-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0278]
+R10-002: semantic_ok          | satisfies every rule [cache: 299,218 read, 0 written, $0.0219]
+R10-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0274]
+R10-004: semantic_ok          | satisfies every rule [cache: 297,605 read, 0 written, $0.0223]
+R11-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0258]
+R11-002: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0286]
+R11-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0297]
+R11-004: semantic_error       | rules broken: {'courses_count_toward': "['40610'] do not move ['DANCE-TECHNIQUE'] forward"} [cache: 295,711 read, 0 written, $0.0290]
+R12-001: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0373]
+R12-002: semantic_ok          | satisfies every rule [cache: 298,587 read, 0 written, $0.0345]
+R12-003: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0308]
+R12-004: semantic_ok          | satisfies every rule [cache: 298,189 read, 0 written, $0.0298]
+O1-001: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0302]
+O1-002: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0276]
+O1-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 2, 'max': 2}", 'must_include_courses': "missing ['HIST05120', 'HIST05306']"} [cache: 295,685 read, 0 written, $0.0357]
+O1-004: semantic_ok          | satisfies every rule [cache: 297,823 read, 0 written, $0.0318]
+O1-005: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0283]
+O1-006: semantic_ok          | satisfies every rule [cache: 298,173 read, 0 written, $0.0265]
+O2-001: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0276]
+O2-002: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0225]
+O2-003: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0350]
+O2-004: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0280]
+O2-005: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0277]
+O2-006: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0242]
+O3-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 295,705 read, 0 written, $0.0258]
+O3-002: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 297,836 read, 0 written, $0.1769]
+O3-003: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3059]
+O3-004: semantic_ok          | satisfies every rule [cache: 299,196 read, 0 written, $0.0231]
+OpenRouter's records: 200 of 200 calls
+
+179/200 semantic_ok on google/gemini-4-argon. Cost $8.2225. Full results in results/FINALIZED_RESULTS/main_argon.json (session compact-20261106T154224Z-high)
+Paired accuracy: 85/100 pairs with both variants semantic_ok (85%)
+    ambiguous          1/2
+    any_correct        1/2
+    back_to_back       2/2
+    boundary_time      2/2
+    busy_block         2/2
+    campus_residence   1/3
+    chained_conflict   2/2
+    complete_cart      4/4
+    course_a_not_b     2/2
+    credit_limit       2/2
+    day_exclusion      1/2
+    days               3/3
+    department         2/2
+    full_fallback      3/3
+    grade_threshold    1/2
+    hard_soft          2/2
+    impossible_days    1/1
+    impossible_full    1/1
+    last_seat          3/3
+    late_meeting       1/1
+    lookalike_id       3/3
+    modality           3/3
+    multi_meeting      1/1
+    negation           2/2
+    noon               1/2
+    not_first_listed   1/2
+    o1_shared_rule     0/1
+    o2_stacked_rules   1/1
+    open_seats         1/2
+    passed_retake      3/3
+    prereq_completed   2/2
+    prereq_in_progress 1/2
+    prereq_min_grade   2/2
+    prereq_transfer    2/2
+    quantity           2/2
+    relative_time      3/3
+    repeatable         2/2
+    requirement_options 2/2
+    requirement_satisfied 1/2
+    same_title         2/2
+    section_number     3/3
+    several_constraints 1/2
+    shared_day_pattern 2/3
+    time_cutoff        1/2
+    time_of_day        3/3
+    transfer           2/2
+    withdrawal         1/1
+session closed: 200 model calls, 60,028,370 input tokens (0 written to the cache, 57,220,945 read from it: 95%), $8.2225 in all, $0.0411 per prompt
+=== argon: stability check, 10 pairs x 3 samples at medium -> results/FINALIZED_RESULTS/check_argon.json
+1 efforts (medium), one session each: about $1.30 in all (medium: estimated cost: $1.30 for 40 call(s) on google/gemini-4-argon via google-ai-studio/flex, from 1 measured session(s) at effort high in results/test_argon.json (setup $0.28, then $0.0255 per call))
+
+=== effort medium
+session compact-20261106T173359Z-medium started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+estimated cost: $1.30 for 40 call(s) on google/gemini-4-argon via google-ai-studio/flex, from 1 measured session(s) at effort high in results/test_argon.json (setup $0.28, then $0.0255 per call)
+T1-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_argon.json
+T1-001 run 1: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3021]
+T1-001 run 2: semantic_ok          | satisfies every rule [cache: 298,131 read, 0 written, $0.0189]
+T1-002 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_argon.json
+T1-002 run 1: semantic_ok          | satisfies every rule [cache: 298,131 read, 0 written, $0.0189]
+T1-002 run 2: semantic_ok          | satisfies every rule [cache: 298,131 read, 0 written, $0.0189]
+T2-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_argon.json
+T2-001 run 1: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0219]
+T2-001 run 2: semantic_ok          | satisfies every rule [cache: 297,891 read, 0 written, $0.0195]
+T2-002 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_argon.json
+T2-002 run 1: semantic_ok          | satisfies every rule [cache: 297,891 read, 0 written, $0.0197]
+T2-002 run 2: semantic_ok          | satisfies every rule [cache: 297,891 read, 0 written, $0.0192]
+D1-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_argon.json
+D1-001 run 1: semantic_ok          | satisfies every rule [cache: 295,705 read, 0 written, $0.0223]
+D1-001 run 2: semantic_ok          | satisfies every rule [cache: 298,194 read, 0 written, $0.0194]
+D1-002 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_argon.json
+D1-002 run 1: semantic_ok          | satisfies every rule [cache: 298,194 read, 0 written, $0.0209]
+D1-002 run 2: semantic_ok          | satisfies every rule [cache: 298,194 read, 0 written, $0.0218]
+D2-001 run 0: semantic_error       | reused from results/FINALIZED_RESULTS/main_argon.json
+D2-001 run 1: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 295,705 read, 0 written, $0.0216]
+D2-001 run 2: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 298,273 read, 0 written, $0.0194]
+D2-002 run 0: semantic_error       | reused from results/FINALIZED_RESULTS/main_argon.json
+D2-002 run 1: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 298,273 read, 0 written, $0.0218]
+D2-002 run 2: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 298,275 read, 0 written, $0.0191]
+C1-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_argon.json
+C1-001 run 1: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0236]
+C1-001 run 2: semantic_ok          | satisfies every rule [cache: 298,212 read, 0 written, $0.0181]
+C1-002 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_argon.json
+C1-002 run 1: semantic_ok          | satisfies every rule [cache: 298,212 read, 0 written, $0.0192]
+C1-002 run 2: semantic_ok          | satisfies every rule [cache: 298,214 read, 0 written, $0.0189]
+C2-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_argon.json
+C2-001 run 1: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0219]
+C2-001 run 2: semantic_ok          | satisfies every rule [cache: 298,153 read, 0 written, $0.0198]
+C2-002 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_argon.json
+C2-002 run 1: semantic_ok          | satisfies every rule [cache: 298,153 read, 0 written, $0.0212]
+C2-002 run 2: semantic_ok          | satisfies every rule [cache: 298,153 read, 0 written, $0.0181]
+I1-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_argon.json
+I1-001 run 1: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3015]
+I1-001 run 2: semantic_ok          | satisfies every rule [cache: 298,383 read, 0 written, $0.0187]
+I1-002 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_argon.json
+I1-002 run 1: semantic_ok          | satisfies every rule [cache: 298,383 read, 0 written, $0.0180]
+I1-002 run 2: semantic_ok          | satisfies every rule [cache: 298,383 read, 0 written, $0.0180]
+K1-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_argon.json
+K1-001 run 1: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0242]
+K1-001 run 2: semantic_ok          | satisfies every rule [cache: 298,147 read, 0 written, $0.0196]
+K1-002 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_argon.json
+K1-002 run 1: semantic_ok          | satisfies every rule [cache: 298,147 read, 0 written, $0.0188]
+K1-002 run 2: semantic_ok          | satisfies every rule [cache: 298,148 read, 0 written, $0.0194]
+R1-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_argon.json
+R1-001 run 1: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.3027]
+R1-001 run 2: semantic_ok          | satisfies every rule [cache: 297,484 read, 0 written, $0.0180]
+R1-002 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_argon.json
+R1-002 run 1: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0197]
+R1-002 run 2: semantic_ok          | satisfies every rule [cache: 297,484 read, 0 written, $0.0180]
+O1-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_argon.json
+O1-001 run 1: semantic_ok          | satisfies every rule [cache: 295,685 read, 0 written, $0.0227]
+O1-001 run 2: semantic_ok          | satisfies every rule [cache: 298,389 read, 0 written, $0.0187]
+O1-002 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_argon.json
+O1-002 run 1: semantic_ok          | satisfies every rule [cache: 295,711 read, 0 written, $0.0260]
+O1-002 run 2: semantic_ok          | satisfies every rule [cache: 298,379 read, 0 written, $0.0227]
+20 answer(s) reused from results/FINALIZED_RESULTS/main_argon.json: no new call, no cost
+OpenRouter's records: 40 of 60 calls
+
+54/60 semantic_ok on google/gemini-4-argon. Cost $1.6526. Full results in results/FINALIZED_RESULTS/check_argon.json (session compact-20261106T173359Z-medium)
+Paired accuracy: 27/30 pairs with both variants semantic_ok (90%)
+    complete_cart      3/3
+    days               3/3
+    full_fallback      3/3
+    last_seat          3/3
+    lookalike_id       3/3
+    modality           3/3
+    passed_retake      3/3
+    relative_time      3/3
+    shared_day_pattern 0/3
+    time_of_day        3/3
+session closed: 40 model calls, 12,006,978 input tokens (0 written to the cache, 11,009,176 read from it: 92%), $1.6526 in all, $0.0413 per prompt
+=== argon: finished

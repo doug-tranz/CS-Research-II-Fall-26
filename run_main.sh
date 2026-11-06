@@ -35,7 +35,7 @@ terra      openai/gpt-6.1-terra                     openai/flex            8.00 
 sol        openai/gpt-6.1-sol                       openai/flex            14.00  3.00   9.44
 flashlite  google/gemini-3.5-flash-lite             google-ai-studio/flex  6.00   1.00   4.07
 flash      google/gemini-3.8-flash                  google-ai-studio/flex  14.00  2.00   9.37
-argon      google/gemini-4-argon                    google-ai-studio/flex  24.00  4.00   16.14
+argon      google/gemini-4-argon                    google-ai-studio/flex  30.00  6.00   16.14
 qwenflash  qwen/qwen3.8-flash                       alibaba                6.50   1.00   4.31
 qwen27b    qwen/qwen3.8-27b                         phala                  17.00  2.50   11.48
 lightning  nvidia/nemotron-3.5-lightning:free       -                      0.05   0.05   0.00
