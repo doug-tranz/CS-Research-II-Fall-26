@@ -1,0 +1,121 @@
+OpenRouter key: $3.89 left of $10 (used $6.11)
+=== lightning: main run, 200 cases x low/medium/high -> results/FINALIZED_RESULTS/main_lightning.json
+note: 1 sample(s) per case; use -n 3 or more to compare sessions reliably
+--resume: effort low already finished in results/FINALIZED_RESULTS/main_lightning.json; skipped
+--resume: effort medium already finished in results/FINALIZED_RESULTS/main_lightning.json; skipped
+1 efforts (high), one session each: about $0.00 in all (high: estimated cost: $0.00 for 200 call(s) on nvidia/nemotron-3.5-lightning:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side))
+
+=== effort high
+session compact-20261106T194254Z-high started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+--resume: continuing session compact-20261106T115149Z-high, which has 183 of 200 calls; only the rest are made
+estimated cost: $0.00 for 200 call(s) on nvidia/nemotron-3.5-lightning:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side)
+R12-004: semantic_ok          | satisfies every rule [cache: 314,400 read, 0 written, $0.0000]
+O1-001: consistency_error    | section 40058: meetings do not match the offered section's: days or times differ [cache: 310,208 read, 0 written, $0.0000]
+O1-002: consistency_error    | section 40058: meetings do not match the offered section's: days or times differ [cache: 316,496 read, 0 written, $0.0000]
+O1-003: semantic_ok          | satisfies every rule [cache: 310,208 read, 0 written, $0.0000]
+O1-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 2, 'max': 2}", 'must_include_courses': "missing ['HIST05120', 'HIST05306']"} [cache: 310,208 read, 0 written, $0.0000]
+O1-005: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 310,208 read, 0 written, $0.0000]
+O1-006: semantic_error       | rules broken: {'count': "1 sections, wanted {'min': 2, 'max': 2}", 'must_include_courses': "missing ['STAT02284']"} [cache: 314,400 read, 0 written, $0.0000]
+O2-001: semantic_ok          | satisfies every rule [cache: 310,208 read, 0 written, $0.0000]
+O2-002: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 316,496 read, 0 written, $0.0000]
+O2-003: semantic_ok          | satisfies every rule [cache: 310,208 read, 0 written, $0.0000]
+O2-004: semantic_ok          | satisfies every rule [cache: 314,400 read, 0 written, $0.0000]
+O2-005: semantic_ok          | satisfies every rule [cache: 310,208 read, 0 written, $0.0000]
+O2-006: semantic_ok          | satisfies every rule [cache: 314,400 read, 0 written, $0.0000]
+O3-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 310,208 read, 0 written, $0.0000]
+O3-002: consistency_error    | section 41298 is full and has no waitlist [cache: 314,400 read, 0 written, $0.0000]
+O3-003: semantic_ok          | satisfies every rule [cache: 310,208 read, 0 written, $0.0000]
+O3-004: semantic_ok          | satisfies every rule [cache: 316,496 read, 0 written, $0.0000]
+OpenRouter's records: 17 of 200 calls
+
+9/17 semantic_ok on nvidia/nemotron-3.5-lightning:free. Cost $0.0000. Full results in results/FINALIZED_RESULTS/main_lightning.json (session compact-20261106T115149Z-high)
+Paired accuracy: 3/8 pairs with both variants semantic_ok (38%); 1 incomplete (a call failed or a variant was not run), not scored
+    any_correct        1/2
+    complete_cart      2/4
+    o1_shared_rule     0/1
+    o2_stacked_rules   0/1
+session closed: 17 model calls, 5,382,385 input tokens (0 written to the cache, 5,313,360 read from it: 99%), $0.0000 in all, $0.0000 per prompt
+=== lightning: stability check, 10 pairs x 3 samples at medium -> results/FINALIZED_RESULTS/check_lightning.json
+1 efforts (medium), one session each: about $0.00 in all (medium: estimated cost: $0.00 for 40 call(s) (20 more answer(s) reused, not called) on nvidia/nemotron-3.5-lightning:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side))
+
+=== effort medium
+session compact-20261106T205849Z-medium started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+estimated cost: $0.00 for 40 call(s) (20 more answer(s) reused, not called) on nvidia/nemotron-3.5-lightning:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side)
+T1-001 run 0: semantic_error       | reused from results/FINALIZED_RESULTS/main_lightning.json
+T1-001 run 1: consistency_error    | section 41185: course_id 'STAT02284' is not the offered section's ('STAT02290') [cache: 0 read, 0 written, $0.0000]
+T1-001 run 2: consistency_error    | section 41183: course_id 'STAT02284' is not the offered section's ('STAT02286') [cache: 314,400 read, 0 written, $0.0000]
+T1-002 run 0: semantic_error       | reused from results/FINALIZED_RESULTS/main_lightning.json
+T1-002 run 1: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['STAT02284']"} [cache: 0 read, 0 written, $0.0000]
+T1-002 run 2: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['STAT02284']"} [cache: 314,400 read, 0 written, $0.0000]
+T2-001 run 0: syntactic_error      | reused from results/FINALIZED_RESULTS/main_lightning.json
+T2-001 run 1: semantic_ok          | satisfies every rule [cache: 167,680 read, 0 written, $0.0000]
+T2-001 run 2: semantic_ok          | satisfies every rule [cache: 301,824 read, 0 written, $0.0000]
+T2-002 run 0: syntactic_error      | reused from results/FINALIZED_RESULTS/main_lightning.json
+T2-002 run 1: semantic_ok          | satisfies every rule [cache: 314,400 read, 0 written, $0.0000]
+T2-002 run 2: schema_error         | not a valid register message: ["body/sections/0: 'credit_hours' is a required property"] [cache: 314,400 read, 0 written, $0.0000]
+D1-001 run 0: consistency_error    | reused from results/FINALIZED_RESULTS/main_lightning.json
+D1-001 run 1: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 301,824 read, 0 written, $0.0000]
+D1-001 run 2: consistency_error    | section 40220: course_id 'MGT06402' is not the offered section's ('MGT98242') [cache: 310,208 read, 0 written, $0.0000]
+D1-002 run 0: syntactic_error      | reused from results/FINALIZED_RESULTS/main_lightning.json
+D1-002 run 1: semantic_ok          | satisfies every rule [cache: 314,400 read, 0 written, $0.0000]
+D1-002 run 2: consistency_error    | section 40223: course_id 'MGT06402' is not the offered section's ('ME10444') [cache: 314,400 read, 0 written, $0.0000]
+D2-001 run 0: syntactic_error      | reused from results/FINALIZED_RESULTS/main_lightning.json
+D2-001 run 1: semantic_ok          | satisfies every rule [cache: 301,824 read, 0 written, $0.0000]
+D2-001 run 2: semantic_error       | rules broken: {'no_days': "['43566'] meet on ['Monday', 'Tuesday', 'Wednesday', 'Friday', 'Saturday', 'Sunday']"} [cache: 316,496 read, 0 written, $0.0000]
+D2-002 run 0: semantic_error       | reused from results/FINALIZED_RESULTS/main_lightning.json
+D2-002 run 1: semantic_ok          | satisfies every rule [cache: 316,496 read, 0 written, $0.0000]
+D2-002 run 2: semantic_ok          | satisfies every rule [cache: 316,496 read, 0 written, $0.0000]
+C1-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_lightning.json
+C1-001 run 1: semantic_ok          | satisfies every rule [cache: 310,208 read, 0 written, $0.0000]
+C1-001 run 2: semantic_ok          | satisfies every rule [cache: 314,400 read, 0 written, $0.0000]
+C1-002 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_lightning.json
+C1-002 run 1: semantic_ok          | satisfies every rule [cache: 314,400 read, 0 written, $0.0000]
+C1-002 run 2: semantic_ok          | satisfies every rule [cache: 314,400 read, 0 written, $0.0000]
+C2-001 run 0: consistency_error    | reused from results/FINALIZED_RESULTS/main_lightning.json
+C2-001 run 1: consistency_error    | section 41937: meetings do not match the offered section's: days or times differ [cache: 310,208 read, 0 written, $0.0000]
+C2-001 run 2: consistency_error    | section 41944: section '1' is not the offered section's ('2') [cache: 310,208 read, 0 written, $0.0000]
+C2-002 run 0: consistency_error    | reused from results/FINALIZED_RESULTS/main_lightning.json
+C2-002 run 1: consistency_error    | section 41945: course_id 'CS04103' is not the offered section's ('MSE00510') [cache: 314,400 read, 0 written, $0.0000]
+C2-002 run 2: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 440 (char 439)) [cache: 314,400 read, 0 written, $0.0000]
+I1-001 run 0: syntactic_error      | reused from results/FINALIZED_RESULTS/main_lightning.json
+I1-001 run 1: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.0000]
+I1-001 run 2: consistency_error    | section 45835: seats_taken 17 is not the offered section's (9) [cache: 316,496 read, 0 written, $0.0000]
+I1-002 run 0: semantic_error       | reused from results/FINALIZED_RESULTS/main_lightning.json
+I1-002 run 1: semantic_ok          | satisfies every rule [cache: 316,496 read, 0 written, $0.0000]
+I1-002 run 2: consistency_error    | section 45838: course_id 'HIST05429' is not the offered section's ('HIST05451') [cache: 316,496 read, 0 written, $0.0000]
+K1-001 run 0: syntactic_error      | reused from results/FINALIZED_RESULTS/main_lightning.json
+K1-001 run 1: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['SOC08120']"} [cache: 310,208 read, 0 written, $0.0000]
+K1-001 run 2: consistency_error    | section 42714: campus 'Glassboro' is not the offered section's ('Online') [cache: 314,400 read, 0 written, $0.0000]
+K1-002 run 0: consistency_error    | reused from results/FINALIZED_RESULTS/main_lightning.json
+K1-002 run 1: consistency_error    | two sections of SOC08120 in the cart: 42708 and 42710 [cache: 314,400 read, 0 written, $0.0000]
+K1-002 run 2: semantic_ok          | satisfies every rule [cache: 314,400 read, 0 written, $0.0000]
+R1-001 run 0: consistency_error    | reused from results/FINALIZED_RESULTS/main_lightning.json
+R1-001 run 1: consistency_error    | section 42941: seats_taken 24 is not the offered section's (12) [cache: 310,208 read, 0 written, $0.0000]
+R1-001 run 2: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 443 (char 442)) [cache: 310,208 read, 0 written, $0.0000]
+R1-002 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_lightning.json
+R1-002 run 1: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 502 (char 501)) [cache: 0 read, 0 written, $0.0000]
+R1-002 run 2: semantic_ok          | satisfies every rule [cache: 314,400 read, 0 written, $0.0000]
+O1-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_lightning.json
+O1-001 run 1: consistency_error    | section 40072: meetings do not match the offered section's: days or times differ [cache: 310,208 read, 0 written, $0.0000]
+O1-001 run 2: consistency_error    | section 40058: meetings do not match the offered section's: days or times differ [cache: 316,496 read, 0 written, $0.0000]
+O1-002 run 0: semantic_error       | reused from results/FINALIZED_RESULTS/main_lightning.json
+O1-002 run 1: consistency_error    | section 40072: section '9' is not the offered section's ('8') [cache: 316,496 read, 0 written, $0.0000]
+O1-002 run 2: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['MGT06300']"} [cache: 316,496 read, 0 written, $0.0000]
+20 answer(s) reused from results/FINALIZED_RESULTS/main_lightning.json: no new call, no cost
+OpenRouter's records: 40 of 60 calls
+
+19/60 semantic_ok on nvidia/nemotron-3.5-lightning:free. Cost $0.0000. Full results in results/FINALIZED_RESULTS/check_lightning.json (session compact-20261106T205849Z-medium)
+Paired accuracy: 6/30 pairs with both variants semantic_ok (20%)
+    complete_cart      0/3
+    days               0/3
+    full_fallback      3/3
+    last_seat          0/3
+    lookalike_id       1/3
+    modality           0/3
+    passed_retake      0/3
+    relative_time      1/3
+    shared_day_pattern 1/3
+    time_of_day        0/3
+session closed: 40 model calls, 12,657,238 input tokens (0 written to the cache, 11,119,280 read from it: 88%), $0.0000 in all, $0.0000 per prompt
+=== lightning: finished
+OpenRouter key: $3.89 left of $10 (used $6.11)
