@@ -1044,16 +1044,26 @@ def f_shared_day_pattern(key, prog, rng, sid):
     return _course_pair("shared_day_pattern", key, prog, rng, sid, options, needs=lambda s: bool(days_of(s)))
 
 
-def f_day_exclusion(key, prog, rng, sid):
-    """D3 'No <day> classes.' vs 'I can only come on <day>s.'"""
-    def options(secs):
-        for d in DAYS[:5]:
-            if 0 < len([s for s in secs if d in days_of(s)]) < len(secs):
-                yield ((f"No {d} classes.", {"no_days": [d]}, f"A section meeting on {d} is ruled out."),
-                       (f"I can only come to campus on {d}s.", {"no_days": [x for x in DAYS if x != d]},
-                        f"Only a section meeting on {d} alone fits."), f"days: no {d} vs only {d}")
-    return _course_pair("day_exclusion", key, prog, rng, sid, options, needs=lambda s: bool(days_of(s)))
 
+def f_day_exclusion(key, prog, rng, sid):
+    """D3: excluded day vs only that day; avoid misleading topic titles.
+
+    Task 2.7 D3 fix: prefer Friday and name course IDs rather than a
+    degree-program topic title that might not match offered section topics.
+    """
+    def options(secs):
+        course = secs[0]["course_id"]
+        preface = f"Register me for any open section of {course}, regardless of its topic."
+        for d in ("Friday", "Monday", "Tuesday", "Wednesday", "Thursday"):
+            if 0 < sum(d in days_of(s) for s in secs) < len(secs):
+                yield ((f"{preface} No {d} classes.", {"no_days": [d]},
+                        f"A section meeting on {d} is ruled out."),
+                       (f"{preface} I can only come to campus on {d}s.",
+                        {"no_days": [x for x in DAYS if x != d]},
+                        f"Only a section meeting on {d} alone fits."),
+                       f"days: no {d} vs only {d}")
+    return _course_pair("day_exclusion", key, prog, rng, sid, options,
+                        needs=lambda s: bool(days_of(s)), prefix=False)
 
 def f_last_seat(key, prog, rng, sid):
     """C2 'I want the section that meets <slot>.', where that section has exactly one seat left
