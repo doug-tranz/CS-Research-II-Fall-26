@@ -1,0 +1,12 @@
+OpenRouter key: $66.64 left of $100 (used $33.36)
+started flashlite (log: results/FINALIZED_RESULTS/logs/flashlite.parallel.log)
+started flash (log: results/FINALIZED_RESULTS/logs/flash.parallel.log)
+started argon (log: results/FINALIZED_RESULTS/logs/argon.parallel.log)
+started qwenflash (log: results/FINALIZED_RESULTS/logs/qwenflash.parallel.log)
+started qwen27b (log: results/FINALIZED_RESULTS/logs/qwen27b.parallel.log)
+--- flashlite: === effort medium
+--- flash: === effort medium
+--- argon: === effort medium
+--- qwenflash: === effort high
+--- qwen27b: === qwen27b: finished
+OpenRouter key: $17.22 left of $100 (used $82.78)

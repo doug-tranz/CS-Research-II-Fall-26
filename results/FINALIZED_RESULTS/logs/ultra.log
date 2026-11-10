@@ -1,0 +1,497 @@
+=== ultra: main run, 200 cases x low/medium/high -> results/FINALIZED_RESULTS/main_ultra.json
+note: 1 sample(s) per case; use -n 3 or more to compare sessions reliably
+3 efforts (low, medium, high), one session each: about $0.00 in all (low: estimated cost: $0.00 for 200 call(s) on nvidia/nemotron-3-ultra-550b-a55b:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side))
+
+=== effort low
+session compact-20261105T222149Z-low started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+--resume: continuing session compact-20261105T190917Z-low, which has 184 of 200 calls; only the rest are made (16 failed call(s) made again)
+estimated cost: $0.00 for 200 call(s) on nvidia/nemotron-3-ultra-550b-a55b:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side)
+K6-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+K6-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty", "body/sections/0/meetings/1/type: '' should be non-empty", "body/sections/1/meetings/0/location: '' should be non-empty", "body/sections/1/meetings/0/type: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+K7-001: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K7-002: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K7-003: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K7-004: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K8-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGR01101']"} [cache: 311,264 read, 0 written, $0.0000]
+K8-002: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGR01101']"} [cache: 311,264 read, 0 written, $0.0000]
+K8-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 315,648 read, 0 written, $0.0000]
+R1-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R1-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+R1-003: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+R1-004: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+R1-005: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R1-006: consistency_error    | section 42479: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+R2-001: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+OpenRouter's records: 16 of 200 calls
+
+7/16 semantic_ok on nvidia/nemotron-3-ultra-550b-a55b:free. Cost $0.0000. Full results in results/FINALIZED_RESULTS/main_ultra.json (session compact-20261105T190917Z-low)
+Paired accuracy: 3/7 pairs with both variants semantic_ok (43%); 2 incomplete (a call failed or a variant was not run), not scored
+    ambiguous          0/1
+    impossible_days    1/1
+    impossible_full    1/1
+    passed_retake      1/3
+    quantity           0/1
+session closed: 16 model calls, 5,056,807 input tokens (0 written to the cache, 4,988,992 read from it: 99%), $0.0000 in all, $0.0000 per prompt
+
+=== effort medium
+session compact-20261105T222620Z-medium started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+--resume: continuing session compact-20261105T215918Z-medium, which has 110 of 200 calls; only the rest are made
+estimated cost: $0.00 for 200 call(s) on nvidia/nemotron-3-ultra-550b-a55b:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side)
+K3-005: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K3-006: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K4-001: consistency_error    | section 44081: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+K4-002: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K4-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+K4-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 315,648 read, 0 written, $0.0000]
+K5-001: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K5-002: semantic_error       | rules broken: {'crns_in': "['45043'] are not among ['46445']"} [cache: 311,264 read, 0 written, $0.0000]
+K5-003: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K5-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+K6-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty", "body/sections/0/meetings/2/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+K6-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty", "body/sections/0/meetings/2/location: '' should be non-empty", "body/sections/1/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+K6-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+K6-004: consistency_error    | section 40434: meetings do not match the offered section's: a meeting's type or location differs [cache: 315,648 read, 0 written, $0.0000]
+K7-001: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K7-002: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K7-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+K7-004: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+K8-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+K8-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+K8-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+K8-004: generation_failed    | ("Connection broken: ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)", ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)) [cache: 0 read, 0 written, $0.0000]
+R1-001: generation_failed    | ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host')) [cache: 0 read, 0 written, $0.0000]
+R1-002: generation_failed    | ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host')) [cache: 0 read, 0 written, $0.0000]
+R1-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+R1-004: generation_failed    | ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host')) [cache: 0 read, 0 written, $0.0000]
+R1-005: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+R1-006: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+R2-001: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+R2-002: consistency_error    | section 43550: meetings do not match the offered section's: a meeting's type or location differs [cache: 315,648 read, 0 written, $0.0000]
+R2-003: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+R2-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}"} [cache: 315,648 read, 0 written, $0.0000]
+R2-005: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R2-006: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+R3-001: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+R3-002: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+R3-003: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+R3-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+R4-001: consistency_error    | section 40300: meetings do not match the offered section's: a meeting's type or location differs [cache: 315,648 read, 0 written, $0.0000]
+R4-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+R4-003: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+R4-004: consistency_error    | section 40338: meetings do not match the offered section's: a meeting's type or location differs [cache: 315,648 read, 0 written, $0.0000]
+R5-001: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+R5-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+R5-003: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+R5-004: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+R6-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R6-002: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+R6-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+R6-004: consistency_error    | section 40303: meetings do not match the offered section's: a meeting's type or location differs [cache: 315,648 read, 0 written, $0.0000]
+R7-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+R7-002: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+R7-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R7-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R8-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R8-002: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.0000]
+R8-003: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+R8-004: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+R9-001: consistency_error    | section 44391: meetings do not match the offered section's: a meeting's type or location differs [cache: 315,648 read, 0 written, $0.0000]
+R9-002: consistency_error    | section 44391: meetings do not match the offered section's: a meeting's type or location differs [cache: 315,648 read, 0 written, $0.0000]
+R9-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+R9-004: consistency_error    | section 41602: meetings do not match the offered section's: a meeting's type or location differs [cache: 315,648 read, 0 written, $0.0000]
+R10-001: consistency_error    | section 44276: meetings do not match the offered section's: a meeting's type or location differs [cache: 315,648 read, 0 written, $0.0000]
+R10-002: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+R10-003: not made: OpenRouter 429: {'message': 'Rate limit exceeded: free-models-per-day-high-balance. ', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '1000', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1793923200000'}, 'limit_source': 'openrouter_free_tier_daily', 'remedy_hint': 'Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model daily limit.', 'provider_name': None}}
+stopped: OpenRouter's daily allowance of free-model requests is used up; it resets at 00:00 UTC. Run the same command with --resume then: this session continues where it stopped.
+OpenRouter's records: 170 of 174 calls
+
+24/64 semantic_ok on nvidia/nemotron-3-ultra-550b-a55b:free. Cost $0.0000. Full results in results/FINALIZED_RESULTS/main_ultra.json (session compact-20261105T215918Z-medium)
+Paired accuracy: 5/29 pairs with both variants semantic_ok (17%); 3 incomplete (a call failed or a variant was not run), not scored
+    ambiguous          0/1
+    campus_residence   1/1
+    credit_limit       0/1
+    grade_threshold    0/2
+    hard_soft          0/2
+    impossible_days    0/1
+    impossible_full    1/1
+    passed_retake      0/1
+    prereq_completed   0/2
+    prereq_in_progress 1/2
+    prereq_min_grade   0/2
+    prereq_transfer    0/2
+    quantity           0/2
+    repeatable         1/2
+    requirement_options 1/2
+    several_constraints 0/2
+    transfer           0/2
+    withdrawal         0/1
+session closed: 64 model calls, 18,982,469 input tokens (0 written to the cache, 18,526,784 read from it: 98%), $0.0000 in all, $0.0000 per prompt
+=== ultra: stopped at the daily free-model limit; run this again after 00:00 UTC to continue
+=== ultra: main run, 200 cases x low/medium/high -> results/FINALIZED_RESULTS/main_ultra.json
+note: 1 sample(s) per case; use -n 3 or more to compare sessions reliably
+--resume: effort low already finished in results/FINALIZED_RESULTS/main_ultra.json; skipped
+2 efforts (medium, high), one session each: about $0.00 in all (medium: estimated cost: $0.00 for 200 call(s) on nvidia/nemotron-3-ultra-550b-a55b:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side))
+
+=== effort medium
+session compact-20261106T000505Z-medium started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+--resume: continuing session compact-20261105T215918Z-medium, which has 170 of 200 calls; only the rest are made (4 failed call(s) made again)
+estimated cost: $0.00 for 200 call(s) on nvidia/nemotron-3-ultra-550b-a55b:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side)
+K8-004: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 0 read, 0 written, $0.0000]
+R1-001: consistency_error    | section 42941: meetings do not match the offered section's: days or times differ [cache: 289,344 read, 0 written, $0.0000]
+R1-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R1-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R10-003: schema_error         | not a valid register message: ["body/sections/1/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R10-004: consistency_error    | section 45787: course_id 'LAWJ05357' is not the offered section's ('LAWJ05360') [cache: 315,648 read, 0 written, $0.0000]
+R11-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R11-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R11-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R11-004: semantic_error       | rules broken: {'courses_count_toward': "['40490'] do not move ['DANCE-TECHNIQUE'] forward"} [cache: 311,264 read, 0 written, $0.0000]
+R12-001: consistency_error    | section 46617: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+R12-002: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+R12-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 0 read, 0 written, $0.0000]
+R12-004: consistency_error    | section 41553: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+O1-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/1/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+O1-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+O1-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 2, 'max': 2}", 'must_include_courses': "missing ['HIST05120', 'HIST05306']"} [cache: 311,264 read, 0 written, $0.0000]
+O1-004: consistency_error    | section 42508: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+O1-005: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+O1-006: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/1/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+O2-001: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+O2-002: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+O2-003: consistency_error    | section 41277: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+O2-004: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+O2-005: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/1/meetings/0/location: '' should be non-empty", "body/sections/1/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+O2-006: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+O3-001: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 311,264 read, 0 written, $0.0000]
+O3-002: consistency_error    | section 41298 is full and has no waitlist [cache: 311,264 read, 0 written, $0.0000]
+O3-003: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+O3-004: consistency_error    | section 41051: meetings do not match the offered section's: days or times differ [cache: 311,264 read, 0 written, $0.0000]
+OpenRouter's records: 30 of 200 calls
+
+7/30 semantic_ok on nvidia/nemotron-3-ultra-550b-a55b:free. Cost $0.0000. Full results in results/FINALIZED_RESULTS/main_ultra.json (session compact-20261105T215918Z-medium)
+Paired accuracy: 1/14 pairs with both variants semantic_ok (7%); 2 incomplete (a call failed or a variant was not run), not scored
+    any_correct        0/2
+    complete_cart      1/4
+    credit_limit       0/1
+    department         0/2
+    o1_shared_rule     0/1
+    o2_stacked_rules   0/1
+    passed_retake      0/1
+    requirement_satisfied 0/2
+session closed: 30 model calls, 9,493,341 input tokens (0 written to the cache, 8,697,856 read from it: 92%), $0.0000 in all, $0.0000 per prompt
+
+=== effort high
+session compact-20261106T001704Z-high started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+estimated cost: $0.00 for 200 call(s) on nvidia/nemotron-3-ultra-550b-a55b:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side)
+T1-001: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+T1-002: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+T1-003: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+T1-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+T1-005: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+T1-006: consistency_error    | section 40995: meetings do not match the offered section's: a meeting's type or location differs [cache: 315,648 read, 0 written, $0.0000]
+T2-001: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+T2-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+T2-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+T2-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+T2-005: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+T2-006: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+T3-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+T3-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+T3-003: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+T3-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+T4-001: consistency_error    | section 41066: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+T4-002: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+T4-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+T4-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+T5-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/1/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+T5-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/1/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+T5-003: consistency_error    | section 42140: course_id 'CS10430' is not the offered section's ('CS10337') [cache: 311,264 read, 0 written, $0.0000]
+T5-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/1/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+T6-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+T6-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+T6-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+T6-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+T7-001: consistency_error    | section 46117: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+T7-002: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['THD07240']"} [cache: 311,264 read, 0 written, $0.0000]
+T7-003: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+T7-004: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 315,648 read, 0 written, $0.0000]
+T8-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty", "body/sections/0/meetings/2/location: '' should be non-empty"] [cache: 0 read, 0 written, $0.0000]
+T8-002: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+T8-003: consistency_error    | section 42688: course_id 'PSY01301' is not the offered section's ('SOC08223') [cache: 311,264 read, 0 written, $0.0000]
+T8-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty", "body/sections/0/meetings/1/type: '' should be non-empty"] [cache: 0 read, 0 written, $0.0000]
+T9-001: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.0000]
+T9-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 0 read, 0 written, $0.0000]
+T9-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 0 read, 0 written, $0.0000]
+T9-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 0 read, 0 written, $0.0000]
+D1-001: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.0000]
+D1-002: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+D1-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 289,344 read, 0 written, $0.0000]
+D1-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty", "body/sections/0/meetings/1/type: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+D1-005: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty"] [cache: 0 read, 0 written, $0.0000]
+D1-006: consistency_error    | section 44378: meetings do not match the offered section's: a meeting's type or location differs [cache: 0 read, 0 written, $0.0000]
+  OpenRouter 503: {'message': 'Provider returned error', 'code': 503, 'metadata': {'raw': '{"message":"Service temporarily overloaded","type":"Service Unavailable","code":503}', 'provider_name': 'Nvidia', 'is_byok': False}}; trying again in 15s
+D2-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty", "body/sections/1/meetings/0/location: '' should be non-empty", "body/sections/1/meetings/1/location: '' should be non-empty"] [cache: 0 read, 0 written, $0.0000]
+D2-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 0 read, 0 written, $0.0000]
+D2-003: consistency_error    | section 45804: section '10' is not the offered section's ('11') [cache: 0 read, 0 written, $0.0000]
+D2-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+D2-005: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 0 read, 0 written, $0.0000]
+D2-006: consistency_error    | section 43566: meetings do not match the offered section's: a meeting's type or location differs [cache: 87,680 read, 0 written, $0.0000]
+D3-001: consistency_error    | section 45795: meetings do not match the offered section's: a meeting's type or location differs [cache: 0 read, 0 written, $0.0000]
+D3-002: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['AFST11350']"} [cache: 315,648 read, 0 written, $0.0000]
+D3-003: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.0000]
+D3-004: consistency_error    | section 44414: meetings do not match the offered section's: a meeting's type or location differs [cache: 315,648 read, 0 written, $0.0000]
+C1-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 0 read, 0 written, $0.0000]
+C1-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+C1-003: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.0000]
+C1-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 0 read, 0 written, $0.0000]
+C1-005: consistency_error    | section 43556: meetings do not match the offered section's: a meeting's type or location differs [cache: 0 read, 0 written, $0.0000]
+C1-006: consistency_error    | section 44149: meetings do not match the offered section's: a meeting's type or location differs [cache: 0 read, 0 written, $0.0000]
+C2-001: consistency_error    | section 41937: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+C2-002: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.0000]
+C2-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty"] [cache: 0 read, 0 written, $0.0000]
+C2-004: consistency_error    | section 44078: meetings do not match the offered section's: a meeting's type or location differs [cache: 315,648 read, 0 written, $0.0000]
+C2-005: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+C2-006: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+C3-001: consistency_error    | section 41881: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+C3-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+C3-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+C3-004: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+C4-001: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+C4-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+C4-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGR01101']"} [cache: 311,264 read, 0 written, $0.0000]
+C4-004: consistency_error    | section 40434: meetings do not match the offered section's: a meeting's type or location differs [cache: 315,648 read, 0 written, $0.0000]
+I1-001: consistency_error    | section 45835: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+I1-002: consistency_error    | section 45836: seats_total 24 is not the offered section's (19) [cache: 315,648 read, 0 written, $0.0000]
+I1-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+I1-004: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+I1-005: consistency_error    | section 44093: meetings do not match the offered section's: days or times differ [cache: 311,264 read, 0 written, $0.0000]
+I1-006: consistency_error    | section 46111: meetings do not match the offered section's: days or times differ [cache: 311,264 read, 0 written, $0.0000]
+I2-001: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+I2-002: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+I2-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+I2-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+I2-005: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+I2-006: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+I3-001: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+I3-002: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+I3-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+I3-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+I4-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+I4-002: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+I4-003: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+I4-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+I5-001: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+I5-002: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty", "body/sections/0/meetings/2/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+I5-003: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['ENGL02123']"} [cache: 311,264 read, 0 written, $0.0000]
+I5-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+K1-001: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K1-002: consistency_error    | section 42712: seats_taken 25 is not the offered section's (35) [cache: 315,648 read, 0 written, $0.0000]
+K1-003: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K1-004: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/1/meetings/0/location: '' should be non-empty", "body/sections/10/meetings/0/location: '' should be non-empty", "body/sections/11/meetings/0/location: '' should be non-empty", "body/sections/12/meetings/0/location: '' should be non-empty", "body/sections/13/meetings/0/location: '' should be non-empty", "body/sections/14/meetings/0/location: '' should be non-empty", "body/sections/15/meetings/0/location: '' should be non-empty", "body/sections/16/meetings/0/location: '' should be non-empty", "body/sections/2/meetings/0/location: '' should be non-empty", "body/sections/3/meetings/0/location: '' should be non-empty", "body/sections/4/meetings/0/location: '' should be non-empty", "body/sections/5/meetings/0/location: '' should be non-empty", "body/sections/6/meetings/0/location: '' should be non-empty", "body/sections/7/meetings/0/location: '' should be non-empty", "body/sections/8/meetings/0/location: '' should be non-empty", "body/sections/9/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+K1-005: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K1-006: generation_failed    | ("Connection broken: ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)", ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)) [cache: 0 read, 0 written, $0.0000]
+K3-001: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+K3-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K3-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K3-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K3-005: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K3-006: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K4-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K4-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K4-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K4-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K5-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K5-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K5-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K5-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K6-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K6-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K6-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K6-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K7-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K7-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K7-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K7-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K8-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K8-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K8-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+K8-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R1-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R1-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R1-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R1-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R1-005: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R1-006: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R2-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R2-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R2-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R2-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R2-005: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R2-006: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R3-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R3-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R3-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R3-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R4-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R4-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R4-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R4-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R5-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R5-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R5-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R5-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R6-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R6-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R6-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R6-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R7-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R7-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R7-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R7-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R8-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R8-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R8-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R8-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R9-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R9-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R9-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R9-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R10-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R10-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R10-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R10-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R11-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R11-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R11-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R11-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R12-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R12-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R12-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+R12-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O1-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O1-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O1-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O1-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O1-005: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O1-006: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O2-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O2-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O2-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O2-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O2-005: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O2-006: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O3-001: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O3-002: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O3-003: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+O3-004: generation_failed    | HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)")) [cache: 0 read, 0 written, $0.0000]
+OpenRouter's records: 105 of 200 calls
+
+30/200 semantic_ok on nvidia/nemotron-3-ultra-550b-a55b:free. Cost $0.0000. Full results in results/FINALIZED_RESULTS/main_ultra.json (session compact-20261106T001704Z-high)
+Paired accuracy: 5/52 pairs with both variants semantic_ok (10%); 48 incomplete (a call failed or a variant was not run), not scored
+    back_to_back       0/2
+    boundary_time      0/2
+    busy_block         0/2
+    chained_conflict   0/2
+    course_a_not_b     0/2
+    day_exclusion      0/2
+    days               1/3
+    full_fallback      0/3
+    last_seat          0/3
+    late_meeting       0/1
+    lookalike_id       0/3
+    modality           0/2
+    multi_meeting      0/1
+    negation           0/2
+    noon               0/2
+    not_first_listed   0/2
+    open_seats         0/2
+    relative_time      0/3
+    same_title         1/2
+    section_number     2/3
+    shared_day_pattern 0/3
+    time_cutoff        0/2
+    time_of_day        1/3
+session closed: 200 model calls, 33,537,216 input tokens (0 written to the cache, 26,019,040 read from it: 78%), $0.0000 in all, $0.0000 per prompt
+=== ultra: stability check, 10 pairs x 3 samples at medium -> results/FINALIZED_RESULTS/check_ultra.json
+1 efforts (medium), one session each: about $0.00 in all (medium: estimated cost: $0.00 for 40 call(s) (20 more answer(s) reused, not called) on nvidia/nemotron-3-ultra-550b-a55b:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side))
+
+=== effort medium
+session compact-20261106T033501Z-medium started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+estimated cost: $0.00 for 40 call(s) (20 more answer(s) reused, not called) on nvidia/nemotron-3-ultra-550b-a55b:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side)
+T1-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_ultra.json
+T1-001 run 1: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+T1-001 run 2: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+T1-002 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_ultra.json
+T1-002 run 1: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+T1-002 run 2: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+T2-001 run 0: schema_error         | reused from results/FINALIZED_RESULTS/main_ultra.json
+T2-001 run 1: semantic_ok          | satisfies every rule [cache: 311,264 read, 0 written, $0.0000]
+T2-001 run 2: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+T2-002 run 0: schema_error         | reused from results/FINALIZED_RESULTS/main_ultra.json
+T2-002 run 1: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+T2-002 run 2: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+D1-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_ultra.json
+D1-001 run 1: consistency_error    | section 40198: meetings do not match the offered section's: a meeting's type or location differs [cache: 0 read, 0 written, $0.0000]
+D1-001 run 2: consistency_error    | section 40198: meetings do not match the offered section's: a meeting's type or location differs [cache: 315,648 read, 0 written, $0.0000]
+D1-002 run 0: consistency_error    | reused from results/FINALIZED_RESULTS/main_ultra.json
+D1-002 run 1: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+D1-002 run 2: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+D2-001 run 0: semantic_error       | reused from results/FINALIZED_RESULTS/main_ultra.json
+D2-001 run 1: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 311,264 read, 0 written, $0.0000]
+D2-001 run 2: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 311,264 read, 0 written, $0.0000]
+D2-002 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_ultra.json
+D2-002 run 1: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 315,648 read, 0 written, $0.0000]
+D2-002 run 2: semantic_error       | rules broken: {'count': "0 sections, wanted {'min': 1, 'max': 1}", 'must_include_courses': "missing ['CHEM07200']"} [cache: 315,648 read, 0 written, $0.0000]
+C1-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_ultra.json
+C1-001 run 1: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty", "body/sections/0/meetings/1/type: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+C1-001 run 2: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+C1-002 run 0: consistency_error    | reused from results/FINALIZED_RESULTS/main_ultra.json
+C1-002 run 1: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+C1-002 run 2: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+C2-001 run 0: consistency_error    | reused from results/FINALIZED_RESULTS/main_ultra.json
+C2-001 run 1: consistency_error    | section 41937: meetings do not match the offered section's: a meeting's type or location differs [cache: 311,264 read, 0 written, $0.0000]
+C2-001 run 2: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+C2-002 run 0: consistency_error    | reused from results/FINALIZED_RESULTS/main_ultra.json
+C2-002 run 1: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty", "body/sections/0/meetings/1/type: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+C2-002 run 2: consistency_error    | section 41944: meetings do not match the offered section's: a meeting's type or location differs [cache: 315,648 read, 0 written, $0.0000]
+I1-001 run 0: schema_error         | reused from results/FINALIZED_RESULTS/main_ultra.json
+I1-001 run 1: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+I1-001 run 2: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+I1-002 run 0: schema_error         | reused from results/FINALIZED_RESULTS/main_ultra.json
+I1-002 run 1: consistency_error    | section 45836: seats_total 24 is not the offered section's (19) [cache: 315,648 read, 0 written, $0.0000]
+I1-002 run 2: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+K1-001 run 0: semantic_ok          | reused from results/FINALIZED_RESULTS/main_ultra.json
+K1-001 run 1: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+K1-001 run 2: semantic_ok          | satisfies every rule [cache: 315,648 read, 0 written, $0.0000]
+K1-002 run 0: schema_error         | reused from results/FINALIZED_RESULTS/main_ultra.json
+K1-002 run 1: consistency_error    | two sections of SOC08120 in the cart: 42708 and 42710 [cache: 315,648 read, 0 written, $0.0000]
+K1-002 run 2: consistency_error    | two sections of SOC08120 in the cart: 42708 and 42710 [cache: 315,648 read, 0 written, $0.0000]
+R1-001 run 0: consistency_error    | reused from results/FINALIZED_RESULTS/main_ultra.json
+R1-001 run 1: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/0/type: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty", "body/sections/0/meetings/1/type: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R1-001 run 2: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R1-002 run 0: schema_error         | reused from results/FINALIZED_RESULTS/main_ultra.json
+R1-002 run 1: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+R1-002 run 2: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+O1-001 run 0: schema_error         | reused from results/FINALIZED_RESULTS/main_ultra.json
+O1-001 run 1: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/1/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+O1-001 run 2: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty", "body/sections/1/meetings/0/location: '' should be non-empty"] [cache: 311,264 read, 0 written, $0.0000]
+O1-002 run 0: schema_error         | reused from results/FINALIZED_RESULTS/main_ultra.json
+O1-002 run 1: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+O1-002 run 2: schema_error         | not a valid register message: ["body/sections/0/meetings/0/location: '' should be non-empty", "body/sections/0/meetings/1/location: '' should be non-empty"] [cache: 315,648 read, 0 written, $0.0000]
+20 answer(s) reused from results/FINALIZED_RESULTS/main_ultra.json: no new call, no cost
+OpenRouter's records: 40 of 60 calls
+
+16/60 semantic_ok on nvidia/nemotron-3-ultra-550b-a55b:free. Cost $0.0000. Full results in results/FINALIZED_RESULTS/check_ultra.json (session compact-20261106T033501Z-medium)
+Paired accuracy: 2/30 pairs with both variants semantic_ok (7%)
+    complete_cart      0/3
+    days               0/3
+    full_fallback      0/3
+    last_seat          0/3
+    lookalike_id       0/3
+    modality           0/3
+    passed_retake      0/3
+    relative_time      0/3
+    shared_day_pattern 0/3
+    time_of_day        2/3
+session closed: 40 model calls, 12,657,238 input tokens (0 written to the cache, 12,248,896 read from it: 97%), $0.0000 in all, $0.0000 per prompt
+=== ultra: finished
