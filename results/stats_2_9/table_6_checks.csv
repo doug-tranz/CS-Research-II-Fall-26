@@ -1,0 +1,44 @@
+check,check_name,group,cases,calls,accuracy,mean_chance,lift_over_chance
+K8,Ambiguous request -> ask or guess,Request constraints,4,132,0.17424242424242425,0.260575,-0.08633257575757575
+K4,Several constraints at once,Request constraints,4,132,0.23484848484848486,0.24875,-0.013901515151515137
+I5,"Negation (""not section X"")",Course and section identity,4,132,0.25757575757575757,0.5077,-0.25012424242424247
+T9,AM/PM and noon traps,Temporal reasoning,4,132,0.38636363636363635,0.3205,0.06586363636363635
+O3,Accepts any of several correct answers,Completeness of the answer,4,132,0.4393939393939394,0.373075,0.0663189393939394
+D3,"Day exclusion (""no Fridays"")",Days,4,132,0.4621212121212121,0.375,0.0871212121212121
+D2,"Shared day, different pattern (MW vs MWF)",Days,6,197,0.48223350253807107,0.09263654822335025,0.3895969543147208
+K3,Campus from residence (implicit),Request constraints,6,197,0.49746192893401014,0.1881736040609137,0.30928832487309643
+C3,Compare open seats (total - taken),Capacity,4,132,0.5378787878787878,0.1544,0.38347878787878786
+R11,Requirement already satisfied,Student record,4,132,0.5833333333333334,0.428575,0.1547583333333334
+R12,"Department filter (""computer science classes"")",Student record,4,132,0.5833333333333334,0.265275,0.3180583333333334
+R5,In-progress course does not meet a prereq,Student record,4,132,0.6060606060606061,0.324425,0.28163560606060606
+R2,W vs passed vs failed (retake allowed),Student record,6,197,0.6091370558375635,0.22568426395939087,0.3834527918781726
+O1,Includes every requested course,Completeness of the answer,6,198,0.6363636363636364,0.08981666666666667,0.5465469696969697
+T3,"Hard time cutoff (""no 8 a.m."", ""ends by 5 PM"")",Temporal reasoning,4,132,0.6515151515151515,0.41664999999999996,0.23486515151515153
+T7,Back-to-back sections (no real conflict),Temporal reasoning,4,132,0.6515151515151515,0.5,0.1515151515151515
+C4,Right answer is not the first one listed,Capacity,4,130,0.6538461538461539,0.24877615384615384,0.40507000000000004
+K5,"Hard vs soft (""must"" vs ""preferred"")",Request constraints,4,132,0.6666666666666666,0.20074999999999998,0.46591666666666665
+T4,Partial overlap with a different start time,Temporal reasoning,4,132,0.6742424242424242,0.40152499999999997,0.27271742424242423
+K6,"Quantity (""one class"", ""two"", ""any"")",Request constraints,4,132,0.6893939393939394,0.470225,0.21916893939393944
+D1,Day pattern (MW vs TR),Days,6,198,0.7121212121212122,0.22219999999999998,0.4899212121212122
+K1,Modality (online / in-person / hybrid),Request constraints,6,198,0.7171717171717171,0.34519999999999995,0.3719717171717172
+R4,Prerequisite met by a completed course,Student record,4,132,0.7196969696969697,0.227925,0.49177196969696974
+T8,Sections with several meetings (lecture + lab),Temporal reasoning,4,132,0.7196969696969697,0.3611,0.35859696969696975
+I1,Look-alike IDs (CS101 vs CS1010),Course and section identity,6,198,0.7272727272727273,0.4111,0.31617272727272727
+R7,Minimum grade on a prereq,Student record,4,130,0.7307692307692307,0.34835,0.38241923076923073
+R10,Credit-load limit,Student record,4,132,0.7348484848484849,0.508325,0.22652348484848484
+R9,Requirement rule types (credits_from / attribute / any_of / all_of),Student record,4,132,0.75,0.329775,0.420225
+C1,Avoid full section,Capacity,6,196,0.7551020408163265,0.20413163265306122,0.5509704081632653
+I4,"Pick course A, not B",Course and section identity,4,132,0.7651515151515151,0.3125,0.45265151515151514
+T5,Chained conflicts (one choice forces the next),Temporal reasoning,4,132,0.7803030303030303,0.08055,0.6997530303030303
+I3,"Same title, different course ID",Course and section identity,4,132,0.7954545454545454,0.5,0.2954545454545454
+R6,Transfer credit meets a prereq,Student record,4,132,0.8106060606060606,0.236075,0.5745310606060605
+R1,Do not retake a passed course,Student record,6,196,0.8112244897959183,0.4515418367346939,0.35968265306122443
+T6,Boundary values (ends exactly at the cutoff),Temporal reasoning,4,132,0.8181818181818182,0.4375,0.38068181818181823
+C2,Last seat (29/30 is still open),Capacity,6,198,0.8232323232323232,0.14026666666666668,0.6829656565656566
+O2,Adds nothing unrequested,Completeness of the answer,6,198,0.8232323232323232,0.37461666666666665,0.44861565656565655
+R3,Repeatable courses,Student record,4,131,0.8244274809160306,0.33902671755725194,0.48540076335877863
+R8,Course must be in the requirement's options,Student record,4,132,0.8257575757575758,0.29115,0.5346075757575758
+T1,Time-of-day words (morning / afternoon),Temporal reasoning,6,198,0.8282828282828283,0.44443333333333335,0.38384949494949494
+I2,Course vs section vs CRN mix-up,Course and section identity,6,198,0.8383838383838383,0.5,0.33838383838383834
+T2,Relative time (earlier / later / latest),Temporal reasoning,6,198,0.8686868686868687,0.3055333333333333,0.5631535353535354
+K7,Impossible request -> no valid answer,Request constraints,4,131,0.9007633587786259,0.16909312977099236,0.7316702290076336
