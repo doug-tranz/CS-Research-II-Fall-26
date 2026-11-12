@@ -1,0 +1,497 @@
+{
+  "about": "Four NEW review candidates for Task 2.7; not part of 2026-11-06 scores. Model sees only each input.",
+  "cases": [
+    {
+      "case_id": "D2-REV-001",
+      "semantic_check": "D2: Shared day, different pattern",
+      "input": {
+        "program": "communication-studies-ba",
+        "student": {
+          "student_id": "S8006",
+          "catalog_year": "Fall 2024",
+          "entry": {
+            "type": "first_year"
+          }
+        },
+        "transcript": {
+          "fabricate": {
+            "seed": 681283,
+            "through": "Spring 2026",
+            "complete": [
+              "CORE-COML",
+              "CORE-ARTL",
+              "CORE-GLBL",
+              "CORE-HUML",
+              "CORE-QNTL",
+              "CORE-SCIL",
+              "EXP-LIT",
+              "EXP-WI",
+              "EXP-RS",
+              "NONPROG-PSY",
+              "NONPROG-SOC",
+              "NONPROG-ECON-POSC",
+              "NONPROG-HIST",
+              "NONPROG-PHIL",
+              "NONPROG-ENGL"
+            ],
+            "rows": [],
+            "avoid": [
+              "CMS04250"
+            ],
+            "keep_unmet": [
+              "CMS-FOUNDATIONAL"
+            ]
+          }
+        },
+        "prompt": "Register me for Communication Theory (CMS04250). I can attend campus on Wednesdays only."
+      },
+      "candidate_courses": [
+        "CMS04250"
+      ],
+      "ground_truth": {
+        "rules": {
+          "count": {
+            "min": 1,
+            "max": 1
+          },
+          "must_include_courses": [
+            "CMS04250"
+          ],
+          "no_days": [
+            "Monday",
+            "Tuesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+          ]
+        },
+        "examples": {
+          "valid": [
+            [
+              "44414"
+            ]
+          ],
+          "invalid": [
+            [
+              "44417"
+            ],
+            [
+              "44421"
+            ],
+            [
+              "44425"
+            ]
+          ]
+        },
+        "implicit_relationship": "CRN 44414 meets Wednesday only. CRNs 44421 and 44425 also meet Monday and violate Wednesday-only availability.",
+        "case_type": "shared_day_pattern",
+        "targets": [],
+        "pair": {
+          "id": "task27/shared_day_pattern-cms04250",
+          "variant": "a",
+          "changed": "Wednesday only vs Monday-and-Wednesday meeting pattern",
+          "difference": {
+            "where": "prompt",
+            "this_case": "Register me for Communication Theory (CMS04250). I can attend campus on Wednesdays only.",
+            "twin_case": "D2-REV-002",
+            "twin_id": "D2-REV-002",
+            "answer_here": "44414",
+            "summary": "CRN 44414 meets Wednesday only. CRNs 44421 and 44425 also meet Monday and violate Wednesday-only availability."
+          },
+          "has_shared_answer": false,
+          "shared_answer_example": null
+        },
+        "difficulty": {
+          "candidate_courses": 1,
+          "candidate_answers": 4,
+          "correct_answers": 1,
+          "chance": 0.25,
+          "rules": 3,
+          "prompt_words": 13
+        },
+        "checks": [
+          "D2"
+        ],
+        "credit": {
+          "owner": "Tyler Henry",
+          "branch": "Tyler",
+          "file": "d_category_task27_supplemental.json",
+          "created_for": "Task 2.7; candidate, not included in Nov 6 experiment"
+        }
+      }
+    },
+    {
+      "case_id": "D2-REV-002",
+      "semantic_check": "D2: Shared day, different pattern",
+      "input": {
+        "program": "communication-studies-ba",
+        "student": {
+          "student_id": "S8006",
+          "catalog_year": "Fall 2024",
+          "entry": {
+            "type": "first_year"
+          }
+        },
+        "transcript": {
+          "fabricate": {
+            "seed": 681283,
+            "through": "Spring 2026",
+            "complete": [
+              "CORE-COML",
+              "CORE-ARTL",
+              "CORE-GLBL",
+              "CORE-HUML",
+              "CORE-QNTL",
+              "CORE-SCIL",
+              "EXP-LIT",
+              "EXP-WI",
+              "EXP-RS",
+              "NONPROG-PSY",
+              "NONPROG-SOC",
+              "NONPROG-ECON-POSC",
+              "NONPROG-HIST",
+              "NONPROG-PHIL",
+              "NONPROG-ENGL"
+            ],
+            "rows": [],
+            "avoid": [
+              "CMS04250"
+            ],
+            "keep_unmet": [
+              "CMS-FOUNDATIONAL"
+            ]
+          }
+        },
+        "prompt": "Register me for Communication Theory (CMS04250). I want a section that meets on Mondays and Wednesdays, with no additional meeting days."
+      },
+      "candidate_courses": [
+        "CMS04250"
+      ],
+      "ground_truth": {
+        "rules": {
+          "count": {
+            "min": 1,
+            "max": 1
+          },
+          "must_include_courses": [
+            "CMS04250"
+          ],
+          "crns_in": [
+            "44421",
+            "44425"
+          ]
+        },
+        "examples": {
+          "valid": [
+            [
+              "44421"
+            ],
+            [
+              "44425"
+            ]
+          ],
+          "invalid": [
+            [
+              "44414"
+            ],
+            [
+              "44417"
+            ]
+          ]
+        },
+        "implicit_relationship": "CRNs 44421 and 44425 meet Monday and Wednesday; CRN 44414 meets Wednesday only.",
+        "case_type": "shared_day_pattern",
+        "targets": [],
+        "pair": {
+          "id": "task27/shared_day_pattern-cms04250",
+          "variant": "b",
+          "changed": "Wednesday only vs Monday-and-Wednesday meeting pattern",
+          "difference": {
+            "where": "prompt",
+            "this_case": "Register me for Communication Theory (CMS04250). I want a section that meets on Mondays and Wednesdays, with no additional meeting days.",
+            "twin_case": "D2-REV-001",
+            "twin_id": "D2-REV-001",
+            "answer_here": "44421, 44425",
+            "summary": "CRNs 44421 and 44425 meet Monday and Wednesday; CRN 44414 meets Wednesday only."
+          },
+          "has_shared_answer": false,
+          "shared_answer_example": null
+        },
+        "difficulty": {
+          "candidate_courses": 1,
+          "candidate_answers": 4,
+          "correct_answers": 2,
+          "chance": 0.5,
+          "rules": 3,
+          "prompt_words": 21
+        },
+        "checks": [
+          "D2"
+        ],
+        "credit": {
+          "owner": "Tyler Henry",
+          "branch": "Tyler",
+          "file": "d_category_task27_supplemental.json",
+          "created_for": "Task 2.7; candidate, not included in Nov 6 experiment"
+        }
+      }
+    },
+    {
+      "case_id": "D3-FR-001",
+      "semantic_check": "D3: Day exclusion",
+      "input": {
+        "program": "computer-science-bs",
+        "student": {
+          "student_id": "S8021",
+          "catalog_year": "Fall 2023",
+          "entry": {
+            "type": "first_year"
+          }
+        },
+        "transcript": {
+          "fabricate": {
+            "seed": 816477,
+            "through": "Spring 2026",
+            "complete": [
+              "CORE-COML",
+              "CORE-ARTL",
+              "CORE-GLBL",
+              "CORE-HUML",
+              "CORE-QNTL",
+              "CORE-SCIL",
+              "EXP-LIT",
+              "EXP-WI",
+              "EXP-RS",
+              "CS-SEMINAR",
+              "NONPROG-HUML",
+              "NONPROG-MATH",
+              "NONPROG-SCIENCE",
+              "NONPROG-WRITING",
+              "NONPROG-LAB-SCIENCE",
+              "CS-INTRO-OOP",
+              "CS-FOUNDATIONAL"
+            ],
+            "rows": [
+              {
+                "term": "Spring 2026",
+                "course_id": "CS01395",
+                "grade": "B"
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "CS06205",
+                "grade": "B"
+              }
+            ],
+            "avoid": [
+              "CS01395",
+              "CS04400",
+              "CS06205"
+            ],
+            "keep_unmet": [
+              "CS-RESTRICTED",
+              "CS-UPPER"
+            ]
+          }
+        },
+        "prompt": "Register me for Senior Project (CS04400). I cannot attend classes on Fridays."
+      },
+      "candidate_courses": [
+        "CS04400"
+      ],
+      "ground_truth": {
+        "rules": {
+          "count": {
+            "min": 1,
+            "max": 1
+          },
+          "must_include_courses": [
+            "CS04400"
+          ],
+          "no_days": [
+            "Friday"
+          ]
+        },
+        "examples": {
+          "valid": [
+            [
+              "42081"
+            ]
+          ],
+          "invalid": [
+            [
+              "42082"
+            ]
+          ]
+        },
+        "implicit_relationship": "CRN 42081 meets Wednesday only, and CRN 42082 meets Friday only, both at 9:30-10:45 AM.",
+        "case_type": "day_exclusion",
+        "targets": [],
+        "pair": {
+          "id": "task27/day_exclusion-cs04400-friday",
+          "variant": "a",
+          "changed": "no Fridays vs Fridays only",
+          "difference": {
+            "where": "prompt",
+            "this_case": "Register me for Senior Project (CS04400). I cannot attend classes on Fridays.",
+            "twin_case": "D3-FR-002",
+            "twin_id": "D3-FR-002",
+            "answer_here": "42081",
+            "summary": "CRN 42081 meets Wednesday only, and CRN 42082 meets Friday only, both at 9:30-10:45 AM."
+          },
+          "has_shared_answer": false,
+          "shared_answer_example": null
+        },
+        "difficulty": {
+          "candidate_courses": 1,
+          "candidate_answers": 2,
+          "correct_answers": 1,
+          "chance": 0.5,
+          "rules": 3,
+          "prompt_words": 12
+        },
+        "checks": [
+          "D3"
+        ],
+        "credit": {
+          "owner": "Tyler Henry",
+          "branch": "Tyler",
+          "file": "d_category_task27_supplemental.json",
+          "created_for": "Task 2.7; candidate, not included in Nov 6 experiment"
+        }
+      }
+    },
+    {
+      "case_id": "D3-FR-002",
+      "semantic_check": "D3: Day exclusion",
+      "input": {
+        "program": "computer-science-bs",
+        "student": {
+          "student_id": "S8021",
+          "catalog_year": "Fall 2023",
+          "entry": {
+            "type": "first_year"
+          }
+        },
+        "transcript": {
+          "fabricate": {
+            "seed": 816477,
+            "through": "Spring 2026",
+            "complete": [
+              "CORE-COML",
+              "CORE-ARTL",
+              "CORE-GLBL",
+              "CORE-HUML",
+              "CORE-QNTL",
+              "CORE-SCIL",
+              "EXP-LIT",
+              "EXP-WI",
+              "EXP-RS",
+              "CS-SEMINAR",
+              "NONPROG-HUML",
+              "NONPROG-MATH",
+              "NONPROG-SCIENCE",
+              "NONPROG-WRITING",
+              "NONPROG-LAB-SCIENCE",
+              "CS-INTRO-OOP",
+              "CS-FOUNDATIONAL"
+            ],
+            "rows": [
+              {
+                "term": "Spring 2026",
+                "course_id": "CS01395",
+                "grade": "B"
+              },
+              {
+                "term": "Spring 2026",
+                "course_id": "CS06205",
+                "grade": "B"
+              }
+            ],
+            "avoid": [
+              "CS01395",
+              "CS04400",
+              "CS06205"
+            ],
+            "keep_unmet": [
+              "CS-RESTRICTED",
+              "CS-UPPER"
+            ]
+          }
+        },
+        "prompt": "Register me for Senior Project (CS04400). I can only attend classes on Fridays."
+      },
+      "candidate_courses": [
+        "CS04400"
+      ],
+      "ground_truth": {
+        "rules": {
+          "count": {
+            "min": 1,
+            "max": 1
+          },
+          "must_include_courses": [
+            "CS04400"
+          ],
+          "no_days": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Saturday",
+            "Sunday"
+          ]
+        },
+        "examples": {
+          "valid": [
+            [
+              "42082"
+            ]
+          ],
+          "invalid": [
+            [
+              "42081"
+            ]
+          ]
+        },
+        "implicit_relationship": "CRN 42082 meets Friday only, and CRN 42081 meets Wednesday only, both at 9:30-10:45 AM.",
+        "case_type": "day_exclusion",
+        "targets": [],
+        "pair": {
+          "id": "task27/day_exclusion-cs04400-friday",
+          "variant": "b",
+          "changed": "no Fridays vs Fridays only",
+          "difference": {
+            "where": "prompt",
+            "this_case": "Register me for Senior Project (CS04400). I can only attend classes on Fridays.",
+            "twin_case": "D3-FR-001",
+            "twin_id": "D3-FR-001",
+            "answer_here": "42082",
+            "summary": "CRN 42082 meets Friday only, and CRN 42081 meets Wednesday only, both at 9:30-10:45 AM."
+          },
+          "has_shared_answer": false,
+          "shared_answer_example": null
+        },
+        "difficulty": {
+          "candidate_courses": 1,
+          "candidate_answers": 2,
+          "correct_answers": 1,
+          "chance": 0.5,
+          "rules": 3,
+          "prompt_words": 13
+        },
+        "checks": [
+          "D3"
+        ],
+        "credit": {
+          "owner": "Tyler Henry",
+          "branch": "Tyler",
+          "file": "d_category_task27_supplemental.json",
+          "created_for": "Task 2.7; candidate, not included in Nov 6 experiment"
+        }
+      }
+    }
+  ],
+  "status": "candidate_needs_human_review"
+}

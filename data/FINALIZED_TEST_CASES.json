@@ -11864,7 +11864,7 @@
             ]
           }
         },
-        "prompt": "Register me for Topics: Tangled Politics and Natural Hair (AFST11350). No Monday classes."
+        "prompt": "Register me for any available section of AFST11350, regardless of topic. No Monday classes."
       },
       "candidate_courses": [
         "AFST11350"
@@ -11908,9 +11908,9 @@
             "this_case": "prompt says 'No Monday classes'",
             "twin_case": "prompt says 'I can only come to campus on Mondays'",
             "twin_id": "pair-day_exclusion-africana-studies-ba-b",
-            "answer_here": "a section of Topics: Tangled Politics and Natural Hair (AFST11350), with nothing on Mondays",
-            "answer_in_twin": "a section of Topics: Tangled Politics and Natural Hair (AFST11350), meeting only on Mondays",
-            "summary": "Only the prompt differs. Here: prompt says 'No Monday classes'. In the twin (pair-day_exclusion-africana-studies-ba-b): prompt says 'I can only come to campus on Mondays'. So the answer here is a section of Topics: Tangled Politics and Natural Hair (AFST11350), with nothing on Mondays, while in the twin it is a section of Topics: Tangled Politics and Natural Hair (AFST11350), meeting only on Mondays."
+            "answer_here": "a section of AFST11350 (any topic), with nothing on Mondays",
+            "answer_in_twin": "a section of AFST11350 (any topic), meeting only on Mondays",
+            "summary": "Only the prompt differs. Here: prompt says 'No Monday classes'. In the twin (pair-day_exclusion-africana-studies-ba-b): prompt says 'I can only come to campus on Mondays'. So the answer here is a section of AFST11350 (any topic), with nothing on Mondays, while in the twin it is a section of AFST11350 (any topic), meeting only on Mondays."
           },
           "has_shared_answer": false,
           "shared_answer_example": null
@@ -11921,7 +11921,7 @@
           "correct_answers": 1,
           "chance": 0.5,
           "rules": 3,
-          "prompt_words": 13
+          "prompt_words": 14
         },
         "checks": [
           "D3"
@@ -11975,7 +11975,7 @@
             ]
           }
         },
-        "prompt": "Register me for Topics: Tangled Politics and Natural Hair (AFST11350). I can only come to campus on Mondays."
+        "prompt": "Register me for any available section of AFST11350, regardless of topic. I can only come to campus on Mondays."
       },
       "candidate_courses": [
         "AFST11350"
@@ -12024,9 +12024,9 @@
             "this_case": "prompt says 'I can only come to campus on Mondays'",
             "twin_case": "prompt says 'No Monday classes'",
             "twin_id": "pair-day_exclusion-africana-studies-ba-a",
-            "answer_here": "a section of Topics: Tangled Politics and Natural Hair (AFST11350), meeting only on Mondays",
-            "answer_in_twin": "a section of Topics: Tangled Politics and Natural Hair (AFST11350), with nothing on Mondays",
-            "summary": "Only the prompt differs. Here: prompt says 'I can only come to campus on Mondays'. In the twin (pair-day_exclusion-africana-studies-ba-a): prompt says 'No Monday classes'. So the answer here is a section of Topics: Tangled Politics and Natural Hair (AFST11350), meeting only on Mondays, while in the twin it is a section of Topics: Tangled Politics and Natural Hair (AFST11350), with nothing on Mondays."
+            "answer_here": "a section of AFST11350 (any topic), meeting only on Mondays",
+            "answer_in_twin": "a section of AFST11350 (any topic), with nothing on Mondays",
+            "summary": "Only the prompt differs. Here: prompt says 'I can only come to campus on Mondays'. In the twin (pair-day_exclusion-africana-studies-ba-a): prompt says 'No Monday classes'. So the answer here is a section of AFST11350 (any topic), meeting only on Mondays, while in the twin it is a section of AFST11350 (any topic), with nothing on Mondays."
           },
           "has_shared_answer": false,
           "shared_answer_example": null
@@ -12037,7 +12037,7 @@
           "correct_answers": 1,
           "chance": 0.5,
           "rules": 3,
-          "prompt_words": 18
+          "prompt_words": 19
         },
         "checks": [
           "D3"
