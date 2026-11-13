@@ -106,6 +106,9 @@ def build_parser() -> argparse.ArgumentParser:
                           "tally, rendering and prompt; the case unchanged) count as this run's first samples "
                           "of those cases, so only the missing samples are called. For the -n 3 check after "
                           "the main runs: --reuse-from the main run's file, and each case needs 2 new calls")
+    run.add_argument("--reuse-across-providers", action="store_true",
+                     help="with --reuse-from: reuse answers a different provider gave (when the pinned one left "
+                          "OpenRouter); each row keeps the provider that served it")
 
     model = parser.add_argument_group("the model call")
     model.add_argument("--backend", choices=["openrouter", "lmstudio"], default="openrouter",
@@ -333,9 +336,14 @@ def call_settings(args, session, first_task, settings: dict) -> dict:
             "shared_context": context_label(first_task), "output_contract": first_task.output_contract}
 
 
-def same_calls(s: dict, calls: dict) -> bool:
+def same_calls(s: dict, calls: dict, any_provider: bool = False) -> bool:
     """Whether session summary `s` made the calls call_settings() describes. The cache lifetime in
-    the opening's label is left out: it changes what a call costs, not what the model reads."""
+    the opening's label is left out: it changes what a call costs, not what the model reads.
+    any_provider: also leave out which provider was pinned (--reuse-across-providers)."""
+    if any_provider:
+        drop = lambda g: {k: v for k, v in (g or {}).items() if k != "provider"}
+        s = {**s, "generation_settings": drop(s.get("generation_settings"))}
+        calls = {**calls, "generation_settings": drop(calls.get("generation_settings"))}
     ttl = lambda label: (label or "").rsplit(", cache ttl", 1)[0]
     return (all(s.get(k) == v for k, v in calls.items() if k != "shared_context")
             and ttl(s.get("shared_context")) == ttl(calls["shared_context"]))
@@ -348,7 +356,7 @@ def reusable(args, calls: dict, cases: list) -> dict:
     if not args.reuse_from:
         return {}
     sessions, results = load_results(args.reuse_from)
-    ids = {s["session_id"] for s in sessions if same_calls(s, calls)}
+    ids = {s["session_id"] for s in sessions if same_calls(s, calls, args.reuse_across_providers)}
     raw = {c["case_id"]: c for c in read_cases(args.test_file)}
     out = {}
     for case in cases:

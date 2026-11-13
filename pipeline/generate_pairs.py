@@ -136,6 +136,8 @@ def title_of(course, prog):
     guide = re.sub(r"\s+OR$", "", prog.get("course_titles", {}).get(course, ""))
     clean = guide and len(guide) <= 60 and not re.search(r"\b(OR|SATISFIES|MINIMUM|PREREQ)\b", guide)
     raw = guide if clean else (fabricate._title(course, prog) or course)
+    if ":" in raw and len({s["title"] for s in by_course().get(course, [])}) > 1:
+        raw = raw.split(":")[0]     # a topics course: naming one topic would make the key accept the others
     raw = re.sub(r"^HONORS\s+", "", raw)
     raw = re.sub(r"\s*-\s*(WI|RS|W|R)$", "", raw).strip(" -")
     small = {"and", "of", "the", "for", "in", "to", "a", "an", "or", "with", "on", "at"}
@@ -332,28 +334,35 @@ def _fixed_credits(course):
     return None if isinstance(credits, dict) else credits
 
 
+def correct_answers(case, c=None):
+    """(how many answers a model could plausibly give, the accepted ones as judge() returns them)
+    for a case whose answer is not the empty cart; see difficulty(). c: the case's Case, if built."""
+    c = c or Case(case)
+    rules = case["ground_truth"]["rules"]
+    size = rules.get("count", {}).get("max", 1)
+    if size == 2 and len(rules.get("must_include_courses", [])) == 2:
+        a, b = rules["must_include_courses"]
+        candidates = (by_course().get(a, []), by_course().get(b, []))
+        total = len(candidates[0]) * len(candidates[1])
+    else:
+        candidates = [s for cid in case.get("candidate_courses", []) for s in by_course().get(cid, [])]
+        total, size = len(candidates), 1
+    return total, (judge(c, candidates, rules, size)[0] if total else [])
+
+
 def difficulty(case, c=None):
     """ground_truth.difficulty for a case: how many answers a model could plausibly give (every
     non-cancelled section of the case's candidate courses, or every pair of sections when the
     answer is two named courses), how many of those are correct, the chance of a correct answer
     by picking one of them at random, the number of rules, and the prompt's length in words.
     c: the case's Case, if already built."""
-    c = c or Case(case)
     rules = case["ground_truth"]["rules"]
     courses = case.get("candidate_courses", [])
-    size = rules.get("count", {}).get("max", 1)
-    if size == 0:           # one right answer (nothing) among every section and the empty cart
+    if rules.get("count", {}).get("max", 1) == 0:   # one right answer (nothing) among every section and the empty cart
         total = sum(len(by_course().get(cid, [])) for cid in courses) + 1
         return {"candidate_courses": len(courses), "candidate_answers": total, "correct_answers": 1,
                 "chance": round(1 / total, 4), "rules": len(rules), "prompt_words": len(case["input"]["prompt"].split())}
-    if size == 2 and len(rules.get("must_include_courses", [])) == 2:
-        a, b = rules["must_include_courses"]
-        candidates = (by_course().get(a, []), by_course().get(b, []))
-        total = len(candidates[0]) * len(candidates[1])
-    else:
-        candidates = [s for cid in courses for s in by_course().get(cid, [])]
-        total, size = len(candidates), 1
-    accepted, _ = judge(c, candidates, rules, size) if total else ([], [])
+    total, accepted = correct_answers(case, c)
     return {"candidate_courses": len(courses), "candidate_answers": total, "correct_answers": len(accepted),
             "chance": round(len(accepted) / total, 4) if total else None, "rules": len(rules),
             "prompt_words": len(case["input"]["prompt"].split())}
@@ -1666,6 +1675,12 @@ def attempts(name):
     return [(r, key) for r in range(1, ROUNDS + 1) for key in order]
 
 
+def allowed(cases):
+    """No case's key needs a section its student is barred from (restrictions.restriction())."""
+    from .restrictions import restriction
+    return not any((restriction(c) or {}).get("status") in ("no_allowed_answer", "unclear") for c in cases)
+
+
 def generate(total=200, families=None, existing=()):
     """Pairs until there are `total` in all, counting `existing` (kept as they are). Families take
     turns adding one pair each, so they stay even until one runs out of programs and courses; a
@@ -1695,6 +1710,8 @@ def generate(total=200, families=None, existing=()):
                 got = FAMILIES[name](key, programs[key], random.Random(zlib.crc32(seed.encode())), f"S{sid}")
                 if got and signature(got) in seen.get((name, key), set()):
                     got = None                  # the same courses again: not a new pair
+                if got and not allowed(got):
+                    got = None                  # a key whose answers the student may not register for
                 if got and r > 1:
                     for c in got:
                         variant = c["ground_truth"]["pair"]["variant"]

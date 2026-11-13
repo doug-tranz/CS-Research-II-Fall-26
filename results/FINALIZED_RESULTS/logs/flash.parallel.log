@@ -984,3 +984,775 @@ session closed: 17 model calls, 5,186,909 input tokens (1,501,785 written to the
 === flash: stability check, 10 pairs x 3 samples at medium -> results/FINALIZED_RESULTS/check_flash.json
 --resume: effort medium already finished in results/FINALIZED_RESULTS/check_flash.json; skipped
 === flash: finished
+=== flash: main run, 200 cases x low/medium/high -> results/FINALIZED_RESULTS/main_flash.json
+note: 1 sample(s) per case; use -n 3 or more to compare sessions reliably
+3 efforts (low, medium, high), one session each: about $1.72 in all (low: estimated cost: $0.54 for 36 call(s) on google/gemini-3.8-flash via google-ai-studio/flex, from 1 measured session(s) in results/test_gemini_flash.json (setup $0.01, then $0.0146 per call))
+
+=== effort low
+session compact-20261113T194419Z-low started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+estimated cost: $0.54 for 36 call(s) on google/gemini-3.8-flash via google-ai-studio/flex, from 1 measured session(s) in results/test_gemini_flash.json (setup $0.01, then $0.0146 per call)
+T1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T1-002: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T1-003: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T1-004: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T1-006: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T2-006: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T3-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T3-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T3-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 300,357 written, $0.0195]
+T3-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0132]
+T4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T4-002: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T4-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T4-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T5-001: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T5-002: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T5-003: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T5-004: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T6-001: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T6-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T6-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T6-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T7-001: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T7-002: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T7-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T7-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T8-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T8-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T8-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T8-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T9-001: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T9-002: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T9-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0135]
+T9-004: consistency_error    | section 41969 is full and has no waitlist [cache: 300,357 read, 0 written, $0.0135]
+D1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D1-002: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D1-004: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D1-006: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D2-001: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 449 (char 448)) [cache: 300,357 read, 0 written, $0.0129]
+D2-002: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0129]
+D2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D2-005: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D2-006: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D3-001: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0138]
+D3-002: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0136]
+D3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C1-003: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C1-004: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C3-001: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0133]
+C3-002: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0131]
+C3-003: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C4-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0131]
+C4-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0129]
+I1-001: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I1-003: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I1-005: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I1-006: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I3-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I3-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I4-003: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I4-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I5-001: semantic_error       | rules broken: {'waitlist': "['41019'] waitlisted, but the student did not ask to be waitlisted", 'crns_in': "['41019'] are not among ['41021', '41026', '41027', '41028', '45039']"} [cache: 300,357 read, 0 written, $0.0134]
+I5-002: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0134]
+I5-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0133]
+I5-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0133]
+K1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K1-006: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K3-001: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0135]
+K3-002: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0135]
+K3-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0134]
+K3-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0134]
+K3-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K3-006: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K4-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0135]
+K4-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0135]
+K5-001: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K5-002: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K5-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K5-004: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K6-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K6-002: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K6-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K6-004: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K7-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K7-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K7-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K7-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K8-001: semantic_error       | rules broken: {'waitlist': "['42015'] waitlisted, but the student did not ask to be waitlisted"} [cache: 300,357 read, 0 written, $0.0134]
+K8-002: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0134]
+K8-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0133]
+K8-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0172]
+R1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R2-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0133]
+R2-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0148]
+R2-005: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0130]
+R2-006: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 437 (char 436)) [cache: 300,357 read, 0 written, $0.0130]
+R3-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R3-002: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R3-003: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R4-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R4-004: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R5-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R5-002: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R5-003: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R5-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R6-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R6-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R6-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R6-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R7-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R7-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R7-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R7-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R8-001: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R8-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R8-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R8-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R9-001: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R9-002: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R9-003: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R9-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R10-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R10-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R10-003: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R10-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R11-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R11-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R11-003: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R11-004: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R12-001: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R12-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R12-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R12-004: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O1-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0135]
+O1-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0132]
+O1-005: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0136]
+O1-006: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0134]
+O2-001: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O3-001: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 437 (char 436)) [cache: 300,357 read, 0 written, $0.0137]
+O3-002: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 497 (char 496)) [cache: 300,357 read, 0 written, $0.0138]
+O3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+164 answer(s) reused from results/FINALIZED_RESULTS/v1/main_flash.json: no new call, no cost
+OpenRouter's records: 36 of 200 calls
+
+143/200 semantic_ok on google/gemini-3.8-flash. Cost $0.4919. Full results in results/FINALIZED_RESULTS/main_flash.json (session compact-20261113T194419Z-low)
+Paired accuracy: 55/100 pairs with both variants semantic_ok (55%)
+    ambiguous          1/2
+    any_correct        1/2
+    back_to_back       1/2
+    boundary_time      1/2
+    busy_block         1/2
+    campus_residence   2/3
+    chained_conflict   0/2
+    complete_cart      5/6
+    course_a_not_b     1/2
+    credit_limit       1/2
+    day_exclusion      2/2
+    days               0/3
+    department         0/2
+    full_fallback      2/3
+    grade_threshold    1/2
+    hard_soft          0/2
+    impossible_days    1/1
+    impossible_full    1/1
+    last_seat          3/3
+    late_meeting       1/1
+    lookalike_id       0/3
+    modality           2/3
+    multi_meeting      1/1
+    negation           1/2
+    noon               0/2
+    not_first_listed   2/2
+    open_seats         1/2
+    passed_retake      3/3
+    prereq_completed   1/2
+    prereq_in_progress 0/2
+    prereq_min_grade   2/2
+    prereq_transfer    2/2
+    quantity           0/2
+    relative_time      2/3
+    repeatable         0/2
+    requirement_options 1/2
+    requirement_satisfied 1/2
+    same_title         2/2
+    section_number     3/3
+    several_constraints 2/2
+    shared_day_pattern 1/3
+    time_cutoff        2/2
+    time_of_day        0/3
+    transfer           0/2
+    withdrawal         1/1
+session closed: 36 model calls, 10,972,680 input tokens (300,357 written to the cache, 10,812,852 read from it: 99%), $0.4919 in all, $0.0137 per prompt
+
+=== effort medium
+session compact-20261113T194736Z-medium started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+estimated cost: $0.57 for 36 call(s) on google/gemini-3.8-flash via google-ai-studio/flex, from 1 measured session(s) in results/test_gemini_flash.json (setup $0.01, then $0.0156 per call)
+T1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T3-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T3-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T3-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0152]
+T3-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0148]
+T4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T4-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T4-004: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T5-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T5-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T5-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T5-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T6-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T6-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T6-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T6-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T7-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T7-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T7-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T7-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T8-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T8-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T8-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T8-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T9-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T9-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T9-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0157]
+T9-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0168]
+D1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D2-001: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0151]
+D2-002: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0171]
+D2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D2-005: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D3-001: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 503 (char 502)) [cache: 300,357 read, 300,357 written, $0.0218]
+D3-002: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0156]
+D3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D3-004: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C2-002: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C3-001: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0151]
+C3-002: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0160]
+C3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C4-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0151]
+C4-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0155]
+I1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I2-006: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I3-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I3-002: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I3-004: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I4-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I4-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I5-001: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0179]
+I5-002: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0157]
+I5-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0157]
+I5-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0167]
+K1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K1-002: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K3-001: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0175]
+K3-002: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0172]
+K3-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0159]
+K3-004: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 518 (char 517)) [cache: 300,357 read, 0 written, $0.0159]
+K3-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K3-006: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K4-001: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K4-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0158]
+K4-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0175]
+K5-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K5-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K5-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K5-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K6-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K6-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K6-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K6-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K7-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K7-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K7-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K7-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K8-001: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0263]
+K8-002: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0190]
+K8-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 300,357 written, $0.0257]
+K8-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0189]
+R1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R2-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0252]
+R2-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0168]
+R2-005: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0176]
+R2-006: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0172]
+R3-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R3-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R4-001: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R4-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R4-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R5-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R5-002: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R5-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R5-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R6-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R6-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R6-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R6-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R7-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R7-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R7-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R7-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R8-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R8-002: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R8-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R8-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R9-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R9-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R9-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R9-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R10-001: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R10-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R10-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R10-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R11-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R11-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R11-003: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R11-004: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R12-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R12-002: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R12-003: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R12-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O1-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0167]
+O1-004: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 503 (char 502)) [cache: 300,357 read, 0 written, $0.0147]
+O1-005: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0217]
+O1-006: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0189]
+O2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O3-001: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0163]
+O3-002: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0189]
+O3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+164 answer(s) reused from results/FINALIZED_RESULTS/v1/main_flash.json: no new call, no cost
+OpenRouter's records: 36 of 200 calls
+
+179/200 semantic_ok on google/gemini-3.8-flash. Cost $0.6336. Full results in results/FINALIZED_RESULTS/main_flash.json (session compact-20261113T194736Z-medium)
+Paired accuracy: 80/100 pairs with both variants semantic_ok (80%)
+    ambiguous          2/2
+    any_correct        2/2
+    back_to_back       2/2
+    boundary_time      2/2
+    busy_block         1/2
+    campus_residence   1/3
+    chained_conflict   2/2
+    complete_cart      5/6
+    course_a_not_b     2/2
+    credit_limit       1/2
+    day_exclusion      0/2
+    days               3/3
+    department         0/2
+    full_fallback      3/3
+    grade_threshold    2/2
+    hard_soft          2/2
+    impossible_days    1/1
+    impossible_full    1/1
+    last_seat          2/3
+    late_meeting       1/1
+    lookalike_id       3/3
+    modality           2/3
+    multi_meeting      1/1
+    negation           2/2
+    noon               2/2
+    not_first_listed   2/2
+    open_seats         2/2
+    passed_retake      3/3
+    prereq_completed   1/2
+    prereq_in_progress 1/2
+    prereq_min_grade   2/2
+    prereq_transfer    2/2
+    quantity           2/2
+    relative_time      3/3
+    repeatable         2/2
+    requirement_options 1/2
+    requirement_satisfied 1/2
+    same_title         0/2
+    section_number     2/3
+    several_constraints 1/2
+    shared_day_pattern 2/3
+    time_cutoff        2/2
+    time_of_day        3/3
+    transfer           2/2
+    withdrawal         1/1
+session closed: 36 model calls, 10,972,680 input tokens (600,714 written to the cache, 10,812,852 read from it: 99%), $0.6336 in all, $0.0176 per prompt
+
+=== effort high
+session compact-20261113T195905Z-high started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+estimated cost: $0.60 for 36 call(s) on google/gemini-3.8-flash via google-ai-studio/flex, from 1 measured session(s) in results/test_gemini_flash.json (setup $0.01, then $0.0165 per call)
+T1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T3-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T3-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T3-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 300,357 written, $0.0264]
+T3-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0177]
+T4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T4-003: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T4-004: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T5-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T5-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T5-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T5-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T6-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T6-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T6-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T6-004: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T7-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T7-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T7-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T7-004: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T8-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T8-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T8-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T8-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T9-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T9-002: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+T9-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0176]
+T9-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0190]
+D1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D2-001: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0177]
+D2-002: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0380]
+D2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D2-005: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D3-001: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 503 (char 502)) [cache: 300,357 read, 0 written, $0.0207]
+D3-002: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 497 (char 496)) [cache: 300,357 read, 0 written, $0.0172]
+D3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+D3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C1-003: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C3-001: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0186]
+C3-002: semantic_ok          | satisfies every rule [cache: 300,357 read, 300,357 written, $0.0225]
+C3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C4-002: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+C4-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0190]
+C4-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0178]
+I1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I3-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I3-002: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I4-001: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I4-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I4-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+I5-001: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0195]
+I5-002: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0219]
+  connection lost (ConnectionError); waiting for the network, then trying again
+I5-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 300,357 written, $0.0279]
+I5-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0708]
+K1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K1-002: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K3-001: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0712]
+K3-002: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 507 (char 506)) [cache: 300,357 read, 300,357 written, $0.0437]
+K3-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0266]
+K3-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0235]
+K3-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K3-006: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K4-001: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K4-002: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K4-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0164]
+K4-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0241]
+K5-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K5-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K5-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K5-004: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K6-001: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K6-002: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K6-003: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K6-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K7-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K7-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K7-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K7-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+K8-001: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0608]
+K8-002: semantic_ok          | satisfies every rule [cache: 300,357 read, 300,357 written, $0.0379]
+K8-003: syntactic_error      | invalid JSON (Expecting value: line 1 column 1 (char 0)) [cache: 300,357 read, 0 written, $0.0710]
+K8-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0351]
+R1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R2-002: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R2-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 300,357 written, $0.0616]
+R2-004: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0200]
+R2-005: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0199]
+R2-006: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0209]
+R3-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R3-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R4-003: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R4-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R5-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R5-002: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R5-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R5-004: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R6-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R6-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R6-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R6-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R7-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R7-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R7-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R7-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R8-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R8-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R8-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R8-004: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R9-001: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R9-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R9-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R9-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R10-001: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R10-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R10-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R10-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R11-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R11-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R11-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R11-004: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R12-001: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R12-002: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R12-003: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+R12-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O1-003: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0315]
+O1-004: syntactic_error      | invalid JSON (Expecting ',' delimiter: line 1 column 503 (char 502)) [cache: 300,357 read, 300,357 written, $0.0233]
+O1-005: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0373]
+O1-006: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0218]
+O2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O2-005: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O3-001: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0184]
+O3-002: semantic_ok          | satisfies every rule [cache: 300,357 read, 0 written, $0.0191]
+O3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+O3-004: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_flash.json
+164 answer(s) reused from results/FINALIZED_RESULTS/v1/main_flash.json: no new call, no cost
+OpenRouter's records: 36 of 200 calls
+
+164/200 semantic_ok on google/gemini-3.8-flash. Cost $1.0766. Full results in results/FINALIZED_RESULTS/main_flash.json (session compact-20261113T195905Z-high)
+Paired accuracy: 69/100 pairs with both variants semantic_ok (69%)
+    ambiguous          1/2
+    any_correct        1/2
+    back_to_back       1/2
+    boundary_time      1/2
+    busy_block         1/2
+    campus_residence   1/3
+    chained_conflict   2/2
+    complete_cart      4/6
+    course_a_not_b     1/2
+    credit_limit       1/2
+    day_exclusion      1/2
+    days               3/3
+    department         0/2
+    full_fallback      2/3
+    grade_threshold    2/2
+    hard_soft          1/2
+    impossible_days    1/1
+    impossible_full    1/1
+    last_seat          3/3
+    late_meeting       1/1
+    lookalike_id       3/3
+    modality           2/3
+    multi_meeting      1/1
+    negation           2/2
+    noon               1/2
+    not_first_listed   1/2
+    open_seats         2/2
+    passed_retake      3/3
+    prereq_completed   1/2
+    prereq_in_progress 0/2
+    prereq_min_grade   2/2
+    prereq_transfer    2/2
+    quantity           0/2
+    relative_time      3/3
+    repeatable         2/2
+    requirement_options 1/2
+    requirement_satisfied 1/2
+    same_title         1/2
+    section_number     3/3
+    several_constraints 1/2
+    shared_day_pattern 2/3
+    time_cutoff        2/2
+    time_of_day        3/3
+    transfer           1/2
+    withdrawal         0/1
+session closed: 36 model calls, 10,972,680 input tokens (2,102,499 written to the cache, 10,812,852 read from it: 99%), $1.0766 in all, $0.0299 per prompt
+=== flash: stability check, 10 pairs x 3 samples at medium -> results/FINALIZED_RESULTS/check_flash.json
+--resume: effort medium already finished in results/FINALIZED_RESULTS/check_flash.json; skipped
+=== flash: finished

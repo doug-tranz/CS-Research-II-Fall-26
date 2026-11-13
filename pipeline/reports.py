@@ -17,7 +17,25 @@ from pathlib import Path
 from .cases import PAIR_VARIANTS, load_test_cases, read_cases
 from .pairs import pair_summary, pairs_of, relate_pairs
 from .results import GROUPS, _answer, _code_order, answer_text, load_results, rebuild_summaries, save_results
-from .scoring import score_answer
+from .scoring import FAILED_AT, TIER_NAMES, score_answer
+
+ACRONYMS = {"json": "JSON", "didcomm": "DIDComm", "crn": "CRN", "id": "ID"}
+
+
+def error_label(tag):
+    """An error_type as the CSV shows it: 'two_sections_of_one_course' -> 'Two sections of one course'."""
+    if not tag:
+        return tag
+    text = " ".join(ACRONYMS.get(w, w) for w in tag.split("_"))
+    return text[0].upper() + text[1:]
+
+
+def error_tier(outcome):
+    """The tier a failed answer stopped at, e.g. 'Tier 3: Consistency'; 'Call failed' or '' otherwise."""
+    tier = FAILED_AT.get(outcome)
+    if tier:
+        return f"Tier {tier}: {TIER_NAMES[tier].split(' (')[0].capitalize()}"
+    return "Call failed" if outcome == "generation_failed" else ""
 from .stats import mcnemar
 
 
@@ -104,10 +122,10 @@ def effort_report(case_file: str, results_file: str) -> None:
 
 
 # The columns of --export-csv, in order (the README's "EDA export" says what each means).
-CSV_COLUMNS = ("session_id", "model", "effort", "provider", "tally_variant", "task_id", "run_index",
-               "check", "check_name", "group", "case_type", "owner", "rebuilt", "pair_id", "variant", "pair_changes",
-               "weak_pair", "chance", "candidate_answers", "correct_answers", "n_rules", "prompt_words",
-               "transcript_courses", "expected_min", "expected_max", "outcome", "semantic_ok", "error_type",
+CSV_COLUMNS = ("session_id", "model", "effort", "provider", "served_by", "tally_variant", "task_id", "run_index",
+               "check", "check_name", "group", "owner", "rebuilt", "pair_id", "variant", "pair_changes",
+               "weak_pair", "restricted_key", "chance", "candidate_answers", "correct_answers", "n_rules", "prompt_words",
+               "transcript_courses", "expected_min", "expected_max", "outcome", "semantic_ok", "error_type", "error_tier",
                "tier1_ok", "tier2_ok", "tier3_ok", "tier4_ok", "sections_registered", "registered_nothing",
                "pair_passed", "same_answer_as_twin", "prompt_tokens", "cached_tokens", "cache_write_tokens",
                "completion_tokens", "reasoning_tokens", "reasoning_chars", "usd_cost", "first_token_ms", "latency_ms",
@@ -156,7 +174,7 @@ def _session_row(s: dict) -> dict:
            "ignored_change_rate": round(sum(ignored[::2]) / sum(ignored[1::2]), 3) if sum(ignored[1::2]) else None,
            "empty_when_right_rate": (empty.get("registered_nothing_when_right") or {}).get("rate"),
            "empty_when_wrong_rate": (empty.get("registered_nothing_when_wrong") or {}).get("rate"),
-           "top_error_type": next(iter(errors), None), "top_error_count": next(iter(errors.values()), None),
+           "top_error_type": error_label(next(iter(errors), None)), "top_error_count": next(iter(errors.values()), None),
            **{k: tokens.get(k) if isinstance(tokens.get(k), int) else None
               for k in ("prompt_tokens", "cached_tokens", "cache_write_tokens", "completion_tokens", "reasoning_tokens")},
            "think_mean_correct": (think.get("correct") or {}).get("mean"),
@@ -204,18 +222,20 @@ def export_csv(case_file: str, out_path: str, results_files: list) -> tuple:
                 "session_id": r.get("session_id"), "model": s.get("model"),
                 "effort": (g.get("reasoning") or {}).get("effort", "default"),
                 "provider": ((g.get("provider") or {}).get("only") or [r.get("provider") or ""])[0],
+                "served_by": r.get("provider") or "",
                 "tally_variant": s.get("tally_variant"), "task_id": r["task_id"], "run_index": r.get("run_index"),
                 "check": code, "check_name": (c.get("semantic_check") or "").partition(": ")[2],
-                "group": GROUPS.get(code[:1], ""), "case_type": gt.get("case_type"), "owner": credit.get("owner"),
+                "group": GROUPS.get(code[:1], ""), "owner": credit.get("owner"),
                 "rebuilt": bit(credit.get("rebuilt_by")) if credit else "", "pair_id": pair.get("id"),
                 "variant": pair.get("variant"), "pair_changes": (pair.get("difference") or {}).get("where"),
-                "weak_pair": bit(pair.get("has_shared_answer")) if pair else "", "chance": diff.get("chance"),
+                "weak_pair": bit(pair.get("has_shared_answer")) if pair else "",
+                "restricted_key": (gt.get("restriction") or {}).get("status", ""), "chance": diff.get("chance"),
                 "candidate_answers": diff.get("candidate_answers"), "correct_answers": diff.get("correct_answers"),
                 "n_rules": diff.get("rules"), "prompt_words": diff.get("prompt_words"),
                 "transcript_courses": r.get("transcript_courses"),
                 "expected_min": count.get("min"), "expected_max": count.get("max"),
                 "outcome": v.get("outcome"), "semantic_ok": bit(v.get("outcome") == "semantic_ok"),
-                "error_type": v.get("error_type"), **tiers,
+                "error_type": error_label(v.get("error_type")), "error_tier": error_tier(v.get("outcome")), **tiers,
                 "sections_registered": len(answer) if isinstance(answer, tuple) else "",
                 "registered_nothing": bit(answer == ()) if isinstance(answer, tuple) else "",
                 "pair_passed": bit(pr.get("pair_passed")), "same_answer_as_twin": bit(pr.get("same_answer_as_twin")),

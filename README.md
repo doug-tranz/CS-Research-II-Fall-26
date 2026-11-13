@@ -192,6 +192,7 @@ asked and gives neither `--max-cost` nor `--yes` does not start, so nothing is s
 | `--backend` | `openrouter` (cloud, paid) or `lmstudio` (a local model on this machine, see [Local runs](#local-runs-lm-studio)) | `openrouter` |
 | `--resume` | With several `--effort`: skip the efforts `--output` already has a whole session of. With `--session-per-pair`: continue the last batch in `--output`, skipping pairs already done | off |
 | `--reuse-from FILE` | Answers `FILE` already has for exactly these calls (same model, effort, provider, tally, rendering and prompt; the case unchanged) count as this run's first samples, and only the missing samples are called. See [The -n 3 check without paying twice](#the--n-3-check-without-paying-twice) | off |
+| `--reuse-across-providers` | With `--reuse-from`: also reuse answers a different provider gave, for a model whose pinned provider left OpenRouter (Qwen 3.8 27B: Phala, 2026-11-13; its new calls went to Alibaba). Each row keeps the provider that served it (CSV `served_by`) | off |
 | `--pairs N` | Run N pairs (2N cases), the checklist codes taking turns across the groups (T1, D1, C1, ..., then T2, ...), instead of `--task-ids`. `--pairs 100` gives every check 4 or 6 cases; `--pairs 10` reaches all seven groups and is the first 10 of `--pairs 100` | |
 | `--session-per-pair` | Each pair in its own session, its opening only that pair's subjects; ends with the batch's totals. See [Local runs](#local-runs-lm-studio) | off |
 | `--batch-report` | Print the grand totals of every `--session-per-pair` batch in `--output`, and exit. No model call | off |
@@ -596,12 +597,10 @@ except `deviation_score` (per row, and averaged in the summary).
   `pair_id`, `twin_id`, `same_answer_as_twin`, `pair_passed`, and an `explanation` naming the
   twin's outcome.
 
-**`error_type`** names what went wrong, so failures can be counted.
-- **A failed pair case** is named for the reasoning its family tests: `fallback_not_applied`,
-  `in_progress_course_ignored`, `transfer_credit_ignored`, `time_overlap_missed`,
-  `and_or_requirement_misread`, `credit_arithmetic`, `modality_ignored`, `meeting_days_ignored`,
-  `minimum_grade_misread`, `withdrawal_counted_as_credit`.
-- **Any other semantic error** is named for its first broken rule: `wrong_number_of_sections`,
+**`error_type`** names what the answer got wrong, so failures can be counted. Which skill a case
+tests is its `check` (`check_name`); the tag does not repeat it (until 4.7 a failed pair case was named for
+its family, so an empty cart in a days case read `meeting_days_ignored`).
+- **A semantic error** is named for its first broken rule: `wrong_number_of_sections`,
   `requirement_mismatch`, `named_course_missing`, `time_limit_ignored`, `wrong_course`, and so on.
 - **A consistency error** is named for its first failed Tier 3 check: `full_section`,
   `time_conflict_in_cart`, `prerequisite_missing`, `section_details_miscopied`, and so on.
@@ -637,14 +636,15 @@ and `think_mean_wrong`, `cost_usd`, `setup_usd_est`, `per_case_marginal_usd_est`
 
 | Columns | What they are |
 |---|---|
-| `session_id`, `model`, `effort`, `provider`, `tally_variant` | The session: who answered, at what reasoning effort, on which endpoint and tally |
+| `session_id`, `model`, `effort`, `provider`, `served_by`, `tally_variant` | The session: who answered, at what reasoning effort, on which endpoint (the session's pinned one) and tally; `served_by` is the provider that actually answered this row (differs from `provider` on a reused row from another provider) |
 | `task_id`, `run_index` | The case and which sample of it (`-n`) |
 | `check`, `check_name`, `group` | Its checklist code, the code's name, and its group (Temporal reasoning, Days, ...) |
-| `case_type`, `owner`, `rebuilt` | Its pair family, who wrote it, and `1` if it was rebuilt on the real tally from a team case |
+| `owner`, `rebuilt` | Who wrote it, and `1` if it was rebuilt on the real tally from a team case |
 | `pair_id`, `variant`, `pair_changes`, `weak_pair` | Its pair, which twin (`a`/`b`), where the twins differ (`prompt`/`transcript`), and `1` if one answer is right in both |
+| `restricted_key` | `no_allowed_answer` when every correct answer needs a section whose restriction bars the student, `some_restricted` when only some do, `unclear` when a note could not be read, empty otherwise (`pipeline/restrictions.py`) |
 | `chance`, `candidate_answers`, `correct_answers`, `n_rules`, `prompt_words` | How hard it is: the chance a random valid cart is right, how many carts are possible and right, the rules it checks, the prompt's length |
 | `transcript_courses`, `expected_min`, `expected_max` | Courses on the student's record; how many sections the request asks for |
-| `outcome`, `semantic_ok`, `error_type`, `tier1_ok` ... `tier4_ok` | The verdict, `1` if right, what went wrong, and whether each tier's checks all passed (empty when that tier was not reached) |
+| `outcome`, `semantic_ok`, `error_type`, `error_tier`, `tier1_ok` ... `tier4_ok` | The verdict, `1` if right, what went wrong in words (the results file's `error_type` without underscores: `two_sections_of_one_course` is "Two sections of one course"), the tier the answer failed at ("Tier 1: Syntactic", "Tier 2: Schema", "Tier 3: Consistency", "Tier 4: Semantic", or "Call failed"), and whether each tier's checks all passed (empty when that tier was not reached) |
 | `sections_registered`, `registered_nothing` | How many sections the cart holds; `1` for an empty cart |
 | `pair_passed`, `same_answer_as_twin` | `1` if both twins were right; `1` if the model gave both twins the same cart |
 | `prompt_tokens`, `cached_tokens`, `cache_write_tokens`, `completion_tokens`, `reasoning_tokens`, `reasoning_chars` | Tokens of the call, and the length of the saved reasoning text (empty when none was sent) |
@@ -775,7 +775,7 @@ The schema checks shape only. Tier 3 checks the values against the input:
 | Rule | Fails as |
 |---|---|
 | `term_code` is the schedule's term | `consistency_error` |
-| Every copied field equals the offered section's: `course_id`, `section`, `campus` and `modality` ignoring case and surrounding spaces; `seats_total` and `seats_taken` exactly; `meetings` with the same days and times, in any order and with or without a leading zero, and `type` and `location`, where given, matching (they may be left out) | `consistency_error` |
+| Every copied field equals the offered section's: `course_id`, `section`, `campus` and `modality` ignoring case and surrounding spaces; `seats_total` and `seats_taken` exactly; `meetings` with the same days and times, in any order and with or without a leading zero (`type` and `location` are removed before grading: the compact tally does not show them) | `consistency_error` |
 | `credit_hours` equals a fixed-credit section's credits, or is inside a variable-credit section's range | `consistency_error` |
 | `waitlist: true` only on a section that is full and has a waitlist with room | `consistency_error` |
 | A full section without `waitlist: true` | `consistency_error` (as before) |
@@ -1606,6 +1606,8 @@ backends × models × domains × tasks × samples
 
 | Version | Date | Changes |
 |---|---|---|
+| 4.8 | 2026-11-13 | **Broken pairs replaced:** `python -m pipeline.replace_pairs` swaps every pair whose key is broken (a topic prompt, or no answer the student may register for) for a newly generated pair of the same family, keeping the case ids, codes and order, so `--pairs 100` picks the same 200 ids; `about.replaced` lists them (O1's two hand-written pairs stand in as `complete_cart` pairs). The generator now refuses a pair whose key has no allowed answer (`generate_pairs.allowed()`), and `restrictions.py` counts HONORS sections as barred (no case student is in the Honors College). `bash run_main.sh rerun [names]` moves each main file to `results/FINALIZED_RESULTS/v1/` and runs again with `--reuse-from` it, so only the replaced cases and the failed calls are asked; the `:free` models use `OPENROUTER_FREE_API_KEY` when it is set. **`error_type` no longer names a failure for its pair family:** it is the first broken rule or check, what the answer got wrong (`check` says what the case tests). **`case_type` left the CSV:** it repeats `check` except in T8, K7 and R2, whose two families `pair_id` still names (it starts with the family). **Meetings are compared day by day:** one "MW 6:30-9:15 PM" meeting now equals the tally's two rows "M 6:30-9:15 PM" and "W 6:30-9:15 PM" (it splits a section's days when the rooms differ); 31 calls across six models were marked miscopied for this. |
+| 4.7 | 2026-11-12 | Fixes from the team review. **Topic courses:** 15 cases named one topic of a multi-topic course (ENGL02123 "Environmental Literature", AFST11350 "Tangled Politics and Natural Hair", CS01104 "Matlab/Cad") while the key accepted any topic; they are re-keyed to the named topic (`about.rekeyed` lists them; 13 were run, now an empty cart, since that topic's only section is full or not offered), and `generate_pairs.title_of()` names only the course, not a topic, when its sections differ in topic. **Meeting `type`/`location`** are removed before grading: the compact tally does not show them and no rule uses them (Nemotron Ultra wrote `""`). **Section restrictions:** `python -m pipeline.restrictions` reads title_note restrictions ("Non-majors only", "Psychology majors only", "3+1 students only", "First-time undergraduate ... only") against each student and writes `ground_truth.restriction` (`no_allowed_answer`, `unclear`, `some_restricted`); CSV column `restricted_key`. They are still not graded. All finalized results re-scored. |
 | 4.6 | 2026-11-05 | `--resume` also makes a session's failed calls (timeouts, refusals) again, keeping one row per call; a session with a failed call no longer counts as finished. A run claims its results file (`<output>.lock`, its process id): a second run on the same file exits with status 4 before any call. `bash run_main.sh parallel <names>` runs models at once (logs `<name>.parallel.log`); a model already running elsewhere is skipped. Saving a results file waits out a lock another program holds (Windows refused the swap while a reader had the file open). |
 | 4.5 | 2026-11-05 | A running session's summary is recomputed every 20 calls (marked `in_progress`: "N of M calls so far"), so the results file shows accuracy, cost and the analysis while a run goes; the end-of-session summary replaces it. |
 | 4.4 | 2026-11-05 | OpenRouter's daily free-model limit stops a run at once (no retries, no failed rows; exit status 3), and `--resume` continues a stopped session from its next call instead of starting the effort over (also after `--max-cost` or a crash), and skips a finished single-effort session. `bash run_main.sh free` runs the three Nemotron models in parallel; run it again each day after 00:00 UTC until all finish. |

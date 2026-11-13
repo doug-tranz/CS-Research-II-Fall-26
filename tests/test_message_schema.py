@@ -42,6 +42,9 @@ CASES = [
         entry("45510", meetings=[]), entry("41909", waitlist=True, seats_taken=30),
         entry("41910", meetings=[{"days": ["Friday"]}])])), "schema_ok"),
     ("contract example", json.dumps(_EXAMPLE), "schema_ok"),
+    ("blank meeting type and location (not graded)", json.dumps(body(sections=[entry("41836", meetings=[
+        {"days": ["Monday"], "start_time": "09:30 AM", "end_time": "10:45 AM", "type": "", "location": ""}])])),
+     "schema_ok"),
     ("valid, with optional headers", json.dumps(variant(
         typ="application/didcomm-plain+json", **{"from": "did:example:alice"},
         to=["did:example:registrar"], created_time=1791331200)), "schema_ok"),

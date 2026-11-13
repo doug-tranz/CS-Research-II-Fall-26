@@ -9,6 +9,10 @@
 #                                  running elsewhere is skipped: its results file is locked)
 #   bash run_main.sh free          the three free Nemotron models at once (logs in results/FINALIZED_RESULTS/logs/);
 #                                  run it again each day after 00:00 UTC until all three finish
+#   bash run_main.sh rerun [names] after replace_pairs: only the replaced cases and failed calls, all at once
+#                                  (old main files kept in results/FINALIZED_RESULTS/v1/)
+# The :free models use OPENROUTER_FREE_API_KEY when it is set (a second account's allowance), except
+# those named in MAIN_KEY_MODELS: MAIN_KEY_MODELS=lightning bash run_main.sh rerun splits them over both keys.
 #
 # Free models share OpenRouter's daily allowance (~1,000 requests). When it runs out the run stops
 # at once (no failed rows) and exits 3; the same command after the reset continues the stopped
@@ -28,6 +32,7 @@ cd "$(dirname "$0")"
 PYTHON="${PYTHON:-python}"   # the interpreter (a test can stand one in)
 OUT=results/FINALIZED_RESULTS   # every main run, check and log of the study
 
+# qwen27b ran on phala until Phala left OpenRouter (2026-11-13); the rerun's new calls went to alibaba.
 #      name       model                                    provider               main$  check$  estimate (3 efforts)
 MODELS="
 luna       openai/gpt-6-luna                        openai/flex            1.50   0.50   0.90
@@ -37,7 +42,7 @@ flashlite  google/gemini-3.5-flash-lite             google-ai-studio/flex  6.00 
 flash      google/gemini-3.8-flash                  google-ai-studio/flex  14.00  2.00   9.37
 argon      google/gemini-4-argon                    google-ai-studio/flex  30.00  6.00   16.14
 qwenflash  qwen/qwen3.8-flash                       alibaba                6.50   1.00   4.31
-qwen27b    qwen/qwen3.8-27b                         phala                  17.00  2.50   11.48
+qwen27b    qwen/qwen3.8-27b                         alibaba                17.00  2.50   11.48
 lightning  nvidia/nemotron-3.5-lightning:free       -                      0.05   0.05   0.00
 super      nvidia/nemotron-3.5-super-vl:free        -                      0.05   0.05   0.00
 ultra      nvidia/nemotron-3-ultra-550b-a55b:free   -                      0.05   0.05   0.00
@@ -58,7 +63,12 @@ d = json.load(urllib.request.urlopen(urllib.request.Request('https://openrouter.
 print(f\"OpenRouter key: \${d['limit_remaining']:.2f} left of \${d['limit']:g} (used \${d['usage']:.2f})\")"
 }
 
-DAILY_LIMIT_EXIT=3     # a run stopped by OpenRouter's daily free-model limit exits with this (pipeline/cli.py)
+# A second OpenRouter key for the :free models (their daily allowance is per account), from the
+# environment or the Windows user variable OPENROUTER_FREE_API_KEY; empty: they use OPENROUTER_API_KEY.
+FREE_KEY="${OPENROUTER_FREE_API_KEY:-$(powershell -NoProfile -Command \
+  '[Environment]::GetEnvironmentVariable("OPENROUTER_FREE_API_KEY","User")' 2>/dev/null | tr -d '\r' || true)}"
+
+DAILY_LIMIT_EXIT=3    # a run stopped by OpenRouter's daily free-model limit exits with this (pipeline/cli.py)
 LOCKED_EXIT=4          # another run is writing that model's results file: this one did not start
 
 run_model() {  # one model: its main run, then (once the main run is whole) its stability check
@@ -67,12 +77,18 @@ run_model() {  # one model: its main run, then (once the main run is whole) its 
   [ -n "$row" ] || { echo "unknown model '$1'; one of:" $(echo "$MODELS" | awk 'NF {print $1}'); return 1; }
   read -r name model provider cap check_cap _ <<< "$row"
   local prov=(); [ "$provider" != - ] && prov=(--provider "$provider")
+  local reuse=(); [ -n "${REUSE_DIR:-}" ] && reuse=(--reuse-from "$REUSE_DIR/main_$name.json" --reuse-across-providers)
+  # free models on their own key, if one is set, except those named in MAIN_KEY_MODELS (split the
+  # free runs over both accounts' daily allowances)
+  if [[ "$model" == *:free && -n "$FREE_KEY" && " ${MAIN_KEY_MODELS:-} " != *" $name "* ]]; then
+    local OPENROUTER_API_KEY="$FREE_KEY"; export OPENROUTER_API_KEY
+  fi
   local common=(--model "$model" "${prov[@]}" --tally compact --max-tokens 32000 --resume
                 --measured-from "results/${TESTED[$name]}.json")
 
   echo "=== $name: main run, 200 cases x low/medium/high -> $OUT/main_$name.json"
   status=0
-  "$PYTHON" run_semantic_eval.py "${common[@]}" --pairs 100 --effort low medium high \
+  "$PYTHON" run_semantic_eval.py "${common[@]}" --pairs 100 --effort low medium high "${reuse[@]}" \
     --output "$OUT/main_$name.json" --max-cost "$cap" || status=$?
   if [ "$status" = "$DAILY_LIMIT_EXIT" ]; then
     echo "=== $name: stopped at the daily free-model limit; run this again after 00:00 UTC to continue"
@@ -123,6 +139,17 @@ case "${1:-}" in
     for n in "$@"; do echo "--- $n: $(grep -E '^=== ' "$OUT/logs/$n.parallel.log" | tail -1)"; done
     credits
     exit 0 ;;
+  rerun)   # after python -m pipeline.replace_pairs: each main file moves to $OUT/v1/, and the run asks only
+           # the replaced cases and the failed calls again (--reuse-from the old file); all named models at once.
+           # Check files stay: their 10 pairs were not replaced. Run it again to continue (free: after 00:00 UTC).
+    shift
+    [ "$#" -gt 0 ] || set -- luna terra sol flashlite flash argon qwenflash qwen27b lightning super ultra
+    mkdir -p "$OUT/v1"
+    for n in "$@"; do
+      [ -e "$OUT/v1/main_$n.json" ] || mv "$OUT/main_$n.json" "$OUT/v1/main_$n.json"
+    done
+    export REUSE_DIR="$OUT/v1"
+    exec bash "$0" parallel "$@" ;;
   paid)    # the eight paid models one after another, in run order, the credits printed before each
     mkdir -p "$OUT/logs"
     failed=""

@@ -111,6 +111,20 @@ _REGISTER_PARTS = (
 )
 
 
+def _drop_meeting_extras(message) -> None:
+    """Removes each meeting's optional "type" and "location" before grading. The compact tally the
+    models see leaves both out and no check or rule uses them, so a blank or wrong one (Nemotron
+    Ultra writes "") is not an error. Leaves a message of the wrong shape for the schema to reject."""
+    body = message.get("body") if isinstance(message, dict) else None
+    sections = body.get("sections") if isinstance(body, dict) else None
+    for item in sections if isinstance(sections, list) else []:
+        meetings = item.get("meetings") if isinstance(item, dict) else None
+        for m in meetings if isinstance(meetings, list) else []:
+            if isinstance(m, dict):
+                m.pop("type", None)
+                m.pop("location", None)
+
+
 def validate_message(raw: str) -> dict:
     """
     raw: the model's output, verbatim.
@@ -131,6 +145,7 @@ def validate_message(raw: str) -> dict:
                 "tier2_checks": []}
     tier1 = [{"check": "json", **_check("the whole answer is one JSON value, with no prose or code fence around it",
                                         [], "valid JSON")}]
+    _drop_meeting_extras(message)
 
     errors = _errors(_ENVELOPE, message)
     tier1.append({"check": "envelope", **_check(

@@ -134,23 +134,27 @@ def _same_text(a, b) -> bool:
     return str(a).strip().casefold() == str(b).strip().casefold()
 
 
-def _meeting_key(m: dict) -> tuple:
-    """A meeting's days and times, ignoring day order and a leading zero ('9:30 AM' = '09:30 AM')."""
-    times = (minutes(m["start_time"]), minutes(m["end_time"])) if "start_time" in m else ()
-    return tuple(sorted(m["days"])), times
+def _meeting_days(meetings: list) -> list:
+    """Each (day, start, end) the meetings cover, ignoring day order, a leading zero ('9:30 AM' =
+    '09:30 AM') and how days are grouped: one 'MW 6:30-9:15' meeting equals 'M 6:30-9:15' plus
+    'W 6:30-9:15' (the tally splits a section's days into rows when the rooms differ)."""
+    return sorted({(day, *((minutes(m["start_time"]), minutes(m["end_time"])) if "start_time" in m else (-1, -1)))
+                   for m in meetings for day in m["days"]})
 
 
 def _meetings_differ(copied: list, offered: list):
     """Why the message's meetings are not the offered ones, else None. Days and times must
-    match; `type` and `location` may be left out, but must match when given."""
-    if sorted(map(_meeting_key, copied)) != sorted(map(_meeting_key, offered)):
+    match; `type` and `location` are removed before grading (didcomm_schema._drop_meeting_extras)."""
+    if _meeting_days(copied) != _meeting_days(offered):
         return "days or times differ"
-    for m in copied:
-        same = [o for o in offered if _meeting_key(o) == _meeting_key(m)]
-        if not any(all(_same_text(m[k], o.get(k, "")) for k in ("type", "location") if k in m)
-                   for o in same):
-            return "a meeting's type or location differs"
     return None
+
+
+assert _meetings_differ([{"days": ["Monday", "Wednesday"], "start_time": "6:30 PM", "end_time": "9:15 PM"}],
+                        [{"days": ["Wednesday"], "start_time": "06:30 PM", "end_time": "09:15 PM"},
+                         {"days": ["Monday"], "start_time": "06:30 PM", "end_time": "09:15 PM"}]) is None
+assert _meetings_differ([{"days": ["Monday"], "start_time": "6:30 PM", "end_time": "9:15 PM"}],
+                        [{"days": ["Wednesday"], "start_time": "6:30 PM", "end_time": "9:15 PM"}])
 
 
 def _copy_differs(conn, item: dict, course: str, seats_total: int, seats_taken: int):

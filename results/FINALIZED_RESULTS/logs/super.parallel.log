@@ -1,0 +1,772 @@
+=== super: main run, 200 cases x low/medium/high -> results/FINALIZED_RESULTS/main_super.json
+note: 1 sample(s) per case; use -n 3 or more to compare sessions reliably
+3 efforts (low, medium, high), one session each: about $0.00 in all (low: estimated cost: $0.00 for 36 call(s) (164 more answer(s) reused, not called) on nvidia/nemotron-3.5-super-vl:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side))
+
+=== effort low
+session compact-20261113T194419Z-low started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+estimated cost: $0.00 for 36 call(s) (164 more answer(s) reused, not called) on nvidia/nemotron-3.5-super-vl:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side)
+T1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T3-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T3-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T3-003: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.0000]
+T3-004: consistency_error    | section 44389: seats_total 30 is not the offered section's (29) [cache: 312,192 read, 0 written, $0.0000]
+T4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T4-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T4-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T5-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T5-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T5-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T5-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T6-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T6-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T6-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T6-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T7-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T7-002: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T7-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T7-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T8-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T8-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T8-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T8-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T9-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T9-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T9-003: semantic_ok          | satisfies every rule [cache: 260,160 read, 0 written, $0.0000]
+T9-004: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+D1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D2-001: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+D2-002: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+D2-003: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D3-001: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+D3-002: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+D3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C1-004: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C3-001: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+C3-002: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+C3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C4-003: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+C4-004: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+I1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I1-006: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I3-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I3-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I4-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I4-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I5-001: consistency_error    | section 41026: meetings do not match the offered section's: days or times differ [cache: 307,856 read, 0 written, $0.0000]
+I5-002: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+I5-003: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+I5-004: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+K1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K3-001: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+K3-002: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+K3-003: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+K3-004: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+K3-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K3-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K4-003: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+K4-004: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+K5-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K5-002: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K5-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K5-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K6-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K6-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K6-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K6-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K7-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K7-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K7-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K7-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K8-001: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+K8-002: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+K8-003: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+K8-004: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+R1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R2-001: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R2-003: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+R2-004: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+R2-005: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+R2-006: consistency_error    | section 43069: course_id 'PR06350' is not the offered section's ('PR05350') [cache: 312,192 read, 0 written, $0.0000]
+R3-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R3-002: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R4-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R4-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R5-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R5-002: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R5-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R5-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R6-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R6-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R6-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R6-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R7-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R7-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R7-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R7-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R8-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R8-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R8-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R8-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R9-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R9-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R9-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R9-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R10-001: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R10-002: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R10-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R10-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R11-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R11-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R11-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R11-004: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R12-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R12-002: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R12-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R12-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O1-003: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+  connection lost (ConnectionError); waiting for the network, then trying again
+O1-004: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+O1-005: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+O1-006: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+O2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O3-001: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+O3-002: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+O3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+164 answer(s) reused from results/FINALIZED_RESULTS/v1/main_super.json: no new call, no cost
+OpenRouter's records: 36 of 200 calls
+
+185/200 semantic_ok on nvidia/nemotron-3.5-super-vl:free. Cost $0.0000. Full results in results/FINALIZED_RESULTS/main_super.json (session compact-20261113T194419Z-low)
+Paired accuracy: 86/100 pairs with both variants semantic_ok (86%)
+    ambiguous          2/2
+    any_correct        2/2
+    back_to_back       1/2
+    boundary_time      2/2
+    busy_block         2/2
+    campus_residence   3/3
+    chained_conflict   2/2
+    complete_cart      6/6
+    course_a_not_b     2/2
+    credit_limit       1/2
+    day_exclusion      2/2
+    days               3/3
+    department         1/2
+    full_fallback      2/3
+    grade_threshold    1/2
+    hard_soft          1/2
+    impossible_days    1/1
+    impossible_full    1/1
+    last_seat          3/3
+    late_meeting       1/1
+    lookalike_id       2/3
+    modality           3/3
+    multi_meeting      1/1
+    negation           1/2
+    noon               2/2
+    not_first_listed   2/2
+    open_seats         2/2
+    passed_retake      3/3
+    prereq_completed   2/2
+    prereq_in_progress 1/2
+    prereq_min_grade   2/2
+    prereq_transfer    2/2
+    quantity           2/2
+    relative_time      3/3
+    repeatable         1/2
+    requirement_options 2/2
+    requirement_satisfied 1/2
+    same_title         2/2
+    section_number     3/3
+    several_constraints 2/2
+    shared_day_pattern 2/3
+    time_cutoff        1/2
+    time_of_day        3/3
+    transfer           2/2
+    withdrawal         0/1
+session closed: 36 model calls, 11,386,799 input tokens (0 written to the cache, 10,826,992 read from it: 95%), $0.0000 in all, $0.0000 per prompt
+
+=== effort medium
+session compact-20261113T202424Z-medium started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+estimated cost: $0.00 for 36 call(s) (164 more answer(s) reused, not called) on nvidia/nemotron-3.5-super-vl:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side)
+T1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T3-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T3-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T3-003: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+T3-004: consistency_error    | section 44389: seats_total 30 is not the offered section's (29) [cache: 312,192 read, 0 written, $0.0000]
+T4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T4-002: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T4-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T4-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T5-001: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T5-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T5-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T5-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T6-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T6-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T6-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T6-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T7-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T7-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T7-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T7-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T8-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T8-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T8-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T8-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T9-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T9-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T9-003: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+T9-004: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+D1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D1-003: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D2-001: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+D2-002: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.0000]
+D2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D3-001: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+D3-002: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+D3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C2-001: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C3-001: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+C3-002: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+C3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C4-003: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+C4-004: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+I1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I1-003: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I1-006: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I3-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I3-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I4-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I4-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I5-001: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+I5-002: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+I5-003: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+I5-004: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+K1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K3-001: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+K3-002: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+K3-003: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+K3-004: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+K3-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K3-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K4-003: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+K4-004: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+K5-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K5-002: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K5-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K5-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K6-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K6-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K6-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K6-004: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K7-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K7-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K7-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K7-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K8-001: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+K8-002: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+K8-003: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+K8-004: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+R1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R1-004: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R2-001: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R2-003: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+R2-004: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+R2-005: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+R2-006: consistency_error    | section 43069: course_id 'PR06350' is not the offered section's ('PR05350') [cache: 312,192 read, 0 written, $0.0000]
+R3-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R3-002: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R4-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R4-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R5-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R5-002: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R5-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R5-004: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R6-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R6-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R6-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R6-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R7-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R7-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R7-003: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R7-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R8-001: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R8-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R8-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R8-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R9-001: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R9-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R9-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R9-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R10-001: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R10-002: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R10-003: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R10-004: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R11-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R11-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R11-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R11-004: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R12-001: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R12-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R12-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R12-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O1-003: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+O1-004: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+O1-005: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+O1-006: semantic_ok          | satisfies every rule [cache: 0 read, 0 written, $0.0000]
+O2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O3-001: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+O3-002: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+O3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+164 answer(s) reused from results/FINALIZED_RESULTS/v1/main_super.json: no new call, no cost
+OpenRouter's records: 36 of 200 calls
+
+176/200 semantic_ok on nvidia/nemotron-3.5-super-vl:free. Cost $0.0000. Full results in results/FINALIZED_RESULTS/main_super.json (session compact-20261113T202424Z-medium)
+Paired accuracy: 78/100 pairs with both variants semantic_ok (78%)
+    ambiguous          2/2
+    any_correct        2/2
+    back_to_back       2/2
+    boundary_time      2/2
+    busy_block         1/2
+    campus_residence   3/3
+    chained_conflict   1/2
+    complete_cart      6/6
+    course_a_not_b     2/2
+    credit_limit       0/2
+    day_exclusion      2/2
+    days               2/3
+    department         1/2
+    full_fallback      3/3
+    grade_threshold    1/2
+    hard_soft          1/2
+    impossible_days    1/1
+    impossible_full    1/1
+    last_seat          2/3
+    late_meeting       1/1
+    lookalike_id       1/3
+    modality           3/3
+    multi_meeting      1/1
+    negation           2/2
+    noon               2/2
+    not_first_listed   2/2
+    open_seats         2/2
+    passed_retake      2/3
+    prereq_completed   2/2
+    prereq_in_progress 0/2
+    prereq_min_grade   1/2
+    prereq_transfer    2/2
+    quantity           1/2
+    relative_time      3/3
+    repeatable         1/2
+    requirement_options 1/2
+    requirement_satisfied 1/2
+    same_title         2/2
+    section_number     3/3
+    several_constraints 2/2
+    shared_day_pattern 3/3
+    time_cutoff        1/2
+    time_of_day        3/3
+    transfer           1/2
+    withdrawal         0/1
+session closed: 36 model calls, 11,386,799 input tokens (0 written to the cache, 10,657,888 read from it: 94%), $0.0000 in all, $0.0000 per prompt
+
+=== effort high
+session compact-20261113T205010Z-high started: Section Tally (compact), 5,129 sections, 595,444 characters, cache ttl 5m
+estimated cost: $0.00 for 36 call(s) (164 more answer(s) reused, not called) on nvidia/nemotron-3.5-super-vl:free (cache write $0.00, then about $0.000 per call; prices from OpenRouter, tokens estimated on the high side)
+T1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T3-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T3-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T3-003: semantic_ok          | satisfies every rule [cache: 260,160 read, 0 written, $0.0000]
+T3-004: consistency_error    | section 44389: seats_total 30 is not the offered section's (29) [cache: 312,192 read, 0 written, $0.0000]
+T4-001: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T4-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T4-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T5-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T5-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T5-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T5-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T6-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T6-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T6-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T6-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T7-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T7-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T7-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T7-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T8-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T8-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T8-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T8-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T9-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T9-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+T9-003: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+T9-004: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+D1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D2-001: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+D2-002: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+D2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D3-001: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+D3-002: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+D3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+D3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C1-004: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C2-003: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C3-001: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+C3-002: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+C3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+C4-003: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+C4-004: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+I1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I1-003: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I1-006: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I3-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I3-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I4-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I4-004: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+I5-001: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+I5-002: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+I5-003: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+I5-004: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+K1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K1-002: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K3-001: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+K3-002: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+K3-003: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+K3-004: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+K3-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K3-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K4-003: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+K4-004: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+K5-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K5-002: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K5-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K5-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K6-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K6-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K6-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K6-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K7-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K7-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K7-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K7-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+K8-001: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+K8-002: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+K8-003: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+K8-004: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+R1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R1-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R1-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R1-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R1-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R2-001: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R2-003: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+R2-004: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+R2-005: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+R2-006: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+R3-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R3-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R4-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R4-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R4-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R4-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R5-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R5-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R5-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R5-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R6-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R6-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R6-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R6-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R7-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R7-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R7-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R7-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R8-001: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R8-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R8-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R8-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R9-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R9-002: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R9-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R9-004: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R10-001: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R10-002: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R10-003: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R10-004: consistency_error    | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R11-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R11-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R11-003: syntactic_error      | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R11-004: semantic_error       | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R12-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R12-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R12-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+R12-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O1-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O1-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O1-003: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+O1-004: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+O1-005: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+O1-006: semantic_ok          | satisfies every rule [cache: 312,192 read, 0 written, $0.0000]
+O2-001: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O2-002: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O2-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O2-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O2-005: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O2-006: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O3-001: semantic_ok          | satisfies every rule [cache: 307,856 read, 0 written, $0.0000]
+O3-002: semantic_ok          | satisfies every rule [cache: 316,528 read, 0 written, $0.0000]
+O3-003: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+O3-004: semantic_ok          | reused from results/FINALIZED_RESULTS/v1/main_super.json
+164 answer(s) reused from results/FINALIZED_RESULTS/v1/main_super.json: no new call, no cost
+OpenRouter's records: 36 of 200 calls
+
+181/200 semantic_ok on nvidia/nemotron-3.5-super-vl:free. Cost $0.0000. Full results in results/FINALIZED_RESULTS/main_super.json (session compact-20261113T205010Z-high)
+Paired accuracy: 84/100 pairs with both variants semantic_ok (84%)
+    ambiguous          2/2
+    any_correct        2/2
+    back_to_back       2/2
+    boundary_time      2/2
+    busy_block         1/2
+    campus_residence   3/3
+    chained_conflict   2/2
+    complete_cart      6/6
+    course_a_not_b     1/2
+    credit_limit       0/2
+    day_exclusion      2/2
+    days               3/3
+    department         2/2
+    full_fallback      2/3
+    grade_threshold    2/2
+    hard_soft          1/2
+    impossible_days    1/1
+    impossible_full    1/1
+    last_seat          2/3
+    late_meeting       1/1
+    lookalike_id       1/3
+    modality           2/3
+    multi_meeting      1/1
+    negation           2/2
+    noon               2/2
+    not_first_listed   2/2
+    open_seats         2/2
+    passed_retake      3/3
+    prereq_completed   2/2
+    prereq_in_progress 2/2
+    prereq_min_grade   2/2
+    prereq_transfer    2/2
+    quantity           2/2
+    relative_time      3/3
+    repeatable         2/2
+    requirement_options 1/2
+    requirement_satisfied 1/2
+    same_title         2/2
+    section_number     3/3
+    several_constraints 2/2
+    shared_day_pattern 3/3
+    time_cutoff        1/2
+    time_of_day        3/3
+    transfer           0/2
+    withdrawal         0/1
+session closed: 36 model calls, 11,386,799 input tokens (0 written to the cache, 11,165,200 read from it: 98%), $0.0000 in all, $0.0000 per prompt
+=== super: stability check, 10 pairs x 3 samples at medium -> results/FINALIZED_RESULTS/check_super.json
+--resume: effort medium already finished in results/FINALIZED_RESULTS/check_super.json; skipped
+=== super: finished

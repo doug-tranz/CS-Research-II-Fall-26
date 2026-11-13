@@ -435,29 +435,9 @@ def score_answer(case: dict, raw_output: str, finish_reason=None, native_finish_
 
 # ── error_type: a short tag for what went wrong ──
 
-# What a semantic error in a pair family means: the family names the reasoning the case tests.
-FAMILY_ERRORS = {"full_fallback": "fallback_not_applied", "in_progress": "in_progress_course_ignored",
-                 "transfer": "transfer_credit_ignored", "busy_block": "time_overlap_missed",
-                 "nested_groups": "and_or_requirement_misread", "credit_limit": "credit_arithmetic",
-                 "modality": "modality_ignored", "days": "meeting_days_ignored",
-                 "grade_threshold": "minimum_grade_misread", "withdrawal": "withdrawal_counted_as_credit",
-                 "time_of_day": "time_of_day_misread", "relative_time": "relative_time_misread",
-                 "time_cutoff": "time_limit_ignored", "chained_conflict": "chained_conflict_missed",
-                 "boundary_time": "time_boundary_misread", "back_to_back": "back_to_back_misread",
-                 "multi_meeting": "second_meeting_ignored", "noon": "noon_misread",
-                 "shared_day_pattern": "meeting_days_ignored", "day_exclusion": "meeting_days_ignored",
-                 "last_seat": "open_seat_misread", "open_seats": "open_seat_arithmetic", "not_first_listed": "first_listed_taken",
-                 "lookalike_id": "lookalike_course_id", "section_number": "section_crn_mixup", "same_title": "same_title_mixup",
-                 "course_a_not_b": "wrong_course", "negation": "negation_ignored", "campus_residence": "campus_ignored",
-                 "several_constraints": "constraint_dropped", "hard_soft": "preference_priority_misread",
-                 "quantity": "quantity_misread", "ambiguous": "ambiguity_misread", "passed_retake": "passed_course_retaken",
-                 "repeatable": "repeatable_course_misread", "prereq_completed": "prerequisite_misread",
-                 "prereq_in_progress": "in_progress_counted_as_prerequisite", "prereq_transfer": "transfer_prerequisite_misread",
-                 "prereq_min_grade": "prerequisite_grade_misread", "requirement_options": "requirement_mismatch",
-                 "requirement_satisfied": "satisfied_requirement_ignored", "department": "department_ignored",
-                 "complete_cart": "incomplete_or_extra_course", "any_correct": "valid_answer_rejected"}
-# Otherwise a semantic error is named by its first failed rule, a consistency error by its first
-# failed Tier 3 check, and a format error by its first failed Tier 1-2 check.
+# A semantic error is named by its first failed rule, a consistency error by its first failed
+# Tier 3 check, and a format error by its first failed Tier 1-2 check: the tag says what the
+# answer got wrong. Which skill the case tests is its case_type, not its error_type.
 RULE_ERRORS = {"student_id": "wrong_student", "term_code": "wrong_term", "count": "wrong_number_of_sections",
                "credits": "credit_arithmetic", "courses_count_toward": "requirement_mismatch",
                "no_days": "meeting_days_ignored", "starts_before": "time_limit_ignored",
@@ -475,9 +455,7 @@ CHECK_ERRORS = {"term": "wrong_term", "exists": "nonexistent_section", "copied_f
 
 
 def error_type(verdict: dict, case: dict) -> str | None:
-    """A short tag for what went wrong, for counting failures by kind; None when correct. A
-    semantic error in a case whose type tests one kind of reasoning is named for it (a failed
-    transfer case is transfer_credit_ignored, unless only the student id or term was wrong)."""
+    """A short tag for what went wrong, for counting failures by kind; None when correct."""
     outcome = verdict["outcome"]
     if outcome == "semantic_ok":
         return None
@@ -485,9 +463,6 @@ def error_type(verdict: dict, case: dict) -> str | None:
         return "call_failed"
     if outcome == "semantic_error":
         failed = [c["rule"] for c in verdict.get("tier4_checks", []) if not c["passed"]]
-        kind = (case.get("ground_truth") or {}).get("case_type")
-        if kind in FAMILY_ERRORS and set(failed) - {"student_id", "term_code"}:
-            return FAMILY_ERRORS[kind]
         return RULE_ERRORS.get(failed[0], failed[0]) if failed else "semantic_error"
     tier = {"syntactic_error": 1, "schema_error": 2, "consistency_error": 3}.get(outcome)
     failed = [c["check"] for c in verdict.get(f"tier{tier}_checks", []) if not c["passed"]] if tier else []

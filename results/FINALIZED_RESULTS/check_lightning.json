@@ -53,44 +53,41 @@
       "calls": 60,
       "generation_failures": 0,
       "outcomes": {
-        "consistency_error": 20,
+        "consistency_error": 19,
         "schema_error": 1,
-        "semantic_error": 10,
-        "semantic_ok": 19,
+        "semantic_error": 13,
+        "semantic_ok": 17,
         "syntactic_error": 10
       },
       "semantic_ok": {
-        "count": "19/60",
-        "rate": 0.317,
+        "count": "17/60",
+        "rate": 0.283,
         "ci95": [
-          0.213,
-          0.442
+          0.185,
+          0.408
         ]
       },
       "semantic_ok_by_case_type": {
         "complete_cart": "1/6",
         "days": "1/6",
         "full_fallback": "6/6",
-        "last_seat": "0/6",
+        "last_seat": "1/6",
         "lookalike_id": "2/6",
         "modality": "1/6",
         "passed_retake": "2/6",
         "relative_time": "3/6",
-        "shared_day_pattern": "3/6",
+        "shared_day_pattern": "0/6",
         "time_of_day": "0/6"
       },
-      "mean_chance_baseline": 0.2902,
-      "mean_deviation_score": 0.1066,
+      "mean_chance_baseline": 0.3308,
+      "mean_deviation_score": 0.1586,
       "error_types": {
-        "section_details_miscopied": 18,
+        "section_details_miscopied": 17,
         "not_json": 9,
-        "time_of_day_misread": 4,
-        "meeting_days_ignored": 2,
-        "incomplete_or_extra_course": 2,
+        "wrong_number_of_sections": 8,
+        "wrong_student": 5,
         "malformed_section_entry": 1,
         "truncated_at_max_tokens": 1,
-        "lookalike_course_id": 1,
-        "modality_ignored": 1,
         "invalid_waitlist": 1,
         "two_sections_of_one_course": 1
       },
@@ -124,19 +121,19 @@
       },
       "reused_answers": "20 of the 60 answers were reused (--reuse-from) from calls made and paid for in another session; tokens and cost count only the 40 made here",
       "paired_accuracy": {
-        "passed": 6,
+        "passed": 5,
         "scored": 30,
-        "rate": 0.2,
+        "rate": 0.167,
         "ci95": [
-          0.095,
-          0.373
+          0.073,
+          0.336
         ],
         "strong_pairs_only": {
-          "count": "6/30",
-          "rate": 0.2,
+          "count": "5/30",
+          "rate": 0.167,
           "ci95": [
-            0.095,
-            0.373
+            0.073,
+            0.336
           ]
         },
         "weak_pairs_scored": 0,
@@ -150,7 +147,7 @@
           "modality": "0/3",
           "passed_retake": "0/3",
           "relative_time": "1/3",
-          "shared_day_pattern": "1/3",
+          "shared_day_pattern": "0/3",
           "time_of_day": "0/3"
         }
       },
@@ -187,14 +184,14 @@
             "lift_over_chance": -0.083
           },
           "D2": {
-            "count": "3/6",
-            "rate": 0.5,
+            "count": "0/6",
+            "rate": 0.0,
             "ci95": [
-              0.188,
-              0.812
+              0.0,
+              0.39
             ],
-            "mean_chance": 0.094,
-            "lift_over_chance": 0.406
+            "mean_chance": 0.5,
+            "lift_over_chance": -0.5
           },
           "C1": {
             "count": "6/6",
@@ -207,14 +204,14 @@
             "lift_over_chance": 0.841
           },
           "C2": {
-            "count": "0/6",
-            "rate": 0.0,
+            "count": "1/6",
+            "rate": 0.167,
             "ci95": [
-              0.0,
-              0.39
+              0.03,
+              0.564
             ],
             "mean_chance": 0.188,
-            "lift_over_chance": -0.188
+            "lift_over_chance": -0.021
           },
           "I1": {
             "count": "2/6",
@@ -269,24 +266,24 @@
             "lift_over_chance": -0.167
           },
           "Days": {
-            "count": "4/12",
-            "rate": 0.333,
+            "count": "1/12",
+            "rate": 0.083,
             "ci95": [
-              0.138,
-              0.609
+              0.015,
+              0.354
             ],
-            "mean_chance": 0.172,
-            "lift_over_chance": 0.161
+            "mean_chance": 0.375,
+            "lift_over_chance": -0.292
           },
           "Capacity": {
-            "count": "6/12",
-            "rate": 0.5,
+            "count": "7/12",
+            "rate": 0.583,
             "ci95": [
-              0.254,
-              0.746
+              0.32,
+              0.807
             ],
             "mean_chance": 0.173,
-            "lift_over_chance": 0.327
+            "lift_over_chance": 0.41
           },
           "Course and section identity": {
             "count": "2/6",
@@ -351,14 +348,14 @@
             "lift_over_chance": -0.032
           },
           "Aneesh Anand": {
-            "count": "6/21",
-            "rate": 0.286,
+            "count": "4/21",
+            "rate": 0.19,
             "ci95": [
-              0.138,
-              0.5
+              0.077,
+              0.4
             ],
-            "mean_chance": 0.277,
-            "lift_over_chance": 0.009
+            "mean_chance": 0.393,
+            "lift_over_chance": -0.202
           },
           "Khalil": {
             "count": "8/15",
@@ -373,24 +370,24 @@
         },
         "semantic_ok_by_transcript_size": {
           "11-20 courses": {
-            "count": "19/60",
-            "rate": 0.317,
+            "count": "17/60",
+            "rate": 0.283,
             "ci95": [
-              0.213,
-              0.442
+              0.185,
+              0.408
             ],
-            "mean_chance": 0.29,
-            "lift_over_chance": 0.026
+            "mean_chance": 0.331,
+            "lift_over_chance": -0.047
           }
         },
         "paired_by_change": {
           "prompt": {
-            "passed": 6,
+            "passed": 5,
             "scored": 27,
-            "rate": 0.222,
+            "rate": 0.185,
             "ci95": [
-              0.106,
-              0.408
+              0.082,
+              0.367
             ]
           },
           "transcript": {
@@ -405,7 +402,7 @@
         },
         "errors_by_check": {
           "T1": {
-            "time_of_day_misread": 4,
+            "wrong_number_of_sections": 4,
             "section_details_miscopied": 2
           },
           "T2": {
@@ -418,21 +415,21 @@
             "not_json": 1
           },
           "D2": {
-            "meeting_days_ignored": 2,
+            "wrong_student": 5,
             "not_json": 1
           },
           "C2": {
-            "section_details_miscopied": 5,
+            "section_details_miscopied": 4,
             "not_json": 1
           },
           "I1": {
             "section_details_miscopied": 2,
             "not_json": 1,
-            "lookalike_course_id": 1
+            "wrong_number_of_sections": 1
           },
           "K1": {
             "not_json": 1,
-            "modality_ignored": 1,
+            "wrong_number_of_sections": 1,
             "section_details_miscopied": 1,
             "invalid_waitlist": 1,
             "two_sections_of_one_course": 1
@@ -443,7 +440,7 @@
           },
           "O1": {
             "section_details_miscopied": 3,
-            "incomplete_or_extra_course": 2
+            "wrong_number_of_sections": 2
           }
         },
         "ignored_change_by_check": {
@@ -597,13 +594,13 @@
         },
         "reasoning_tokens_by_outcome": {
           "correct": {
-            "calls": 19,
-            "mean": 7616,
+            "calls": 17,
+            "mean": 7299,
             "median": 6718
           },
           "wrong": {
-            "calls": 41,
-            "mean": 8263,
+            "calls": 43,
+            "mean": 8358,
             "median": 7885
           }
         },
@@ -652,11 +649,11 @@
               ]
             },
             "D2": {
-              "count": "2/2",
-              "rate": 1.0,
+              "count": "1/2",
+              "rate": 0.5,
               "ci95": [
-                0.342,
-                1.0
+                0.095,
+                0.905
               ]
             },
             "C1": {
@@ -668,11 +665,11 @@
               ]
             },
             "C2": {
-              "count": "1/2",
-              "rate": 0.5,
+              "count": "2/2",
+              "rate": 1.0,
               "ci95": [
-                0.095,
-                0.905
+                0.342,
+                1.0
               ]
             },
             "I1": {
@@ -1424,7 +1421,7 @@
       "verdict": {
         "outcome": "semantic_error",
         "detail": "rules broken: {'count': \"0 sections, wanted {'min': 1, 'max': 1}\", 'must_include_courses': \"missing ['STAT02284']\"}",
-        "error_type": "time_of_day_misread",
+        "error_type": "wrong_number_of_sections",
         "why_wrong": "2 of 6 Tier 4 checks failed (count and must_include_courses). What the request needed: A morning class starts before noon.",
         "tiers": {
           "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
@@ -3959,7 +3956,7 @@
       "verdict": {
         "outcome": "semantic_error",
         "detail": "rules broken: {'count': \"0 sections, wanted {'min': 1, 'max': 1}\", 'must_include_courses': \"missing ['STAT02284']\"}",
-        "error_type": "time_of_day_misread",
+        "error_type": "wrong_number_of_sections",
         "why_wrong": "2 of 7 Tier 4 checks failed (count and must_include_courses). What the request needed: An afternoon class starts between noon and 5 PM.",
         "tiers": {
           "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
@@ -4789,7 +4786,7 @@
       "verdict": {
         "outcome": "semantic_error",
         "detail": "rules broken: {'count': \"0 sections, wanted {'min': 1, 'max': 1}\", 'must_include_courses': \"missing ['STAT02284']\"}",
-        "error_type": "time_of_day_misread",
+        "error_type": "wrong_number_of_sections",
         "why_wrong": "2 of 7 Tier 4 checks failed (count and must_include_courses). What the request needed: An afternoon class starts between noon and 5 PM.",
         "tiers": {
           "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
@@ -5614,7 +5611,7 @@
       "verdict": {
         "outcome": "semantic_error",
         "detail": "rules broken: {'count': \"0 sections, wanted {'min': 1, 'max': 1}\", 'must_include_courses': \"missing ['STAT02284']\"}",
-        "error_type": "time_of_day_misread",
+        "error_type": "wrong_number_of_sections",
         "why_wrong": "2 of 7 Tier 4 checks failed (count and must_include_courses). What the request needed: An afternoon class starts between noon and 5 PM.",
         "tiers": {
           "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
@@ -16117,7 +16114,7 @@
         "tier4_checks": []
       },
       "pair_result": {
-        "pair_id": "shared_day_pattern/biochemistry-bs",
+        "pair_id": "shared_day_pattern/theatre-ba",
         "twin_id": "D2-002",
         "same_answer_as_twin": false,
         "pair_passed": false,
@@ -16869,13 +16866,15 @@
         "data_region": "global"
       },
       "verdict": {
-        "outcome": "semantic_ok",
-        "detail": "satisfies every rule",
+        "outcome": "semantic_error",
+        "detail": "rules broken: {'student_id': 'expected S9034', 'must_include_courses': \"missing ['THD07240']\"}",
+        "error_type": "wrong_student",
+        "why_wrong": "2 of 6 Tier 4 checks failed (student_id and must_include_courses). What the request needed: Only a section meeting on Tuesdays, Thursdays and Fridays alone fits; one on Mondays, Tuesdays, Wednesdays, Thursdays and Fridays shares those days but also meets on Mondays and Wednesdays.",
         "tiers": {
           "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
           "tier2": "schema (our register message): passed (4/4 checks passed)",
           "tier3": "consistency (invariants against the schedule and transcript): passed (9/9 checks passed)",
-          "tier4": "semantic (the request's rules): passed (6/6 checks passed)"
+          "tier4": "semantic (the request's rules): failed (4/6 checks passed)"
         },
         "tier1_checks": [
           {
@@ -16985,9 +16984,10 @@
         "tier4_checks": [
           {
             "rule": "student_id",
-            "requires": "the message is for student S8004",
+            "requires": "the message is for student S9034",
             "found": "student_id 'S8004'",
-            "passed": true
+            "passed": false,
+            "why": "The message registers 'S8004', but the request is from student S9034, so it would enroll the wrong person."
           },
           {
             "rule": "term_code",
@@ -17003,7 +17003,7 @@
           },
           {
             "rule": "no_days",
-            "requires": "no meeting on Monday, Tuesday, Wednesday, Friday, Saturday, Sunday",
+            "requires": "no meeting on Monday, Wednesday, Saturday, Sunday",
             "found": "45958 Thu 06:30 PM-07:45 PM; 45958 Thu 08:00 PM-09:15 PM",
             "passed": true
           },
@@ -17015,19 +17015,20 @@
           },
           {
             "rule": "must_include_courses",
-            "requires": "the cart contains CHEM07200",
+            "requires": "the cart contains THD07240",
             "found": "courses: CHEM07200",
-            "passed": true
+            "passed": false,
+            "why": "The request names THD07240, but the cart has no section of it (it has CHEM07200). THD07240 has 5 open section(s) this term."
           }
         ],
-        "deviation_score": 0.0
+        "deviation_score": 0.3333333333333333
       },
       "pair_result": {
-        "pair_id": "shared_day_pattern/biochemistry-bs",
+        "pair_id": "shared_day_pattern/theatre-ba",
         "twin_id": "D2-002",
         "same_answer_as_twin": false,
-        "pair_passed": true,
-        "explanation": "Both cases are correct and the answer changed with the prompt (days: only Thursdays vs exactly Tuesdays and Thursdays): the model used the changed detail. Pair passed."
+        "pair_passed": false,
+        "explanation": "Neither case is correct (this: semantic_error, twin: semantic_error). Pair failed."
       },
       "transcript_courses": 20
     },
@@ -17765,14 +17766,14 @@
       },
       "verdict": {
         "outcome": "semantic_error",
-        "detail": "rules broken: {'no_days': \"['43566'] meet on ['Monday', 'Tuesday', 'Wednesday', 'Friday', 'Saturday', 'Sunday']\"}",
-        "error_type": "meeting_days_ignored",
-        "why_wrong": "1 of 6 Tier 4 checks failed (no_days). What the request needed: Only a section meeting on Thursdays alone fits; one on Tuesdays and Thursdays shares those days but also meets on Tuesdays.",
+        "detail": "rules broken: {'student_id': 'expected S9034', 'must_include_courses': \"missing ['THD07240']\"}",
+        "error_type": "wrong_student",
+        "why_wrong": "2 of 6 Tier 4 checks failed (student_id and must_include_courses). What the request needed: Only a section meeting on Tuesdays, Thursdays and Fridays alone fits; one on Mondays, Tuesdays, Wednesdays, Thursdays and Fridays shares those days but also meets on Mondays and Wednesdays.",
         "tiers": {
           "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
           "tier2": "schema (our register message): passed (4/4 checks passed)",
           "tier3": "consistency (invariants against the schedule and transcript): passed (9/9 checks passed)",
-          "tier4": "semantic (the request's rules): failed (5/6 checks passed)"
+          "tier4": "semantic (the request's rules): failed (4/6 checks passed)"
         },
         "tier1_checks": [
           {
@@ -17882,9 +17883,10 @@
         "tier4_checks": [
           {
             "rule": "student_id",
-            "requires": "the message is for student S8004",
+            "requires": "the message is for student S9034",
             "found": "student_id 'S8004'",
-            "passed": true
+            "passed": false,
+            "why": "The message registers 'S8004', but the request is from student S9034, so it would enroll the wrong person."
           },
           {
             "rule": "term_code",
@@ -17900,10 +17902,9 @@
           },
           {
             "rule": "no_days",
-            "requires": "no meeting on Monday, Tuesday, Wednesday, Friday, Saturday, Sunday",
+            "requires": "no meeting on Monday, Wednesday, Saturday, Sunday",
             "found": "43566 Tue/Thu 09:30 AM-10:45 AM",
-            "passed": false,
-            "why": "43566 Tue/Thu 09:30 AM-10:45 AM meets on Tuesday, but the student can only come Thursdays. A section meeting only on allowed days was needed."
+            "passed": true
           },
           {
             "rule": "waitlist",
@@ -17913,19 +17914,20 @@
           },
           {
             "rule": "must_include_courses",
-            "requires": "the cart contains CHEM07200",
+            "requires": "the cart contains THD07240",
             "found": "courses: CHEM07200",
-            "passed": true
+            "passed": false,
+            "why": "The request names THD07240, but the cart has no section of it (it has CHEM07200). THD07240 has 5 open section(s) this term."
           }
         ],
-        "deviation_score": 0.16666666666666666
+        "deviation_score": 0.3333333333333333
       },
       "pair_result": {
-        "pair_id": "shared_day_pattern/biochemistry-bs",
+        "pair_id": "shared_day_pattern/theatre-ba",
         "twin_id": "D2-002",
         "same_answer_as_twin": true,
         "pair_passed": false,
-        "explanation": "Only its twin is correct; this case is a semantic_error. Pair failed. The model gave the same answer to both, so it ignored the change in the prompt and was right only where that answer happened to fit."
+        "explanation": "Neither case is correct (this: semantic_error, twin: semantic_error). Pair failed, with the same answer to both: the change in the prompt was ignored."
       },
       "transcript_courses": 20
     },
@@ -18642,14 +18644,14 @@
       },
       "verdict": {
         "outcome": "semantic_error",
-        "detail": "rules broken: {'count': \"0 sections, wanted {'min': 1, 'max': 1}\", 'must_include_courses': \"missing ['CHEM07200']\"}",
-        "error_type": "meeting_days_ignored",
-        "why_wrong": "2 of 6 Tier 4 checks failed (count and must_include_courses). What the request needed: Only a section meeting on exactly Tuesdays and Thursdays fits; Thursdays alone is a different pattern.",
+        "detail": "rules broken: {'student_id': 'expected S9034', 'count': \"0 sections, wanted {'min': 1, 'max': 1}\", 'must_include_courses': \"missing ['THD07240']\"}",
+        "error_type": "wrong_student",
+        "why_wrong": "3 of 6 Tier 4 checks failed (student_id, count and must_include_courses). What the request needed: Only a section meeting on exactly Mondays, Tuesdays, Wednesdays, Thursdays and Fridays fits; Tuesdays, Thursdays and Fridays alone is a different pattern.",
         "tiers": {
           "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
           "tier2": "schema (our register message): passed (4/4 checks passed)",
           "tier3": "consistency (invariants against the schedule and transcript): passed (1/1 checks passed)",
-          "tier4": "semantic (the request's rules): failed (4/6 checks passed)"
+          "tier4": "semantic (the request's rules): failed (3/6 checks passed)"
         },
         "tier1_checks": [
           {
@@ -18703,9 +18705,10 @@
         "tier4_checks": [
           {
             "rule": "student_id",
-            "requires": "the message is for student S8004",
+            "requires": "the message is for student S9034",
             "found": "student_id 'S8004'",
-            "passed": true
+            "passed": false,
+            "why": "The message registers 'S8004', but the request is from student S9034, so it would enroll the wrong person."
           },
           {
             "rule": "term_code",
@@ -18728,22 +18731,22 @@
           },
           {
             "rule": "must_include_courses",
-            "requires": "the cart contains CHEM07200",
+            "requires": "the cart contains THD07240",
             "found": "courses: none",
             "passed": false,
-            "why": "The request names CHEM07200, but the cart has no section of it (it has none). CHEM07200 has 5 open section(s) this term."
+            "why": "The request names THD07240, but the cart has no section of it (it has none). THD07240 has 5 open section(s) this term."
           },
           {
             "rule": "crns_in",
-            "requires": "every section is one of 43562, 43565, 43566, 43567, 43568, 43569, 43570, 45956",
+            "requires": "every section is one of 40508, 40510, 40512, 40513",
             "found": "none",
             "passed": true
           }
         ],
-        "deviation_score": 0.3333333333333333
+        "deviation_score": 0.5
       },
       "pair_result": {
-        "pair_id": "shared_day_pattern/biochemistry-bs",
+        "pair_id": "shared_day_pattern/theatre-ba",
         "twin_id": "D2-001",
         "same_answer_as_twin": false,
         "pair_passed": false,
@@ -19489,13 +19492,15 @@
         "data_region": "global"
       },
       "verdict": {
-        "outcome": "semantic_ok",
-        "detail": "satisfies every rule",
+        "outcome": "semantic_error",
+        "detail": "rules broken: {'student_id': 'expected S9034', 'must_include_courses': \"missing ['THD07240']\", 'crns_in': \"['43566'] are not among ['40508', '40510', '40512', '40513']\"}",
+        "error_type": "wrong_student",
+        "why_wrong": "3 of 6 Tier 4 checks failed (student_id, must_include_courses and crns_in). What the request needed: Only a section meeting on exactly Mondays, Tuesdays, Wednesdays, Thursdays and Fridays fits; Tuesdays, Thursdays and Fridays alone is a different pattern.",
         "tiers": {
           "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
           "tier2": "schema (our register message): passed (4/4 checks passed)",
           "tier3": "consistency (invariants against the schedule and transcript): passed (9/9 checks passed)",
-          "tier4": "semantic (the request's rules): passed (6/6 checks passed)"
+          "tier4": "semantic (the request's rules): failed (3/6 checks passed)"
         },
         "tier1_checks": [
           {
@@ -19605,9 +19610,10 @@
         "tier4_checks": [
           {
             "rule": "student_id",
-            "requires": "the message is for student S8004",
+            "requires": "the message is for student S9034",
             "found": "student_id 'S8004'",
-            "passed": true
+            "passed": false,
+            "why": "The message registers 'S8004', but the request is from student S9034, so it would enroll the wrong person."
           },
           {
             "rule": "term_code",
@@ -19629,25 +19635,27 @@
           },
           {
             "rule": "must_include_courses",
-            "requires": "the cart contains CHEM07200",
+            "requires": "the cart contains THD07240",
             "found": "courses: CHEM07200",
-            "passed": true
+            "passed": false,
+            "why": "The request names THD07240, but the cart has no section of it (it has CHEM07200). THD07240 has 5 open section(s) this term."
           },
           {
             "rule": "crns_in",
-            "requires": "every section is one of 43562, 43565, 43566, 43567, 43568, 43569, 43570, 45956",
+            "requires": "every section is one of 40508, 40510, 40512, 40513",
             "found": "43566 (CHEM07200 Organic Chemistry I)",
-            "passed": true
+            "passed": false,
+            "why": "The cart takes 43566 (CHEM07200 Organic Chemistry I), but the request singles out section(s) 40508, 40510, 40512, 40513 (see why_wrong for the reason)."
           }
         ],
-        "deviation_score": 0.0
+        "deviation_score": 0.5
       },
       "pair_result": {
-        "pair_id": "shared_day_pattern/biochemistry-bs",
+        "pair_id": "shared_day_pattern/theatre-ba",
         "twin_id": "D2-001",
         "same_answer_as_twin": false,
-        "pair_passed": true,
-        "explanation": "Both cases are correct and the answer changed with the prompt (days: only Thursdays vs exactly Tuesdays and Thursdays): the model used the changed detail. Pair passed."
+        "pair_passed": false,
+        "explanation": "Neither case is correct (this: semantic_error, twin: semantic_error). Pair failed."
       },
       "transcript_courses": 20
     },
@@ -20384,13 +20392,15 @@
         "data_region": "global"
       },
       "verdict": {
-        "outcome": "semantic_ok",
-        "detail": "satisfies every rule",
+        "outcome": "semantic_error",
+        "detail": "rules broken: {'student_id': 'expected S9034', 'must_include_courses': \"missing ['THD07240']\", 'crns_in': \"['43566'] are not among ['40508', '40510', '40512', '40513']\"}",
+        "error_type": "wrong_student",
+        "why_wrong": "3 of 6 Tier 4 checks failed (student_id, must_include_courses and crns_in). What the request needed: Only a section meeting on exactly Mondays, Tuesdays, Wednesdays, Thursdays and Fridays fits; Tuesdays, Thursdays and Fridays alone is a different pattern.",
         "tiers": {
           "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
           "tier2": "schema (our register message): passed (4/4 checks passed)",
           "tier3": "consistency (invariants against the schedule and transcript): passed (9/9 checks passed)",
-          "tier4": "semantic (the request's rules): passed (6/6 checks passed)"
+          "tier4": "semantic (the request's rules): failed (3/6 checks passed)"
         },
         "tier1_checks": [
           {
@@ -20500,9 +20510,10 @@
         "tier4_checks": [
           {
             "rule": "student_id",
-            "requires": "the message is for student S8004",
+            "requires": "the message is for student S9034",
             "found": "student_id 'S8004'",
-            "passed": true
+            "passed": false,
+            "why": "The message registers 'S8004', but the request is from student S9034, so it would enroll the wrong person."
           },
           {
             "rule": "term_code",
@@ -20524,25 +20535,27 @@
           },
           {
             "rule": "must_include_courses",
-            "requires": "the cart contains CHEM07200",
+            "requires": "the cart contains THD07240",
             "found": "courses: CHEM07200",
-            "passed": true
+            "passed": false,
+            "why": "The request names THD07240, but the cart has no section of it (it has CHEM07200). THD07240 has 5 open section(s) this term."
           },
           {
             "rule": "crns_in",
-            "requires": "every section is one of 43562, 43565, 43566, 43567, 43568, 43569, 43570, 45956",
+            "requires": "every section is one of 40508, 40510, 40512, 40513",
             "found": "43566 (CHEM07200 Organic Chemistry I)",
-            "passed": true
+            "passed": false,
+            "why": "The cart takes 43566 (CHEM07200 Organic Chemistry I), but the request singles out section(s) 40508, 40510, 40512, 40513 (see why_wrong for the reason)."
           }
         ],
-        "deviation_score": 0.0
+        "deviation_score": 0.5
       },
       "pair_result": {
-        "pair_id": "shared_day_pattern/biochemistry-bs",
+        "pair_id": "shared_day_pattern/theatre-ba",
         "twin_id": "D2-001",
         "same_answer_as_twin": true,
         "pair_passed": false,
-        "explanation": "Only this case is correct; its twin is a semantic_error. Pair failed. The model gave the same answer to both, so it ignored the change in the prompt and was right only where that answer happened to fit."
+        "explanation": "Neither case is correct (this: semantic_error, twin: semantic_error). Pair failed, with the same answer to both: the change in the prompt was ignored."
       },
       "transcript_courses": 20
     },
@@ -27526,14 +27539,13 @@
         "data_region": "global"
       },
       "verdict": {
-        "outcome": "consistency_error",
-        "detail": "section 41937: meetings do not match the offered section's: days or times differ",
-        "error_type": "section_details_miscopied",
+        "outcome": "semantic_ok",
+        "detail": "satisfies every rule",
         "tiers": {
           "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
           "tier2": "schema (our register message): passed (4/4 checks passed)",
-          "tier3": "consistency (invariants against the schedule and transcript): failed (8/9 checks passed)",
-          "tier4": "semantic (the request's rules): not reached"
+          "tier3": "consistency (invariants against the schedule and transcript): passed (9/9 checks passed)",
+          "tier4": "semantic (the request's rules): passed (6/6 checks passed)"
         },
         "tier1_checks": [
           {
@@ -27594,8 +27606,8 @@
             "check": "copied_fields",
             "section": "41937",
             "requires": "course_id, section, campus, modality, seats and meetings are copied exactly from the offered section",
-            "found": "meetings do not match the offered section's: days or times differ",
-            "passed": false
+            "found": "all match",
+            "passed": true
           },
           {
             "check": "not_cancelled",
@@ -27640,14 +27652,52 @@
             "passed": true
           }
         ],
-        "tier4_checks": []
+        "tier4_checks": [
+          {
+            "rule": "student_id",
+            "requires": "the message is for student S8001",
+            "found": "student_id 'S8001'",
+            "passed": true
+          },
+          {
+            "rule": "term_code",
+            "requires": "the message is for term 202640",
+            "found": "term_code '202640'",
+            "passed": true
+          },
+          {
+            "rule": "count",
+            "requires": "exactly 1 section in the cart",
+            "found": "1: 41937",
+            "passed": true
+          },
+          {
+            "rule": "waitlist",
+            "requires": "no section is waitlisted (no request asks for a waitlist)",
+            "found": "nothing waitlisted",
+            "passed": true
+          },
+          {
+            "rule": "must_include_courses",
+            "requires": "the cart contains CS04103",
+            "found": "courses: CS04103",
+            "passed": true
+          },
+          {
+            "rule": "crns_in",
+            "requires": "every section is one of 41937, 42160",
+            "found": "41937 (CS04103 Computer Sci & Progm)",
+            "passed": true
+          }
+        ],
+        "deviation_score": 0.0
       },
       "pair_result": {
         "pair_id": "last_seat/bioinformatics-bs",
         "twin_id": "C2-002",
         "same_answer_as_twin": false,
         "pair_passed": false,
-        "explanation": "Neither case is correct (this: consistency_error, twin: consistency_error). Pair failed."
+        "explanation": "Only this case is correct; its twin is a consistency_error. Pair failed. The model changed its answer between the two, but not to a correct one in its twin."
       },
       "transcript_courses": 19
     },
@@ -30235,7 +30285,7 @@
         "twin_id": "C2-001",
         "same_answer_as_twin": false,
         "pair_passed": false,
-        "explanation": "Neither case is correct (this: consistency_error, twin: consistency_error). Pair failed."
+        "explanation": "Only its twin is correct; this case is a consistency_error. Pair failed. The model changed its answer between the two, but not to a correct one in this case."
       },
       "transcript_courses": 19
     },
@@ -34171,7 +34221,7 @@
       "verdict": {
         "outcome": "semantic_error",
         "detail": "rules broken: {'count': \"0 sections, wanted {'min': 1, 'max': 1}\", 'must_include_courses': \"missing ['HIST05429']\"}",
-        "error_type": "lookalike_course_id",
+        "error_type": "wrong_number_of_sections",
         "why_wrong": "2 of 5 Tier 4 checks failed (count and must_include_courses). What the request needed: HIST05429, not the look-alike HIST05425.",
         "tiers": {
           "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
@@ -37408,7 +37458,7 @@
       "verdict": {
         "outcome": "semantic_error",
         "detail": "rules broken: {'count': \"0 sections, wanted {'min': 1, 'max': 1}\", 'must_include_courses': \"missing ['SOC08120']\"}",
-        "error_type": "modality_ignored",
+        "error_type": "wrong_number_of_sections",
         "why_wrong": "2 of 6 Tier 4 checks failed (count and must_include_courses). What the request needed: Only sections of SOC08120 that satisfy 'It has to be fully online.' are correct.",
         "tiers": {
           "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
@@ -48649,7 +48699,7 @@
         "tiers": {
           "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
           "tier2": "schema (our register message): passed (4/4 checks passed)",
-          "tier3": "consistency (invariants against the schedule and transcript): failed (14/17 checks passed)",
+          "tier3": "consistency (invariants against the schedule and transcript): failed (15/17 checks passed)",
           "tier4": "semantic (the request's rules): not reached"
         },
         "tier1_checks": [
@@ -48767,8 +48817,8 @@
             "check": "copied_fields",
             "section": "41327",
             "requires": "course_id, section, campus, modality, seats and meetings are copied exactly from the offered section",
-            "found": "meetings do not match the offered section's: a meeting's type or location differs",
-            "passed": false
+            "found": "all match",
+            "passed": true
           },
           {
             "check": "not_cancelled",
@@ -49588,7 +49638,7 @@
       "verdict": {
         "outcome": "semantic_error",
         "detail": "rules broken: {'count': \"0 sections, wanted {'min': 1, 'max': 1}\", 'must_include_courses': \"missing ['MGT06300']\"}",
-        "error_type": "incomplete_or_extra_course",
+        "error_type": "wrong_number_of_sections",
         "why_wrong": "2 of 6 Tier 4 checks failed (count and must_include_courses). What the request needed: Only MGT06300; adding anything else is wrong.",
         "tiers": {
           "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
@@ -51595,7 +51645,7 @@
       "verdict": {
         "outcome": "semantic_error",
         "detail": "rules broken: {'count': \"0 sections, wanted {'min': 1, 'max': 1}\", 'must_include_courses': \"missing ['MGT06300']\"}",
-        "error_type": "incomplete_or_extra_course",
+        "error_type": "wrong_number_of_sections",
         "why_wrong": "2 of 6 Tier 4 checks failed (count and must_include_courses). What the request needed: Only MGT06300; adding anything else is wrong.",
         "tiers": {
           "tier1": "syntactic (JSON, DIDComm envelope): passed (2/2 checks passed)",
